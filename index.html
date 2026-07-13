@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NextGen BA Banker — Học Business Analysis qua dự án ngân hàng thực tế</title>
+<meta name="description" content="Chương trình học Business Analysis chuyên sâu trong lĩnh vực ngân hàng — nền tảng BABOK kết hợp nghiệp vụ Core Banking, Tín dụng, KYC/AML, Thanh toán. Dành cho BA mới bắt đầu và BA ít kinh nghiệm." />
+<meta property="og:title" content="NextGen BA Banker — Học Business Analysis qua dự án ngân hàng thực tế" />
+<meta property="og:description" content="Nền tảng BABOK kết hợp nghiệp vụ ngân hàng thực tế — dành cho BA mới bắt đầu và BA ít kinh nghiệm." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310264A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23A6802A'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23A6802A'/%3E%3C/svg%3E" />
+<style>
+  :root {
+    --navy: #10264A;
+    --navy-ink: #101B33;
+    --text-body: #4B5668;
+    --text-soft: #7C879B;
+    --bg: #FFFFFF;
+    --bg-soft: #F6F5F0;
+    --card: #FFFFFF;
+    --border: #E7E2D4;
+    --gold: #A6802A;
+    --gold-dark: #8C6A1E;
+    --gold-soft: #F4E9C9;
+    --blue: #3B82F6;
+    --blue-soft: #EAF1FE;
+    --violet: #8B5CF6;
+    --violet-soft: #F1ECFE;
+    --green: #16A34A;
+    --green-soft: #E8F8EE;
+    --amber: #B7902A;
+    --amber-soft: #F4E9C9;
+    --laptop-base-1: #C9D0DA;
+    --laptop-base-2: #A6AEBB;
+    --shadow: 0 24px 48px -28px rgba(16, 38, 74, 0.28);
+    --shadow-sm: 0 10px 24px -16px rgba(16, 38, 74, 0.22);
+    --radius: 16px;
+  }
+
+  :root[data-theme="dark"] {
+    --navy-ink: #F3EDDC;
+    --text-body: #D4C9AE;
+    --text-soft: #A79C82;
+    --bg: #17130B;
+    --bg-soft: #1E1A10;
+    --card: #241F14;
+    --border: #3A331F;
+    --gold-soft: #362E1A;
+    --blue-soft: #16233F;
+    --violet-soft: #221C3C;
+    --green-soft: #142A20;
+    --amber-soft: #362E1A;
+    --laptop-base-1: #4A4229;
+    --laptop-base-2: #2A2415;
+    --shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.55);
+    --shadow-sm: 0 10px 24px -16px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-body);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: inherit; color: var(--navy-ink); margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  svg { display: block; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--navy);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.9rem clamp(1.25rem, 4vw, 2.5rem);
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 0.7rem; color: #fff; min-width: 0; }
+  .brand .icon {
+    width: 34px; height: 34px; flex-shrink: 0;
+    display: grid; place-items: center;
+    color: #fff;
+  }
+  .brand .name {
+    font-size: clamp(0.92rem, 1.6vw, 1.15rem); font-weight: 700; letter-spacing: -0.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 44vw;
+  }
+  .brand .name .hl { color: var(--gold); }
+  .brand .tagline { font-size: 0.68rem; color: #9FB0CB; letter-spacing: 0.02em; margin-top: 1px; white-space: nowrap; }
+  @media (max-width: 420px) { .brand .tagline { display: none; } }
+  nav.links { display: flex; gap: clamp(1rem, 2vw, 1.9rem); font-size: 0.9rem; }
+  nav.links a {
+    color: #C8D3E6;
+    padding-bottom: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  nav.links a:hover, nav.links a:focus-visible { color: #fff; }
+  nav.links a.active { color: #fff; border-color: var(--gold); }
+  @media (max-width: 900px) { nav.links { display: none; } }
+  .nav-actions { display: flex; align-items: center; gap: 0.75rem; flex: none; }
+  @media (max-width: 900px) { .nav-actions { display: none; } }
+
+  .nav-toggle {
+    display: none; flex: none;
+    width: 38px; height: 38px; border-radius: 8px;
+    background: rgba(255,255,255,0.08); border: none; color: #fff;
+    cursor: pointer; align-items: center; justify-content: center;
+  }
+  .nav-toggle:hover { background: rgba(255,255,255,0.16); }
+  .nav-toggle svg { width: 20px; height: 20px; display: block; }
+  @media (max-width: 900px) { .nav-toggle { display: inline-flex; } }
+
+  .mobile-panel {
+    display: none;
+    flex-direction: column;
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 0.5rem clamp(1.25rem, 4vw, 2.5rem) 1.25rem;
+  }
+  .mobile-panel.open { display: flex; }
+  .mobile-panel a.link {
+    color: #C8D3E6; padding: 0.85rem 0; font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .mobile-panel a.link.active { color: #fff; font-weight: 700; }
+  .mobile-panel a.link:last-of-type { border-bottom: none; }
+  .mobile-panel .mobile-actions { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .mobile-panel .mobile-actions .btn { flex: 1; justify-content: center; }
+  @media (min-width: 901px) { .mobile-panel { display: none !important; } }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.45em;
+    padding: 0.68em 1.3em;
+    border-radius: 9px;
+    font-size: 0.92rem; font-weight: 600;
+    cursor: pointer; border: 1.5px solid transparent;
+    transition: transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .btn-gold { background: var(--gold); color: #fff; box-shadow: var(--shadow-sm); }
+  .btn-gold:hover { background: var(--gold-dark); }
+  .btn-outline { border-color: var(--border); color: var(--navy-ink); background: var(--card); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); position: relative; overflow: clip; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+  }
+  @media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .pill {
+    display: inline-block;
+    background: var(--gold-soft);
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.5em 0.9em;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 4.2vw, 3.1rem);
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 .hl { color: var(--gold); }
+  .hero p.sub { color: var(--text-soft); font-size: 1.08rem; max-width: 42ch; margin: 1.1rem 0 1.6rem; }
+  .cta-row { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+  .cta-row .btn { font-size: 0.98rem; padding: 0.85em 1.5em; }
+  @media (max-width: 480px) {
+    .cta-row { flex-direction: column; }
+    .cta-row .btn { width: 100%; justify-content: center; }
+  }
+
+  .trust p { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.9rem; }
+  .trust-logos { display: flex; align-items: center; gap: clamp(1.1rem, 3vw, 1.8rem); flex-wrap: wrap; color: var(--text-soft); }
+  .trust-logos .logo { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.92rem; opacity: 0.75; }
+  .trust-logos .logo svg { width: 18px; height: 18px; }
+  .trust-logos .more { font-size: 1.1rem; letter-spacing: 0.15em; opacity: 0.5; }
+
+  /* ---------- Hero illustration ---------- */
+  .hero-art { position: relative; display: flex; justify-content: center; align-items: center; min-height: 380px; }
+  .hero-art .blob {
+    position: absolute;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, var(--gold-soft) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  .laptop { position: relative; width: min(460px, 92%); z-index: 1; }
+  .laptop-screen {
+    background: linear-gradient(160deg, #2C3A52, #131C2C);
+    border-radius: 14px 14px 4px 4px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+  }
+  .laptop-inner { background: var(--card); border-radius: 8px; padding: 14px; display: flex; gap: 10px; min-height: 220px; }
+  .laptop-sidebar {
+    flex: none; width: 34px;
+    background: var(--navy);
+    border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px; padding: 10px 0;
+  }
+  .laptop-sidebar span { width: 14px; height: 14px; border-radius: 4px; background: rgba(255,255,255,0.18); }
+  .laptop-sidebar span.on { background: var(--gold); }
+  .laptop-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .laptop-greet { font-size: 0.72rem; font-weight: 700; color: var(--navy-ink); }
+  .laptop-kpis { display: grid; grid-template-columns: repeat(3, 1fr) 1fr; gap: 6px; }
+  .laptop-kpis .k { background: var(--bg-soft); border-radius: 6px; padding: 6px 7px; }
+  .laptop-kpis .k .n { font-size: 0.78rem; font-weight: 800; color: var(--navy-ink); font-variant-numeric: tabular-nums; }
+  .laptop-kpis .k .l { font-size: 0.5rem; color: var(--text-soft); margin-top: 1px; }
+  .laptop-kpis .ring { display: flex; align-items: center; justify-content: center; }
+  .laptop-kpis .ring .donut {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: conic-gradient(var(--gold) 72%, var(--border) 0);
+    display: grid; place-items: center;
+  }
+  .laptop-kpis .ring .donut span {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--card);
+    display: grid; place-items: center;
+    font-size: 0.42rem; font-weight: 800; color: var(--gold);
+  }
+  .laptop-list { display: flex; flex-direction: column; gap: 5px; }
+  .laptop-list .row { display: flex; align-items: center; gap: 6px; font-size: 0.52rem; color: var(--text-soft); }
+  .laptop-list .dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+  .laptop-list .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--bg-soft); overflow: hidden; }
+  .laptop-list .bar i { display: block; height: 100%; background: var(--gold); }
+  .laptop-base {
+    position: relative;
+    width: 94%; height: 12px; margin: 0 auto;
+    background: linear-gradient(180deg, var(--laptop-base-1), var(--laptop-base-2));
+    clip-path: polygon(3% 0, 97% 0, 100% 100%, 0 100%);
+  }
+  .laptop-base::after {
+    content: "";
+    position: absolute;
+    top: 3px; left: 50%;
+    width: 46px; height: 4px;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.18);
+    border-radius: 0 0 6px 6px;
+  }
+
+  .float-card {
+    position: absolute;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    padding: 10px 12px;
+    z-index: 2;
+    border: 1px solid var(--border);
+  }
+  .float-card .ft-title { font-size: 0.62rem; font-weight: 700; color: var(--navy-ink); margin-bottom: 6px; }
+  .card-req { top: -6%; right: -4%; width: 168px; transform: rotate(3deg); }
+  .card-req .row { display: flex; align-items: center; gap: 5px; font-size: 0.56rem; color: var(--text-soft); margin-top: 4px; }
+  .card-req .row svg { width: 11px; height: 11px; color: var(--green); flex: none; }
+  .card-books { top: 40%; right: -9%; width: 96px; transform: rotate(-4deg); text-align: center; }
+  .card-books .spines { display: flex; gap: 3px; justify-content: center; align-items: flex-end; height: 46px; }
+  .card-books .spines i { display: block; width: 14px; border-radius: 2px 2px 0 0; }
+  .card-books .spines i:nth-child(1) { height: 46px; background: var(--gold); }
+  .card-books .spines i:nth-child(2) { height: 38px; background: var(--navy); }
+  .card-books .spines i:nth-child(3) { height: 30px; background: var(--blue); }
+  .card-books .labels { display: flex; gap: 2px; justify-content: center; font-size: 0.44rem; color: var(--text-soft); margin-top: 5px; }
+  .card-map { bottom: -8%; left: -6%; width: 150px; }
+  .card-map svg { width: 100%; height: 46px; }
+  @media (max-width: 640px) { .float-card { display: none; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-art { animation: art-in .7s ease-out both; }
+  }
+  @keyframes art-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- Reveal ---------- */
+  .reveal { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- Feature strip ---------- */
+  section.features { padding: 0 0 clamp(2.5rem, 5vw, 4rem); }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: 980px) { .feature-card { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .feature-card { grid-template-columns: 1fr; } }
+  .feature-item {
+    display: flex; gap: 0.8rem;
+    padding: 1.4rem 1.3rem;
+    border-left: 1px solid var(--border);
+  }
+  .feature-item:first-child { border-left: none; }
+  @media (max-width: 980px) { .feature-item:nth-child(odd) { border-left: none; } .feature-item { border-top: 1px solid var(--border); } .feature-item:nth-child(-n+2) { border-top: none; } }
+  @media (max-width: 560px) { .feature-item { border-left: none !important; } .feature-item:first-child { border-top: none; } }
+  .feature-item .ic {
+    flex: none; width: 40px; height: 40px; border-radius: 10px;
+    background: var(--gold-soft); color: var(--gold);
+    display: grid; place-items: center;
+  }
+  .feature-item .ic svg { width: 20px; height: 20px; }
+  .feature-item h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .feature-item p { font-size: 0.8rem; color: var(--text-soft); }
+
+  /* ---------- Roadmap + stats ---------- */
+  section.roadmap { padding: clamp(1rem, 3vw, 2rem) 0 clamp(3.5rem, 7vw, 5.5rem); }
+  .roadmap-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: clamp(1.5rem, 4vw, 2.5rem); align-items: start; }
+  @media (max-width: 980px) { .roadmap-grid { grid-template-columns: 1fr; } }
+
+  .col-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
+  .col-head h2 { font-size: clamp(1.35rem, 2.4vw, 1.7rem); font-weight: 800; }
+  .col-head .title-wrap { flex: 1; min-width: 240px; }
+  .col-head p.roadmap-sub { font-size: 0.88rem; color: var(--text-soft); margin-top: 0.55rem; max-width: 54ch; }
+  .badge-note {
+    flex: none; margin-top: 0.3rem;
+    font-size: 0.76rem; font-weight: 700; color: var(--gold);
+    background: var(--gold-soft);
+    padding: 0.4em 0.85em; border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .stepper { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; position: relative; }
+  @media (max-width: 760px) { .stepper { grid-template-columns: repeat(3, 1fr); row-gap: 1.8rem; } }
+  @media (max-width: 420px) { .stepper { grid-template-columns: repeat(2, 1fr); } }
+  .stepper::before {
+    content: "";
+    position: absolute;
+    top: 22px; left: calc(100% / 12); right: calc(100% / 12);
+    height: 0;
+    border-top: 2px dashed var(--border);
+    z-index: 0;
+  }
+  @media (max-width: 760px) { .stepper::before { display: none; } }
+  .step { position: relative; z-index: 1; text-align: center; padding: 0 0.35rem; }
+  .step .node {
+    width: 44px; height: 44px; margin: 0 auto 0.7rem;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    display: grid; place-items: center;
+  }
+  .step .node svg { width: 20px; height: 20px; }
+  .step .num { font-size: 0.72rem; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; margin-bottom: 0.3rem; }
+  .step h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .step p { font-size: 0.74rem; color: var(--text-soft); line-height: 1.45; }
+
+  .highlight-box {
+    margin-top: 2.2rem;
+    background: var(--gold-soft);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .highlight-box .ic { flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--card); color: var(--gold); display: grid; place-items: center; }
+  .highlight-box .ic svg { width: 20px; height: 20px; }
+  .highlight-box p.stmt { font-size: 0.92rem; color: var(--navy-ink); font-weight: 600; margin-bottom: 0.8rem; }
+  .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag-row span {
+    background: var(--card); color: var(--gold);
+    border: 1px solid var(--border);
+    font-size: 0.74rem; font-weight: 600;
+    padding: 0.35em 0.8em; border-radius: 999px;
+  }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  @media (max-width: 460px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 1.1rem 1.15rem;
+  }
+  .stat-card .ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; margin-bottom: 0.7rem; }
+  .stat-card .ic svg { width: 18px; height: 18px; }
+  .stat-card.violet .ic { background: var(--violet-soft); color: var(--violet); }
+  .stat-card.blue .ic { background: var(--blue-soft); color: var(--blue); }
+  .stat-card.green .ic { background: var(--green-soft); color: var(--green); }
+  .stat-card.amber .ic { background: var(--amber-soft); color: var(--amber); }
+  .stat-card .num { font-size: 1.35rem; font-weight: 800; color: var(--navy-ink); font-variant-numeric: tabular-nums; }
+  .stat-card .lbl { font-size: 0.78rem; color: var(--text-soft); margin-top: 0.2rem; line-height: 1.4; }
+  .stats-note { font-size: 0.72rem; color: var(--text-soft); margin-top: 0.8rem; }
+
+  /* ---------- About / Giới thiệu ---------- */
+  section.about { padding: clamp(1rem, 3vw, 2rem) 0 clamp(3.5rem, 7vw, 5.5rem); border-top: 1px solid var(--border); }
+  .about-intro { max-width: 62ch; margin-bottom: 2.2rem; }
+  .about-intro p.sub { color: var(--text-soft); font-size: 0.96rem; margin-top: 0.7rem; }
+
+  .story-block { max-width: 68ch; margin-bottom: 2rem; }
+  .story-block h3.h { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 800; color: var(--navy-ink); margin-bottom: 0.7rem; }
+  .story-block p { font-size: 0.94rem; color: var(--text-body); }
+
+  .compare-list { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2.4rem; }
+  .compare-row {
+    display: flex; gap: 0.8rem; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+  }
+  .compare-row .ic { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--gold-soft); color: var(--gold); display: grid; place-items: center; margin-top: 1px; }
+  .compare-row .ic svg { width: 14px; height: 14px; }
+  .compare-row p { font-size: 0.88rem; color: var(--text-body); }
+  .compare-row p strong { color: var(--navy-ink); }
+
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
+  .sec-head h3.h { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 800; color: var(--navy-ink); }
+
+  .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  @media (max-width: 860px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .course-grid { grid-template-columns: 1fr; } }
+  .course-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); padding: 1.2rem 1.25rem;
+  }
+  .course-card .ic { width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; margin-bottom: 0.8rem; }
+  .course-card .ic svg { width: 19px; height: 19px; }
+  .course-card:nth-child(1) .ic { background: var(--gold-soft); color: var(--gold); }
+  .course-card:nth-child(2) .ic { background: var(--blue-soft); color: var(--blue); }
+  .course-card:nth-child(3) .ic { background: var(--violet-soft); color: var(--violet); }
+  .course-card:nth-child(4) .ic { background: var(--amber-soft); color: var(--amber); }
+  .course-card:nth-child(5) .ic { background: var(--green-soft); color: var(--green); }
+  .course-card:nth-child(6) .ic { background: var(--gold-soft); color: var(--gold); }
+  .course-card h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .course-card p { font-size: 0.8rem; color: var(--text-soft); }
+
+  .mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin: 2.6rem 0; }
+  @media (max-width: 860px) { .mission-grid { grid-template-columns: 1fr; } }
+  .side-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.15rem 1.25rem; }
+  .side-card h3 { font-size: 0.94rem; font-weight: 700; margin-bottom: 0.9rem; }
+
+  .cta-banner {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+    background: var(--navy); color: #fff;
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .cta-banner h3 { color: #fff; font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 800; }
+  .cta-banner p { color: #C8D3E6; font-size: 0.92rem; margin-top: 0.35rem; }
+  @media (max-width: 480px) { .cta-banner .btn { width: 100%; justify-content: center; } }
+
+  .contact-row { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.55rem 0; border-top: 1px solid var(--border); }
+  .contact-row:first-of-type { border-top: none; padding-top: 0; }
+  .contact-row .ic { width: 30px; height: 30px; border-radius: 8px; background: var(--gold-soft); color: var(--gold); display: grid; place-items: center; flex: none; }
+  .contact-row .ic svg { width: 15px; height: 15px; }
+  .contact-row .lbl { font-size: 0.72rem; color: var(--text-soft); }
+  .contact-row .val { font-size: 0.86rem; font-weight: 600; color: var(--navy-ink); }
+
+  .social-row { display: flex; gap: 0.6rem; }
+  .social-row a {
+    width: 36px; height: 36px; border-radius: 9px; background: var(--bg-soft); color: var(--navy-ink);
+    display: grid; place-items: center; font-size: 0.78rem; font-weight: 800;
+  }
+  .social-row a:hover { background: var(--gold-soft); color: var(--gold); }
+
+  .about-text { font-size: 0.86rem; color: var(--text-body); margin-bottom: 0.9rem; }
+  .about-checklist { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.9rem; }
+  .about-checklist div { display: flex; align-items: center; gap: 0.55rem; font-size: 0.84rem; color: var(--text-body); }
+  .about-checklist svg { width: 15px; height: 15px; color: var(--green); }
+
+  /* ---------- Register / Đăng ký quan tâm ---------- */
+  .register-shell { background: var(--navy); color: #fff; padding: clamp(3rem, 6vw, 4.5rem) 0; }
+  .register-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
+  @media (max-width: 860px) { .register-grid { grid-template-columns: 1fr; } }
+  .register-shell h2 { color: #fff; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-top: 0.6em; }
+  .register-shell p.sub { color: #C8D3E6; font-size: 0.98rem; margin-top: 0.9rem; max-width: 42ch; }
+
+  form.register-form {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.16);
+    border-radius: var(--radius); padding: clamp(1.5rem, 3vw, 2rem);
+  }
+  .field { margin-bottom: 1.1rem; }
+  .field label { display: block; font-size: 0.76rem; letter-spacing: 0.05em; text-transform: uppercase; color: #C8D3E6; margin-bottom: 0.4rem; }
+  .field input, .field select {
+    width: 100%; padding: 0.7em 0.85em; background: rgba(11,22,38,0.5);
+    border: 1px solid rgba(255,255,255,0.22); border-radius: 8px; color: #fff;
+    font-size: 0.92rem; font-family: inherit;
+  }
+  .field input::placeholder { color: #7C87A0; }
+  .field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+  form.register-form .btn-gold { width: 100%; justify-content: center; }
+  .form-fine { font-size: 0.74rem; color: #7C87A0; margin-top: 0.8rem; }
+
+  .confirm-panel { display: none; border: 1px solid rgba(244,121,31,0.5); border-radius: var(--radius); padding: 1.5rem; }
+  .confirm-panel.show { display: block; }
+  .confirm-panel p { color: #C8D3E6; font-size: 0.9rem; margin-top: 0.4rem; }
+  .confirm-panel strong { color: #fff; }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    border-top: 1px solid var(--border);
+    padding: 1.8rem 0;
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+  }
+  footer.site .brand { color: var(--navy-ink); }
+  footer.site .brand .icon { width: 24px; height: 24px; color: var(--navy-ink); }
+  footer.site .brand .name { font-size: 0.92rem; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-row">
+    <a class="brand" href="#top">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="30" height="30">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M6 10 12 6 18 10" />
+          <path d="M8 10 V14 M12 10 V14 M16 10 V14" />
+          <path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" />
+          <path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span>
+        <div class="name">NextGen <span class="hl">BA</span> Banker</div>
+        <div class="tagline">Learn · Analyze · Grow</div>
+      </span>
+    </a>
+    <nav class="links">
+      <a href="#top" class="active">Trang chủ</a>
+      <a href="#lo-trinh">Lộ trình học</a>
+      <a href="#gioi-thieu">Giới thiệu</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-gold" href="#dang-ky">Đăng ký quan tâm</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-panel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-panel" id="mobile-panel">
+    <a class="link active" href="#top">Trang chủ</a>
+    <a class="link" href="#lo-trinh">Lộ trình học</a>
+    <a class="link" href="#gioi-thieu">Giới thiệu</a>
+    <div class="mobile-actions">
+      <a class="btn btn-gold" href="#dang-ky">Đăng ký quan tâm</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="pill">Nền tảng học Business Analysis trong ngân hàng</span>
+        <h1>Học Business Analysis qua những dự án <span class="hl">ngân hàng</span> thực tế.</h1>
+        <p class="sub">Học từ thực tế. Trưởng thành qua từng bài toán.</p>
+        <div class="cta-row">
+          <a class="btn btn-gold" href="#dang-ky">Đăng ký quan tâm →</a>
+          <a class="btn btn-outline" href="#lo-trinh">Xem lộ trình học →</a>
+        </div>
+        <div class="trust">
+          <p>Được tin tưởng bởi học viên đến từ các ngân hàng và tổ chức tài chính</p>
+          <div class="trust-logos">
+            <span class="logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9 L12 3 L21 9" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9 V19 M20 9 V19 M2 19 H22" stroke-linecap="round"/></svg>
+              Ngân hàng Thương mại
+            </span>
+            <span class="logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h4" stroke-linecap="round"/></svg>
+              Công ty Tài chính
+            </span>
+            <span class="logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Fintech &amp; Bảo hiểm
+            </span>
+            <span class="more">···</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art reveal">
+        <div class="blob" aria-hidden="true"></div>
+        <div class="laptop">
+          <div class="laptop-screen">
+            <div class="laptop-inner">
+              <div class="laptop-sidebar" aria-hidden="true">
+                <span class="on"></span><span></span><span></span><span></span>
+              </div>
+              <div class="laptop-main">
+                <div class="laptop-greet">Chào mừng bạn trở lại!</div>
+                <div class="laptop-kpis">
+                  <div class="k"><div class="n">03</div><div class="l">Lộ trình</div></div>
+                  <div class="k"><div class="n">12</div><div class="l">Bài tập</div></div>
+                  <div class="k"><div class="n">07</div><div class="l">Case study</div></div>
+                  <div class="ring"><div class="donut"><span>72%</span></div></div>
+                </div>
+                <div class="laptop-list">
+                  <div class="row"><span class="dot" style="background:var(--green)"></span><span style="flex:none">Đã nộp bài tập</span><span class="bar"><i style="width:100%"></i></span></div>
+                  <div class="row"><span class="dot" style="background:var(--gold)"></span><span style="flex:none">Case study mới</span><span class="bar"><i style="width:65%"></i></span></div>
+                  <div class="row"><span class="dot" style="background:var(--gold)"></span><span style="flex:none">Tiến độ tuần</span><span class="bar"><i style="width:80%"></i></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="laptop-base"></div>
+        </div>
+
+        <div class="float-card card-req">
+          <div class="ft-title">Business Requirements</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg> Xác định phạm vi</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg> Stakeholder liên quan</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg> Tiêu chí nghiệm thu</div>
+        </div>
+
+        <div class="float-card card-books">
+          <div class="spines"><i></i><i></i><i></i></div>
+          <div class="labels"><span>BRD</span><span>FSD</span><span>SRS</span></div>
+        </div>
+
+        <div class="float-card card-map">
+          <div class="ft-title">Stakeholder Map</div>
+          <svg viewBox="0 0 120 46" fill="none" stroke-linecap="round">
+            <circle cx="60" cy="10" r="6" fill="var(--gold)" stroke="none"/>
+            <circle cx="20" cy="36" r="5" fill="var(--border)" stroke="none"/>
+            <circle cx="60" cy="40" r="5" fill="var(--border)" stroke="none"/>
+            <circle cx="100" cy="36" r="5" fill="var(--border)" stroke="none"/>
+            <path d="M60 16 L20 31 M60 16 L60 35 M60 16 L100 31" stroke="var(--border)" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <div class="feature-card reveal">
+        <div class="feature-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></div>
+          <div><h3>Dự án thực tế</h3><p>Case study từ dự án ngân hàng nội bộ.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></div>
+          <div><h3>Học qua thực hành</h3><p>Bài tập mô phỏng theo quy trình thực tế.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M12 9V5"/><circle cx="12" cy="4" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div><h3>AI Mentor đồng hành</h3><p>Nhận review &amp; góp ý như mentor thật.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3V2h6v1"/><path d="M9 9l2 2 4-4"/><path d="M9 15h6"/></svg></div>
+          <div><h3>Template &amp; Checklist</h3><p>Kho tài liệu chuẩn BA sẵn sàng áp dụng.</p></div>
+        </div>
+        <div class="feature-item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
+          <div><h3>Đo lường tiến độ</h3><p>Theo dõi tiến độ học tập và năng lực cá nhân.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="roadmap" id="lo-trinh">
+    <div class="container roadmap-grid">
+      <div>
+        <div class="col-head reveal">
+          <div class="title-wrap">
+            <h2>Lộ trình học gợi ý cho bạn</h2>
+            <p class="roadmap-sub">Đây là lộ trình tổng quan áp dụng chung cho mọi học viên. Khi tham gia khoá học, lộ trình sẽ được tuỳ chỉnh lại theo năng lực hiện tại và mục tiêu riêng của bạn.</p>
+          </div>
+          <span class="badge-note">Cá nhân hoá sau khi đăng ký</span>
+        </div>
+
+        <div class="stepper reveal">
+          <div class="step">
+            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6l9 4 9-4-9-4Z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
+            <div class="num">01</div>
+            <h3>Fundamentals</h3>
+            <p>Nền tảng BA và dự án ngân hàng</p>
+          </div>
+          <div class="step">
+            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg></div>
+            <div class="num">02</div>
+            <h3>Process &amp; Domain</h3>
+            <p>Nghiệp vụ ngân hàng cốt lõi</p>
+          </div>
+          <div class="step">
+            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+            <div class="num">03</div>
+            <h3>Business Analysis</h3>
+            <p>Phân tích &amp; mô hình nghiệp vụ</p>
+          </div>
+          <div class="step">
+            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16h5"/></svg></div>
+            <div class="num">04</div>
+            <h3>Documentation</h3>
+            <p>Viết tài liệu BA chuyên nghiệp</p>
+          </div>
+          <div class="step">
+            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <div class="num">05</div>
+            <h3>Project Practice</h3>
+            <p>Case study thực tế ngân hàng</p>
+          </div>
+          <div class="step">
+            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+            <div class="num">06</div>
+            <h3>Go-live Ready</h3>
+            <p>UAT, triển khai &amp; vận hành</p>
+          </div>
+        </div>
+
+        <div class="highlight-box reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 21l5-3 5 3-1.5-8.5"/></svg></div>
+          <div>
+            <p class="stmt">Hoàn thành lộ trình, bạn sẽ tự tin đảm nhận vai trò BA trong các dự án ngân hàng thực tế.</p>
+            <div class="tag-row">
+              <span>Kỹ năng toàn diện</span>
+              <span>Kinh nghiệm thực chiến</span>
+              <span>Portfolio dự án</span>
+              <span>Sẵn sàng đi làm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-head reveal"><h2>Chương trình được xây dựng thế nào</h2></div>
+        <div class="stats-grid reveal">
+          <div class="stat-card violet">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6l9 4 9-4-9-4Z"/><path d="M3 12l9 4 9-4"/></svg></div>
+            <div class="num">2</div>
+            <div class="lbl">Lộ trình học song song</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
+            <div class="num">6</div>
+            <div class="lbl">Bước trong lộ trình học</div>
+          </div>
+          <div class="stat-card green">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+            <div class="num">100%</div>
+            <div class="lbl">Case study bám nghiệp vụ ngân hàng</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+            <div class="num">Mới</div>
+            <div class="lbl">Đang trong giai đoạn xây dựng nội dung</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="gioi-thieu">
+    <div class="container">
+        <div class="about-intro reveal">
+          <span class="pill">Về NextGen BA Banker</span>
+          <h2>Nền tảng học Business Analysis chuyên sâu trong lĩnh vực ngân hàng</h2>
+          <p class="sub">NextGen BA Banker giúp bạn học đúng – hiểu sâu – làm được, thông qua dự án thực tế, case study ngân hàng và phương pháp học hiện đại.</p>
+        </div>
+
+        <div class="story-block reveal">
+          <h3 class="h">Câu chuyện NextGen BA Banker</h3>
+          <p>NextGen BA Banker bắt đầu từ một quan sát đơn giản: rất nhiều BA mới vào ngành ngân hàng học đủ lý thuyết BABOK nhưng vẫn lúng túng khi đối diện một hồ sơ tín dụng, một luồng KYC, hay một yêu cầu thay đổi hệ thống Core Banking thực tế. Khoảng cách giữa "biết" và "làm được" chính là lý do chương trình này ra đời — không phải để dạy lại BABOK, mà để nối lý thuyết với những tình huống ngân hàng có thật.</p>
+        </div>
+
+        <div class="compare-list reveal">
+          <div class="compare-row">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <p><strong>Không học lý thuyết đơn thuần</strong> — mọi bài học đi kèm case tình huống ngân hàng thật, không phải ví dụ chung chung.</p>
+          </div>
+          <div class="compare-row">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <p><strong>Không dừng ở BABOK</strong> — có track riêng luyện nghiệp vụ Core Banking, Tín dụng, KYC/AML, Thanh toán.</p>
+          </div>
+          <div class="compare-row">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            <p><strong>Không phải khoá học đại trà</strong> — nội dung được xây dựng và cập nhật dựa trên các dự án ngân hàng đang triển khai thật.</p>
+          </div>
+        </div>
+
+        <div class="sec-head reveal"><span class="h">Khóa học cung cấp những gì?</span></div>
+        <div class="course-grid reveal">
+          <div class="course-card">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+            <h3>Kiến thức BA nền tảng &amp; nâng cao</h3>
+            <p>Hệ thống kiến thức theo BABOK, áp dụng vào nghiệp vụ ngân hàng.</p>
+          </div>
+          <div class="course-card">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg></div>
+            <h3>Phân tích nghiệp vụ ngân hàng</h3>
+            <p>Phân tích quy trình, nghiệp vụ cốt lõi trong các mảng Core Banking, Tín dụng, Thẻ, ...</p>
+          </div>
+          <div class="course-card">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16h5"/></svg></div>
+            <h3>BRD – FSD – SRS chuẩn thực tế</h3>
+            <p>Hướng dẫn cách viết và review tài liệu theo chuẩn ngân hàng.</p>
+          </div>
+          <div class="course-card">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3V2h6v1"/><path d="M9 9l2 2 4-4"/><path d="M9 15h6"/></svg></div>
+            <h3>Templates &amp; Checklist</h3>
+            <p>Bộ template, checklist, cheatsheet BA sẵn sàng áp dụng.</p>
+          </div>
+          <div class="course-card">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+            <h3>Bài tập &amp; Case Study</h3>
+            <p>Thực hành với bài tập, case study bám sát tình huống thực tế.</p>
+          </div>
+          <div class="course-card">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 21l5-3 5 3-1.5-8.5"/></svg></div>
+            <h3>Chứng nhận hoàn thành</h3>
+            <p>Nhận chứng nhận hoàn thành khoá học và các lộ trình chuyên sâu.</p>
+          </div>
+        </div>
+
+      <div class="mission-grid reveal">
+        <div class="side-card">
+          <h3>Sứ mệnh</h3>
+          <p class="about-text">Nâng cao năng lực Business Analyst trong lĩnh vực ngân hàng Việt Nam, thông qua nền tảng học tập thực chiến, chất lượng và bền vững.</p>
+        </div>
+
+        <div class="side-card">
+          <h3>Giá trị cốt lõi</h3>
+          <div class="about-checklist">
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Thực tiễn – Ứng dụng</div>
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Chất lượng – Uy tín</div>
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Đồng hành – Phát triển</div>
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Sáng tạo – Liên tục cải tiến</div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <h3>Liên hệ với chúng tôi</h3>
+          <div class="contact-row">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+            <div><div class="lbl">Email</div><div class="val">support@bankingba.vn</div></div>
+          </div>
+          <div class="contact-row">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 3a2 2 0 0 1-.4 2.1L8 10.3a16 16 0 0 0 6 6l1.5-1.5a2 2 0 0 1 2-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.5 2Z"/></svg></div>
+            <div><div class="lbl">Hotline</div><div class="val">(+84) 912 345 678</div></div>
+          </div>
+          <div class="contact-row">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg></div>
+            <div><div class="lbl">Zalo</div><div class="val">0912 345 678</div></div>
+          </div>
+          <div class="contact-row">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div><div class="lbl">Thời gian hỗ trợ</div><div class="val">Thứ 2 – Thứ 6: 8:30 – 17:30</div></div>
+          </div>
+          <div class="social-row" style="margin-top: 0.9rem;">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-banner reveal">
+        <div>
+          <h3>Bạn đã sẵn sàng nâng tầm sự nghiệp BA của mình?</h3>
+          <p>Đăng ký quan tâm để nhận thông tin ngay khi chương trình ra mắt!</p>
+        </div>
+        <a class="btn btn-gold" href="#dang-ky">Đăng ký quan tâm →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="register-shell" id="dang-ky">
+    <div class="container register-grid">
+      <div class="reveal">
+        <span class="pill">Quan tâm chương trình?</span>
+        <h2>Đăng ký để nhận thông tin ngay khi ra mắt</h2>
+        <p class="sub">Để lại thông tin — bạn sẽ là người đầu tiên biết khi lộ trình học chi tiết và case study đầu tiên sẵn sàng.</p>
+      </div>
+      <div class="reveal">
+        <form class="register-form" id="register-form">
+          <div class="field">
+            <label for="f-name">Họ và tên</label>
+            <input id="f-name" name="name" type="text" placeholder="Nguyễn Văn A" required />
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="ban@vidu.com" required />
+          </div>
+          <div class="field">
+            <label for="f-role">Vai trò hiện tại</label>
+            <select id="f-role" name="role">
+              <option>BA mới bắt đầu</option>
+              <option>BA có kinh nghiệm 1–2 năm</option>
+              <option>Vai trò khác trong dự án</option>
+            </select>
+          </div>
+          <button class="btn btn-gold" type="submit" id="register-submit">Gửi đăng ký</button>
+          <p class="form-fine" id="form-error" style="display:none; color:#B3261E;"></p>
+          <p class="form-fine">Thông tin của bạn được lưu bảo mật, chỉ dùng để gửi cập nhật về chương trình.</p>
+        </form>
+        <div class="confirm-panel" id="confirm-panel">
+          <span class="pill">Đã ghi nhận</span>
+          <p>Cảm ơn <strong id="confirm-name"></strong>. Chúng tôi đã lưu thông tin đăng ký và sẽ liên hệ khi chương trình học chính thức triển khai.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.8rem; width:100%;">
+    <a class="brand" href="#top">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M6 10 12 6 18 10" />
+          <path d="M8 10 V14 M12 10 V14 M16 10 V14" />
+          <path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" />
+          <path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span class="name">NextGen BA Banker</span>
+    </a>
+    <span>Chương trình đào tạo nội bộ · Tham chiếu BABOK Guide v3</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-panel');
+    if (!toggle || !panel) return;
+    toggle.addEventListener('click', function () {
+      var open = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    panel.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        panel.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+
+  (function () {
+    var SUPABASE_URL = 'https://jdkzevfxitprddvaohyi.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_a2p2pbLD3AWJOTZWFswVuQ_trIfygVs';
+
+    var form = document.getElementById('register-form');
+    var panel = document.getElementById('confirm-panel');
+    var nameOut = document.getElementById('confirm-name');
+    var submitBtn = document.getElementById('register-submit');
+    var errorOut = document.getElementById('form-error');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('f-name').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      var role = document.getElementById('f-role').value;
+
+      errorOut.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang gửi...';
+
+      fetch(SUPABASE_URL + '/rest/v1/registrations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ name: name, email: email, role: role })
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Gửi thất bại (HTTP ' + res.status + ')');
+          nameOut.textContent = name || 'bạn';
+          form.style.display = 'none';
+          panel.classList.add('show');
+        })
+        .catch(function () {
+          errorOut.textContent = 'Có lỗi khi gửi đăng ký. Vui lòng thử lại sau.';
+          errorOut.style.display = 'block';
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Gửi đăng ký';
+        });
+    });
+  })();
+</script>
+</body>
+</html>

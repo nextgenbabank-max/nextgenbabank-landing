@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cộng đồng NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310264A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23A6802A'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23A6802A'/%3E%3C/svg%3E" />
+<style>
+  :root {
+    --navy: #10264A;
+    --navy-ink: #101B33;
+    --text-body: #4B5668;
+    --text-soft: #7C879B;
+    --bg: #FFFFFF;
+    --bg-soft: #F6F5F0;
+    --card: #FFFFFF;
+    --border: #E7E2D4;
+    --gold: #A6802A;
+    --gold-dark: #8C6A1E;
+    --gold-soft: #F4E9C9;
+    --blue: #3B82F6;
+    --blue-soft: #EAF1FE;
+    --violet: #8B5CF6;
+    --violet-soft: #F1ECFE;
+    --green: #16A34A;
+    --green-soft: #E8F8EE;
+    --amber: #C1662B;
+    --amber-soft: #F7E5D8;
+    --shadow-sm: 0 10px 24px -16px rgba(16, 38, 74, 0.22);
+    --radius: 16px;
+  }
+  :root[data-theme="dark"] {
+    --navy-ink: #F3EDDC;
+    --text-body: #D4C9AE;
+    --text-soft: #A79C82;
+    --bg: #17130B;
+    --bg-soft: #1E1A10;
+    --card: #241F14;
+    --border: #3A331F;
+    --gold-soft: #362E1A;
+    --blue-soft: #16233F;
+    --violet-soft: #221C3C;
+    --green-soft: #142A20;
+    --amber-soft: #33210F;
+    --shadow-sm: 0 10px 24px -16px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  body {
+    margin: 0;
+    background: var(--bg-soft);
+    color: var(--text-body);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: inherit; color: var(--navy-ink); margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  svg { display: block; flex: none; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+
+  /* ---------- Header (shared) ---------- */
+  header.site { position: sticky; top: 0; z-index: 30; background: var(--navy); }
+  .nav-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    padding: 0.9rem clamp(1.25rem, 4vw, 2.5rem); max-width: 1240px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 0.7rem; color: #fff; min-width: 0; }
+  .brand .icon { width: 34px; height: 34px; flex-shrink: 0; display: grid; place-items: center; color: #fff; }
+  .brand .name {
+    font-size: clamp(0.92rem, 1.6vw, 1.15rem); font-weight: 700; letter-spacing: -0.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 44vw;
+  }
+  .brand .name .hl { color: var(--gold); }
+  .brand .tagline { font-size: 0.68rem; color: #9FB0CB; letter-spacing: 0.02em; margin-top: 1px; white-space: nowrap; }
+  @media (max-width: 420px) { .brand .tagline { display: none; } }
+  nav.links { display: flex; gap: clamp(1rem, 2vw, 1.9rem); font-size: 0.9rem; }
+  nav.links a { color: #C8D3E6; padding-bottom: 6px; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; white-space: nowrap; }
+  nav.links a:hover, nav.links a:focus-visible { color: #fff; }
+  nav.links a.active { color: #fff; border-color: var(--gold); }
+  @media (max-width: 900px) { nav.links { display: none; } }
+  .nav-actions { display: flex; align-items: center; gap: 0.75rem; flex: none; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.45em;
+    padding: 0.68em 1.3em; border-radius: 9px; font-size: 0.92rem; font-weight: 600;
+    cursor: pointer; border: 1.5px solid transparent;
+    transition: transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .btn-gold { background: var(--gold); color: #fff; box-shadow: var(--shadow-sm); }
+  .btn-gold:hover { background: var(--gold-dark); }
+  .btn-nav-ghost { border-color: rgba(255,255,255,0.35); color: #fff; }
+  .btn-nav-ghost:hover { border-color: #fff; }
+  .btn-outline { border-color: var(--border); color: var(--navy-ink); background: var(--card); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ---------- Page shell ---------- */
+  .page { padding: clamp(1.75rem, 4vw, 2.75rem) 0 4rem; }
+  .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+  .page-head h1 { font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 800; }
+  .page-head p { color: var(--text-soft); font-size: 0.95rem; margin-top: 0.4rem; max-width: 52ch; }
+
+  .layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.75rem; align-items: start; }
+  @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } }
+
+  /* ---------- Tabs ---------- */
+  .tab-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.4rem; overflow-x: auto; }
+  .tab {
+    flex: none;
+    padding: 0.55em 1.1em; border-radius: 9px;
+    font-size: 0.86rem; font-weight: 600;
+    color: var(--text-soft); background: transparent; border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .tab:hover { color: var(--navy-ink); }
+  .tab.active { background: var(--navy); color: #fff; }
+  .filter-btn {
+    margin-left: auto; flex: none;
+    display: inline-flex; align-items: center; gap: 0.45em;
+    padding: 0.55em 1em; border-radius: 9px; font-size: 0.86rem; font-weight: 600;
+    border: 1px solid var(--border); background: var(--card); color: var(--navy-ink);
+    cursor: pointer;
+  }
+  .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .filter-btn svg { width: 15px; height: 15px; }
+
+  /* ---------- Post feed ---------- */
+  .feed { display: flex; flex-direction: column; gap: 1rem; }
+  .post {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); padding: 1.25rem 1.4rem;
+  }
+  .post-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.6rem; }
+  .badge { font-size: 0.72rem; font-weight: 700; padding: 0.32em 0.75em; border-radius: 999px; white-space: nowrap; }
+  .badge.q { background: var(--amber-soft); color: var(--amber); }
+  .badge.d { background: var(--green-soft); color: var(--green); }
+  .badge.s { background: var(--violet-soft); color: var(--violet); }
+  .badge.a { background: var(--blue-soft); color: var(--blue); }
+  .comment-count { display: inline-flex; align-items: center; gap: 0.35em; font-size: 0.82rem; color: var(--text-soft); flex: none; }
+  .comment-count svg { width: 15px; height: 15px; }
+
+  .post h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.55rem; }
+
+  .post-meta { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; font-size: 0.8rem; color: var(--text-soft); }
+  .avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center; flex: none;
+    color: #fff; font-size: 0.62rem; font-weight: 700;
+  }
+  .post-meta .name { color: var(--navy-ink); font-weight: 600; }
+  .post-meta .dot { opacity: 0.5; }
+  .post-meta .views { display: inline-flex; align-items: center; gap: 0.3em; }
+  .post-meta .views svg { width: 13px; height: 13px; }
+
+  .post-body { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 0.8rem; }
+  .post-body p { font-size: 0.9rem; color: var(--text-body); flex: 1; }
+
+  .mini-sheet { flex: none; width: 96px; height: 74px; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+  .mini-sheet .head { height: 16px; background: var(--blue); }
+  .mini-sheet .row { height: 8px; margin: 6px 8px; border-radius: 2px; background: var(--bg-soft); }
+  .mini-sheet .row.short { width: 60%; }
+
+  .attachment {
+    display: inline-flex; align-items: center; gap: 0.65rem;
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.5rem 0.8rem; margin-bottom: 0.8rem;
+  }
+  .attachment .file-ic {
+    width: 30px; height: 30px; border-radius: 6px; background: var(--green);
+    color: #fff; display: grid; place-items: center; font-size: 0.62rem; font-weight: 800;
+  }
+  .attachment .fname { font-size: 0.82rem; font-weight: 600; color: var(--navy-ink); }
+  .attachment .fsize { font-size: 0.72rem; color: var(--text-soft); }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; }
+  .tag-list span { font-size: 0.76rem; color: var(--gold); background: var(--gold-soft); padding: 0.28em 0.7em; border-radius: 999px; }
+
+  .post-foot { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 0.75rem; }
+  .like-btn { display: inline-flex; align-items: center; gap: 0.4em; font-size: 0.84rem; font-weight: 600; color: var(--text-soft); background: none; border: none; cursor: pointer; padding: 0; }
+  .like-btn:hover { color: var(--gold); }
+  .like-btn svg { width: 16px; height: 16px; }
+  .bookmark-btn { background: none; border: none; color: var(--text-soft); cursor: pointer; padding: 0; }
+  .bookmark-btn:hover { color: var(--gold); }
+  .bookmark-btn svg { width: 17px; height: 17px; }
+
+  /* ---------- Sidebar ---------- */
+  .side { display: flex; flex-direction: column; gap: 1.1rem; }
+  .side-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.15rem 1.25rem; }
+  .side-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+  .side-head .ttl { display: flex; align-items: center; gap: 0.5em; font-size: 0.94rem; font-weight: 700; color: var(--navy-ink); }
+  .side-head .ttl svg { width: 17px; height: 17px; color: var(--gold); }
+  .side-head .see-all { font-size: 0.76rem; font-weight: 600; color: var(--gold); }
+
+  .topic-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0; border-top: 1px solid var(--border); }
+  .topic-row:first-of-type { border-top: none; padding-top: 0; }
+  .topic-row .hash {
+    width: 30px; height: 30px; border-radius: 8px; background: var(--gold-soft); color: var(--gold);
+    display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; flex: none;
+  }
+  .topic-row .name { font-size: 0.86rem; font-weight: 600; color: var(--navy-ink); }
+  .topic-row .count { font-size: 0.74rem; color: var(--text-soft); }
+
+  .member-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0; border-top: 1px solid var(--border); }
+  .member-row:first-of-type { border-top: none; padding-top: 0; }
+  .member-row .name { font-size: 0.86rem; font-weight: 600; color: var(--navy-ink); flex: 1; }
+  .member-row .pts { font-size: 0.78rem; font-weight: 700; color: var(--gold); white-space: nowrap; }
+
+  .rule-row { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.5rem 0; font-size: 0.85rem; color: var(--text-body); }
+  .rule-row svg { width: 16px; height: 16px; color: var(--gold); margin-top: 2px; }
+  .rule-link { display: inline-block; margin-top: 0.5rem; font-size: 0.82rem; font-weight: 700; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-row">
+    <a class="brand" href="index.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="30" height="30">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M6 10 12 6 18 10" />
+          <path d="M8 10 V14 M12 10 V14 M16 10 V14" />
+          <path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" />
+          <path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span>
+        <div class="name">NextGen <span class="hl">BA</span> Banker</div>
+        <div class="tagline">Learn · Analyze · Grow</div>
+      </span>
+    </a>
+    <nav class="links">
+      <a href="index.html">Trang chủ</a>
+      <a href="index.html#lo-trinh">Lộ trình học</a>
+      <a href="community.html" class="active">Cộng đồng</a>
+      <a href="index.html#gioi-thieu">Giới thiệu</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-nav-ghost" href="#">Đăng nhập</a>
+      <a class="btn btn-gold" href="#">Đăng ký ngay</a>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container">
+    <div class="page-head">
+      <div>
+        <h1>Cộng đồng NextGen BA Banker</h1>
+        <p>Nơi kết nối, chia sẻ và học hỏi cùng cộng đồng Business Analyst trong lĩnh vực ngân hàng.</p>
+      </div>
+      <a class="btn btn-gold" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Tạo bài viết
+      </a>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div class="tab-row">
+          <button class="tab active">Tất cả</button>
+          <button class="tab">Câu hỏi</button>
+          <button class="tab">Thảo luận</button>
+          <button class="tab">Chia sẻ kinh nghiệm</button>
+          <button class="tab">Thông báo</button>
+          <button class="filter-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            Bộ lọc
+          </button>
+        </div>
+
+        <div class="feed">
+
+          <article class="post">
+            <div class="post-top">
+              <span class="badge q">Câu hỏi</span>
+              <span class="comment-count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>
+                5
+              </span>
+            </div>
+            <h3>Cách phân tích yêu cầu nghiệp vụ trong quy trình mở tài khoản doanh nghiệp?</h3>
+            <div class="post-meta">
+              <span class="avatar" style="background:var(--gold)">TMĐ</span>
+              <span class="name">Trần Minh Đức</span>
+              <span class="dot">·</span>
+              <span>2 giờ trước</span>
+              <span class="dot">·</span>
+              <span class="views">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                132 lượt xem
+              </span>
+            </div>
+            <div class="post-body">
+              <p>Mình đang phân tích quy trình mở tài khoản doanh nghiệp tại ngân hàng. Anh/chị có thể chia sẻ cách tiếp cận và các điểm cần lưu ý khi phân tích yêu cầu nghiệp vụ ở quy trình này không?</p>
+            </div>
+            <div class="tag-list">
+              <span>#Phân tích yêu cầu</span>
+              <span>#Mở tài khoản</span>
+              <span>#Core Banking</span>
+            </div>
+            <div class="post-foot">
+              <button class="like-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M2 13v6a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18 10h-5l1-5.5a1.7 1.7 0 0 0-3-1.3L7 10Z"/></svg>
+                12
+              </button>
+              <button class="bookmark-btn" aria-label="Lưu bài viết">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="post">
+            <div class="post-top">
+              <span class="badge d">Thảo luận</span>
+              <span class="comment-count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>
+                8
+              </span>
+            </div>
+            <h3>Kinh nghiệm xử lý thay đổi yêu cầu từ stakeholder</h3>
+            <div class="post-meta">
+              <span class="avatar" style="background:var(--violet)">PTL</span>
+              <span class="name">Phạm Thùy Linh</span>
+              <span class="dot">·</span>
+              <span>5 giờ trước</span>
+              <span class="dot">·</span>
+              <span class="views">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                215 lượt xem
+              </span>
+            </div>
+            <div class="post-body">
+              <p>Share với mọi người quy trình và tips để quản lý thay đổi yêu cầu hiệu quả mà không ảnh hưởng đến scope dự án nhé!</p>
+            </div>
+            <div class="tag-list">
+              <span>#Quản lý thay đổi</span>
+              <span>#Stakeholder Management</span>
+              <span>#Kinh nghiệm</span>
+            </div>
+            <div class="post-foot">
+              <button class="like-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M2 13v6a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18 10h-5l1-5.5a1.7 1.7 0 0 0-3-1.3L7 10Z"/></svg>
+                24
+              </button>
+              <button class="bookmark-btn" aria-label="Lưu bài viết">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="post">
+            <div class="post-top">
+              <span class="badge s">Chia sẻ kinh nghiệm</span>
+              <span class="comment-count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>
+                6
+              </span>
+            </div>
+            <h3>Checklist tài liệu BA cần có cho giai đoạn UAT</h3>
+            <div class="post-meta">
+              <span class="avatar" style="background:var(--amber)">LHN</span>
+              <span class="name">Lê Hoàng Nam</span>
+              <span class="dot">·</span>
+              <span>1 ngày trước</span>
+              <span class="dot">·</span>
+              <span class="views">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                342 lượt xem
+              </span>
+            </div>
+            <div class="post-body">
+              <p>Mình tổng hợp checklist các tài liệu BA cần chuẩn bị cho giai đoạn UAT. Hy vọng hữu ích cho mọi người.</p>
+              <div class="mini-sheet" aria-hidden="true">
+                <div class="head"></div>
+                <div class="row"></div>
+                <div class="row short"></div>
+                <div class="row"></div>
+              </div>
+            </div>
+            <div class="attachment">
+              <span class="file-ic">XLS</span>
+              <span>
+                <div class="fname">BA_Checklist_UAT.xlsx</div>
+                <div class="fsize">18.6 KB</div>
+              </span>
+            </div>
+            <div class="post-foot">
+              <button class="like-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M2 13v6a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18 10h-5l1-5.5a1.7 1.7 0 0 0-3-1.3L7 10Z"/></svg>
+                31
+              </button>
+              <button class="bookmark-btn" aria-label="Lưu bài viết">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="post">
+            <div class="post-top">
+              <span class="badge q">Câu hỏi</span>
+              <span class="comment-count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>
+                3
+              </span>
+            </div>
+            <h3>Mapping nghiệp vụ giữa hệ thống Core Banking và LOS</h3>
+            <div class="post-meta">
+              <span class="avatar" style="background:var(--blue)">NTM</span>
+              <span class="name">Nguyễn Thị Mai</span>
+              <span class="dot">·</span>
+              <span>1 ngày trước</span>
+              <span class="dot">·</span>
+              <span class="views">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                178 lượt xem
+              </span>
+            </div>
+            <div class="post-body">
+              <p>Trong dự án tích hợp LOS với Core Banking, mình đang gặp khó khăn khi mapping một số nghiệp vụ. Mọi người có kinh nghiệm phần này không, cho mình xin ít gợi ý với.</p>
+            </div>
+            <div class="tag-list">
+              <span>#Core Banking</span>
+              <span>#LOS</span>
+              <span>#Tích hợp hệ thống</span>
+            </div>
+            <div class="post-foot">
+              <button class="like-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M2 13v6a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18 10h-5l1-5.5a1.7 1.7 0 0 0-3-1.3L7 10Z"/></svg>
+                9
+              </button>
+              <button class="bookmark-btn" aria-label="Lưu bài viết">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="side-card">
+          <div class="side-head">
+            <span class="ttl">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3-1 4-1 7a3 3 0 1 0 6 0c0-1-1-2-1-2 2 1 3 3.5 3 5.5A7 7 0 0 1 5 12.5C5 8 8 5.5 12 2Z"/></svg>
+              Chủ đề nổi bật
+            </span>
+            <a class="see-all" href="#">Xem tất cả</a>
+          </div>
+          <div class="topic-row">
+            <span class="hash">#</span>
+            <div><div class="name">Phân tích yêu cầu</div><div class="count">128 bài viết</div></div>
+          </div>
+          <div class="topic-row">
+            <span class="hash">#</span>
+            <div><div class="name">Core Banking</div><div class="count">96 bài viết</div></div>
+          </div>
+          <div class="topic-row">
+            <span class="hash">#</span>
+            <div><div class="name">Quản lý dự án</div><div class="count">82 bài viết</div></div>
+          </div>
+          <div class="topic-row">
+            <span class="hash">#</span>
+            <div><div class="name">UAT Testing</div><div class="count">64 bài viết</div></div>
+          </div>
+          <div class="topic-row">
+            <span class="hash">#</span>
+            <div><div class="name">Tích hợp hệ thống</div><div class="count">58 bài viết</div></div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-head">
+            <span class="ttl">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+              Thành viên tích cực
+            </span>
+            <a class="see-all" href="#">Xem tất cả</a>
+          </div>
+          <div class="member-row">
+            <span class="avatar" style="background:var(--gold)">TMĐ</span>
+            <span class="name">Trần Minh Đức</span>
+            <span class="pts">1.250 điểm</span>
+          </div>
+          <div class="member-row">
+            <span class="avatar" style="background:var(--violet)">PTL</span>
+            <span class="name">Phạm Thùy Linh</span>
+            <span class="pts">980 điểm</span>
+          </div>
+          <div class="member-row">
+            <span class="avatar" style="background:var(--amber)">LHN</span>
+            <span class="name">Lê Hoàng Nam</span>
+            <span class="pts">875 điểm</span>
+          </div>
+          <div class="member-row">
+            <span class="avatar" style="background:var(--green)">NVH</span>
+            <span class="name">Nguyễn Văn Hùng</span>
+            <span class="pts">720 điểm</span>
+          </div>
+          <div class="member-row">
+            <span class="avatar" style="background:var(--blue)">NTM</span>
+            <span class="name">Nguyễn Thị Mai</span>
+            <span class="pts">690 điểm</span>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-head">
+            <span class="ttl">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.8 3.4 8.4 8 9 4.6-.6 8-4.2 8-9V6l-8-3Z"/></svg>
+              Quy tắc cộng đồng
+            </span>
+          </div>
+          <div class="rule-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6c0 4.7-8.8 10.4-8.8 10.4S3.2 13.3 3.2 8.6a4.6 4.6 0 0 1 8.8-1.9 4.6 4.6 0 0 1 8.8 1.9Z"/></svg>
+            <span>Tôn trọng &amp; lịch sự</span>
+          </div>
+          <div class="rule-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+            <span>Nội dung hữu ích, đúng chủ đề</span>
+          </div>
+          <div class="rule-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+            <span>Không spam, quảng cáo</span>
+          </div>
+          <div class="rule-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <span>Bảo mật thông tin</span>
+          </div>
+          <a class="rule-link" href="#">Xem chi tiết quy tắc →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
