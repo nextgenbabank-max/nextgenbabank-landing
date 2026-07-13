@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NextGen BA Banker — Học Business Analysis qua dự án ngân hàng thực tế</title>
-<meta name="description" content="Chương trình học Business Analysis chuyên sâu trong lĩnh vực ngân hàng — nền tảng BABOK kết hợp nghiệp vụ Core Banking, Tín dụng, KYC/AML, Thanh toán. Dành cho BA mới bắt đầu và BA ít kinh nghiệm." />
-<meta property="og:title" content="NextGen BA Banker — Học Business Analysis qua dự án ngân hàng thực tế" />
-<meta property="og:description" content="Nền tảng BABOK kết hợp nghiệp vụ ngân hàng thực tế — dành cho BA mới bắt đầu và BA ít kinh nghiệm." />
+<title>NextGen BA Banker — Trở thành Business Analyst ngân hàng qua những dự án thực tế</title>
+<meta name="description" content="Chương trình học Business Analysis chuyên sâu trong lĩnh vực ngân hàng — phân tích quy trình, làm rõ yêu cầu, thiết kế giải pháp và xây dựng portfolio qua dự án ngân hàng mô phỏng." />
+<meta property="og:title" content="NextGen BA Banker — Trở thành Business Analyst ngân hàng qua những dự án thực tế" />
+<meta property="og:description" content="Học đúng kiến thức – Làm được sản phẩm – Sẵn sàng tham gia dự án. Hai lộ trình song song: BA Competency và Banking Domain." />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310264A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23A6802A'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23A6802A'/%3E%3C/svg%3E" />
 <style>
@@ -70,11 +70,13 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3 { font-family: inherit; color: var(--navy-ink); margin: 0; text-wrap: balance; }
+  h1, h2, h3, h4 { font-family: inherit; color: var(--navy-ink); margin: 0; text-wrap: balance; }
   p { margin: 0; }
   a { color: inherit; text-decoration: none; }
   svg { display: block; }
   .container { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+  section.tint { background: var(--bg-soft); }
+  section.bordered-top { border-top: 1px solid var(--border); }
 
   /* ---------- Header ---------- */
   header.site {
@@ -192,7 +194,8 @@
     letter-spacing: -0.01em;
   }
   .hero h1 .hl { color: var(--gold); }
-  .hero p.sub { color: var(--text-soft); font-size: 1.08rem; max-width: 42ch; margin: 1.1rem 0 1.6rem; }
+  .hero p.sub { color: var(--text-soft); font-size: 1.05rem; max-width: 48ch; margin: 1.1rem 0 1.1rem; }
+  .hero p.emphasis { color: var(--navy-ink); font-size: 1.02rem; font-weight: 700; margin-bottom: 1.6rem; }
   .cta-row { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
   .cta-row .btn { font-size: 0.98rem; padding: 0.85em 1.5em; }
   @media (max-width: 480px) {
@@ -204,7 +207,6 @@
   .trust-logos { display: flex; align-items: center; gap: clamp(1.1rem, 3vw, 1.8rem); flex-wrap: wrap; color: var(--text-soft); }
   .trust-logos .logo { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.92rem; opacity: 0.75; }
   .trust-logos .logo svg { width: 18px; height: 18px; }
-  .trust-logos .more { font-size: 1.1rem; letter-spacing: 0.15em; opacity: 0.5; }
 
   /* ---------- Hero illustration ---------- */
   .hero-art { position: relative; display: flex; justify-content: center; align-items: center; min-height: 380px; }
@@ -305,170 +307,152 @@
     .reveal.in { opacity: 1; transform: translateY(0); }
   }
 
-  /* ---------- Feature strip ---------- */
-  section.features { padding: 0 0 clamp(2.5rem, 5vw, 4rem); }
-  .feature-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+  /* ---------- Section head (reusable) ---------- */
+  section.block { padding: clamp(2.75rem, 6vw, 4.5rem) 0; }
+  .block-head { max-width: 68ch; margin-bottom: clamp(1.8rem, 4vw, 2.6rem); }
+  .block-head .eyebrow {
+    display: inline-block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
   }
-  @media (max-width: 980px) { .feature-card { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .feature-card { grid-template-columns: 1fr; } }
-  .feature-item {
-    display: flex; gap: 0.8rem;
-    padding: 1.4rem 1.3rem;
-    border-left: 1px solid var(--border);
-  }
-  .feature-item:first-child { border-left: none; }
-  @media (max-width: 980px) { .feature-item:nth-child(odd) { border-left: none; } .feature-item { border-top: 1px solid var(--border); } .feature-item:nth-child(-n+2) { border-top: none; } }
-  @media (max-width: 560px) { .feature-item { border-left: none !important; } .feature-item:first-child { border-top: none; } }
-  .feature-item .ic {
-    flex: none; width: 40px; height: 40px; border-radius: 10px;
-    background: var(--gold-soft); color: var(--gold);
-    display: grid; place-items: center;
-  }
-  .feature-item .ic svg { width: 20px; height: 20px; }
-  .feature-item h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
-  .feature-item p { font-size: 0.8rem; color: var(--text-soft); }
+  .block-head h2 { font-size: clamp(1.5rem, 3vw, 2.05rem); font-weight: 800; line-height: 1.25; }
+  .block-head p.desc { color: var(--text-soft); font-size: 0.98rem; margin-top: 0.8rem; }
 
-  /* ---------- Roadmap + stats ---------- */
-  section.roadmap { padding: clamp(1rem, 3vw, 2rem) 0 clamp(3.5rem, 7vw, 5.5rem); }
-  .roadmap-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: clamp(1.5rem, 4vw, 2.5rem); align-items: start; }
-  @media (max-width: 980px) { .roadmap-grid { grid-template-columns: 1fr; } }
-
-  .col-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
-  .col-head h2 { font-size: clamp(1.35rem, 2.4vw, 1.7rem); font-weight: 800; }
-  .col-head .title-wrap { flex: 1; min-width: 240px; }
-  .col-head p.roadmap-sub { font-size: 0.88rem; color: var(--text-soft); margin-top: 0.55rem; max-width: 54ch; }
-  .badge-note {
-    flex: none; margin-top: 0.3rem;
-    font-size: 0.76rem; font-weight: 700; color: var(--gold);
-    background: var(--gold-soft);
-    padding: 0.4em 0.85em; border-radius: 999px;
-    white-space: nowrap;
-  }
-
-  .stepper { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; position: relative; }
-  @media (max-width: 760px) { .stepper { grid-template-columns: repeat(3, 1fr); row-gap: 1.8rem; } }
-  @media (max-width: 420px) { .stepper { grid-template-columns: repeat(2, 1fr); } }
-  .stepper::before {
-    content: "";
-    position: absolute;
-    top: 22px; left: calc(100% / 12); right: calc(100% / 12);
-    height: 0;
-    border-top: 2px dashed var(--border);
-    z-index: 0;
-  }
-  @media (max-width: 760px) { .stepper::before { display: none; } }
-  .step { position: relative; z-index: 1; text-align: center; padding: 0 0.35rem; }
-  .step .node {
-    width: 44px; height: 44px; margin: 0 auto 0.7rem;
-    border-radius: 50%;
-    background: var(--card);
-    border: 1.5px solid var(--gold);
-    color: var(--gold);
-    display: grid; place-items: center;
-  }
-  .step .node svg { width: 20px; height: 20px; }
-  .step .num { font-size: 0.72rem; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; margin-bottom: 0.3rem; }
-  .step h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
-  .step p { font-size: 0.74rem; color: var(--text-soft); line-height: 1.45; }
-
-  .highlight-box {
-    margin-top: 2.2rem;
-    background: var(--gold-soft);
-    border-radius: var(--radius);
-    padding: 1.4rem 1.6rem;
-    display: flex; gap: 1rem; align-items: flex-start;
-  }
-  .highlight-box .ic { flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--card); color: var(--gold); display: grid; place-items: center; }
-  .highlight-box .ic svg { width: 20px; height: 20px; }
-  .highlight-box p.stmt { font-size: 0.92rem; color: var(--navy-ink); font-weight: 600; margin-bottom: 0.8rem; }
-  .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .tag-row span {
-    background: var(--card); color: var(--gold);
-    border: 1px solid var(--border);
-    font-size: 0.74rem; font-weight: 600;
-    padding: 0.35em 0.8em; border-radius: 999px;
-  }
-
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-  @media (max-width: 460px) { .stats-grid { grid-template-columns: 1fr; } }
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-    padding: 1.1rem 1.15rem;
-  }
-  .stat-card .ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; margin-bottom: 0.7rem; }
-  .stat-card .ic svg { width: 18px; height: 18px; }
-  .stat-card.violet .ic { background: var(--violet-soft); color: var(--violet); }
-  .stat-card.blue .ic { background: var(--blue-soft); color: var(--blue); }
-  .stat-card.green .ic { background: var(--green-soft); color: var(--green); }
-  .stat-card.amber .ic { background: var(--amber-soft); color: var(--amber); }
-  .stat-card .num { font-size: 1.35rem; font-weight: 800; color: var(--navy-ink); font-variant-numeric: tabular-nums; }
-  .stat-card .lbl { font-size: 0.78rem; color: var(--text-soft); margin-top: 0.2rem; line-height: 1.4; }
-  .stats-note { font-size: 0.72rem; color: var(--text-soft); margin-top: 0.8rem; }
-
-  /* ---------- About / Giới thiệu ---------- */
-  section.about { padding: clamp(1rem, 3vw, 2rem) 0 clamp(3.5rem, 7vw, 5.5rem); border-top: 1px solid var(--border); }
-  .about-intro { max-width: 62ch; margin-bottom: 2.2rem; }
-  .about-intro p.sub { color: var(--text-soft); font-size: 0.96rem; margin-top: 0.7rem; }
-
-  .story-block { max-width: 68ch; margin-bottom: 2rem; }
-  .story-block h3.h { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 800; color: var(--navy-ink); margin-bottom: 0.7rem; }
-  .story-block p { font-size: 0.94rem; color: var(--text-body); }
-
-  .compare-list { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2.4rem; }
-  .compare-row {
-    display: flex; gap: 0.8rem; align-items: flex-start;
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 0.9rem 1.1rem;
-  }
-  .compare-row .ic { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--gold-soft); color: var(--gold); display: grid; place-items: center; margin-top: 1px; }
-  .compare-row .ic svg { width: 14px; height: 14px; }
-  .compare-row p { font-size: 0.88rem; color: var(--text-body); }
-  .compare-row p strong { color: var(--navy-ink); }
-
-  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
-  .sec-head h3.h { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 800; color: var(--navy-ink); }
-
-  .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  @media (max-width: 860px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 500px) { .course-grid { grid-template-columns: 1fr; } }
-  .course-card {
+  /* ---------- Generic info-card grid (pain points / audience / outcomes) ---------- */
+  .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+  .info-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .info-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+  @media (max-width: 980px) { .info-grid, .info-grid.cols-5 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .info-grid, .info-grid.cols-2, .info-grid.cols-5 { grid-template-columns: 1fr; } }
+  .info-card {
     background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    box-shadow: var(--shadow-sm); padding: 1.2rem 1.25rem;
+    box-shadow: var(--shadow-sm); padding: 1.3rem 1.35rem;
   }
-  .course-card .ic { width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; margin-bottom: 0.8rem; }
-  .course-card .ic svg { width: 19px; height: 19px; }
-  .course-card:nth-child(1) .ic { background: var(--gold-soft); color: var(--gold); }
-  .course-card:nth-child(2) .ic { background: var(--blue-soft); color: var(--blue); }
-  .course-card:nth-child(3) .ic { background: var(--violet-soft); color: var(--violet); }
-  .course-card:nth-child(4) .ic { background: var(--amber-soft); color: var(--amber); }
-  .course-card:nth-child(5) .ic { background: var(--green-soft); color: var(--green); }
-  .course-card:nth-child(6) .ic { background: var(--gold-soft); color: var(--gold); }
-  .course-card h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem; }
-  .course-card p { font-size: 0.8rem; color: var(--text-soft); }
+  .info-card .ic {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--gold-soft); color: var(--gold);
+    display: grid; place-items: center; margin-bottom: 0.9rem;
+  }
+  .info-card .ic svg { width: 20px; height: 20px; }
+  .info-card h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.35; }
+  .info-card p { font-size: 0.86rem; color: var(--text-soft); line-height: 1.55; }
+  .info-note {
+    margin-top: 1.6rem; background: var(--gold-soft); border-radius: var(--radius);
+    padding: 1.1rem 1.4rem; font-size: 0.92rem; font-weight: 600; color: var(--navy-ink);
+  }
 
-  .mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin: 2.6rem 0; }
+  /* ---------- Check grid (outcomes / portfolio / assessment) ---------- */
+  .check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem 2rem; }
+  .check-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .check-grid.cols-1 { grid-template-columns: 1fr; max-width: 68ch; }
+  @media (max-width: 760px) { .check-grid.cols-3 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .check-grid, .check-grid.cols-3 { grid-template-columns: 1fr; } }
+  .check-item { display: flex; gap: 0.65rem; align-items: flex-start; font-size: 0.92rem; color: var(--text-body); }
+  .check-item svg { flex: none; width: 17px; height: 17px; color: var(--green); margin-top: 2px; }
+
+  /* ---------- Tracks (detailed) ---------- */
+  .tracks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 860px) { .tracks-grid { grid-template-columns: 1fr; } }
+  .track-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); padding: clamp(1.5rem, 3vw, 1.9rem);
+  }
+  .track-card .eyebrow {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gold); background: var(--gold-soft);
+    padding: 0.35em 0.8em; border-radius: 999px; margin-bottom: 0.9rem;
+  }
+  .track-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 1.1rem; }
+  .track-card ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 1.4rem; }
+  @media (max-width: 560px) { .track-card ul { columns: 1; } }
+  .track-card li { display: flex; gap: 0.5rem; font-size: 0.87rem; padding: 0.38rem 0; break-inside: avoid; color: var(--text-body); }
+  .track-card li::before { content: "•"; color: var(--gold); flex: none; font-weight: 800; }
+  .tracks-note { margin-top: 1.4rem; font-size: 0.88rem; color: var(--text-soft); max-width: 74ch; }
+
+  /* ---------- Chapters accordion (6 chặng) ---------- */
+  .chapters { display: flex; flex-direction: column; gap: 1rem; }
+  .chapter {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .chapter summary {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.2rem 1.4rem; cursor: pointer; list-style: none;
+  }
+  .chapter summary::-webkit-details-marker { display: none; }
+  .chapter .chapter-num {
+    flex: none; width: 42px; height: 42px; border-radius: 50%;
+    background: var(--gold-soft); color: var(--gold); font-weight: 800; font-size: 0.9rem;
+    display: grid; place-items: center; font-variant-numeric: tabular-nums;
+  }
+  .chapter .chapter-title { flex: 1; min-width: 0; }
+  .chapter .chapter-title h3 { font-size: 1.02rem; font-weight: 700; }
+  .chapter .chapter-title p { font-size: 0.84rem; color: var(--text-soft); margin-top: 0.3rem; }
+  .chapter .chevron { flex: none; width: 20px; height: 20px; color: var(--text-soft); transition: transform .2s ease; }
+  .chapter[open] .chevron { transform: rotate(180deg); }
+  .chapter-body {
+    padding: 0.2rem 1.4rem 1.4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 2rem;
+    border-top: 1px solid var(--border); margin-top: 0.2rem; padding-top: 1.2rem;
+  }
+  @media (max-width: 700px) { .chapter-body { grid-template-columns: 1fr; } }
+  .chapter-body h4 { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 0.7rem; }
+  .chapter-body ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .chapter-body li { display: flex; gap: 0.55rem; font-size: 0.87rem; color: var(--text-body); line-height: 1.5; }
+  .chapter-body li::before { content: "—"; color: var(--text-soft); flex: none; }
+
+  /* ---------- Case studies ---------- */
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+  @media (max-width: 760px) { .case-grid { grid-template-columns: 1fr; } }
+  .case-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); padding: 1.4rem 1.5rem;
+  }
+  .case-card .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; color: var(--gold);
+    background: var(--gold-soft); padding: 0.3em 0.75em; border-radius: 999px; margin-bottom: 0.8rem;
+  }
+  .case-card h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .case-card p { font-size: 0.9rem; color: var(--text-soft); }
+
+  /* ---------- Method (Learn-Analyze-Build-Review) ---------- */
+  .method-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; position: relative; }
+  @media (max-width: 760px) { .method-grid { grid-template-columns: repeat(2, 1fr); row-gap: 1.6rem; } }
+  .method-grid::before {
+    content: ""; position: absolute; top: 24px; left: calc(100% / 8); right: calc(100% / 8);
+    height: 0; border-top: 2px dashed var(--border); z-index: 0;
+  }
+  @media (max-width: 760px) { .method-grid::before { display: none; } }
+  .method-step { position: relative; z-index: 1; text-align: center; padding: 0 0.6rem; }
+  .method-step .node {
+    width: 48px; height: 48px; margin: 0 auto 0.8rem; border-radius: 50%;
+    background: var(--navy); color: #fff; font-weight: 800; font-size: 1rem;
+    display: grid; place-items: center;
+  }
+  .method-step h3 { font-size: 1rem; font-weight: 800; color: var(--gold); margin-bottom: 0.4rem; }
+  .method-step p { font-size: 0.86rem; color: var(--text-soft); line-height: 1.5; }
+
+  /* ---------- Support grid ---------- */
+  .support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  @media (max-width: 860px) { .support-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .support-grid { grid-template-columns: 1fr; } }
+  .support-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); padding: 1.3rem 1.35rem;
+  }
+  .support-card .ic { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 0.9rem; }
+  .support-card .ic svg { width: 20px; height: 20px; }
+  .support-card:nth-child(1) .ic { background: var(--gold-soft); color: var(--gold); }
+  .support-card:nth-child(2) .ic { background: var(--blue-soft); color: var(--blue); }
+  .support-card:nth-child(3) .ic { background: var(--violet-soft); color: var(--violet); }
+  .support-card:nth-child(4) .ic { background: var(--amber-soft); color: var(--amber); }
+  .support-card:nth-child(5) .ic { background: var(--green-soft); color: var(--green); }
+  .support-card:nth-child(6) .ic { background: var(--gold-soft); color: var(--gold); }
+  .support-card h3 { font-size: 0.96rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .support-card p { font-size: 0.86rem; color: var(--text-soft); }
+
+  /* ---------- Mission / contact ---------- */
+  .mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
   @media (max-width: 860px) { .mission-grid { grid-template-columns: 1fr; } }
   .side-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.15rem 1.25rem; }
   .side-card h3 { font-size: 0.94rem; font-weight: 700; margin-bottom: 0.9rem; }
-
-  .cta-banner {
-    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
-    background: var(--navy); color: #fff;
-    border-radius: var(--radius);
-    padding: clamp(1.5rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 2.5rem);
-  }
-  .cta-banner h3 { color: #fff; font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 800; }
-  .cta-banner p { color: #C8D3E6; font-size: 0.92rem; margin-top: 0.35rem; }
-  @media (max-width: 480px) { .cta-banner .btn { width: 100%; justify-content: center; } }
 
   .contact-row { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.55rem 0; border-top: 1px solid var(--border); }
   .contact-row:first-of-type { border-top: none; padding-top: 0; }
@@ -494,7 +478,10 @@
   .register-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
   @media (max-width: 860px) { .register-grid { grid-template-columns: 1fr; } }
   .register-shell h2 { color: #fff; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-top: 0.6em; }
-  .register-shell p.sub { color: #C8D3E6; font-size: 0.98rem; margin-top: 0.9rem; max-width: 42ch; }
+  .register-shell p.sub { color: #C8D3E6; font-size: 0.98rem; margin-top: 0.9rem; }
+  .register-benefits { list-style: none; margin: 1.1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .register-benefits li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: #E4E9F5; }
+  .register-benefits svg { flex: none; width: 16px; height: 16px; color: var(--gold); margin-top: 3px; }
 
   form.register-form {
     background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.16);
@@ -516,6 +503,39 @@
   .confirm-panel.show { display: block; }
   .confirm-panel p { color: #C8D3E6; font-size: 0.9rem; margin-top: 0.4rem; }
   .confirm-panel strong { color: #fff; }
+  .confirm-panel .btn { margin-top: 1.1rem; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+  /* ---------- Story / mission statement ---------- */
+  .story-copy { max-width: 74ch; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+  .story-copy p { font-size: 0.98rem; color: var(--text-body); line-height: 1.7; }
+  .story-copy p.lead { font-weight: 700; color: var(--navy-ink); font-size: 1.05rem; }
+
+  .mission-statement {
+    background: var(--navy); color: #fff; border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: clamp(2rem, 4vw, 2.6rem);
+  }
+  .mission-statement .eyebrow { color: var(--gold); }
+  .mission-statement p { font-size: clamp(1.02rem, 2vw, 1.2rem); font-weight: 600; line-height: 1.55; max-width: 70ch; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .faq-item summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.1rem 1.3rem; cursor: pointer; list-style: none; font-weight: 700; font-size: 0.94rem; color: var(--navy-ink);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .chevron { flex: none; width: 18px; height: 18px; color: var(--text-soft); transition: transform .2s ease; }
+  .faq-item[open] .chevron { transform: rotate(180deg); }
+  .faq-answer {
+    padding: 0 1.3rem 1.1rem; margin-top: -0.2rem;
+    border-top: 1px solid var(--border); padding-top: 1rem;
+    font-size: 0.9rem; color: var(--text-body); line-height: 1.6;
+  }
 
   /* ---------- Footer ---------- */
   footer.site {
@@ -573,32 +593,25 @@
 </header>
 
 <main id="top">
+
+  <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <span class="pill">Nền tảng học Business Analysis trong ngân hàng</span>
-        <h1>Học Business Analysis qua những dự án <span class="hl">ngân hàng</span> thực tế.</h1>
-        <p class="sub">Học từ thực tế. Trưởng thành qua từng bài toán.</p>
+        <span class="pill">Nền tảng học Business Analysis chuyên sâu trong lĩnh vực ngân hàng</span>
+        <h1>Trở thành Business Analyst <span class="hl">ngân hàng</span> qua những dự án thực tế</h1>
+        <p class="sub">Không chỉ học BA là gì. Bạn sẽ trực tiếp phân tích quy trình, làm rõ yêu cầu, thiết kế giải pháp và xây dựng bộ tài liệu hoàn chỉnh cho một dự án ngân hàng mô phỏng.</p>
+        <p class="emphasis">Học đúng kiến thức – Làm được sản phẩm – Sẵn sàng tham gia dự án</p>
         <div class="cta-row">
-          <a class="btn btn-gold" href="#dang-ky">Đăng ký quan tâm →</a>
-          <a class="btn btn-outline" href="#lo-trinh">Xem lộ trình học →</a>
+          <a class="btn btn-gold" href="#lo-trinh">Khám phá lộ trình học →</a>
+          <a class="btn btn-outline" href="#dang-ky">Đăng ký nhận tư vấn</a>
         </div>
         <div class="trust">
-          <p>Được tin tưởng bởi học viên đến từ các ngân hàng và tổ chức tài chính</p>
           <div class="trust-logos">
-            <span class="logo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9 L12 3 L21 9" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9 V19 M20 9 V19 M2 19 H22" stroke-linecap="round"/></svg>
-              Ngân hàng Thương mại
-            </span>
-            <span class="logo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h4" stroke-linecap="round"/></svg>
-              Công ty Tài chính
-            </span>
-            <span class="logo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Fintech &amp; Bảo hiểm
-            </span>
-            <span class="more">···</span>
+            <span class="logo">Tham chiếu BABOK Guide</span>
+            <span class="logo">Case study ngân hàng</span>
+            <span class="logo">AI Mentor</span>
+            <span class="logo">Portfolio thực tế</span>
           </div>
         </div>
       </div>
@@ -656,203 +669,617 @@
     </div>
   </section>
 
-  <section class="features" id="features">
+  <!-- ============ PAIN POINTS ============ -->
+  <section class="block tint bordered-top">
     <div class="container">
-      <div class="feature-card reveal">
-        <div class="feature-item">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></div>
-          <div><h3>Dự án thực tế</h3><p>Case study từ dự án ngân hàng nội bộ.</p></div>
+      <div class="block-head reveal">
+        <span class="eyebrow">Bạn có đang gặp những vấn đề này?</span>
+        <h2>Khoảng cách giữa "đã học" và "làm được việc"</h2>
+      </div>
+      <div class="info-grid reveal">
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 15 6-6M9 9h.01M15 15h.01"/></svg></div>
+          <h3>Đã học BA nhưng chưa biết bắt đầu một dự án thực tế từ đâu</h3>
+          <p>Bạn hiểu khái niệm stakeholder, requirement, BRD hay BPMN nhưng chưa biết cách kết nối chúng thành một quy trình phân tích hoàn chỉnh.</p>
         </div>
-        <div class="feature-item">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></div>
-          <div><h3>Học qua thực hành</h3><p>Bài tập mô phỏng theo quy trình thực tế.</p></div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9 13l2 2 4-4"/><path d="m14.5 17.5 1 1 2-2"/></svg></div>
+          <h3>Làm BA nhưng tài liệu thường xuyên phải sửa lại</h3>
+          <p>Yêu cầu chưa rõ ràng, thiếu business rule, chưa xác định đủ trường hợp ngoại lệ hoặc chưa thể hiện đúng nhu cầu của người dùng.</p>
         </div>
-        <div class="feature-item">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M12 9V5"/><circle cx="12" cy="4" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-          <div><h3>AI Mentor đồng hành</h3><p>Nhận review &amp; góp ý như mentor thật.</p></div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L12 3 L21 9" /><path d="M4 9 V19 M20 9 V19 M2 19 H22" /></svg></div>
+          <h3>Muốn chuyển sang BA ngân hàng nhưng thiếu kiến thức nghiệp vụ</h3>
+          <p>Bạn chưa hiểu luồng giao dịch ngân hàng, hệ thống Core Banking, tín dụng, thanh toán, KYC hoặc cách các hệ thống nội bộ tích hợp với nhau.</p>
         </div>
-        <div class="feature-item">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3V2h6v1"/><path d="M9 9l2 2 4-4"/><path d="M9 15h6"/></svg></div>
-          <div><h3>Template &amp; Checklist</h3><p>Kho tài liệu chuẩn BA sẵn sàng áp dụng.</p></div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+          <h3>Có kinh nghiệm nhưng chưa xây dựng được portfolio thuyết phục</h3>
+          <p>Bạn chưa có một case study đủ sâu để thể hiện năng lực phân tích, mô hình hóa, viết tài liệu và phối hợp với đội dự án.</p>
         </div>
-        <div class="feature-item">
+      </div>
+      <p class="info-note reveal">NextGen BA Banker được xây dựng để giúp bạn thu hẹp khoảng cách giữa "đã học" và "có thể làm việc".</p>
+    </div>
+  </section>
+
+  <!-- ============ ĐỐI TƯỢNG PHÙ HỢP ============ -->
+  <section class="block">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Chương trình phù hợp với ai?</span>
+        <h2>Bốn nhóm học viên chương trình phục vụ tốt nhất</h2>
+      </div>
+      <div class="info-grid reveal">
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+          <h3>Người mới bắt đầu với Business Analysis</h3>
+          <p>Muốn xây dựng nền tảng BA có hệ thống và được hướng dẫn từng bước qua một dự án hoàn chỉnh.</p>
+        </div>
+        <div class="info-card">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
-          <div><h3>Đo lường tiến độ</h3><p>Theo dõi tiến độ học tập và năng lực cá nhân.</p></div>
+          <h3>BA có từ 1–3 năm kinh nghiệm</h3>
+          <p>Muốn nâng cao khả năng phân tích, viết tài liệu, xử lý yêu cầu phức tạp và làm việc trong môi trường ngân hàng.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L12 3 L21 9" /><path d="M4 9 V19 M20 9 V19 M2 19 H22" /><path d="m9 14 3-3 3 3" /></svg></div>
+          <h3>Nhân sự ngân hàng muốn chuyển sang BA</h3>
+          <p>Đã có kiến thức nghiệp vụ nhưng cần bổ sung tư duy phân tích, kỹ thuật BA và kỹ năng làm việc với đội phát triển hệ thống.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg></div>
+          <h3>Thành viên trong dự án công nghệ</h3>
+          <p>Tester, Product Owner, Project Coordinator, Developer hoặc Operation muốn hiểu sâu hơn về quá trình hình thành và quản lý yêu cầu.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="roadmap" id="lo-trinh">
-    <div class="container roadmap-grid">
-      <div>
-        <div class="col-head reveal">
-          <div class="title-wrap">
-            <h2>Lộ trình học gợi ý cho bạn</h2>
-            <p class="roadmap-sub">Đây là lộ trình tổng quan áp dụng chung cho mọi học viên. Khi tham gia khoá học, lộ trình sẽ được tuỳ chỉnh lại theo năng lực hiện tại và mục tiêu riêng của bạn.</p>
-          </div>
-          <span class="badge-note">Cá nhân hoá sau khi đăng ký</span>
-        </div>
+  <!-- ============ SAU LỘ TRÌNH BẠN LÀM ĐƯỢC GÌ ============ -->
+  <section class="block tint bordered-top">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Kết quả đầu ra</span>
+        <h2>Sau lộ trình, bạn có thể làm được gì?</h2>
+      </div>
+      <div class="check-grid reveal">
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Xác định đúng vấn đề nghiệp vụ và mục tiêu của dự án.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Phân tích stakeholder, vai trò và phạm vi ảnh hưởng.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Khảo sát và mô hình hóa quy trình AS-IS, TO-BE.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Khai thác, phân tích và quản lý yêu cầu.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Xây dựng business rule và xử lý các trường hợp ngoại lệ.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Viết User Story, Use Case, BRD, FSD hoặc SRS.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Phân tích dữ liệu, màn hình và luồng tích hợp hệ thống.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Xây dựng Acceptance Criteria và hỗ trợ đội kiểm thử.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Tham gia Refinement, SIT, UAT, Go-live và quản lý thay đổi.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Hoàn thiện một bộ portfolio BA có thể sử dụng khi ứng tuyển.</div>
+      </div>
+    </div>
+  </section>
 
-        <div class="stepper reveal">
-          <div class="step">
-            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6l9 4 9-4-9-4Z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
-            <div class="num">01</div>
-            <h3>Fundamentals</h3>
-            <p>Nền tảng BA và dự án ngân hàng</p>
-          </div>
-          <div class="step">
-            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg></div>
-            <div class="num">02</div>
-            <h3>Process &amp; Domain</h3>
-            <p>Nghiệp vụ ngân hàng cốt lõi</p>
-          </div>
-          <div class="step">
-            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
-            <div class="num">03</div>
-            <h3>Business Analysis</h3>
-            <p>Phân tích &amp; mô hình nghiệp vụ</p>
-          </div>
-          <div class="step">
-            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16h5"/></svg></div>
-            <div class="num">04</div>
-            <h3>Documentation</h3>
-            <p>Viết tài liệu BA chuyên nghiệp</p>
-          </div>
-          <div class="step">
-            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 12l2 2 4-4"/></svg></div>
-            <div class="num">05</div>
-            <h3>Project Practice</h3>
-            <p>Case study thực tế ngân hàng</p>
-          </div>
-          <div class="step">
-            <div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
-            <div class="num">06</div>
-            <h3>Go-live Ready</h3>
-            <p>UAT, triển khai &amp; vận hành</p>
-          </div>
+  <!-- ============ HAI LỘ TRÌNH SONG SONG ============ -->
+  <section class="block">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Nội dung chương trình</span>
+        <h2>Hai lộ trình học song song</h2>
+      </div>
+      <div class="tracks-grid reveal">
+        <div class="track-card">
+          <span class="eyebrow">Track 1</span>
+          <h3>Business Analysis Competency</h3>
+          <p style="font-size:0.88rem; color:var(--text-soft); margin-bottom:1rem;">Tập trung xây dựng năng lực cốt lõi của một Business Analyst:</p>
+          <ul>
+            <li>Tư duy phân tích và giải quyết vấn đề</li>
+            <li>Stakeholder Analysis</li>
+            <li>Requirement Elicitation</li>
+            <li>Process Modeling</li>
+            <li>Requirement Analysis and Design Definition</li>
+            <li>Requirement Life Cycle Management</li>
+            <li>Documentation</li>
+            <li>Solution Evaluation</li>
+            <li>UAT và hỗ trợ triển khai</li>
+          </ul>
         </div>
+        <div class="track-card">
+          <span class="eyebrow">Track 2</span>
+          <h3>Banking Domain</h3>
+          <p style="font-size:0.88rem; color:var(--text-soft); margin-bottom:1rem;">Giúp người học hiểu bối cảnh và nghiệp vụ thường gặp trong dự án ngân hàng:</p>
+          <ul>
+            <li>Cấu trúc hệ thống ngân hàng</li>
+            <li>Core Banking và hệ thống vệ tinh</li>
+            <li>Khách hàng và KYC</li>
+            <li>Tài khoản và tiền gửi</li>
+            <li>Thanh toán và chuyển tiền</li>
+            <li>Tín dụng và giải ngân</li>
+            <li>Thẻ và giao dịch thẻ</li>
+            <li>Đối soát và hạch toán</li>
+            <li>Quy trình nội bộ ngân hàng</li>
+            <li>Tích hợp API và trao đổi dữ liệu giữa các hệ thống</li>
+          </ul>
+        </div>
+      </div>
+      <p class="tracks-note reveal">Hai track được kết nối trong từng bài tập để người học vừa hiểu phương pháp BA, vừa biết cách áp dụng trong một bối cảnh ngân hàng cụ thể.</p>
+    </div>
+  </section>
 
-        <div class="highlight-box reveal">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 21l5-3 5 3-1.5-8.5"/></svg></div>
-          <div>
-            <p class="stmt">Hoàn thành lộ trình, bạn sẽ tự tin đảm nhận vai trò BA trong các dự án ngân hàng thực tế.</p>
-            <div class="tag-row">
-              <span>Kỹ năng toàn diện</span>
-              <span>Kinh nghiệm thực chiến</span>
-              <span>Portfolio dự án</span>
-              <span>Sẵn sàng đi làm</span>
+  <!-- ============ LỘ TRÌNH HỌC 6 CHẶNG ============ -->
+  <section class="block tint bordered-top" id="lo-trinh">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Lộ trình học</span>
+        <h2>Lộ trình học 6 chặng</h2>
+        <p class="desc">Đây là lộ trình tổng quan áp dụng chung cho mọi học viên. Bấm vào từng chặng để xem nội dung chi tiết và sản phẩm đầu ra.</p>
+      </div>
+
+      <div class="chapters reveal">
+        <details class="chapter" open>
+          <summary>
+            <span class="chapter-num">01</span>
+            <span class="chapter-title">
+              <h3>BA Fundamentals</h3>
+              <p>Xây dựng nền tảng về vai trò BA và cách một dự án được vận hành</p>
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="chapter-body">
+            <div>
+              <h4>Nội dung chính</h4>
+              <ul>
+                <li>Vai trò và trách nhiệm của Business Analyst.</li>
+                <li>Phân biệt Business Analyst, Product Owner và Project Manager.</li>
+                <li>Vòng đời phát triển phần mềm.</li>
+                <li>Agile, Scrum và Waterfall.</li>
+                <li>Các nhóm tài liệu thường dùng trong dự án.</li>
+                <li>Cách BA phối hợp với Business, Developer, Tester và Project Manager.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Sản phẩm đầu ra</h4>
+              <ul>
+                <li>Project Context.</li>
+                <li>Problem Statement.</li>
+                <li>Business Objective.</li>
+                <li>Scope sơ bộ.</li>
+                <li>Danh sách stakeholder ban đầu.</li>
+              </ul>
             </div>
           </div>
-        </div>
+        </details>
+
+        <details class="chapter">
+          <summary>
+            <span class="chapter-num">02</span>
+            <span class="chapter-title">
+              <h3>Process &amp; Banking Domain</h3>
+              <p>Hiểu nghiệp vụ trước khi phân tích yêu cầu hệ thống</p>
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="chapter-body">
+            <div>
+              <h4>Nội dung chính</h4>
+              <ul>
+                <li>Tổng quan hệ thống ngân hàng.</li>
+                <li>Quy trình nghiệp vụ và quy trình hệ thống.</li>
+                <li>Phân tích AS-IS và TO-BE.</li>
+                <li>BPMN và Flowchart.</li>
+                <li>Điểm nghẽn, rủi ro và cơ hội cải tiến.</li>
+                <li>Thuật ngữ và dữ liệu cơ bản trong nghiệp vụ ngân hàng.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Sản phẩm đầu ra</h4>
+              <ul>
+                <li>Sơ đồ quy trình AS-IS.</li>
+                <li>Danh sách pain point.</li>
+                <li>Sơ đồ quy trình TO-BE.</li>
+                <li>Business Glossary.</li>
+                <li>Danh sách đề xuất cải tiến.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary>
+            <span class="chapter-num">03</span>
+            <span class="chapter-title">
+              <h3>Requirement Analysis</h3>
+              <p>Chuyển nhu cầu của người dùng thành yêu cầu rõ ràng và có thể phát triển</p>
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="chapter-body">
+            <div>
+              <h4>Nội dung chính</h4>
+              <ul>
+                <li>Lập kế hoạch khai thác yêu cầu.</li>
+                <li>Interview, Workshop, Observation và Document Analysis.</li>
+                <li>Phân loại Business, Stakeholder, Solution và Transition Requirement.</li>
+                <li>Phân tích functional và non-functional requirement.</li>
+                <li>Business Rule.</li>
+                <li>Assumption, Constraint và Dependency.</li>
+                <li>Requirement Prioritization.</li>
+                <li>Traceability và quản lý thay đổi.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Sản phẩm đầu ra</h4>
+              <ul>
+                <li>Stakeholder Map.</li>
+                <li>Elicitation Plan.</li>
+                <li>Requirement List.</li>
+                <li>Business Rule Catalogue.</li>
+                <li>Requirement Traceability Matrix.</li>
+                <li>Scope và Out of Scope.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary>
+            <span class="chapter-num">04</span>
+            <span class="chapter-title">
+              <h3>BA Documentation</h3>
+              <p>Viết tài liệu đủ rõ để Business, Developer và Tester cùng hiểu</p>
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="chapter-body">
+            <div>
+              <h4>Nội dung chính</h4>
+              <ul>
+                <li>Cấu trúc BRD, FSD và SRS.</li>
+                <li>User Story và Acceptance Criteria.</li>
+                <li>Use Case Specification.</li>
+                <li>Mô tả màn hình và field specification.</li>
+                <li>Data Dictionary.</li>
+                <li>Validation Rule.</li>
+                <li>Interface và API Mapping.</li>
+                <li>Cách review tài liệu và quản lý version.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Sản phẩm đầu ra</h4>
+              <ul>
+                <li>BRD hoặc Business Requirement Document.</li>
+                <li>User Story hoặc Use Case.</li>
+                <li>FSD cho một chức năng.</li>
+                <li>Wireframe hoặc Prototype.</li>
+                <li>Data Dictionary.</li>
+                <li>API Mapping mẫu.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary>
+            <span class="chapter-num">05</span>
+            <span class="chapter-title">
+              <h3>Banking Project Practice</h3>
+              <p>Thực hành một dự án ngân hàng từ yêu cầu ban đầu đến giải pháp</p>
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="chapter-body">
+            <div>
+              <h4>Hoạt động thực hành</h4>
+              <ul>
+                <li>Nhận đề bài và xác định vấn đề.</li>
+                <li>Phân tích stakeholder.</li>
+                <li>Khảo sát quy trình hiện tại.</li>
+                <li>Tổ chức workshop mô phỏng.</li>
+                <li>Xây dựng giải pháp TO-BE.</li>
+                <li>Viết bộ tài liệu dự án.</li>
+                <li>Trình bày và bảo vệ phương án.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Ví dụ case study</h4>
+              <ul>
+                <li>Số hóa quy trình mở tài khoản và xác thực khách hàng.</li>
+                <li>Xây dựng chức năng đăng ký và phê duyệt khoản vay.</li>
+                <li>Cải tiến luồng chuyển tiền và xử lý giao dịch lỗi.</li>
+                <li>Quản lý hạn mức giao dịch theo nhóm khách hàng.</li>
+                <li>Xây dựng dashboard theo dõi hoạt động nghiệp vụ.</li>
+                <li>Số hóa quy trình mua sắm, hợp đồng và thanh toán nội bộ.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary>
+            <span class="chapter-num">06</span>
+            <span class="chapter-title">
+              <h3>Go-live Ready</h3>
+              <p>Chuẩn bị để tham gia dự án thực tế</p>
+            </span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="chapter-body">
+            <div>
+              <h4>Nội dung chính</h4>
+              <ul>
+                <li>Backlog Refinement.</li>
+                <li>Phân tích Impact khi thay đổi yêu cầu.</li>
+                <li>Hỗ trợ Developer và Tester.</li>
+                <li>Xây dựng UAT Scenario.</li>
+                <li>Quản lý defect và change request.</li>
+                <li>Chuẩn bị dữ liệu triển khai.</li>
+                <li>Go-live Checklist.</li>
+                <li>Hướng dẫn sử dụng và chuyển giao vận hành.</li>
+                <li>Kỹ năng trình bày case study khi phỏng vấn.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Sản phẩm đầu ra</h4>
+              <ul>
+                <li>UAT Checklist.</li>
+                <li>Test Scenario.</li>
+                <li>Change Request Analysis.</li>
+                <li>Go-live Checklist.</li>
+                <li>Hướng dẫn sử dụng mẫu.</li>
+                <li>Portfolio Presentation.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
       </div>
 
-      <div>
-        <div class="col-head reveal"><h2>Chương trình được xây dựng thế nào</h2></div>
-        <div class="stats-grid reveal">
-          <div class="stat-card violet">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6l9 4 9-4-9-4Z"/><path d="M3 12l9 4 9-4"/></svg></div>
-            <div class="num">2</div>
-            <div class="lbl">Lộ trình học song song</div>
-          </div>
-          <div class="stat-card blue">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
-            <div class="num">6</div>
-            <div class="lbl">Bước trong lộ trình học</div>
-          </div>
-          <div class="stat-card green">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
-            <div class="num">100%</div>
-            <div class="lbl">Case study bám nghiệp vụ ngân hàng</div>
-          </div>
-          <div class="stat-card amber">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
-            <div class="num">Mới</div>
-            <div class="lbl">Đang trong giai đoạn xây dựng nội dung</div>
-          </div>
+      <p class="tracks-note reveal">Một bộ hồ sơ dự án BA hoàn chỉnh từ chặng 05 sẽ được đưa thẳng vào portfolio cá nhân của bạn.</p>
+    </div>
+  </section>
+
+  <!-- ============ CASE STUDY ============ -->
+  <section class="block">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Thực hành</span>
+        <h2>Case study không chỉ để đọc — bạn sẽ trực tiếp xử lý</h2>
+      </div>
+      <div class="case-grid reveal">
+        <div class="case-card">
+          <span class="tag">Case 01</span>
+          <h3>eKYC và mở tài khoản trực tuyến</h3>
+          <p>Phân tích luồng xác thực khách hàng, kiểm tra giấy tờ, nhận diện khuôn mặt, xử lý kết quả thất bại và tích hợp với hệ thống quản lý khách hàng.</p>
+        </div>
+        <div class="case-card">
+          <span class="tag">Case 02</span>
+          <h3>Phê duyệt khoản vay</h3>
+          <p>Xác định các bước tiếp nhận hồ sơ, thẩm định, phê duyệt, quản lý hạn mức, giải ngân và theo dõi trạng thái khoản vay.</p>
+        </div>
+        <div class="case-card">
+          <span class="tag">Case 03</span>
+          <h3>Chuyển tiền và đối soát giao dịch</h3>
+          <p>Phân tích trạng thái giao dịch, timeout, giao dịch treo, hoàn tiền và quá trình trao đổi dữ liệu giữa các hệ thống.</p>
+        </div>
+        <div class="case-card">
+          <span class="tag">Case 04</span>
+          <h3>Quy trình nội bộ ngân hàng</h3>
+          <p>Xây dựng luồng đề xuất, phê duyệt, mua sắm, ký hợp đồng, nghiệm thu và thanh toán với nhiều vai trò, điều kiện và cấp phê duyệt.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="about" id="gioi-thieu">
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="block tint bordered-top">
     <div class="container">
-        <div class="about-intro reveal">
-          <span class="pill">Về NextGen BA Banker</span>
-          <h2>Nền tảng học Business Analysis chuyên sâu trong lĩnh vực ngân hàng</h2>
-          <p class="sub">NextGen BA Banker giúp bạn học đúng – hiểu sâu – làm được, thông qua dự án thực tế, case study ngân hàng và phương pháp học hiện đại.</p>
-        </div>
+      <div class="block-head reveal">
+        <span class="eyebrow">Sản phẩm cuối cùng</span>
+        <h2>Portfolio bạn có thể hoàn thành</h2>
+        <p class="desc">Sau chương trình, portfolio của bạn có thể bao gồm:</p>
+      </div>
+      <div class="check-grid cols-3 reveal">
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Project Overview.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Problem Statement và Business Objective.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Stakeholder Map.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Scope và Context Diagram.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> AS-IS và TO-BE Process.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Requirement Catalogue.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Business Rule Catalogue.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> User Story hoặc Use Case.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Wireframe.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Field Specification.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Data Dictionary.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> API Mapping.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Acceptance Criteria.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> UAT Scenario.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Change Request Analysis.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Slide trình bày giải pháp.</div>
+      </div>
+      <p class="info-note reveal">Portfolio được tổ chức thành một câu chuyện dự án hoàn chỉnh, thay vì tập hợp những tài liệu rời rạc.</p>
+    </div>
+  </section>
 
-        <div class="story-block reveal">
-          <h3 class="h">Câu chuyện NextGen BA Banker</h3>
-          <p>NextGen BA Banker bắt đầu từ một quan sát đơn giản: rất nhiều BA mới vào ngành ngân hàng học đủ lý thuyết BABOK nhưng vẫn lúng túng khi đối diện một hồ sơ tín dụng, một luồng KYC, hay một yêu cầu thay đổi hệ thống Core Banking thực tế. Khoảng cách giữa "biết" và "làm được" chính là lý do chương trình này ra đời — không phải để dạy lại BABOK, mà để nối lý thuyết với những tình huống ngân hàng có thật.</p>
+  <!-- ============ PHƯƠNG PHÁP HỌC ============ -->
+  <section class="block">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Phương pháp học</span>
+        <h2>Learn – Analyze – Build – Review</h2>
+      </div>
+      <div class="method-grid reveal">
+        <div class="method-step">
+          <div class="node">1</div>
+          <h3>Learn</h3>
+          <p>Học kiến thức ngắn gọn, có ví dụ và bối cảnh sử dụng rõ ràng.</p>
         </div>
-
-        <div class="compare-list reveal">
-          <div class="compare-row">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
-            <p><strong>Không học lý thuyết đơn thuần</strong> — mọi bài học đi kèm case tình huống ngân hàng thật, không phải ví dụ chung chung.</p>
-          </div>
-          <div class="compare-row">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
-            <p><strong>Không dừng ở BABOK</strong> — có track riêng luyện nghiệp vụ Core Banking, Tín dụng, KYC/AML, Thanh toán.</p>
-          </div>
-          <div class="compare-row">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
-            <p><strong>Không phải khoá học đại trà</strong> — nội dung được xây dựng và cập nhật dựa trên các dự án ngân hàng đang triển khai thật.</p>
-          </div>
+        <div class="method-step">
+          <div class="node">2</div>
+          <h3>Analyze</h3>
+          <p>Phân tích tình huống nghiệp vụ, phát hiện vấn đề và xác định thông tin còn thiếu.</p>
         </div>
-
-        <div class="sec-head reveal"><span class="h">Khóa học cung cấp những gì?</span></div>
-        <div class="course-grid reveal">
-          <div class="course-card">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
-            <h3>Kiến thức BA nền tảng &amp; nâng cao</h3>
-            <p>Hệ thống kiến thức theo BABOK, áp dụng vào nghiệp vụ ngân hàng.</p>
-          </div>
-          <div class="course-card">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg></div>
-            <h3>Phân tích nghiệp vụ ngân hàng</h3>
-            <p>Phân tích quy trình, nghiệp vụ cốt lõi trong các mảng Core Banking, Tín dụng, Thẻ, ...</p>
-          </div>
-          <div class="course-card">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16h5"/></svg></div>
-            <h3>BRD – FSD – SRS chuẩn thực tế</h3>
-            <p>Hướng dẫn cách viết và review tài liệu theo chuẩn ngân hàng.</p>
-          </div>
-          <div class="course-card">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3V2h6v1"/><path d="M9 9l2 2 4-4"/><path d="M9 15h6"/></svg></div>
-            <h3>Templates &amp; Checklist</h3>
-            <p>Bộ template, checklist, cheatsheet BA sẵn sàng áp dụng.</p>
-          </div>
-          <div class="course-card">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
-            <h3>Bài tập &amp; Case Study</h3>
-            <p>Thực hành với bài tập, case study bám sát tình huống thực tế.</p>
-          </div>
-          <div class="course-card">
-            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 21l5-3 5 3-1.5-8.5"/></svg></div>
-            <h3>Chứng nhận hoàn thành</h3>
-            <p>Nhận chứng nhận hoàn thành khoá học và các lộ trình chuyên sâu.</p>
-          </div>
+        <div class="method-step">
+          <div class="node">3</div>
+          <h3>Build</h3>
+          <p>Tự xây dựng sơ đồ, yêu cầu, tài liệu và giải pháp.</p>
         </div>
-
-      <div class="mission-grid reveal">
-        <div class="side-card">
-          <h3>Sứ mệnh</h3>
-          <p class="about-text">Nâng cao năng lực Business Analyst trong lĩnh vực ngân hàng Việt Nam, thông qua nền tảng học tập thực chiến, chất lượng và bền vững.</p>
+        <div class="method-step">
+          <div class="node">4</div>
+          <h3>Review</h3>
+          <p>Nhận phản hồi theo checklist và rubric để biết nội dung nào đã đạt, nội dung nào cần cải thiện.</p>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="side-card">
-          <h3>Giá trị cốt lõi</h3>
-          <div class="about-checklist">
-            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Thực tiễn – Ứng dụng</div>
-            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Chất lượng – Uy tín</div>
-            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Đồng hành – Phát triển</div>
-            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Sáng tạo – Liên tục cải tiến</div>
-          </div>
+  <!-- ============ HỖ TRỢ ============ -->
+  <section class="block tint bordered-top">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Đồng hành cùng bạn</span>
+        <h2>Bạn được hỗ trợ như thế nào?</h2>
+      </div>
+      <div class="support-grid reveal">
+        <div class="support-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M12 9V5"/><circle cx="12" cy="4" r="1.2" fill="currentColor" stroke="none"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <h3>AI Mentor</h3>
+          <p>Giải thích kiến thức, đặt câu hỏi gợi mở, kiểm tra logic và hỗ trợ review bài tập theo tiêu chí của chương trình.</p>
         </div>
+        <div class="support-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3V2h6v1"/><path d="M9 9l2 2 4-4"/><path d="M9 15h6"/></svg></div>
+          <h3>Template và Checklist</h3>
+          <p>Sử dụng các biểu mẫu có thể áp dụng ngay trong quá trình học và công việc thực tế.</p>
+        </div>
+        <div class="support-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
+          <h3>Learning Dashboard</h3>
+          <p>Theo dõi tiến độ, bài đã hoàn thành, kỹ năng còn yếu và nội dung cần ôn lại.</p>
+        </div>
+        <div class="support-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 2.4 18a1.8 1.8 0 0 0 1.6 2.7h16a1.8 1.8 0 0 0 1.6-2.7L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg></div>
+          <h3>Kho lỗi sai cá nhân</h3>
+          <p>Lưu lại những lỗi thường gặp trong quá trình phân tích và viết tài liệu để ôn tập có hệ thống.</p>
+        </div>
+        <div class="support-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg></div>
+          <h3>Cộng đồng học tập</h3>
+          <p>Đăng câu hỏi, trao đổi tình huống, phản biện giải pháp và học hỏi từ các bài làm khác.</p>
+        </div>
+        <div class="support-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+          <h3>Case Clinic</h3>
+          <p>Cùng phân tích một tình huống nghiệp vụ, so sánh nhiều phương án và giải thích lý do lựa chọn giải pháp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ============ ĐÁNH GIÁ KẾT QUẢ ============ -->
+  <section class="block">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Đo lường năng lực</span>
+        <h2>Cách đánh giá kết quả học tập</h2>
+        <p class="desc">Năng lực của học viên được đánh giá qua:</p>
+      </div>
+      <div class="check-grid cols-1 reveal">
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Bài kiểm tra đầu vào.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Quiz sau mỗi chủ đề.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Bài tập thực hành.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Chất lượng tài liệu.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Khả năng giải thích quyết định phân tích.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Mức độ hoàn thành case study.</div>
+        <div class="check-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Bài trình bày dự án cuối khóa.</div>
+      </div>
+      <p class="info-note reveal">Hệ thống không chỉ ghi nhận việc bạn đã xem bài học mà còn theo dõi khả năng áp dụng kiến thức vào tình huống thực tế.</p>
+    </div>
+  </section>
+
+  <!-- ============ KHÔNG CHỈ HOÀN THÀNH KHÓA HỌC ============ -->
+  <section class="block tint bordered-top">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Sau khi hoàn thành</span>
+        <h2>Không chỉ hoàn thành khóa học — hãy chứng minh bạn có thể làm BA</h2>
+      </div>
+      <div class="info-grid cols-5 reveal">
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+          <h3>Nền tảng BA có hệ thống</h3>
+          <p>Hiểu vai trò, kỹ thuật và quy trình làm việc của Business Analyst.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L12 3 L21 9" /><path d="M4 9 V19 M20 9 V19 M2 19 H22" /></svg></div>
+          <h3>Kiến thức nghiệp vụ ngân hàng</h3>
+          <p>Có khả năng trao đổi và phân tích các bài toán ngân hàng phổ biến.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6l9 4 9-4-9-4Z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
+          <h3>Kinh nghiệm thực hành dự án</h3>
+          <p>Đã trải qua các bước từ xác định vấn đề đến hỗ trợ triển khai.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+          <h3>Portfolio cá nhân</h3>
+          <p>Có sản phẩm cụ thể để trình bày khi ứng tuyển hoặc đánh giá năng lực.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
+          <h3>Lộ trình phát triển tiếp theo</h3>
+          <p>Biết kỹ năng nào cần tiếp tục cải thiện để trở thành BA chuyên nghiệp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GIỚI THIỆU ============ -->
+  <section class="block" id="gioi-thieu">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Câu chuyện của chúng tôi</span>
+        <h2>Câu chuyện của NextGen BA Banker</h2>
+      </div>
+
+      <div class="story-copy reveal">
+        <p>Nhiều người đã học các khái niệm về Business Analysis nhưng vẫn lúng túng khi bắt đầu một dự án thực tế.</p>
+        <p>Họ biết stakeholder là gì nhưng chưa biết cần gặp ai trước. Biết BPMN nhưng chưa biết nên mô hình hóa phần nào. Biết BRD và FSD nhưng chưa biết mức độ chi tiết nào là đủ để Developer có thể phát triển và Tester có thể kiểm thử.</p>
+        <p>Trong lĩnh vực ngân hàng, khoảng cách này càng lớn bởi mỗi yêu cầu thường liên quan đến nhiều quy trình, vai trò, hệ thống, quy định và luồng dữ liệu khác nhau.</p>
+        <p class="lead">NextGen BA Banker được xây dựng để giải quyết khoảng cách đó.</p>
+        <p>Chương trình kết hợp kiến thức Business Analysis, nghiệp vụ ngân hàng và hoạt động thực hành dự án. Mục tiêu không phải là giúp người học ghi nhớ nhiều khái niệm hơn, mà là giúp họ có thể tiếp nhận một bài toán, đặt đúng câu hỏi, phân tích đủ sâu và tạo ra một giải pháp có thể triển khai.</p>
+      </div>
+
+      <div class="mission-statement reveal">
+        <span class="eyebrow">Sứ mệnh</span>
+        <p>Góp phần xây dựng thế hệ Business Analyst ngân hàng có tư duy hệ thống, năng lực thực hành và khả năng tạo ra giá trị thực tế cho tổ chức.</p>
+      </div>
+
+      <div class="block-head reveal">
+        <span class="eyebrow">Giá trị cốt lõi</span>
+      </div>
+      <div class="info-grid cols-5 reveal">
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a7 7 0 1 0-7-7"/><path d="M12 20v-3M8 20h8"/></svg></div>
+          <h3>Thực tiễn</h3>
+          <p>Mỗi nội dung cần trả lời được câu hỏi: kiến thức này được sử dụng ở đâu và sử dụng như thế nào trong dự án?</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <h3>Chất lượng</h3>
+          <p>Tài liệu, bài tập và phản hồi được xây dựng theo tiêu chí rõ ràng, nhất quán và có thể đánh giá.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg></div>
+          <h3>Đồng hành</h3>
+          <p>Người học được hỗ trợ xác định điểm yếu, lựa chọn lộ trình và cải thiện sản phẩm qua từng vòng review.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg></div>
+          <h3>Phát triển liên tục</h3>
+          <p>Nội dung được cập nhật dựa trên thay đổi của công nghệ, phương pháp làm việc và nhu cầu thực tế của dự án ngân hàng.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+          <h3>Bảo mật</h3>
+          <p>Các case study được mô phỏng hoặc ẩn danh hóa, không sử dụng thông tin mật của tổ chức và khách hàng.</p>
+        </div>
+      </div>
+
+      <div class="mission-grid reveal" style="margin-top: 2.4rem;">
         <div class="side-card">
           <h3>Liên hệ với chúng tôi</h3>
           <div class="contact-row">
@@ -878,23 +1305,94 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="cta-banner reveal">
-        <div>
-          <h3>Bạn đã sẵn sàng nâng tầm sự nghiệp BA của mình?</h3>
-          <p>Đăng ký quan tâm để nhận thông tin ngay khi chương trình ra mắt!</p>
-        </div>
-        <a class="btn btn-gold" href="#dang-ky">Đăng ký quan tâm →</a>
+  <!-- ============ FAQ ============ -->
+  <section class="block tint bordered-top">
+    <div class="container">
+      <div class="block-head reveal">
+        <span class="eyebrow">Câu hỏi thường gặp</span>
+        <h2>Những điều học viên hay thắc mắc</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>Tôi chưa có kinh nghiệm BA có học được không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Có. Lộ trình bắt đầu từ kiến thức nền tảng và hướng dẫn từng bước. Trước khi học, bạn sẽ thực hiện bài đánh giá đầu vào để xác định nội dung cần ưu tiên.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Tôi không làm việc trong ngân hàng có theo học được không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Có. Các kiến thức nghiệp vụ được giải thích từ bối cảnh, thuật ngữ đến quy trình. Người đã có kinh nghiệm ngân hàng có thể được đề xuất lộ trình rút gọn.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Tôi có cần biết lập trình không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Không bắt buộc. Tuy nhiên, bạn sẽ được làm quen với dữ liệu, API, tích hợp hệ thống và một số khái niệm kỹ thuật cần thiết để phối hợp với Developer.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Chương trình học online hay offline?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Nội dung chính được thiết kế để học trực tuyến. Các hoạt động workshop, case clinic hoặc mentor review sẽ được tổ chức theo kế hoạch của từng chương trình.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Lộ trình học kéo dài bao lâu?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Thời gian phụ thuộc vào năng lực đầu vào và thời lượng học mỗi tuần. Hệ thống sẽ đề xuất lộ trình phù hợp thay vì áp dụng một tiến độ giống nhau cho tất cả học viên.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Tôi sẽ thực hành trên những tài liệu nào?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Tùy case study, bạn có thể thực hành Stakeholder Map, BPMN, BRD, FSD, User Story, Use Case, Wireframe, Data Dictionary, API Mapping, Acceptance Criteria và UAT Scenario.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Bài tập có được review không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Bài tập được kiểm tra theo rubric và checklist. Một số bài có thể được phản hồi bởi AI Mentor, mentor chương trình hoặc thông qua hoạt động peer review.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Tôi có được cấp chứng nhận không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Học viên đáp ứng điều kiện hoàn thành sẽ nhận xác nhận hoàn thành của chương trình. Đây là chứng nhận đào tạo nội bộ, không thay thế các chứng chỉ nghề nghiệp quốc tế.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Nội dung có bám theo BABOK không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Các năng lực và kỹ thuật BA được tham chiếu từ BABOK Guide, đồng thời được điều chỉnh để phù hợp với hoạt động thực tế trong dự án ngân hàng.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Case study có sử dụng dữ liệu thật của ngân hàng không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Không sử dụng dữ liệu mật hoặc thông tin định danh của khách hàng. Case study được mô phỏng, tổng hợp hoặc ẩn danh hóa để bảo đảm an toàn thông tin.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Sau khóa học tôi có được giới thiệu việc làm không?
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="faq-answer">Chương trình tập trung giúp học viên xây dựng năng lực và portfolio. Các hoạt động kết nối cơ hội nghề nghiệp, nếu có, sẽ được thông báo riêng và không được coi là cam kết tuyển dụng.</div>
+        </details>
       </div>
     </div>
   </section>
 
+  <!-- ============ FORM ĐĂNG KÝ QUAN TÂM ============ -->
   <section class="register-shell" id="dang-ky">
     <div class="container register-grid">
       <div class="reveal">
-        <span class="pill">Quan tâm chương trình?</span>
-        <h2>Đăng ký để nhận thông tin ngay khi ra mắt</h2>
-        <p class="sub">Để lại thông tin — bạn sẽ là người đầu tiên biết khi lộ trình học chi tiết và case study đầu tiên sẵn sàng.</p>
+        <span class="pill">Nhận lộ trình đề xuất</span>
+        <h2>Nhận lộ trình học phù hợp với bạn</h2>
+        <p class="sub">Hãy cung cấp một số thông tin để NextGen BA Banker hiểu mục tiêu và đề xuất lộ trình phù hợp hơn.</p>
       </div>
       <div class="reveal">
         <form class="register-form" id="register-form">
@@ -906,21 +1404,81 @@
             <label for="f-email">Email</label>
             <input id="f-email" name="email" type="email" placeholder="ban@vidu.com" required />
           </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-phone">Số điện thoại / Zalo</label>
+              <input id="f-phone" name="phone" type="tel" placeholder="09xx xxx xxx" />
+            </div>
+            <div class="field">
+              <label for="f-role">Vai trò hiện tại</label>
+              <select id="f-role" name="role">
+                <option>Sinh viên hoặc người mới đi làm</option>
+                <option>Nhân sự ngân hàng</option>
+                <option>Business Analyst mới bắt đầu</option>
+                <option>Business Analyst có dưới 2 năm kinh nghiệm</option>
+                <option>Business Analyst có trên 2 năm kinh nghiệm</option>
+                <option>Tester hoặc Quality Control</option>
+                <option>Product Owner hoặc thành viên đội dự án</option>
+                <option>Vai trò khác</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-experience">Kinh nghiệm làm việc</label>
+              <select id="f-experience" name="experience">
+                <option>Chưa có kinh nghiệm</option>
+                <option>Dưới 1 năm</option>
+                <option>Từ 1–2 năm</option>
+                <option>Từ 3–5 năm</option>
+                <option>Trên 5 năm</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-hours">Thời gian học mỗi tuần</label>
+              <select id="f-hours" name="weekly_hours">
+                <option>Dưới 3 giờ</option>
+                <option>Từ 3–5 giờ</option>
+                <option>Từ 6–8 giờ</option>
+                <option>Trên 8 giờ</option>
+              </select>
+            </div>
+          </div>
           <div class="field">
-            <label for="f-role">Vai trò hiện tại</label>
-            <select id="f-role" name="role">
-              <option>BA mới bắt đầu</option>
-              <option>BA có kinh nghiệm 1–2 năm</option>
-              <option>Vai trò khác trong dự án</option>
+            <label for="f-goal">Mục tiêu của bạn</label>
+            <select id="f-goal" name="goal">
+              <option>Bắt đầu nghề Business Analyst</option>
+              <option>Chuyển sang lĩnh vực ngân hàng</option>
+              <option>Nâng cao năng lực viết tài liệu</option>
+              <option>Nâng cao kiến thức nghiệp vụ ngân hàng</option>
+              <option>Xây dựng portfolio</option>
+              <option>Chuẩn bị phỏng vấn</option>
+              <option>Cải thiện năng lực trong dự án hiện tại</option>
             </select>
           </div>
-          <button class="btn btn-gold" type="submit" id="register-submit">Gửi đăng ký</button>
+          <div class="field">
+            <label for="f-interest">Lĩnh vực bạn quan tâm</label>
+            <select id="f-interest" name="interest">
+              <option>Core Banking</option>
+              <option>KYC và quản lý khách hàng</option>
+              <option>Tín dụng</option>
+              <option>Thanh toán</option>
+              <option>Thẻ</option>
+              <option>Ngân hàng số</option>
+              <option>Quy trình nội bộ ngân hàng</option>
+              <option>Chưa xác định</option>
+            </select>
+          </div>
+          <button class="btn btn-gold" type="submit" id="register-submit">Nhận lộ trình đề xuất</button>
           <p class="form-fine" id="form-error" style="display:none; color:#B3261E;"></p>
-          <p class="form-fine">Thông tin của bạn được lưu bảo mật, chỉ dùng để gửi cập nhật về chương trình.</p>
+          <p class="form-fine"><strong>Cam kết bảo mật:</strong> thông tin đăng ký chỉ được sử dụng để tư vấn và gửi cập nhật liên quan đến chương trình NextGen BA Banker.</p>
         </form>
         <div class="confirm-panel" id="confirm-panel">
-          <span class="pill">Đã ghi nhận</span>
-          <p>Cảm ơn <strong id="confirm-name"></strong>. Chúng tôi đã lưu thông tin đăng ký và sẽ liên hệ khi chương trình học chính thức triển khai.</p>
+          <span class="pill">Đăng ký thành công!</span>
+          <p>Cảm ơn <strong id="confirm-name"></strong> đã quan tâm đến NextGen BA Banker.</p>
+          <p>Thông tin của bạn đã được ghi nhận. Chúng tôi sẽ gửi nội dung giới thiệu chương trình và lộ trình đề xuất qua thông tin liên hệ bạn đã cung cấp.</p>
+          <p>Trong thời gian chờ đợi, bạn có thể khám phá lộ trình tổng quan và các case study mẫu trên website.</p>
+          <a class="btn btn-gold" href="#lo-trinh">Xem lộ trình học →</a>
         </div>
       </div>
     </div>
@@ -992,7 +1550,12 @@
       e.preventDefault();
       var name = document.getElementById('f-name').value.trim();
       var email = document.getElementById('f-email').value.trim();
+      var phone = document.getElementById('f-phone').value.trim();
       var role = document.getElementById('f-role').value;
+      var experience = document.getElementById('f-experience').value;
+      var weeklyHours = document.getElementById('f-hours').value;
+      var goal = document.getElementById('f-goal').value;
+      var interest = document.getElementById('f-interest').value;
 
       errorOut.style.display = 'none';
       submitBtn.disabled = true;
@@ -1006,7 +1569,16 @@
           'Authorization': 'Bearer ' + SUPABASE_KEY,
           'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ name: name, email: email, role: role })
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: phone,
+          role: role,
+          experience: experience,
+          weekly_hours: weeklyHours,
+          goal: goal,
+          interest: interest
+        })
       })
         .then(function (res) {
           if (!res.ok) throw new Error('Gửi thất bại (HTTP ' + res.status + ')');
@@ -1020,7 +1592,7 @@
         })
         .finally(function () {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Gửi đăng ký';
+          submitBtn.textContent = 'Nhận lộ trình đề xuất';
         });
     });
   })();
