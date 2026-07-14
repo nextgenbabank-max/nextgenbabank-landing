@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bảng điều khiển học viên — NextGen BA Banker</title>
+<link rel="stylesheet" href="shared/app.css" />
+</head>
+<body>
+<div class="app-header">
+  <a class="brand" href="/app/dashboard.html">NextGen BA Banker</a>
+  <button id="logout-btn">Đăng xuất</button>
+</div>
+
+<div class="app-shell">
+  <h1>Xin chào, <span id="user-name">...</span></h1>
+  <p style="color:var(--text-soft); margin-top:-.3rem;">Theo dõi tiến độ học và bài tập của bạn.</p>
+
+  <div class="card">
+    <h2>Tiến độ các buổi học</h2>
+    <div id="modules-list"><p style="color:var(--text-soft); font-size:.9rem;">Đang tải...</p></div>
+  </div>
+
+  <div class="card">
+    <h2>Bài tập</h2>
+    <div id="assignments-list"><p style="color:var(--text-soft); font-size:.9rem;">Đang tải...</p></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    document.getElementById('logout-btn').addEventListener('click', signOut);
+
+    requireAuth().then(function (session) {
+      if (!session) return;
+      var userId = session.user.id;
+      document.getElementById('user-name').textContent =
+        (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+
+      loadModules(userId);
+      loadAssignments(userId);
+    });
+
+    function loadModules(userId) {
+      Promise.all([
+        window.sb.from('modules').select('id,title,order_index').order('order_index'),
+        window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId)
+      ]).then(function (results) {
+        var modulesRes = results[0], progressRes = results[1];
+        var container = document.getElementById('modules-list');
+        if (modulesRes.error) { container.innerHTML = '<p class="msg-error">Không tải được danh sách buổi học.</p>'; return; }
+        var modules = modulesRes.data || [];
+        var progressMap = {};
+        (progressRes.data || []).forEach(function (p) { progressMap[p.module_id] = p.completed; });
+
+        if (modules.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-soft); font-size:.9rem;">Chưa có buổi học nào được thêm.</p>';
+          return;
+        }
+        container.innerHTML = modules.map(function (m) {
+          var done = progressMap[m.id];
+          var badge = done ? '<span class="badge done">Đã hoàn thành</span>' : '<span class="badge pending">Chưa hoàn thành</span>';
+          return '<div class="module-row"><span>' + escapeHtml(m.title) + '</span>' + badge + '</div>';
+        }).join('');
+      });
+    }
+
+    function loadAssignments(userId) {
+      Promise.all([
+        window.sb.from('assignments').select('id,title,type,max_score').order('created_at'),
+        window.sb.from('submissions').select('assignment_id,score,max_score,graded').eq('user_id', userId)
+      ]).then(function (results) {
+        var aRes = results[0], sRes = results[1];
+        var container = document.getElementById('assignments-list');
+        if (aRes.error) { container.innerHTML = '<p class="msg-error">Không tải được danh sách bài tập.</p>'; return; }
+        var assignments = aRes.data || [];
+        var subMap = {};
+        (sRes.data || []).forEach(function (s) { subMap[s.assignment_id] = s; });
+
+        if (assignments.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-soft); font-size:.9rem;">Chưa có bài tập nào được giao.</p>';
+          return;
+        }
+        container.innerHTML = assignments.map(function (a) {
+          var sub = subMap[a.id];
+          var status, link;
+          var typePage = a.type === 'quiz' ? 'quiz.html' : (a.type === 'essay' ? 'essay.html' : 'file.html');
+          link = typePage + '?a=' + a.id;
+          if (!sub) {
+            status = '<span class="badge pending">Chưa làm</span>';
+          } else if (sub.graded) {
+            status = '<span class="badge done">Đã chấm: ' + sub.score + '/' + sub.max_score + '</span>';
+          } else {
+            status = '<span class="badge">Chờ chấm</span>';
+          }
+          return '<div class="assignment-row"><a href="' + link + '">' + escapeHtml(a.title) + '</a>' + status + '</div>';
+        }).join('');
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+  })();
+</script>
+</body>
+</html>

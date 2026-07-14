@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Đăng nhập học viên — NextGen BA Banker</title>
+<link rel="stylesheet" href="shared/app.css" />
+</head>
+<body>
+<div class="app-shell" style="max-width:420px; padding-top:4rem;">
+  <div class="card">
+    <h1 id="form-title" style="text-align:center;">Đăng nhập học viên</h1>
+    <p style="text-align:center; color:var(--text-soft); font-size:.85rem; margin-top:-.3rem;">NextGen BA Banker</p>
+
+    <form id="auth-form">
+      <div class="field" id="name-field" style="display:none;">
+        <label for="f-name">Họ và tên</label>
+        <input id="f-name" type="text" placeholder="Nguyễn Văn A" />
+      </div>
+      <div class="field">
+        <label for="f-email">Email</label>
+        <input id="f-email" type="email" required placeholder="ban@vidu.com" />
+      </div>
+      <div class="field">
+        <label for="f-password">Mật khẩu</label>
+        <input id="f-password" type="password" required minlength="6" placeholder="Tối thiểu 6 ký tự" />
+      </div>
+      <button class="btn" type="submit" id="submit-btn" style="width:100%;">Đăng nhập</button>
+      <p class="msg-error" id="msg-error" style="display:none;"></p>
+      <p class="msg-success" id="msg-success" style="display:none;"></p>
+    </form>
+
+    <p style="text-align:center; margin-top:1.2rem; font-size:.88rem;">
+      <span id="toggle-text">Chưa có tài khoản?</span>
+      <a href="#" id="toggle-mode">Đăng ký ngay</a>
+    </p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var isSignup = false;
+    var form = document.getElementById('auth-form');
+    var nameField = document.getElementById('name-field');
+    var title = document.getElementById('form-title');
+    var submitBtn = document.getElementById('submit-btn');
+    var toggleText = document.getElementById('toggle-text');
+    var toggleMode = document.getElementById('toggle-mode');
+    var errorOut = document.getElementById('msg-error');
+    var successOut = document.getElementById('msg-success');
+
+    toggleMode.addEventListener('click', function (e) {
+      e.preventDefault();
+      isSignup = !isSignup;
+      title.textContent = isSignup ? 'Đăng ký tài khoản' : 'Đăng nhập học viên';
+      submitBtn.textContent = isSignup ? 'Đăng ký' : 'Đăng nhập';
+      nameField.style.display = isSignup ? 'block' : 'none';
+      toggleText.textContent = isSignup ? 'Đã có tài khoản?' : 'Chưa có tài khoản?';
+      toggleMode.textContent = isSignup ? 'Đăng nhập' : 'Đăng ký ngay';
+      errorOut.style.display = 'none';
+      successOut.style.display = 'none';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = document.getElementById('f-email').value.trim();
+      var password = document.getElementById('f-password').value;
+      var name = document.getElementById('f-name').value.trim();
+
+      errorOut.style.display = 'none';
+      successOut.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang xử lý...';
+
+      var action = isSignup
+        ? window.sb.auth.signUp({ email: email, password: password, options: { data: { full_name: name } } })
+        : window.sb.auth.signInWithPassword({ email: email, password: password });
+
+      action.then(function (res) {
+        if (res.error) throw res.error;
+        if (isSignup && !res.data.session) {
+          successOut.textContent = 'Đăng ký thành công. Kiểm tra email để xác nhận tài khoản trước khi đăng nhập.';
+          successOut.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Đăng ký';
+          return;
+        }
+        window.location.href = '/app/dashboard.html';
+      }).catch(function (err) {
+        errorOut.textContent = err.message || 'Có lỗi xảy ra. Vui lòng thử lại.';
+        errorOut.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = isSignup ? 'Đăng ký' : 'Đăng nhập';
+      });
+    });
+
+    window.sb.auth.getSession().then(function (res) {
+      if (res.data.session) window.location.href = '/app/dashboard.html';
+    });
+  })();
+</script>
+</body>
+</html>
