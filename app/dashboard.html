@@ -3,109 +3,406 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bảng điều khiển học viên — NextGen BA Banker</title>
-<link rel="stylesheet" href="shared/app.css" />
+<title>Tổng quan — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
 </head>
 <body>
-<div class="app-header">
-  <a class="brand" href="/app/dashboard.html">NextGen BA Banker</a>
-  <button id="logout-btn">Đăng xuất</button>
-</div>
 
-<div class="app-shell">
-  <h1>Xin chào, <span id="user-name">...</span></h1>
-  <p style="color:var(--text-soft); margin-top:-.3rem;">Theo dõi tiến độ học và bài tập của bạn.</p>
-
-  <div class="card">
-    <h2>Tiến độ các buổi học</h2>
-    <div id="modules-list"><p style="color:var(--text-soft); font-size:.9rem;">Đang tải...</p></div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html" class="active">Tổng quan</a>
+      <a href="assignments.html">Bài tập</a>
+      <a href="case-studies.html">Case study</a>
+      <a href="progress.html">Tiến độ</a>
+      <a href="dashboard.html#portfolio">Portfolio</a>
+      <a href="dashboard.html#feed">Thông báo <span class="count">3</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">3</span></button>
+      <div class="user-trigger">
+        <span class="avatar" id="user-avatar">BL</span>
+        <span class="meta"><span class="u-name" id="user-name">BA Learner</span><span class="u-role">Học viên</span></span>
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
-
-  <div class="card">
-    <h2>Bài tập</h2>
-    <div id="assignments-list"><p style="color:var(--text-soft); font-size:.9rem;">Đang tải...</p></div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html" class="active">Tổng quan</a>
+    <a href="assignments.html">Bài tập</a>
+    <a href="case-studies.html">Case study</a>
+    <a href="progress.html">Tiến độ</a>
+    <a href="dashboard.html#portfolio">Portfolio</a>
+    <a href="dashboard.html#feed">Thông báo <span class="count">3</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
   </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
+      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="dashboard.html#portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Portfolio</a>
+      <a href="dashboard.html#feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="#" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Xin chào, <span id="user-name-2">BA Learner</span>! <span class="wave">👋</span></h1>
+        <p class="d">Hôm nay là một ngày tuyệt vời để học hỏi và tiến bộ.</p>
+      </div>
+      <div class="card" style="display:flex; align-items:center; gap:0.9rem; padding:0.9rem 1.1rem;">
+        <div>
+          <p style="font-size:0.72rem; color:var(--text-soft); font-weight:700; text-transform:uppercase; letter-spacing:0.03em;">Buổi học tiếp theo</p>
+          <p style="font-size:0.92rem; font-weight:800; color:var(--navy-ink); margin-top:0.3rem;">Live cùng Mentor</p>
+          <p style="font-size:0.8rem; color:var(--text-soft); margin-top:0.1rem;">Thứ 5, 16/05 • 20:00</p>
+        </div>
+        <a class="btn btn-outline btn-sm" href="#">Xem lịch</a>
+      </div>
+    </div>
+
+    <div class="stat-grid cols-4">
+      <div class="stat-card">
+        <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 15a9 9 0 1 1-3.6-11.5"/><path d="M22 4 12 14l-3-3"/></svg></span>
+        <div><div class="n" id="stat-phase-pct">—</div><div class="l">Tiến độ lộ trình</div><div class="sub" id="stat-phase-current">Đang tải...</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <div><div class="n" id="stat-done-frac">—</div><div class="l">Bài tập đã hoàn thành</div><div class="sub" id="stat-done-pct">—</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg></span>
+        <div><div class="n" id="stat-pending">—</div><div class="l">Bài tập đang chờ nộp</div><div class="sub" id="stat-pending-due">—</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span>
+        <div><div class="n" id="stat-cs">—</div><div class="l">Case study đang thực hiện</div><div class="sub" id="stat-cs-sub">Sắp ra mắt</div></div>
+      </div>
+    </div>
+
+    <div class="grid-main-side">
+      <div class="stack">
+        <div class="card">
+          <div class="card-head">
+            <h2>Bài tập cần làm</h2>
+            <a class="more" href="assignments.html">Xem tất cả bài tập <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Bài tập</th><th>Lộ trình</th><th>Hạn nộp</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+              <tbody id="assignments-tbody">
+                <tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Lộ trình cá nhân</h2><a class="more" href="progress.html">Xem lộ trình <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+            <div style="background:var(--bg-soft); border-radius:10px; padding:0.9rem 1rem; margin-bottom:0.9rem;">
+              <p style="font-size:0.76rem; color:var(--text-soft); font-weight:700; text-transform:uppercase;">Giai đoạn hiện tại</p>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.2rem;">
+                <p style="font-size:1rem; font-weight:800; color:var(--navy-ink);" id="current-phase-title">—</p>
+                <p style="font-size:0.82rem; color:var(--text-soft); font-weight:700;" id="current-phase-idx"></p>
+              </div>
+            </div>
+            <div id="current-phase-modules"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h2>Mục tiêu tuần này</h2><span style="font-size:0.78rem; color:var(--text-soft); font-weight:700;" id="week-days-left"></span></div>
+            <div id="weekly-goal-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+            <div class="streak-banner">🔥 Hoàn thành mục tiêu để duy trì chuỗi học tập!</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h2>Theo dõi tiến độ</h2><a class="more" href="progress.html">Xem chi tiết <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="chapter-progress" id="phase-progress-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card" id="portfolio">
+          <div class="card-head"><h2>Portfolio tiến độ</h2><a class="more" href="#">Xem portfolio <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="tile-grid" id="portfolio-tiles"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card" id="feed">
+          <div class="card-head"><h2>Cập nhật gần đây</h2></div>
+          <div class="feed" id="activity-feed"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+          <a class="more" href="#" style="display:block; text-align:right; margin-top:0.8rem;">Xem tất cả →</a>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/app.js"></script>
 <script>
   (function () {
-    document.getElementById('logout-btn').addEventListener('click', signOut);
-
-    requireAuth().then(function (session) {
-      if (!session) return;
-      var userId = session.user.id;
-      document.getElementById('user-name').textContent =
-        (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
-
-      loadModules(userId);
-      loadAssignments(userId);
-    });
-
-    function loadModules(userId) {
-      Promise.all([
-        window.sb.from('modules').select('id,title,order_index').order('order_index'),
-        window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId)
-      ]).then(function (results) {
-        var modulesRes = results[0], progressRes = results[1];
-        var container = document.getElementById('modules-list');
-        if (modulesRes.error) { container.innerHTML = '<p class="msg-error">Không tải được danh sách buổi học.</p>'; return; }
-        var modules = modulesRes.data || [];
-        var progressMap = {};
-        (progressRes.data || []).forEach(function (p) { progressMap[p.module_id] = p.completed; });
-
-        if (modules.length === 0) {
-          container.innerHTML = '<p style="color:var(--text-soft); font-size:.9rem;">Chưa có buổi học nào được thêm.</p>';
-          return;
-        }
-        container.innerHTML = modules.map(function (m) {
-          var done = progressMap[m.id];
-          var badge = done ? '<span class="badge done">Đã hoàn thành</span>' : '<span class="badge pending">Chưa hoàn thành</span>';
-          return '<div class="module-row"><span>' + escapeHtml(m.title) + '</span>' + badge + '</div>';
-        }).join('');
-      });
-    }
-
-    function loadAssignments(userId) {
-      Promise.all([
-        window.sb.from('assignments').select('id,title,type,max_score').order('created_at'),
-        window.sb.from('submissions').select('assignment_id,score,max_score,graded').eq('user_id', userId)
-      ]).then(function (results) {
-        var aRes = results[0], sRes = results[1];
-        var container = document.getElementById('assignments-list');
-        if (aRes.error) { container.innerHTML = '<p class="msg-error">Không tải được danh sách bài tập.</p>'; return; }
-        var assignments = aRes.data || [];
-        var subMap = {};
-        (sRes.data || []).forEach(function (s) { subMap[s.assignment_id] = s; });
-
-        if (assignments.length === 0) {
-          container.innerHTML = '<p style="color:var(--text-soft); font-size:.9rem;">Chưa có bài tập nào được giao.</p>';
-          return;
-        }
-        container.innerHTML = assignments.map(function (a) {
-          var sub = subMap[a.id];
-          var status, link;
-          var typePage = a.type === 'quiz' ? 'quiz.html' : (a.type === 'essay' ? 'essay.html' : 'file.html');
-          link = typePage + '?a=' + a.id;
-          if (!sub) {
-            status = '<span class="badge pending">Chưa làm</span>';
-          } else if (sub.graded) {
-            status = '<span class="badge done">Đã chấm: ' + sub.score + '/' + sub.max_score + '</span>';
-          } else {
-            status = '<span class="badge">Chờ chấm</span>';
-          }
-          return '<div class="assignment-row"><a href="' + link + '">' + escapeHtml(a.title) + '</a>' + status + '</div>';
-        }).join('');
-      });
-    }
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, function (c) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-      });
-    }
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
   })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN');
+  }
+  function daysLeft(iso) {
+    if (!iso) return null;
+    var diff = Math.ceil((new Date(iso) - new Date()) / 86400000);
+    return diff;
+  }
+  function startOfWeek(d) {
+    var date = new Date(d);
+    var day = (date.getDay() + 6) % 7;
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - day);
+    return date;
+  }
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    var userId = session.user.id;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-2').textContent = name;
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'HV';
+
+    loadAll(userId);
+  });
+
+  function loadAll(userId) {
+    Promise.all([
+      window.sb.from('phases').select('id,title,order_index').order('order_index'),
+      window.sb.from('modules').select('id,title,phase_id,order_index').order('order_index'),
+      window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
+      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,max_score').order('due_date', { ascending: true, nullsFirst: false }),
+      window.sb.from('submissions').select('assignment_id,score,max_score,graded,graded_at,submitted_at').eq('user_id', userId),
+      window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color')
+    ]).then(function (r) {
+      var phases = r[0].data || [];
+      var modules = r[1].data || [];
+      var moduleProgress = r[2].data || [];
+      var assignments = r[3].data || [];
+      var submissions = r[4].data || [];
+      var mentors = r[5].data || [];
+
+      var progressByModule = {};
+      moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });
+      var subByAssignment = {};
+      submissions.forEach(function (s) { subByAssignment[s.assignment_id] = s; });
+      var mentorById = {};
+      mentors.forEach(function (m) { mentorById[m.id] = m; });
+
+      var phaseById = {};
+      phases.forEach(function (p) { phaseById[p.id] = p; });
+
+      renderPhaseStats(phases, modules, progressByModule, assignments, subByAssignment);
+      renderAssignmentsTable(assignments, subByAssignment, mentorById, phaseById);
+      renderCurrentPhase(phases, modules, progressByModule);
+      renderWeeklyGoal(assignments, subByAssignment);
+      renderPortfolio(assignments, subByAssignment);
+      renderFeed(assignments, subByAssignment, mentorById);
+
+      var doneCount = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+      var pendingCount = assignments.filter(function (a) { return !subByAssignment[a.id]; }).length;
+      document.getElementById('stat-done-frac').textContent = doneCount + ' / ' + assignments.length;
+      document.getElementById('stat-done-pct').textContent = assignments.length ? 'Hoàn thành ' + Math.round(doneCount / assignments.length * 100) + '%' : '—';
+      document.getElementById('stat-pending').textContent = pendingCount;
+      var nextDue = assignments.filter(function (a) { return !subByAssignment[a.id] && a.due_date; }).map(function (a) { return daysLeft(a.due_date); }).sort(function (a, b) { return a - b; })[0];
+      document.getElementById('stat-pending-due').textContent = nextDue != null ? 'Hạn gần nhất: ' + nextDue + ' ngày' : 'Không có hạn nộp';
+    });
+  }
+
+  function renderPhaseStats(phases, modules, progressByModule, assignments, subByAssignment) {
+    var pctByPhase = computePhasePct(phases, modules, progressByModule, assignments, subByAssignment);
+    var overall = pctByPhase.length ? Math.round(pctByPhase.reduce(function (s, p) { return s + p.pct; }, 0) / pctByPhase.length) : 0;
+    document.getElementById('stat-phase-pct').textContent = overall + '%';
+    var current = pctByPhase.find(function (p) { return p.pct < 100; }) || pctByPhase[pctByPhase.length - 1];
+    document.getElementById('stat-phase-current').textContent = current ? 'Đang học: ' + current.title : '—';
+
+    var list = document.getElementById('phase-progress-list');
+    list.innerHTML = pctByPhase.map(function (p) {
+      var cls = p.pct === 100 ? 'green' : 'gold';
+      return '<div class="row"><span class="lbl">' + escapeHtml(p.title) + '</span><span class="pbar"><i class="' + cls + '" style="width:' + p.pct + '%;"></i></span><span class="pct">' + p.pct + '%</span></div>';
+    }).join('') || '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có phase nào.</p>';
+  }
+
+  function computePhasePct(phases, modules, progressByModule, assignments, subByAssignment) {
+    return phases.map(function (phase) {
+      var phaseModules = modules.filter(function (m) { return m.phase_id === phase.id; });
+      var phaseAssignments = assignments.filter(function (a) { return a.phase_id === phase.id; });
+      var total = phaseModules.length + phaseAssignments.length;
+      var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length +
+        phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+      var pct = total ? Math.round(done / total * 100) : 0;
+      return { id: phase.id, title: phase.title, order_index: phase.order_index, pct: pct };
+    });
+  }
+
+  function assignmentStatus(assignment, sub) {
+    if (!sub) return { label: 'Mới giao', cls: 'b-new', action: 'Làm bài' };
+    if (!sub.graded) return { label: 'Chờ chấm', cls: 'b-review', action: 'Xem bài nộp' };
+    return { label: 'Đã chấm: ' + sub.score + '/' + sub.max_score, cls: 'b-done', action: 'Xem kết quả' };
+  }
+
+  function assignmentLink(a) {
+    var page = a.type === 'quiz' ? 'quiz.html' : (a.type === 'essay' ? 'essay.html' : 'file.html');
+    return page + '?a=' + a.id;
+  }
+
+  function renderAssignmentsTable(assignments, subByAssignment, mentorById, phaseById) {
+    var tbody = document.getElementById('assignments-tbody');
+    if (!tbody) return;
+    if (assignments.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập nào.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = assignments.slice(0, 6).map(function (a) {
+      var sub = subByAssignment[a.id];
+      var st = assignmentStatus(a, sub);
+      var due = a.due_date ? fmtDate(a.due_date) + (daysLeft(a.due_date) != null ? ' <span class="due-soon">(' + daysLeft(a.due_date) + ' ngày nữa)</span>' : '') : '—';
+      var phase = phaseById[a.phase_id];
+      return '<tr>' +
+        '<td><div class="cell-item"><div><div class="t">' + escapeHtml(a.title) + '</div><div class="s">' + escapeHtml(a.doc_type || '') + '</div></div></div></td>' +
+        '<td>' + escapeHtml(phase ? phase.title : '—') + '</td>' +
+        '<td><span class="due-cell">' + due + '</span></td>' +
+        '<td><span class="badge ' + st.cls + '">' + st.label + '</span></td>' +
+        '<td><a class="row-action-btn" href="' + assignmentLink(a) + '">' + st.action + '</a></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function renderCurrentPhase(phases, modules, progressByModule) {
+    var pctByPhase = computePhasePct(phases, modules, progressByModule, [], {});
+    var current = pctByPhase.find(function (p) { return p.pct < 100; }) || pctByPhase[pctByPhase.length - 1];
+    if (!current) {
+      document.getElementById('current-phase-title').textContent = 'Chưa có dữ liệu';
+      document.getElementById('current-phase-modules').innerHTML = '';
+      return;
+    }
+    document.getElementById('current-phase-title').textContent = current.title;
+    var idx = phases.findIndex(function (p) { return p.id === current.id; });
+    document.getElementById('current-phase-idx').textContent = 'Chặng ' + (idx + 1) + ' / ' + phases.length;
+
+    var phaseModules = modules.filter(function (m) { return m.phase_id === current.id; });
+    var container = document.getElementById('current-phase-modules');
+    if (phaseModules.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học trong chặng này.</p>';
+      return;
+    }
+    container.innerHTML = phaseModules.map(function (m) {
+      var done = progressByModule[m.id];
+      return '<div class="check-row ' + (done ? 'done' : 'pending') + '"><span class="dot-check">' + (done ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : '') + '</span><span class="lbl">' + escapeHtml(m.title) + '</span></div>';
+    }).join('');
+  }
+
+  function renderWeeklyGoal(assignments, subByAssignment) {
+    var now = new Date();
+    var weekStart = startOfWeek(now);
+    var weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
+    var thisWeek = assignments.filter(function (a) {
+      if (!a.due_date) return false;
+      var d = new Date(a.due_date);
+      return d >= weekStart && d < weekEnd;
+    });
+    var doneThisWeek = thisWeek.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+    var daysRemain = Math.max(0, Math.ceil((weekEnd - now) / 86400000));
+    document.getElementById('week-days-left').textContent = 'Còn ' + daysRemain + ' ngày';
+
+    var body = document.getElementById('weekly-goal-body');
+    if (thisWeek.length === 0) {
+      body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Không có bài tập nào đến hạn trong tuần này.</p>';
+      return;
+    }
+    var pct = Math.round(doneThisWeek / thisWeek.length * 100);
+    body.innerHTML =
+      '<div class="goal-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 11l2 2 4-4"/></svg></span>' +
+      '<div class="body"><div class="top"><span class="lbl">Hoàn thành bài tập đến hạn tuần này</span><span class="frac">' + doneThisWeek + ' / ' + thisWeek.length + '</span></div><div class="pbar"><i class="gold" style="width:' + pct + '%;"></i></div></div></div>';
+  }
+
+  function renderPortfolio(assignments, subByAssignment) {
+    var byType = {};
+    assignments.forEach(function (a) {
+      var type = a.doc_type || 'Khác';
+      if (!byType[type]) byType[type] = { total: 0, done: 0 };
+      byType[type].total++;
+      if (subByAssignment[a.id] && subByAssignment[a.id].graded) byType[type].done++;
+    });
+    var keys = Object.keys(byType);
+    var container = document.getElementById('portfolio-tiles');
+    if (keys.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có dữ liệu.</p>';
+      return;
+    }
+    container.innerHTML = keys.map(function (k) {
+      return '<div class="tile"><span class="ic" style="background:var(--gold);"></span><div class="lbl">' + escapeHtml(k) + '</div><div class="frac">' + byType[k].done + ' / ' + byType[k].total + '</div></div>';
+    }).join('');
+  }
+
+  function renderFeed(assignments, subByAssignment, mentorById) {
+    var assignmentById = {};
+    assignments.forEach(function (a) { assignmentById[a.id] = a; });
+    var events = [];
+    Object.keys(subByAssignment).forEach(function (aid) {
+      var s = subByAssignment[aid];
+      if (s.graded && s.graded_at) {
+        var a = assignmentById[aid];
+        var mentor = a && mentorById[a.mentor_id];
+        events.push({
+          time: new Date(s.graded_at),
+          html: '<span class="av">' + escapeHtml(mentor ? mentor.avatar_initials : 'GV') + '</span><p><b>' + escapeHtml(mentor ? mentor.full_name : 'Giảng viên') + '</b> đã chấm bài tập "' + escapeHtml(a ? a.title : '') + '"<br><span class="t">' + fmtDate(s.graded_at) + '</span></p>'
+        });
+      }
+    });
+    events.sort(function (a, b) { return b.time - a.time; });
+    var feed = document.getElementById('activity-feed');
+    if (events.length === 0) {
+      feed.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có cập nhật nào.</p>';
+      return;
+    }
+    feed.innerHTML = events.slice(0, 5).map(function (e) { return '<div class="feed-item">' + e.html + '</div>'; }).join('');
+  }
 </script>
 </body>
 </html>
