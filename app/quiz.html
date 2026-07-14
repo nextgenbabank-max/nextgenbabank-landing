@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Làm bài trắc nghiệm — NextGen BA Banker</title>
+<link rel="stylesheet" href="shared/app.css" />
+</head>
+<body>
+<div class="app-header">
+  <a class="brand" href="/app/dashboard.html">NextGen BA Banker</a>
+  <button id="logout-btn">Đăng xuất</button>
+</div>
+
+<div class="app-shell">
+  <p><a href="/app/dashboard.html">&larr; Quay lại Dashboard</a></p>
+  <div class="card">
+    <h1 id="quiz-title">Đang tải...</h1>
+    <p id="quiz-desc" style="color:var(--text-soft);"></p>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    document.getElementById('logout-btn').addEventListener('click', signOut);
+
+    var params = new URLSearchParams(window.location.search);
+    var assignmentId = params.get('a');
+    var body = document.getElementById('quiz-body');
+
+    if (!assignmentId) {
+      body.innerHTML = '<p class="msg-error">Thiếu mã bài tập.</p>';
+      return;
+    }
+
+    requireAuth().then(function (session) {
+      if (!session) return;
+      loadQuiz(session.user.id);
+    });
+
+    function loadQuiz(userId) {
+      Promise.all([
+        window.sb.from('assignments').select('id,title,description,max_score').eq('id', assignmentId).single(),
+        window.sb.from('quiz_questions_public').select('id,question_text,options,order_index').eq('assignment_id', assignmentId).order('order_index'),
+        window.sb.from('submissions').select('score,max_score,graded').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle()
+      ]).then(function (results) {
+        var aRes = results[0], qRes = results[1], sRes = results[2];
+        if (aRes.error || !aRes.data) {
+          document.getElementById('quiz-title').textContent = 'Không tìm thấy bài tập';
+          return;
+        }
+        document.getElementById('quiz-title').textContent = aRes.data.title;
+        document.getElementById('quiz-desc').textContent = aRes.data.description || '';
+
+        if (sRes.data && sRes.data.graded) {
+          body.innerHTML = '<p class="msg-success">Bạn đã làm bài này. Điểm: ' + sRes.data.score + '/' + sRes.data.max_score + '</p>' +
+            '<p><a href="/app/dashboard.html">Quay lại Dashboard</a></p>';
+          return;
+        }
+
+        var questions = qRes.data || [];
+        if (questions.length === 0) {
+          body.innerHTML = '<p style="color:var(--text-soft);">Bài tập chưa có câu hỏi.</p>';
+          return;
+        }
+
+        var html = '<form id="quiz-form">';
+        questions.forEach(function (q, idx) {
+          html += '<div class="quiz-question"><p><strong>Câu ' + (idx + 1) + '.</strong> ' + escapeHtml(q.question_text) + '</p>';
+          (q.options || []).forEach(function (opt, optIdx) {
+            html += '<label class="opt"><input type="radio" name="q-' + q.id + '" value="' + optIdx + '" required /> ' + escapeHtml(opt) + '</label><br/>';
+          });
+          html += '</div>';
+        });
+        html += '<button class="btn" type="submit" id="submit-quiz-btn" style="margin-top:1rem;">Nộp bài</button>';
+        html += '<p class="msg-error" id="quiz-error" style="display:none;"></p>';
+        html += '</form>';
+        body.innerHTML = html;
+
+        document.getElementById('quiz-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+          var answers = {};
+          questions.forEach(function (q) {
+            var checked = document.querySelector('input[name="q-' + q.id + '"]:checked');
+            answers[q.id] = checked ? parseInt(checked.value, 10) : null;
+          });
+
+          var submitBtn = document.getElementById('submit-quiz-btn');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Đang nộp...';
+
+          window.sb.rpc('submit_quiz', { p_assignment_id: assignmentId, p_answers: answers }).then(function (res) {
+            if (res.error) throw res.error;
+            var result = res.data[0];
+            body.innerHTML = '<p class="msg-success">Nộp bài thành công! Điểm: ' + result.score + '/' + result.max_score + '</p>' +
+              '<p><a href="/app/dashboard.html">Quay lại Dashboard</a></p>';
+          }).catch(function (err) {
+            document.getElementById('quiz-error').textContent = err.message || 'Có lỗi khi nộp bài.';
+            document.getElementById('quiz-error').style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Nộp bài';
+          });
+        });
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+  })();
+</script>
+</body>
+</html>
