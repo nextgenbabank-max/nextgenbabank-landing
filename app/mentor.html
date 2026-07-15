@@ -96,8 +96,10 @@
           <p style="font-size:1.05rem; font-weight:800; color:var(--navy-ink);" id="mentor-name">—</p>
           <p style="font-size:0.84rem; color:var(--text-soft); margin-top:2px;" id="mentor-role">—</p>
         </div>
-        <div class="info-line" style="border-top:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><div class="l">Thời gian phản hồi</div><div class="v">Trong vòng 24 giờ</div></div></div>
-        <a class="btn btn-gold" href="schedule.html" style="width:100%; justify-content:center; margin-top:1.1rem;"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Đặt lịch 1:1</a>
+        <button class="btn btn-outline" id="view-profile-btn" type="button" style="width:100%; justify-content:center;">Xem hồ sơ</button>
+        <div id="mentor-profile-detail" style="display:none; margin-top:0.9rem;">
+          <div class="info-line" style="border-top:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><div><div class="v" id="mentor-email">–</div></div></div>
+        </div>
       </div>
 
       <div class="card chat-card" id="chat">
@@ -108,9 +110,11 @@
         </div>
         <div class="chat-input-row">
           <button class="chat-round-btn attach" id="chat-attach" aria-label="Đính kèm file"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.4 11.1 12.5 20a5 5 0 0 1-7-7l9-9a3.5 3.5 0 0 1 5 5l-9 9a2 2 0 0 1-3-3l8-8"/></svg></button>
+          <input type="file" id="chat-file-input" style="display:none;" />
           <input type="text" id="chat-input" placeholder="Nhập tin nhắn cho mentor..." />
           <button class="chat-round-btn send" id="chat-send" aria-label="Gửi"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" stroke="none"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg></button>
         </div>
+        <p id="chat-upload-status" style="display:none; font-size:0.78rem; color:var(--text-soft); margin-top:0.4rem;"></p>
       </div>
 
       <div class="stack">
@@ -200,16 +204,27 @@
     loadChat(currentUserId);
   });
 
+  var currentMentorUserId = null;
   function loadMentorInfo() {
-    window.sb.from('mentors').select('full_name,role_title,avatar_initials').limit(1).then(function (res) {
+    window.sb.from('mentors').select('full_name,role_title,avatar_initials,user_id').limit(1).then(function (res) {
       var m = (res.data || [])[0];
       if (!m) return;
       mentorAvatarInitials = m.avatar_initials || 'GV';
+      currentMentorUserId = m.user_id;
       document.getElementById('mentor-name').textContent = m.full_name;
       document.getElementById('mentor-role').textContent = m.role_title || '';
       document.getElementById('mentor-initials').textContent = mentorAvatarInitials;
     });
   }
+  document.getElementById('view-profile-btn').addEventListener('click', function () {
+    var detail = document.getElementById('mentor-profile-detail');
+    if (detail.style.display === 'block') { detail.style.display = 'none'; return; }
+    detail.style.display = 'block';
+    if (!currentMentorUserId) return;
+    window.sb.from('profiles').select('email').eq('id', currentMentorUserId).single().then(function (res) {
+      document.getElementById('mentor-email').textContent = (res.data && res.data.email) || '–';
+    });
+  });
 
   function loadNextSession(userId) {
     window.sb.from('class_sessions').select('title,scheduled_at').eq('session_type', 'one-on-one').gte('scheduled_at', new Date().toISOString()).order('scheduled_at').limit(1).then(function (res) {
@@ -242,9 +257,10 @@
         var mine = m.sender_id === userId;
         var initials = mine ? myInitials : mentorAvatarInitials;
         var bg = mine ? 'var(--navy)' : 'var(--gold-grad)';
+        var fileHtml = m.file_url ? '<div class="chat-file-card" style="display:flex; align-items:center; gap:8px; background:var(--bg-soft); border:1px solid var(--border); border-radius:10px; padding:8px 10px; margin-top:6px; font-size:0.8rem;"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg><span style="flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:700; color:var(--navy-ink);">' + escapeHtml(m.file_name || 'Tệp đính kèm') + '</span><a href="' + escapeHtml(m.file_url) + '" target="_blank" rel="noopener" title="Tải xuống"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg></a></div>' : '';
         return '<div class="chat-msg' + (mine ? ' mine' : '') + '">' +
           '<span class="avatar" style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:0.66rem;font-weight:800;background:' + bg + ';">' + escapeHtml(initials) + '</span>' +
-          '<div class="col"><div class="bubble">' + escapeHtml(m.body) + '</div><div class="time">' + fmtTime(m.created_at) + (mine ? checkSvg : '') + '</div></div>' +
+          '<div class="col"><div class="bubble">' + (m.body ? escapeHtml(m.body) : '') + fileHtml + '</div><div class="time">' + fmtTime(m.created_at) + (mine ? checkSvg : '') + '</div></div>' +
           '</div>';
       }).join('');
       win.scrollTop = win.scrollHeight;
@@ -252,19 +268,19 @@
       recentBox.innerHTML = messages.slice(-3).reverse().map(function (m) {
         var mine = m.sender_id === userId;
         var who = mine ? 'Bạn' : 'Mentor';
-        var snippet = m.body.length > 46 ? m.body.slice(0, 46) + '…' : m.body;
+        var snippet = m.body ? (m.body.length > 46 ? m.body.slice(0, 46) + '…' : m.body) : '[Tệp đính kèm] ' + (m.file_name || '');
         return '<div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg></span>' +
           '<p><b>' + who + ':</b> ' + escapeHtml(snippet) + '<br><span class="t">' + fmtTime(m.created_at) + '</span></p></div>';
       }).join('');
     }
 
-    window.sb.from('messages').select('id,sender_id,body,created_at').eq('student_id', userId).order('created_at').then(function (res) {
+    window.sb.from('messages').select('id,sender_id,body,created_at,file_url,file_name,file_size').eq('student_id', userId).order('created_at').then(function (res) {
       renderMessages(res.data || []);
     });
 
     window.sb.channel('chat-' + userId)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: 'student_id=eq.' + userId }, function () {
-        window.sb.from('messages').select('id,sender_id,body,created_at').eq('student_id', userId).order('created_at').then(function (res) {
+        window.sb.from('messages').select('id,sender_id,body,created_at,file_url,file_name,file_size').eq('student_id', userId).order('created_at').then(function (res) {
           renderMessages(res.data || []);
         });
       })
@@ -279,6 +295,32 @@
         if (res.error) alert('Không gửi được: ' + res.error.message);
       });
     }
+
+    document.getElementById('chat-attach').addEventListener('click', function () {
+      document.getElementById('chat-file-input').click();
+    });
+    document.getElementById('chat-file-input').addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      var statusEl = document.getElementById('chat-upload-status');
+      statusEl.style.display = 'block';
+      statusEl.textContent = 'Đang tải file lên...';
+      var path = userId + '/' + Date.now() + '-' + file.name;
+      window.sb.storage.from('chat-attachments').upload(path, file).then(function (upRes) {
+        if (upRes.error) { statusEl.textContent = 'Lỗi tải file: ' + upRes.error.message; return; }
+        return window.sb.storage.from('chat-attachments').createSignedUrl(path, 60 * 60 * 24 * 365).then(function (urlRes) {
+          if (urlRes.error) { statusEl.textContent = 'Lỗi lấy link file: ' + urlRes.error.message; return; }
+          return window.sb.from('messages').insert({
+            student_id: userId, sender_id: userId, body: '',
+            file_url: urlRes.data.signedUrl, file_name: file.name, file_size: file.size
+          }).then(function (res) {
+            statusEl.style.display = 'none';
+            if (res.error) alert('Không gửi được file: ' + res.error.message);
+          });
+        });
+      });
+    });
     document.getElementById('chat-send').addEventListener('click', send);
     document.getElementById('chat-input').addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
   }
