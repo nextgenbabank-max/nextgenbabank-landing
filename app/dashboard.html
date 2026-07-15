@@ -225,7 +225,11 @@
   });
 
   function checkMentorThenInit(session) {
-    window.sb.from('profiles').select('is_mentor').eq('id', session.user.id).single().then(function (res) {
+    window.sb.from('profiles').select('is_admin,is_mentor').eq('id', session.user.id).single().then(function (res) {
+      if (res.data && res.data.is_admin) {
+        window.location.href = '/app/admin.html';
+        return;
+      }
       if (res.data && res.data.is_mentor) {
         window.location.href = '/app/mentor-inbox.html';
         return;

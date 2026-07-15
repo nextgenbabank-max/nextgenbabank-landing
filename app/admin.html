@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quản trị — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .admin-shell { max-width: 1200px; margin: 1.5rem auto; padding: 0 1.25rem; }
+  .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .admin-tabs button { padding: 0.6em 1.2em; border-radius: 9px; border: 1.5px solid var(--border); background: var(--card); color: var(--text-body); font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+  .admin-tabs button.active { background: var(--gold-grad); color: #fff; border-color: transparent; }
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+  .split { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.2rem; align-items: start; }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+  .row-click { cursor: pointer; }
+  .row-click:hover { background: var(--bg-soft); }
+  .pct-tag { font-size: 0.78rem; font-weight: 700; color: var(--gold-dark); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="admin.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Quản trị hệ thống</div></span>
+    </a>
+    <div style="flex:1;"></div>
+    <div class="topbar-actions">
+      <div class="user-trigger">
+        <span class="avatar" id="user-avatar">AD</span>
+        <span class="meta"><span class="u-name" id="user-name">Admin</span><span class="u-role">Quản trị viên</span></span>
+      </div>
+      <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
+    </div>
+  </div>
+</header>
+
+<div class="admin-shell">
+  <div class="admin-tabs">
+    <button class="active" data-tab="students">Học viên</button>
+    <button data-tab="mentors">Mentor</button>
+    <button data-tab="classes">Lớp học</button>
+  </div>
+
+  <!-- TAB: Học viên -->
+  <div class="admin-panel active" id="tab-students">
+    <div class="split">
+      <div class="card">
+        <div class="card-head"><h2>Danh sách học viên</h2></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Họ tên</th><th>Email</th><th>Lớp</th><th>Tiến độ</th></tr></thead>
+            <tbody id="students-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2 id="student-detail-title">Chọn 1 học viên</h2></div>
+        <div id="student-detail-body"><p style="color:var(--text-soft); font-size:0.85rem;">Chưa chọn học viên nào.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Mentor -->
+  <div class="admin-panel" id="tab-mentors">
+    <div class="split">
+      <div class="card">
+        <div class="card-head"><h2>Danh sách mentor</h2></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Tên</th><th>Vai trò</th><th>Tài khoản</th><th>Liên kết</th></tr></thead>
+            <tbody id="mentors-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Thêm mentor mới</h2></div>
+        <form id="mentor-form">
+          <div class="tfield"><label for="m-name">Họ và tên</label><input id="m-name" type="text" required /></div>
+          <div class="tfield"><label for="m-role">Vai trò</label><input id="m-role" type="text" placeholder="vd Senior BA" /></div>
+          <div class="tfield"><label for="m-initials">Chữ viết tắt avatar</label><input id="m-initials" type="text" maxlength="2" placeholder="vd MT" /></div>
+          <button class="btn btn-gold" type="submit">Thêm mentor</button>
+          <p class="msg-error" id="mentor-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Lớp học -->
+  <div class="admin-panel" id="tab-classes">
+    <div class="split">
+      <div class="card">
+        <div class="card-head"><h2>Danh sách lớp học</h2></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Tên lớp</th><th>Mentor phụ trách</th><th>Số học viên</th></tr></thead>
+            <tbody id="classes-tbody"><tr><td colspan="3" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+        <div class="ud-divider" style="margin:1rem 0;"></div>
+        <form id="class-form" style="display:flex; gap:0.6rem; flex-wrap:wrap; align-items:flex-end;">
+          <div class="tfield" style="margin:0; flex:1; min-width:180px;"><label for="c-name">Tên lớp mới</label><input id="c-name" type="text" required /></div>
+          <div class="tfield" style="margin:0; flex:1; min-width:180px;"><label for="c-mentor">Mentor phụ trách</label><select id="c-mentor"><option value="">-- Chưa gán --</option></select></div>
+          <button class="btn btn-gold" type="submit">Tạo lớp</button>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2 id="class-detail-title">Chọn 1 lớp</h2></div>
+        <div id="class-detail-body"><p style="color:var(--text-soft); font-size:0.85rem;">Chưa chọn lớp nào.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function initialsOf(name) {
+    return (name || 'HV').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || 'HV';
+  }
+  function fmtDate(iso) { return new Date(iso).toLocaleDateString('vi-VN'); }
+
+  document.getElementById('logout-btn').addEventListener('click', signOut);
+
+  document.querySelectorAll('.admin-tabs button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.admin-tabs button').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.admin-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_admin,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_admin) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      var name = res.data.full_name || session.user.email;
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-avatar').textContent = initialsOf(name);
+      loadStudents();
+      loadMentors();
+      loadClasses();
+    });
+  });
+
+  // ---------- Học viên ----------
+  var allStudents = [], allPhasesGlobal = [];
+
+  function loadStudents() {
+    Promise.all([
+      window.sb.from('profiles').select('id,full_name,email').eq('is_admin', false).eq('is_mentor', false),
+      window.sb.from('class_members').select('class_id,student_id'),
+      window.sb.from('classes').select('id,name'),
+      window.sb.from('phases').select('id,title,order_index').order('order_index'),
+      window.sb.from('modules').select('id,phase_id'),
+      window.sb.from('assignments').select('id,phase_id'),
+      window.sb.from('module_progress').select('module_id,user_id,completed'),
+      window.sb.from('submissions').select('assignment_id,user_id,graded')
+    ]).then(function (r) {
+      var profiles = r[0].data || [];
+      var members = r[1].data || [];
+      var classes = r[2].data || [];
+      var phases = r[3].data || [];
+      var modules = r[4].data || [];
+      var assignments = r[5].data || [];
+      var moduleProgress = r[6].data || [];
+      var submissions = r[7].data || [];
+      allPhasesGlobal = phases;
+
+      var classById = {};
+      classes.forEach(function (c) { classById[c.id] = c; });
+      var classByStudent = {};
+      members.forEach(function (m) { classByStudent[m.student_id] = classById[m.class_id]; });
+
+      allStudents = profiles.map(function (p) {
+        var myModuleProgress = moduleProgress.filter(function (mp) { return mp.user_id === p.id; });
+        var mySubmissions = submissions.filter(function (s) { return s.user_id === p.id; });
+        var progressByModule = {};
+        myModuleProgress.forEach(function (mp) { progressByModule[mp.module_id] = mp.completed; });
+        var gradedByAssignment = {};
+        mySubmissions.forEach(function (s) { if (s.graded) gradedByAssignment[s.assignment_id] = true; });
+
+        var pctByPhase = phases.map(function (phase) {
+          var pm = modules.filter(function (m) { return m.phase_id === phase.id; });
+          var pa = assignments.filter(function (a) { return a.phase_id === phase.id; });
+          var total = pm.length + pa.length;
+          var done = pm.filter(function (m) { return progressByModule[m.id]; }).length + pa.filter(function (a) { return gradedByAssignment[a.id]; }).length;
+          return total ? Math.round(done / total * 100) : 0;
+        });
+        var overall = pctByPhase.length ? Math.round(pctByPhase.reduce(function (a, b) { return a + b; }, 0) / pctByPhase.length) : 0;
+
+        return { id: p.id, name: p.full_name || p.email, email: p.email, cls: classByStudent[p.id], pct: overall };
+      });
+
+      renderStudentsTable();
+    });
+  }
+
+  function renderStudentsTable() {
+    var tbody = document.getElementById('students-tbody');
+    if (allStudents.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</td></tr>'; return; }
+    tbody.innerHTML = allStudents.map(function (s) {
+      return '<tr class="row-click" data-student="' + s.id + '">' +
+        '<td>' + escapeHtml(s.name) + '</td>' +
+        '<td>' + escapeHtml(s.email || '') + '</td>' +
+        '<td>' + (s.cls ? escapeHtml(s.cls.name) : '<span style="color:var(--text-soft);">Chưa có lớp</span>') + '</td>' +
+        '<td><span class="pct-tag">' + s.pct + '%</span></td>' +
+        '</tr>';
+    }).join('');
+    tbody.querySelectorAll('[data-student]').forEach(function (row) {
+      row.addEventListener('click', function () { openStudentDetail(row.getAttribute('data-student')); });
+    });
+  }
+
+  function openStudentDetail(studentId) {
+    var student = allStudents.find(function (s) { return s.id === studentId; });
+    document.getElementById('student-detail-title').textContent = student ? student.name : '';
+    var body = document.getElementById('student-detail-body');
+    body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+
+    Promise.all([
+      window.sb.from('modules').select('id,title,order_index').order('order_index'),
+      window.sb.from('module_progress').select('module_id,completed').eq('user_id', studentId),
+      window.sb.from('class_sessions').select('id,title,scheduled_at').order('scheduled_at', { ascending: false }).limit(10),
+      window.sb.from('class_session_registrations').select('session_id,attended').eq('user_id', studentId)
+    ]).then(function (r) {
+      var modules = r[0].data || [];
+      var moduleProgress = r[1].data || [];
+      var sessions = r[2].data || [];
+      var regs = r[3].data || [];
+
+      var progressByModule = {};
+      moduleProgress.forEach(function (mp) { progressByModule[mp.module_id] = mp.completed; });
+      var attendedBySession = {};
+      regs.forEach(function (r2) { attendedBySession[r2.session_id] = r2.attended; });
+
+      var html = '<p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; margin-bottom:0.5rem;">Buổi học</p>';
+      html += modules.map(function (m) {
+        var done = !!progressByModule[m.id];
+        return '<label class="toggle-row"><span class="t" style="font-weight:600;">' + escapeHtml(m.title) + '</span><input type="checkbox" data-module="' + m.id + '" ' + (done ? 'checked' : '') + ' /></label>';
+      }).join('');
+
+      html += '<p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; margin:1rem 0 0.5rem;">Điểm danh buổi Meet gần đây</p>';
+      html += sessions.map(function (s) {
+        var attended = !!attendedBySession[s.id];
+        return '<label class="toggle-row"><span class="t" style="font-weight:600;">' + escapeHtml(s.title) + ' <span style="color:var(--text-soft); font-weight:400;">(' + fmtDate(s.scheduled_at) + ')</span></span><input type="checkbox" data-session="' + s.id + '" ' + (attended ? 'checked' : '') + ' /></label>';
+      }).join('') || '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào.</p>';
+
+      body.innerHTML = html;
+
+      body.querySelectorAll('[data-module]').forEach(function (chk) {
+        chk.addEventListener('change', function () {
+          var moduleId = chk.getAttribute('data-module');
+          window.sb.from('module_progress').upsert({ user_id: studentId, module_id: moduleId, completed: chk.checked, completed_at: chk.checked ? new Date().toISOString() : null }, { onConflict: 'user_id,module_id' }).then(function (res) {
+            if (res.error) alert('Lỗi: ' + res.error.message);
+          });
+        });
+      });
+      body.querySelectorAll('[data-session]').forEach(function (chk) {
+        chk.addEventListener('change', function () {
+          var sessionId = chk.getAttribute('data-session');
+          window.sb.from('class_session_registrations').upsert({ user_id: studentId, session_id: sessionId, attended: chk.checked }, { onConflict: 'session_id,user_id' }).then(function (res) {
+            if (res.error) alert('Lỗi: ' + res.error.message);
+          });
+        });
+      });
+    });
+  }
+
+  // ---------- Mentor ----------
+  var allMentors = [];
+
+  function loadMentors() {
+    window.sb.from('mentors').select('id,full_name,role_title,avatar_initials,avatar_color,user_id').then(function (res) {
+      allMentors = res.data || [];
+      renderMentorsTable();
+      renderClassMentorOptions();
+    });
+  }
+
+  function renderMentorsTable() {
+    var tbody = document.getElementById('mentors-tbody');
+    if (allMentors.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có mentor nào.</td></tr>'; return; }
+    tbody.innerHTML = allMentors.map(function (m) {
+      var linked = !!m.user_id;
+      return '<tr>' +
+        '<td>' + escapeHtml(m.full_name) + '</td>' +
+        '<td>' + escapeHtml(m.role_title || '') + '</td>' +
+        '<td>' + (linked ? '<span class="badge b-done">Đã liên kết</span>' : '<span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa liên kết</span>') + '</td>' +
+        '<td>' + (linked ? '—' : '<input type="email" placeholder="email tài khoản..." data-link-email="' + m.id + '" style="width:150px; padding:4px 6px; border:1px solid var(--border); border-radius:6px; font-size:0.78rem;" /> <button class="row-action-btn" data-link-btn="' + m.id + '">Liên kết</button>') +
+        '</td>' +
+        '</tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-link-btn]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var mentorId = btn.getAttribute('data-link-btn');
+        var input = tbody.querySelector('[data-link-email="' + mentorId + '"]');
+        var email = input.value.trim();
+        if (!email) return;
+        window.sb.rpc('admin_link_mentor_account', { p_mentor_id: mentorId, p_email: email }).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          if (res.data === false) { alert('Không tìm thấy tài khoản với email này. Yêu cầu người đó đăng ký trước qua trang đăng nhập.'); return; }
+          alert('Liên kết thành công!');
+          loadMentors();
+        });
+      });
+    });
+  }
+
+  document.getElementById('mentor-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var errorOut = document.getElementById('mentor-error');
+    errorOut.style.display = 'none';
+    var payload = {
+      full_name: document.getElementById('m-name').value.trim(),
+      role_title: document.getElementById('m-role').value.trim(),
+      avatar_initials: document.getElementById('m-initials').value.trim() || undefined
+    };
+    window.sb.from('mentors').insert(payload).then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('mentor-form').reset();
+      loadMentors();
+    });
+  });
+
+  // ---------- Lớp học ----------
+  var allClasses = [];
+
+  function renderClassMentorOptions() {
+    var select = document.getElementById('c-mentor');
+    select.innerHTML = '<option value="">-- Chưa gán --</option>' + allMentors.map(function (m) {
+      return '<option value="' + m.id + '">' + escapeHtml(m.full_name) + '</option>';
+    }).join('');
+  }
+
+  function loadClasses() {
+    Promise.all([
+      window.sb.from('classes').select('id,name,description,mentor_id'),
+      window.sb.from('class_members').select('class_id,student_id')
+    ]).then(function (r) {
+      allClasses = r[0].data || [];
+      var members = r[1].data || [];
+      var countByClass = {};
+      members.forEach(function (m) { countByClass[m.class_id] = (countByClass[m.class_id] || 0) + 1; });
+
+      var tbody = document.getElementById('classes-tbody');
+      if (allClasses.length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="color:var(--text-soft); font-size:0.85rem;">Chưa có lớp nào.</td></tr>'; return; }
+      tbody.innerHTML = allClasses.map(function (c) {
+        var mentor = allMentors.find(function (m) { return m.id === c.mentor_id; });
+        return '<tr class="row-click" data-class="' + c.id + '">' +
+          '<td>' + escapeHtml(c.name) + '</td>' +
+          '<td>' + (mentor ? escapeHtml(mentor.full_name) : '<span style="color:var(--text-soft);">Chưa gán</span>') + '</td>' +
+          '<td>' + (countByClass[c.id] || 0) + '</td>' +
+          '</tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-class]').forEach(function (row) {
+        row.addEventListener('click', function () { openClassDetail(row.getAttribute('data-class')); });
+      });
+    });
+  }
+
+  document.getElementById('class-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('c-name').value.trim();
+    var mentorId = document.getElementById('c-mentor').value || null;
+    if (!name) return;
+    window.sb.from('classes').insert({ name: name, mentor_id: mentorId }).then(function (res) {
+      if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+      document.getElementById('class-form').reset();
+      loadClasses();
+    });
+  });
+
+  function openClassDetail(classId) {
+    var cls = allClasses.find(function (c) { return c.id === classId; });
+    document.getElementById('class-detail-title').textContent = cls ? cls.name : '';
+    var body = document.getElementById('class-detail-body');
+    body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+
+    Promise.all([
+      window.sb.from('class_members').select('id,student_id').eq('class_id', classId),
+      window.sb.from('profiles').select('id,full_name,email').eq('is_admin', false).eq('is_mentor', false)
+    ]).then(function (r) {
+      var members = r[0].data || [];
+      var allProfiles = r[1].data || [];
+      var memberIds = members.map(function (m) { return m.student_id; });
+      var notInClass = allProfiles.filter(function (p) { return memberIds.indexOf(p.id) === -1; });
+
+      var html = '<p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; margin-bottom:0.5rem;">Học viên trong lớp</p>';
+      if (members.length === 0) {
+        html += '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</p>';
+      } else {
+        html += members.map(function (m) {
+          var p = allProfiles.find(function (pp) { return pp.id === m.student_id; }) || { full_name: m.student_id };
+          return '<div class="toggle-row"><span class="t" style="font-weight:600;">' + escapeHtml(p.full_name || p.email) + '</span><button class="row-action-btn" data-remove-member="' + m.id + '">Xoá khỏi lớp</button></div>';
+        }).join('');
+      }
+
+      html += '<p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; margin:1rem 0 0.5rem;">Thêm học viên vào lớp</p>';
+      if (notInClass.length === 0) {
+        html += '<p style="color:var(--text-soft); font-size:0.85rem;">Tất cả học viên đã ở trong lớp này.</p>';
+      } else {
+        html += '<select id="add-member-select" style="width:100%; padding:0.6em; border-radius:8px; border:1px solid var(--border); margin-bottom:0.6rem;">' +
+          notInClass.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.full_name || p.email) + '</option>'; }).join('') +
+          '</select><button class="btn btn-gold btn-sm" id="add-member-btn">Thêm vào lớp</button>';
+      }
+
+      body.innerHTML = html;
+
+      body.querySelectorAll('[data-remove-member]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          window.sb.from('class_members').delete().eq('id', btn.getAttribute('data-remove-member')).then(function (res) {
+            if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+            openClassDetail(classId);
+            loadClasses();
+          });
+        });
+      });
+      var addBtn = document.getElementById('add-member-btn');
+      if (addBtn) {
+        addBtn.addEventListener('click', function () {
+          var studentId = document.getElementById('add-member-select').value;
+          window.sb.from('class_members').insert({ class_id: classId, student_id: studentId }).then(function (res) {
+            if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+            openClassDetail(classId);
+            loadClasses();
+          });
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>
