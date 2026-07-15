@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lớp học của tôi — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .row-click { cursor: pointer; }
+  .row-click:hover { background: var(--bg-soft); }
+</style>
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <a class="t-brand" href="mentor-dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">GV</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Giảng viên</div>
+        <div class="name" id="user-name">–</div>
+        <div class="online"><span class="d"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="mentor-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="mentor-classes.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="mentor-dashboard.html#meet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg>Link Google Meet</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="teacher-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
+      <a href="teacher-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
+      <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Hộp thư học viên</a>
+      <div class="t-nav-divider"></div>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu</a>
+      <a href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
+    </nav>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div class="t-topbar-actions">
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">GV</span>
+            <span class="meta"><span class="u-name" id="user-name-2">–</span><span class="u-role">Giảng viên</span></span>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head">
+        <div>
+          <h1>Lớp học của tôi</h1>
+          <p class="d">Danh sách các lớp bạn phụ trách giảng dạy, học viên và lịch buổi học.</p>
+        </div>
+      </div>
+
+      <div class="grid-main-side" id="cls-grid">
+        <div class="card">
+          <div class="card-head"><h2 id="cls-list-title">Danh sách lớp học</h2></div>
+          <div class="table-wrap">
+            <table class="data-table" id="cls-table">
+              <thead><tr><th>Tên lớp</th><th>Mã lớp</th><th>Số học viên</th><th>Thời gian</th><th>Trạng thái</th></tr></thead>
+              <tbody id="cls-tbody"><tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" id="detail-panel" style="display:none;">
+          <a href="#" class="more" id="detail-close" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Đóng</a>
+          <p id="d-name" style="font-size:1.05rem; font-weight:800; color:var(--navy-ink); margin-bottom:0.3rem;">–</p>
+          <span class="badge b-progress" id="d-status">–</span>
+
+          <div class="info-line" style="border-top:none; margin-top:0.8rem;"><span class="l" style="flex:1;">Mã lớp</span><span class="v" id="d-code">–</span></div>
+          <div class="info-line"><span class="l" style="flex:1;">Thời gian</span><span class="v" id="d-dates">–</span></div>
+          <div class="info-line"><span class="l" style="flex:1;">Tiến độ tổng thể</span><span class="v" id="d-progress">–</span></div>
+
+          <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Danh sách học viên (<span id="d-roster-count">0</span>)</p>
+          <div class="table-wrap">
+            <table class="data-table" id="d-roster-table">
+              <thead><tr><th>Họ và tên</th><th>Email</th><th>Tiến độ</th></tr></thead>
+              <tbody id="d-roster-tbody"></tbody>
+            </table>
+          </div>
+
+          <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Buổi học</p>
+          <div class="table-wrap">
+            <table class="data-table" id="d-sessions-table">
+              <thead><tr><th>Ngày giờ</th><th>Kết thúc</th><th>Phòng/Hình thức</th><th>Link Meet</th><th></th></tr></thead>
+              <tbody id="d-sessions-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="card" id="session-edit-card" style="display:none; margin-top:0.9rem; box-shadow:none; border:1px solid var(--border);">
+            <div class="card-head"><h2 style="font-size:0.9rem;">Sửa buổi học</h2></div>
+            <input type="hidden" id="se-id" />
+            <div class="grid-2" style="gap:0.8rem 1rem;">
+              <div class="tfield"><label for="se-time">Giờ bắt đầu</label><input id="se-time" type="datetime-local" /></div>
+              <div class="tfield"><label for="se-end">Giờ kết thúc</label><input id="se-end" type="datetime-local" /></div>
+            </div>
+            <div class="grid-2" style="gap:0.8rem 1rem;">
+              <div class="tfield"><label for="se-room">Phòng học (nếu offline)</label><input id="se-room" type="text" /></div>
+              <div class="tfield">
+                <label for="se-mode">Hình thức</label>
+                <select id="se-mode"><option value="online">Online</option><option value="offline">Offline</option><option value="hybrid">Kết hợp</option></select>
+              </div>
+            </div>
+            <div class="tfield"><label for="se-link">Link Google Meet</label><input id="se-link" type="url" /></div>
+            <p class="msg-error" id="se-error" style="display:none; color:var(--danger); font-size:0.82rem;"></p>
+            <div style="display:flex; gap:0.6rem;">
+              <button class="btn btn-outline btn-sm" id="se-cancel-btn" type="button">Huỷ</button>
+              <button class="btn btn-gold btn-sm" id="se-save-btn" type="button">Lưu thay đổi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>@media (max-width: 1180px) { #cls-grid { grid-template-columns: 1fr !important; } }</style>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+  document.getElementById('logout-btn').addEventListener('click', signOut);
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDate(d) { return d ? new Date(d).toLocaleDateString('vi-VN') : '–'; }
+  function fmtDateTime(iso) {
+    if (!iso) return '–';
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+  function toLocalInputValue(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
+
+  var myMentorId = null;
+  var myClasses = [];
+  var allSessionsByClass = {};
+  var selectedClassId = null;
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_mentor,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_mentor) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      var name = res.data.full_name || session.user.email;
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-2').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'GV';
+      document.getElementById('user-avatar-2').textContent = initials || 'GV';
+
+      window.sb.from('mentors').select('id').eq('user_id', session.user.id).single().then(function (mRes) {
+        if (mRes.error || !mRes.data) {
+          document.getElementById('cls-tbody').innerHTML = '<tr><td colspan="5" style="color:var(--danger); font-size:0.85rem;">Không tìm thấy hồ sơ giảng viên gắn với tài khoản này. Liên hệ Admin để được gán.</td></tr>';
+          return;
+        }
+        myMentorId = mRes.data.id;
+        loadClasses();
+      });
+    });
+  });
+
+  function loadClasses() {
+    window.sb.from('classes').select('id,name,code,mode,status,start_date,end_date').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (clsRes) {
+      myClasses = clsRes.data || [];
+      var classIds = myClasses.map(function (c) { return c.id; });
+      var membersP = classIds.length ? window.sb.from('class_members').select('class_id,student_id') .in('class_id', classIds) : Promise.resolve({ data: [] });
+      var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,class_id,title,scheduled_at,ends_at,meet_link,mode,room').in('class_id', classIds).order('scheduled_at') : Promise.resolve({ data: [] });
+      Promise.all([membersP, sessionsP]).then(function (r) {
+        var members = r[0].data || [];
+        var sessions = r[1].data || [];
+        var membersByClass = {};
+        members.forEach(function (m) { (membersByClass[m.class_id] = membersByClass[m.class_id] || []).push(m.student_id); });
+        myClasses.forEach(function (c) { c._members = membersByClass[c.id] || []; });
+        allSessionsByClass = {};
+        sessions.forEach(function (s) { (allSessionsByClass[s.class_id] = allSessionsByClass[s.class_id] || []).push(s); });
+        renderClassTable();
+        if (selectedClassId) openDetail(selectedClassId);
+      });
+    });
+  }
+
+  function classStatusBadge(c) {
+    if (c.status === 'draft') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Nháp</span>';
+    if (c.status === 'archived') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Đã lưu trữ</span>';
+    var today = new Date().toISOString().slice(0, 10);
+    if (c.start_date && today < c.start_date) return '<span class="badge b-progress">Chờ bắt đầu</span>';
+    if (c.end_date && today > c.end_date) return '<span class="badge b-done">Hoàn thành</span>';
+    return '<span class="badge" style="background:var(--green-soft); color:var(--green);">Đang học</span>';
+  }
+
+  function renderClassTable() {
+    document.getElementById('cls-list-title').textContent = 'Danh sách lớp học (' + myClasses.length + ')';
+    var tbody = document.getElementById('cls-tbody');
+    if (myClasses.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Bạn chưa được phân công lớp học nào.</td></tr>'; return; }
+    tbody.innerHTML = myClasses.map(function (c) {
+      return '<tr class="row-click" data-id="' + c.id + '">' +
+        '<td>' + escapeHtml(c.name) + '</td>' +
+        '<td>' + escapeHtml(c.code || '–') + '</td>' +
+        '<td>' + c._members.length + '</td>' +
+        '<td>' + fmtDate(c.start_date) + ' – ' + fmtDate(c.end_date) + '</td>' +
+        '<td>' + classStatusBadge(c) + '</td></tr>';
+    }).join('');
+    tbody.querySelectorAll('tr[data-id]').forEach(function (row) {
+      row.addEventListener('click', function () { openDetail(row.getAttribute('data-id')); });
+    });
+  }
+
+  function computeProgressForStudents(studentIds) {
+    if (studentIds.length === 0) return Promise.resolve({});
+    return Promise.all([
+      window.sb.from('phases').select('id'),
+      window.sb.from('modules').select('id,phase_id'),
+      window.sb.from('assignments').select('id,phase_id'),
+      window.sb.from('module_progress').select('user_id,module_id,completed').in('user_id', studentIds),
+      window.sb.from('submissions').select('user_id,assignment_id,graded').in('user_id', studentIds)
+    ]).then(function (r) {
+      var phases = r[0].data || [];
+      var modules = r[1].data || [];
+      var assignments = r[2].data || [];
+      var moduleProgress = r[3].data || [];
+      var submissions = r[4].data || [];
+      var pctByStudent = {};
+      studentIds.forEach(function (uid) {
+        var progressByModule = {};
+        moduleProgress.filter(function (p) { return p.user_id === uid; }).forEach(function (p) { progressByModule[p.module_id] = p.completed; });
+        var subByAssignment = {};
+        submissions.filter(function (s) { return s.user_id === uid; }).forEach(function (s) { subByAssignment[s.assignment_id] = s; });
+        var pctByPhase = phases.map(function (phase) {
+          var phaseModules = modules.filter(function (m) { return m.phase_id === phase.id; });
+          var phaseAssignments = assignments.filter(function (a) { return a.phase_id === phase.id; });
+          var total = phaseModules.length + phaseAssignments.length;
+          var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length +
+            phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+          return total ? Math.round(done / total * 100) : 0;
+        });
+        pctByStudent[uid] = pctByPhase.length ? Math.round(pctByPhase.reduce(function (s, p) { return s + p; }, 0) / pctByPhase.length) : 0;
+      });
+      return pctByStudent;
+    });
+  }
+
+  function openDetail(classId) {
+    selectedClassId = classId;
+    var c = myClasses.find(function (x) { return x.id === classId; });
+    if (!c) return;
+    document.getElementById('detail-panel').style.display = 'block';
+    document.getElementById('session-edit-card').style.display = 'none';
+    document.getElementById('d-name').textContent = c.name;
+    var statusEl = document.getElementById('d-status');
+    statusEl.outerHTML = classStatusBadge(c).replace('<span', '<span id="d-status"');
+    document.getElementById('d-code').textContent = c.code || '–';
+    document.getElementById('d-dates').textContent = fmtDate(c.start_date) + ' – ' + fmtDate(c.end_date);
+    document.getElementById('d-progress').textContent = 'Đang tính...';
+
+    window.sb.from('profiles').select('id,full_name,email').in('id', c._members.length ? c._members : ['00000000-0000-0000-0000-000000000000']).then(function (pRes) {
+      var roster = c._members.length ? (pRes.data || []) : [];
+      document.getElementById('d-roster-count').textContent = roster.length;
+      var rosterTbody = document.getElementById('d-roster-tbody');
+      if (roster.length === 0) {
+        rosterTbody.innerHTML = '<tr><td colspan="3" style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</td></tr>';
+      } else {
+        rosterTbody.innerHTML = roster.map(function (s) {
+          return '<tr><td>' + escapeHtml(s.full_name || '(chưa đặt tên)') + '</td><td>' + escapeHtml(s.email || '') + '</td><td class="roster-pct" data-uid="' + s.id + '">–</td></tr>';
+        }).join('');
+      }
+      var studentIds = roster.map(function (s) { return s.id; });
+      computeProgressForStudents(studentIds).then(function (pctByStudent) {
+        document.querySelectorAll('.roster-pct').forEach(function (cell) {
+          var uid = cell.getAttribute('data-uid');
+          cell.textContent = (pctByStudent[uid] || 0) + '%';
+        });
+        var vals = studentIds.map(function (uid) { return pctByStudent[uid] || 0; });
+        var overall = vals.length ? Math.round(vals.reduce(function (s, v) { return s + v; }, 0) / vals.length) : 0;
+        document.getElementById('d-progress').textContent = vals.length ? overall + '%' : 'Chưa có học viên';
+      });
+    });
+
+    renderSessionsTable(classId);
+  }
+
+  function renderSessionsTable(classId) {
+    var sessions = allSessionsByClass[classId] || [];
+    var tbody = document.getElementById('d-sessions-tbody');
+    if (sessions.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = sessions.map(function (s) {
+      return '<tr>' +
+        '<td>' + fmtDateTime(s.scheduled_at) + '</td>' +
+        '<td>' + fmtDateTime(s.ends_at) + '</td>' +
+        '<td>' + escapeHtml((s.mode || '') + (s.room ? ' · ' + s.room : '')) + '</td>' +
+        '<td>' + (s.meet_link ? '<a href="' + escapeHtml(s.meet_link) + '" target="_blank" rel="noopener">Mở link</a>' : '<span style="color:var(--text-soft);">Chưa có</span>') + '</td>' +
+        '<td><button class="row-action-btn" data-edit-sess="' + s.id + '">Sửa</button></td></tr>';
+    }).join('');
+    tbody.querySelectorAll('[data-edit-sess]').forEach(function (btn) {
+      btn.addEventListener('click', function () { openSessionEdit(btn.getAttribute('data-edit-sess')); });
+    });
+  }
+
+  function openSessionEdit(sessionId) {
+    var sessions = allSessionsByClass[selectedClassId] || [];
+    var s = sessions.find(function (x) { return x.id === sessionId; });
+    if (!s) return;
+    document.getElementById('se-id').value = s.id;
+    document.getElementById('se-time').value = toLocalInputValue(s.scheduled_at);
+    document.getElementById('se-end').value = toLocalInputValue(s.ends_at);
+    document.getElementById('se-room').value = s.room || '';
+    document.getElementById('se-mode').value = s.mode || 'online';
+    document.getElementById('se-link').value = s.meet_link || '';
+    document.getElementById('se-error').style.display = 'none';
+    document.getElementById('session-edit-card').style.display = 'block';
+  }
+  document.getElementById('se-cancel-btn').addEventListener('click', function () {
+    document.getElementById('session-edit-card').style.display = 'none';
+  });
+  document.getElementById('se-save-btn').addEventListener('click', function () {
+    var id = document.getElementById('se-id').value;
+    var errorOut = document.getElementById('se-error');
+    var timeVal = document.getElementById('se-time').value;
+    var endVal = document.getElementById('se-end').value;
+    var link = document.getElementById('se-link').value.trim();
+    if (link && !/^https?:\/\//.test(link)) {
+      errorOut.textContent = 'Link Meet không hợp lệ (phải bắt đầu bằng http/https).';
+      errorOut.style.display = 'block';
+      return;
+    }
+    var payload = {
+      scheduled_at: timeVal ? new Date(timeVal).toISOString() : null,
+      ends_at: endVal ? new Date(endVal).toISOString() : null,
+      room: document.getElementById('se-room').value.trim(),
+      mode: document.getElementById('se-mode').value,
+      meet_link: link
+    };
+    window.sb.from('class_sessions').update(payload).eq('id', id).then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('session-edit-card').style.display = 'none';
+      loadClasses();
+    });
+  });
+
+  document.getElementById('detail-close').addEventListener('click', function (e) {
+    e.preventDefault();
+    selectedClassId = null;
+    document.getElementById('detail-panel').style.display = 'none';
+  });
+</script>
+</body>
+</html>
