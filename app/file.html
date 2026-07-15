@@ -46,7 +46,7 @@
     function load() {
       Promise.all([
         window.sb.from('assignments').select('id,title,description,max_score').eq('id', assignmentId).single(),
-        window.sb.from('submissions').select('file_path,score,max_score,graded,feedback').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle()
+        window.sb.from('submissions').select('file_path,drive_link,score,max_score,graded,feedback').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle()
       ]).then(function (results) {
         var aRes = results[0], sRes = results[1];
         if (aRes.error || !aRes.data) {
@@ -59,36 +59,83 @@
         var sub = sRes.data;
 
         if (sub && sub.graded) {
+          var submittedLabel = sub.drive_link ? '<a href="' + escapeHtml(sub.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(sub.drive_link) + '</a>' : escapeHtml(fileNameFromPath(sub.file_path));
           body.innerHTML =
             '<p class="msg-success">Đã được chấm: ' + sub.score + '/' + sub.max_score + '</p>' +
             (sub.feedback ? '<div class="card" style="background:var(--bg-soft);"><strong>Nhận xét:</strong><p>' + escapeHtml(sub.feedback) + '</p></div>' : '') +
-            '<p>File đã nộp: ' + escapeHtml(fileNameFromPath(sub.file_path)) + '</p>';
+            '<p>Đã nộp: ' + submittedLabel + '</p>';
           return;
         }
 
+        var isDriveMode = !!(sub && sub.drive_link);
+
         body.innerHTML =
+          '<div class="tabs" style="display:flex; gap:0.6rem; margin-bottom:1rem;">' +
+          '<button type="button" class="btn" id="tab-upload" style="' + (isDriveMode ? 'background:#eee;color:#333;' : '') + '">Upload file</button>' +
+          '<button type="button" class="btn" id="tab-drive" style="' + (isDriveMode ? '' : 'background:#eee;color:#333;') + '">Dán link Google Drive</button>' +
+          '</div>' +
           '<form id="file-form">' +
-          '<div class="field"><label for="f-file">Chọn file (.xlsx, .xls, .docx, .doc, .pdf)</label>' +
-          '<input id="f-file" type="file" accept=".xlsx,.xls,.docx,.doc,.pdf" required /></div>' +
-          '<button class="btn" type="submit" id="submit-btn">' + (sub ? 'Nộp lại file' : 'Nộp file') + '</button>' +
+          '<div class="field" id="upload-field" style="display:' + (isDriveMode ? 'none' : 'block') + ';"><label for="f-file">Chọn file (.xlsx, .xls, .docx, .doc, .pdf)</label>' +
+          '<input id="f-file" type="file" accept=".xlsx,.xls,.docx,.doc,.pdf" /></div>' +
+          '<div class="field" id="drive-field" style="display:' + (isDriveMode ? 'block' : 'none') + ';"><label for="f-drive-link">Link chia sẻ Google Drive</label>' +
+          '<input id="f-drive-link" type="url" placeholder="https://drive.google.com/..." value="' + (isDriveMode ? escapeHtml(sub.drive_link) : '') + '" /></div>' +
+          '<button class="btn" type="submit" id="submit-btn">' + (sub ? 'Nộp lại' : 'Nộp bài') + '</button>' +
           '<p class="msg-error" id="err" style="display:none;"></p>' +
           '<p class="msg-success" id="ok" style="display:none;"></p>' +
           '</form>';
 
         if (sub) {
-          body.innerHTML += '<p style="color:var(--text-soft); font-size:.85rem; margin-top:.6rem;">Bạn đã nộp file "' + escapeHtml(fileNameFromPath(sub.file_path)) + '", đang chờ chấm. Nộp lại sẽ ghi đè file cũ.</p>';
+          var prevLabel = sub.drive_link ? sub.drive_link : fileNameFromPath(sub.file_path);
+          body.innerHTML += '<p style="color:var(--text-soft); font-size:.85rem; margin-top:.6rem;">Bạn đã nộp "' + escapeHtml(prevLabel) + '", đang chờ chấm. Nộp lại sẽ ghi đè bài cũ.</p>';
         }
+
+        var mode = isDriveMode ? 'drive' : 'upload';
+        document.getElementById('tab-upload').addEventListener('click', function () {
+          mode = 'upload';
+          document.getElementById('upload-field').style.display = 'block';
+          document.getElementById('drive-field').style.display = 'none';
+          this.style.background = ''; this.style.color = '';
+          document.getElementById('tab-drive').style.background = '#eee'; document.getElementById('tab-drive').style.color = '#333';
+        });
+        document.getElementById('tab-drive').addEventListener('click', function () {
+          mode = 'drive';
+          document.getElementById('upload-field').style.display = 'none';
+          document.getElementById('drive-field').style.display = 'block';
+          this.style.background = ''; this.style.color = '';
+          document.getElementById('tab-upload').style.background = '#eee'; document.getElementById('tab-upload').style.color = '#333';
+        });
 
         document.getElementById('file-form').addEventListener('submit', function (e) {
           e.preventDefault();
-          var fileInput = document.getElementById('f-file');
-          var file = fileInput.files[0];
           var submitBtn = document.getElementById('submit-btn');
           var err = document.getElementById('err');
           var ok = document.getElementById('ok');
           err.style.display = 'none';
           ok.style.display = 'none';
 
+          if (mode === 'drive') {
+            var driveLink = document.getElementById('f-drive-link').value.trim();
+            if (!driveLink) return;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Đang lưu...';
+            var payload = { assignment_id: assignmentId, user_id: userId, type: 'file', drive_link: driveLink, file_path: null };
+            window.sb.from('submissions').upsert(payload, { onConflict: 'assignment_id,user_id' }).then(function (subRes) {
+              if (subRes.error) throw subRes.error;
+              ok.textContent = 'Nộp link Drive thành công! Bài sẽ được giảng viên chấm và phản hồi.';
+              ok.style.display = 'block';
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Nộp lại';
+            }).catch(function (e2) {
+              err.textContent = e2.message || 'Có lỗi khi nộp link.';
+              err.style.display = 'block';
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Nộp bài';
+            });
+            return;
+          }
+
+          var fileInput = document.getElementById('f-file');
+          var file = fileInput.files[0];
           if (!file) return;
 
           submitBtn.disabled = true;
@@ -98,19 +145,19 @@
 
           window.sb.storage.from('submissions').upload(path, file, { upsert: true }).then(function (upRes) {
             if (upRes.error) throw upRes.error;
-            var payload = { assignment_id: assignmentId, user_id: userId, type: 'file', file_path: path };
+            var payload = { assignment_id: assignmentId, user_id: userId, type: 'file', file_path: path, drive_link: null };
             return window.sb.from('submissions').upsert(payload, { onConflict: 'assignment_id,user_id' });
           }).then(function (subRes) {
             if (subRes.error) throw subRes.error;
             ok.textContent = 'Nộp file thành công! Bài sẽ được giảng viên chấm và phản hồi.';
             ok.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Nộp lại file';
+            submitBtn.textContent = 'Nộp lại';
           }).catch(function (e2) {
             err.textContent = e2.message || 'Có lỗi khi nộp file.';
             err.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Nộp file';
+            submitBtn.textContent = 'Nộp bài';
           });
         });
       });

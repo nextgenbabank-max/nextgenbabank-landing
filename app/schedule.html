@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lịch học &amp; Meet — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html">Tổng quan</a>
+      <a href="assignments.html">Bài tập</a>
+      <a href="case-studies.html">Case study</a>
+      <a href="progress.html">Tiến độ</a>
+      <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <a class="icon-btn" href="notifications.html" aria-label="Thông báo" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="notif-dot" style="display:none;"></span></a>
+      <div class="user-menu" id="user-menu">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">BA Learner</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head">
+            <span class="avatar" id="user-avatar-dd">BL</span>
+            <div><div class="n" id="user-name-dd">BA Learner</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+          </div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt tài khoản</a>
+          <a class="ud-item" href="change-password.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Đổi mật khẩu</a>
+          <a class="ud-item" href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo của tôi</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html">Tổng quan</a>
+    <a href="assignments.html">Bài tập</a>
+    <a href="case-studies.html">Case study</a>
+    <a href="progress.html">Tiến độ</a>
+    <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
+      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="schedule.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="mentor.html" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div><h1>Lịch học &amp; Meet</h1><p class="d">Quản lý lịch học, buổi Meet và các cuộc hẹn với mentor.</p></div>
+    </div>
+
+    <div class="stat-grid cols-4">
+      <div class="stat-card">
+        <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+        <div><div class="n" id="st-next24">—</div><div class="l">Buổi học sắp tới</div><div class="sub">Trong 24 giờ tới</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg></span>
+        <div><div class="n" id="st-month-total">—</div><div class="l">Tổng buổi trong tháng</div><div class="sub" id="st-month-label"></div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <div><div class="n" id="st-attended">—</div><div class="l">Buổi đã tham gia</div><div class="sub" id="st-attended-pct"></div></div>
+      </div>
+      <div class="stat-card" style="position:relative;">
+        <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg></span>
+        <div><div class="n" id="st-1on1">—</div><div class="l">Lịch 1:1 với mentor</div><div class="sub">Trong 7 ngày tới</div></div>
+      </div>
+    </div>
+
+    <div class="grid-main-side">
+      <div class="card">
+        <div class="card-head"><h2>Lịch học sắp tới</h2><a class="more" href="#">Xem lịch đầy đủ <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Buổi học</th><th>Nội dung</th><th>Thời gian</th><th>Giảng viên</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+            <tbody id="sched-tbody">
+              <tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h2>Buổi học tiếp theo</h2></div>
+          <div id="next-session-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Agenda tháng này</h2></div>
+          <div id="agenda-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/notifications.js"></script>
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) menu.classList.remove('open');
+    });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) {
+      e.preventDefault();
+      signOut();
+    });
+  })();
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDateTime(iso) {
+    var d = new Date(iso);
+    var days = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+    return days[d.getDay()] + ', ' + d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+  function typeLabel(t) {
+    return { live: 'Buổi live', workshop: 'Buổi thực hành', 'study-group': 'Nhóm học viên', 'one-on-one': '1:1 với mentor' }[t] || t;
+  }
+
+  var currentUserId = null;
+  var mentorInfo = null;
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    currentUserId = session.user.id;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-dd').textContent = name;
+    document.getElementById('user-email-dd').textContent = session.user.email || '—';
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'HV';
+    document.getElementById('user-avatar-dd').textContent = initials || 'HV';
+    loadNotificationBadge(currentUserId);
+
+    loadSchedule(currentUserId);
+  });
+
+  function loadSchedule(userId) {
+    Promise.all([
+      window.sb.from('class_sessions').select('id,title,meet_link,scheduled_at,session_type,registration_required').order('scheduled_at'),
+      window.sb.from('class_session_registrations').select('session_id,registered_at,attended').eq('user_id', userId),
+      window.sb.from('mentors').select('full_name,role_title').limit(1)
+    ]).then(function (r) {
+      var sessions = r[0].data || [];
+      var registrations = r[1].data || [];
+      mentorInfo = (r[2].data || [])[0];
+
+      var regBySession = {};
+      registrations.forEach(function (reg) { regBySession[reg.session_id] = reg; });
+
+      var now = new Date();
+      var upcoming = sessions.filter(function (s) { return new Date(s.scheduled_at) >= now; });
+
+      renderStats(sessions, registrations, upcoming);
+      renderTable(upcoming, regBySession);
+      renderNextSession(upcoming[0]);
+      renderAgenda(upcoming);
+    });
+  }
+
+  function renderStats(sessions, registrations, upcoming) {
+    var now = new Date();
+    var in24h = upcoming.filter(function (s) { return (new Date(s.scheduled_at) - now) <= 86400000; }).length;
+    document.getElementById('st-next24').textContent = in24h;
+
+    var monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    var monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+    var thisMonth = sessions.filter(function (s) { var d = new Date(s.scheduled_at); return d >= monthStart && d < monthEnd; });
+    document.getElementById('st-month-total').textContent = thisMonth.length;
+    document.getElementById('st-month-label').textContent = 'Tháng ' + (now.getMonth() + 1) + '/' + now.getFullYear();
+
+    var past = sessions.filter(function (s) { return new Date(s.scheduled_at) < now; });
+    var attended = registrations.filter(function (r) { return r.attended; }).length;
+    document.getElementById('st-attended').textContent = attended;
+    document.getElementById('st-attended-pct').textContent = past.length ? Math.round(attended / past.length * 100) + '% tổng buổi' : '';
+
+    var oneOnOne = upcoming.filter(function (s) { return s.session_type === 'one-on-one' && (new Date(s.scheduled_at) - now) <= 7 * 86400000; }).length;
+    document.getElementById('st-1on1').textContent = oneOnOne;
+  }
+
+  function renderTable(upcoming, regBySession) {
+    var tbody = document.getElementById('sched-tbody');
+    if (upcoming.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào sắp tới.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = upcoming.map(function (s) {
+      var reg = regBySession[s.id];
+      var statusHtml, actionHtml;
+      if (s.registration_required && !reg) {
+        statusHtml = '<span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa đăng ký</span>';
+        actionHtml = '<button class="row-action-btn primary" data-register="' + s.id + '">Đăng ký</button>';
+      } else {
+        statusHtml = '<span class="badge b-new">Sắp diễn ra</span>';
+        actionHtml = (s.meet_link ? '<a class="row-action-btn primary" href="' + escapeHtml(s.meet_link) + '" target="_blank" rel="noopener">Vào Meet</a>' : '') +
+          '<button class="row-action-btn" data-ics="' + s.id + '" style="margin-top:6px;">Thêm vào lịch</button>';
+      }
+      return '<tr>' +
+        '<td><div class="cell-item"><span class="ic" style="background:var(--gold-grad);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg></span><div><div class="t">' + escapeHtml(s.title) + '</div><div class="s">' + typeLabel(s.session_type) + '</div></div></div></td>' +
+        '<td>' + escapeHtml(s.title) + '</td>' +
+        '<td><span class="due-cell">' + fmtDateTime(s.scheduled_at) + '</span></td>' +
+        '<td>' + (mentorInfo ? '<span class="mentor-chip"><span class="info"><span class="n">' + escapeHtml(mentorInfo.full_name) + '</span></span></span>' : '—') + '</td>' +
+        '<td>' + statusHtml + '</td>' +
+        '<td><div style="display:flex; flex-direction:column; gap:6px;">' + actionHtml + '</div></td>' +
+        '</tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-register]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var sessionId = btn.getAttribute('data-register');
+        window.sb.from('class_session_registrations').insert({ session_id: sessionId, user_id: currentUserId }).then(function (res) {
+          if (res.error) { alert('Không đăng ký được: ' + res.error.message); return; }
+          loadSchedule(currentUserId);
+        });
+      });
+    });
+    tbody.querySelectorAll('[data-ics]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var sessionId = btn.getAttribute('data-ics');
+        window.sb.from('class_sessions').select('title,meet_link,scheduled_at').eq('id', sessionId).single().then(function (res) {
+          if (res.data) downloadIcs(res.data);
+        });
+      });
+    });
+  }
+
+  function downloadIcs(s) {
+    var start = new Date(s.scheduled_at);
+    var end = new Date(start.getTime() + 90 * 60000);
+    function fmt(d) { return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'; }
+    var ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:' + s.title.replace(/\n/g, ' ') +
+      '\nDTSTART:' + fmt(start) + '\nDTEND:' + fmt(end) +
+      (s.meet_link ? '\nLOCATION:' + s.meet_link : '') + '\nEND:VEVENT\nEND:VCALENDAR';
+    var blob = new Blob([ics], { type: 'text/calendar' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = s.title.replace(/[^\w\s-]/g, '') + '.ics';
+    a.click();
+  }
+
+  function renderNextSession(s) {
+    var body = document.getElementById('next-session-body');
+    if (!s) { body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào sắp tới.</p>'; return; }
+    body.innerHTML =
+      '<p style="font-size:0.98rem; font-weight:800; color:var(--navy-ink);">' + escapeHtml(s.title) + '</p>' +
+      '<p style="font-size:0.84rem; color:var(--text-soft); margin-top:0.2rem; margin-bottom:0.9rem;">' + typeLabel(s.session_type) + '</p>' +
+      '<div class="info-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="v">' + fmtDateTime(s.scheduled_at) + '</span></div>' +
+      (mentorInfo ? '<div class="info-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg><span class="v">' + escapeHtml(mentorInfo.full_name) + '</span></div>' : '') +
+      (s.meet_link ? '<a class="btn btn-gold" href="' + escapeHtml(s.meet_link) + '" target="_blank" rel="noopener" style="width:100%; justify-content:center; margin-top:1rem;">Vào Meet</a>' : '');
+  }
+
+  function renderAgenda(upcoming) {
+    var body = document.getElementById('agenda-body');
+    if (upcoming.length === 0) { body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Không có buổi học nào.</p>'; return; }
+    body.innerHTML = upcoming.slice(0, 4).map(function (s) {
+      var d = new Date(s.scheduled_at);
+      return '<div class="due-tile-row"><span class="date-box"><span class="d">' + d.getDate() + '</span><span class="m">Th ' + (d.getMonth() + 1) + '</span></span>' +
+        '<div class="body" style="flex:1;"><div class="t">' + escapeHtml(s.title) + '</div><div class="s">' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + '</div></div></div>';
+    }).join('');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mentor của tôi — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html">Tổng quan</a>
+      <a href="assignments.html">Bài tập</a>
+      <a href="case-studies.html">Case study</a>
+      <a href="progress.html">Tiến độ</a>
+      <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <a class="icon-btn" href="notifications.html" aria-label="Thông báo" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="notif-dot" style="display:none;"></span></a>
+      <div class="user-menu" id="user-menu">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">BA Learner</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head">
+            <span class="avatar" id="user-avatar-dd">BL</span>
+            <div><div class="n" id="user-name-dd">BA Learner</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+          </div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt tài khoản</a>
+          <a class="ud-item" href="change-password.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Đổi mật khẩu</a>
+          <a class="ud-item" href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo của tôi</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html">Tổng quan</a>
+    <a href="assignments.html">Bài tập</a>
+    <a href="case-studies.html">Case study</a>
+    <a href="progress.html">Tiến độ</a>
+    <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
+      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="mentor.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="#chat" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div><h1>Mentor của tôi</h1><p class="d">Mỗi học viên được kết nối với một giảng viên/mentor đồng hành trong suốt quá trình học.</p></div>
+    </div>
+
+    <div class="grid-main-side" style="grid-template-columns: 0.85fr 1.6fr 1fr;">
+      <div class="card">
+        <div class="mentor-photo"><span class="ph-fallback" id="mentor-initials">--</span><span class="dot"></span></div>
+        <div style="text-align:center; margin-bottom:1.2rem;">
+          <p style="font-size:1.05rem; font-weight:800; color:var(--navy-ink);" id="mentor-name">—</p>
+          <p style="font-size:0.84rem; color:var(--text-soft); margin-top:2px;" id="mentor-role">—</p>
+        </div>
+        <div class="info-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><div class="l">Thời gian phản hồi</div><div class="v">Trong vòng 24 giờ</div></div></div>
+      </div>
+
+      <div class="card chat-card" id="chat">
+        <div class="card-head"><h2>Trao đổi với mentor</h2></div>
+        <div class="chat-window" id="chat-window">
+          <p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Nhập tin nhắn cho mentor..." />
+          <button class="chat-round-btn send" id="chat-send" aria-label="Gửi"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" stroke="none"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg></button>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h2>Lịch hẹn sắp tới</h2><a class="more" href="schedule.html">Xem tất cả <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div id="next-1on1-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Gợi ý câu hỏi cho mentor</h2></div>
+          <div class="chip-row" data-q="Làm sao để xác định đúng stakeholder quan trọng?">Làm sao để xác định đúng stakeholder quan trọng?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+          <div class="chip-row" data-q="Kỹ thuật nào phù hợp để thu thập yêu cầu ban đầu?">Kỹ thuật nào phù hợp để thu thập yêu cầu ban đầu?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+          <div class="chip-row" data-q="Cách viết BRD ngắn gọn và dễ hiểu?">Cách viết BRD ngắn gọn và dễ hiểu?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+          <div class="chip-row" data-q="Nên ưu tiên học kỹ năng nào trong giai đoạn này?">Nên ưu tiên học kỹ năng nào trong giai đoạn này?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <style>@media (max-width: 1280px) { .grid-main-side { grid-template-columns: 1fr !important; } }</style>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/notifications.js"></script>
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) menu.classList.remove('open');
+    });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) {
+      e.preventDefault();
+      signOut();
+    });
+  })();
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtTime(iso) { return new Date(iso).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }); }
+
+  var currentUserId = null;
+  var myInitials = 'HV';
+  var mentorAvatarInitials = 'GV';
+
+  document.querySelectorAll('.chip-row').forEach(function (row) {
+    row.addEventListener('click', function () {
+      document.getElementById('chat-input').value = row.getAttribute('data-q');
+      document.getElementById('chat-input').focus();
+    });
+  });
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    currentUserId = session.user.id;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-dd').textContent = name;
+    document.getElementById('user-email-dd').textContent = session.user.email || '—';
+    myInitials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || 'HV';
+    document.getElementById('user-avatar').textContent = myInitials;
+    document.getElementById('user-avatar-dd').textContent = myInitials;
+    loadNotificationBadge(currentUserId);
+
+    loadMentorInfo();
+    loadNextSession(currentUserId);
+    loadChat(currentUserId);
+  });
+
+  function loadMentorInfo() {
+    window.sb.from('mentors').select('full_name,role_title,avatar_initials').limit(1).then(function (res) {
+      var m = (res.data || [])[0];
+      if (!m) return;
+      mentorAvatarInitials = m.avatar_initials || 'GV';
+      document.getElementById('mentor-name').textContent = m.full_name;
+      document.getElementById('mentor-role').textContent = m.role_title || '';
+      document.getElementById('mentor-initials').textContent = mentorAvatarInitials;
+    });
+  }
+
+  function loadNextSession(userId) {
+    window.sb.from('class_sessions').select('title,scheduled_at').eq('session_type', 'one-on-one').gte('scheduled_at', new Date().toISOString()).order('scheduled_at').limit(1).then(function (res) {
+      var body = document.getElementById('next-1on1-body');
+      var s = (res.data || [])[0];
+      if (!s) { body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có lịch hẹn nào.</p>'; return; }
+      var d = new Date(s.scheduled_at);
+      var months = ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'];
+      var days = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+      body.innerHTML =
+        '<div class="appt-date"><div class="mo">' + months[d.getMonth()] + '</div><div class="day">' + d.getDate() + '</div><div class="dow">' + days[d.getDay()] + '</div></div>' +
+        '<p style="font-size:0.86rem; font-weight:700; color:var(--navy-ink);">' + fmtTime(s.scheduled_at) + '</p>' +
+        '<p style="font-size:0.86rem; font-weight:700; color:var(--navy-ink); margin-top:2px;">' + escapeHtml(s.title) + '</p>';
+    });
+  }
+
+  function loadChat(userId) {
+    var win = document.getElementById('chat-window');
+
+    function renderMessages(messages) {
+      if (messages.length === 0) {
+        win.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tin nhắn nào. Gửi tin đầu tiên cho mentor nhé!</p>';
+        return;
+      }
+      win.innerHTML = messages.map(function (m) {
+        var mine = m.sender_id === userId;
+        var initials = mine ? myInitials : mentorAvatarInitials;
+        var bg = mine ? 'var(--navy)' : 'var(--gold-grad)';
+        return '<div class="chat-msg' + (mine ? ' mine' : '') + '">' +
+          '<span class="avatar" style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:0.66rem;font-weight:800;background:' + bg + ';">' + escapeHtml(initials) + '</span>' +
+          '<div class="col"><div class="bubble">' + escapeHtml(m.body) + '</div><div class="time">' + fmtTime(m.created_at) + '</div></div>' +
+          '</div>';
+      }).join('');
+      win.scrollTop = win.scrollHeight;
+    }
+
+    window.sb.from('messages').select('id,sender_id,body,created_at').eq('student_id', userId).order('created_at').then(function (res) {
+      renderMessages(res.data || []);
+    });
+
+    window.sb.channel('chat-' + userId)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: 'student_id=eq.' + userId }, function () {
+        window.sb.from('messages').select('id,sender_id,body,created_at').eq('student_id', userId).order('created_at').then(function (res) {
+          renderMessages(res.data || []);
+        });
+      })
+      .subscribe();
+
+    function send() {
+      var input = document.getElementById('chat-input');
+      var text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      window.sb.from('messages').insert({ student_id: userId, sender_id: userId, body: text }).then(function (res) {
+        if (res.error) alert('Không gửi được: ' + res.error.message);
+      });
+    }
+    document.getElementById('chat-send').addEventListener('click', send);
+    document.getElementById('chat-input').addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
+  }
+</script>
+</body>
+</html>

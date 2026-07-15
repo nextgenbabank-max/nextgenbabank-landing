@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hộp thư mentor — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .inbox-layout { display: grid; grid-template-columns: 300px 1fr; gap: 1.2rem; max-width: 1200px; margin: 1.5rem auto; padding: 0 1.25rem; height: calc(100vh - 110px); }
+  @media (max-width: 860px) { .inbox-layout { grid-template-columns: 1fr; height: auto; } }
+  .student-list { overflow-y: auto; }
+  .student-row { display: flex; align-items: center; gap: 10px; padding: 0.8rem 0.6rem; border-radius: 10px; cursor: pointer; }
+  .student-row:hover { background: var(--bg-soft); }
+  .student-row.active { background: var(--gold-soft); }
+  .student-row .avatar { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 0.78rem; background: var(--navy); flex: none; }
+  .student-row .body { flex: 1; min-width: 0; }
+  .student-row .n { font-size: 0.86rem; font-weight: 700; color: var(--navy-ink); }
+  .student-row .last { font-size: 0.76rem; color: var(--text-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .student-row .unread { flex: none; min-width: 18px; height: 18px; border-radius: 999px; background: var(--gold); color: #fff; font-size: 0.66rem; font-weight: 800; display: grid; place-items: center; padding: 0 4px; }
+  .inbox-chat { display: flex; flex-direction: column; height: 100%; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="mentor-inbox.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Mentor Inbox</div></span>
+    </a>
+    <div style="flex:1;"></div>
+    <div class="topbar-actions">
+      <div class="user-trigger">
+        <span class="avatar" id="user-avatar">GV</span>
+        <span class="meta"><span class="u-name" id="user-name">Giảng viên</span><span class="u-role">Mentor</span></span>
+      </div>
+      <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
+    </div>
+  </div>
+</header>
+
+<div class="inbox-layout">
+  <div class="card student-list" id="student-list">
+    <p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>
+  </div>
+
+  <div class="card inbox-chat">
+    <div class="card-head"><h2 id="chat-title">Chọn 1 học viên để xem tin nhắn</h2></div>
+    <div class="chat-window" id="chat-window" style="flex:1; overflow-y:auto;">
+      <p style="color:var(--text-soft); font-size:0.85rem;">Chưa chọn học viên nào.</p>
+    </div>
+    <div class="chat-input-row" id="chat-input-row" style="display:none;">
+      <input type="text" id="chat-input" placeholder="Nhập tin nhắn trả lời..." />
+      <button class="chat-round-btn send" id="chat-send" aria-label="Gửi"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" stroke="none"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtTime(iso) { return new Date(iso).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }); }
+  function initialsOf(name) {
+    return (name || 'HV').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || 'HV';
+  }
+
+  document.getElementById('logout-btn').addEventListener('click', signOut);
+
+  var mentorId = null;
+  var mentorInitials = 'GV';
+  var students = [];
+  var activeStudentId = null;
+  var chatChannel = null;
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_mentor,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_mentor) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      mentorId = session.user.id;
+      var name = res.data.full_name || session.user.email;
+      mentorInitials = initialsOf(name);
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-avatar').textContent = mentorInitials;
+      loadStudents();
+    });
+  });
+
+  function loadStudents() {
+    Promise.all([
+      window.sb.from('profiles').select('id,full_name,email').eq('is_mentor', false),
+      window.sb.from('messages').select('student_id,sender_id,body,created_at,read_at').order('created_at', { ascending: false })
+    ]).then(function (r) {
+      var profiles = r[0].data || [];
+      var messages = r[1].data || [];
+
+      students = profiles.map(function (p) {
+        var thread = messages.filter(function (m) { return m.student_id === p.id; });
+        var last = thread[0];
+        var unread = thread.filter(function (m) { return m.sender_id === p.id && !m.read_at; }).length;
+        return { id: p.id, name: p.full_name || p.email, lastBody: last ? last.body : null, lastTime: last ? last.created_at : null, unread: unread };
+      });
+      students.sort(function (a, b) { return (b.lastTime ? new Date(b.lastTime) : 0) - (a.lastTime ? new Date(a.lastTime) : 0); });
+
+      renderStudentList();
+    });
+  }
+
+  function renderStudentList() {
+    var container = document.getElementById('student-list');
+    if (students.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</p>';
+      return;
+    }
+    container.innerHTML = students.map(function (s) {
+      return '<div class="student-row' + (s.id === activeStudentId ? ' active' : '') + '" data-student="' + s.id + '">' +
+        '<span class="avatar">' + escapeHtml(initialsOf(s.name)) + '</span>' +
+        '<div class="body"><div class="n">' + escapeHtml(s.name) + '</div><div class="last">' + escapeHtml(s.lastBody || 'Chưa có tin nhắn') + '</div></div>' +
+        (s.unread > 0 ? '<span class="unread">' + s.unread + '</span>' : '') +
+        '</div>';
+    }).join('');
+    container.querySelectorAll('[data-student]').forEach(function (row) {
+      row.addEventListener('click', function () { openStudent(row.getAttribute('data-student')); });
+    });
+  }
+
+  function openStudent(studentId) {
+    activeStudentId = studentId;
+    renderStudentList();
+    var student = students.find(function (s) { return s.id === studentId; });
+    document.getElementById('chat-title').textContent = student ? student.name : '';
+    document.getElementById('chat-input-row').style.display = 'flex';
+
+    loadThread(studentId);
+
+    if (chatChannel) window.sb.removeChannel(chatChannel);
+    chatChannel = window.sb.channel('mentor-chat-' + studentId)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: 'student_id=eq.' + studentId }, function () {
+        loadThread(studentId);
+        loadStudents();
+      })
+      .subscribe();
+  }
+
+  function loadThread(studentId) {
+    window.sb.from('messages').select('id,sender_id,body,created_at').eq('student_id', studentId).order('created_at').then(function (res) {
+      var win = document.getElementById('chat-window');
+      var messages = res.data || [];
+      if (messages.length === 0) {
+        win.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tin nhắn nào.</p>';
+        return;
+      }
+      var student = students.find(function (s) { return s.id === studentId; });
+      win.innerHTML = messages.map(function (m) {
+        var mine = m.sender_id === mentorId;
+        var initials = mine ? mentorInitials : initialsOf(student ? student.name : '');
+        var bg = mine ? 'var(--navy)' : 'var(--gold-grad)';
+        return '<div class="chat-msg' + (mine ? ' mine' : '') + '">' +
+          '<span class="avatar" style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:0.66rem;font-weight:800;background:' + bg + ';">' + escapeHtml(initials) + '</span>' +
+          '<div class="col"><div class="bubble">' + escapeHtml(m.body) + '</div><div class="time">' + fmtTime(m.created_at) + '</div></div>' +
+          '</div>';
+      }).join('');
+      win.scrollTop = win.scrollHeight;
+    });
+  }
+
+  function send() {
+    if (!activeStudentId) return;
+    var input = document.getElementById('chat-input');
+    var text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    window.sb.from('messages').insert({ student_id: activeStudentId, sender_id: mentorId, body: text }).then(function (res) {
+      if (res.error) alert('Không gửi được: ' + res.error.message);
+    });
+  }
+  document.getElementById('chat-send').addEventListener('click', send);
+  document.getElementById('chat-input').addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
+</script>
+</body>
+</html>

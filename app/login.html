@@ -600,7 +600,7 @@
           submitBtn.textContent = 'Tạo tài khoản';
           return;
         }
-        window.location.href = '/app/dashboard.html';
+        redirectAfterLogin(res.data.user.id);
       }).catch(function (err) {
         errorOut.textContent = err.message || 'Có lỗi xảy ra. Vui lòng thử lại.';
         errorOut.style.display = 'block';
@@ -609,8 +609,18 @@
       });
     });
 
+    function redirectAfterLogin(userId) {
+      window.sb.from('profiles').select('is_mentor').eq('id', userId).single().then(function (res) {
+        if (res.data && res.data.is_mentor) {
+          window.location.href = '/app/mentor-inbox.html';
+        } else {
+          window.location.href = '/app/dashboard.html';
+        }
+      });
+    }
+
     window.sb.auth.getSession().then(function (res) {
-      if (res.data.session) window.location.href = '/app/dashboard.html';
+      if (res.data.session) redirectAfterLogin(res.data.session.user.id);
     });
 
     var urlParams = new URLSearchParams(window.location.search);

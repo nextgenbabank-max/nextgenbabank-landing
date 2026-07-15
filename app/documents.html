@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tài liệu của tôi — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html">Tổng quan</a>
+      <a href="assignments.html">Bài tập</a>
+      <a href="case-studies.html">Case study</a>
+      <a href="progress.html">Tiến độ</a>
+      <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <a class="icon-btn" href="notifications.html" aria-label="Thông báo" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="notif-dot" style="display:none;"></span></a>
+      <div class="user-menu" id="user-menu">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">BA Learner</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head">
+            <span class="avatar" id="user-avatar-dd">BL</span>
+            <div><div class="n" id="user-name-dd">BA Learner</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+          </div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt tài khoản</a>
+          <a class="ud-item" href="change-password.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Đổi mật khẩu</a>
+          <a class="ud-item" href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo của tôi</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html">Tổng quan</a>
+    <a href="assignments.html">Bài tập</a>
+    <a href="case-studies.html">Case study</a>
+    <a href="progress.html">Tiến độ</a>
+    <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
+      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="documents.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="mentor.html" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div><h1>Tài liệu của tôi</h1><p class="d">Quản lý và truy cập nhanh các tài liệu học tập của bạn.</p></div>
+    </div>
+
+    <div class="stat-grid cols-4">
+      <div class="stat-card">
+        <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>
+        <div><div class="n" id="st-total">—</div><div class="l">Tổng tài liệu</div><div class="sub">Trong tất cả chặng học</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg></span>
+        <div><div class="n" id="st-new">—</div><div class="l">Tài liệu mới</div><div class="sub">Trong 7 ngày qua</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic" style="background:linear-gradient(120deg,#F49AB4,#E86A8A);" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg></span>
+        <div><div class="n" id="st-favorites">—</div><div class="l">Yêu thích</div><div class="sub">Bạn đã lưu</div></div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <select id="filter-phase"><option value="">Tất cả chặng</option></select>
+      <select id="filter-type"><option value="">Tất cả loại</option></select>
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="filter-search" placeholder="Nhập tên tài liệu..." /></div>
+    </div>
+
+    <div class="grid-main-side">
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Tên tài liệu</th><th>Chặng học</th><th>Loại tài liệu</th><th>Cập nhật</th><th>Người chia sẻ</th><th>Thao tác</th></tr></thead>
+            <tbody id="docs-tbody">
+              <tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h2>Tài liệu mới nhất</h2></div>
+          <div class="doc-row-list" id="docs-recent"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Tài liệu đã lưu</h2></div>
+          <div class="doc-row-list" id="docs-favorites"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/notifications.js"></script>
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) menu.classList.remove('open');
+    });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) {
+      e.preventDefault();
+      signOut();
+    });
+  })();
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDate(iso) { return new Date(iso).toLocaleDateString('vi-VN'); }
+  function docIcon() {
+    return '<span class="doc-icon"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M8.15 3 2 13.5 6 20h5l-6-10.5L9.15 3Z"/><path fill="#0F9D58" d="M6 20h12l4-6.9-4.15 1.4-4 6.9Z"/><path fill="#FFCD40" d="M8.15 3 18 20l4-6.9L11.85 3Z"/></svg></span>';
+  }
+
+  var currentUserId = null;
+  var allDocs = [], allFavIds = [], allPhases = [];
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    currentUserId = session.user.id;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-dd').textContent = name;
+    document.getElementById('user-email-dd').textContent = session.user.email || '—';
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'HV';
+    document.getElementById('user-avatar-dd').textContent = initials || 'HV';
+    loadNotificationBadge(currentUserId);
+
+    loadDocuments(currentUserId);
+  });
+
+  function loadDocuments(userId) {
+    Promise.all([
+      window.sb.from('documents').select('id,title,url,phase_id,doc_type,created_at').order('created_at', { ascending: false }),
+      window.sb.from('document_favorites').select('document_id').eq('user_id', userId),
+      window.sb.from('phases').select('id,title').order('order_index')
+    ]).then(function (r) {
+      allDocs = r[0].data || [];
+      allFavIds = (r[1].data || []).map(function (f) { return f.document_id; });
+      allPhases = r[2].data || [];
+
+      var phaseSelect = document.getElementById('filter-phase');
+      allPhases.forEach(function (p) {
+        var opt = document.createElement('option');
+        opt.value = p.id; opt.textContent = p.title;
+        phaseSelect.appendChild(opt);
+      });
+      var types = Array.from(new Set(allDocs.map(function (d) { return d.doc_type; }).filter(Boolean)));
+      var typeSelect = document.getElementById('filter-type');
+      types.forEach(function (t) {
+        var opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        typeSelect.appendChild(opt);
+      });
+
+      renderStats();
+      renderTable();
+      renderRecent();
+      renderFavorites();
+
+      ['filter-phase', 'filter-type', 'filter-search'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', renderTable);
+      });
+    });
+  }
+
+  function phaseTitle(id) {
+    var p = allPhases.find(function (p) { return p.id === id; });
+    return p ? p.title : '—';
+  }
+
+  function renderStats() {
+    document.getElementById('st-total').textContent = allDocs.length;
+    var weekAgo = Date.now() - 7 * 86400000;
+    document.getElementById('st-new').textContent = allDocs.filter(function (d) { return new Date(d.created_at).getTime() >= weekAgo; }).length;
+    document.getElementById('st-favorites').textContent = allFavIds.length;
+  }
+
+  function renderTable() {
+    var phaseFilter = document.getElementById('filter-phase').value;
+    var typeFilter = document.getElementById('filter-type').value;
+    var search = document.getElementById('filter-search').value.trim().toLowerCase();
+
+    var filtered = allDocs.filter(function (d) {
+      if (phaseFilter && d.phase_id !== phaseFilter) return false;
+      if (typeFilter && d.doc_type !== typeFilter) return false;
+      if (search && d.title.toLowerCase().indexOf(search) === -1) return false;
+      return true;
+    });
+
+    var tbody = document.getElementById('docs-tbody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Không có tài liệu nào.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = filtered.map(function (d) {
+      var isFav = allFavIds.indexOf(d.id) !== -1;
+      return '<tr>' +
+        '<td><div class="cell-item"><span class="doc-star' + (isFav ? ' fav' : '') + '" data-fav="' + d.id + '" aria-label="Yêu thích"><svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><path d="M12 2 15 9l7.5 1-5.5 5.2L18.5 22 12 18.3 5.5 22 7 15.2 1.5 10l7.5-1Z"/></svg></span>' + docIcon() + '<span class="name">' + escapeHtml(d.title) + '</span></div></td>' +
+        '<td>' + escapeHtml(phaseTitle(d.phase_id)) + '</td>' +
+        '<td><span class="type-tag" style="background:var(--gold-soft); color:var(--gold-dark);">' + escapeHtml(d.doc_type || '') + '</span></td>' +
+        '<td>' + fmtDate(d.created_at) + '</td>' +
+        '<td>—</td>' +
+        '<td><a class="row-action-btn" href="' + escapeHtml(d.url) + '" target="_blank" rel="noopener">Mở link</a></td>' +
+        '</tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-fav]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var docId = btn.getAttribute('data-fav');
+        var isFav = allFavIds.indexOf(docId) !== -1;
+        var action = isFav
+          ? window.sb.from('document_favorites').delete().eq('user_id', currentUserId).eq('document_id', docId)
+          : window.sb.from('document_favorites').insert({ user_id: currentUserId, document_id: docId });
+        action.then(function (res) {
+          if (res.error) { alert('Có lỗi: ' + res.error.message); return; }
+          if (isFav) allFavIds = allFavIds.filter(function (id) { return id !== docId; });
+          else allFavIds.push(docId);
+          renderStats();
+          renderTable();
+          renderFavorites();
+        });
+      });
+    });
+  }
+
+  function renderRecent() {
+    var container = document.getElementById('docs-recent');
+    var recent = allDocs.slice(0, 5);
+    if (recent.length === 0) { container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tài liệu nào.</p>'; return; }
+    container.innerHTML = recent.map(function (d) {
+      return '<a class="item" href="' + escapeHtml(d.url) + '" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">' + docIcon() + '<span class="name">' + escapeHtml(d.title) + '</span><span class="date">' + fmtDate(d.created_at) + '</span></a>';
+    }).join('');
+  }
+
+  function renderFavorites() {
+    var container = document.getElementById('docs-favorites');
+    var favs = allDocs.filter(function (d) { return allFavIds.indexOf(d.id) !== -1; });
+    if (favs.length === 0) { container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa lưu tài liệu nào.</p>'; return; }
+    container.innerHTML = favs.map(function (d) {
+      return '<a class="item" href="' + escapeHtml(d.url) + '" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">' + docIcon() + '<span class="name">' + escapeHtml(d.title) + '</span></a>';
+    }).join('');
+  }
+</script>
+</body>
+</html>

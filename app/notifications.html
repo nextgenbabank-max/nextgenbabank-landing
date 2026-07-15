@@ -43,10 +43,25 @@
     <div class="topbar-actions">
       <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
       <a class="icon-btn" href="notifications.html" aria-label="Thông báo" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="notif-dot" style="display:none;"></span></a>
-      <div class="user-trigger">
-        <span class="avatar" id="user-avatar">HV</span>
-        <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
-        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      <div class="user-menu" id="user-menu">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">HV</span>
+          <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head">
+            <span class="avatar" id="user-avatar-dd">HV</span>
+            <div><div class="n" id="user-name-dd">Học viên</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+          </div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt tài khoản</a>
+          <a class="ud-item" href="change-password.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Đổi mật khẩu</a>
+          <a class="ud-item" href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo của tôi</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
       </div>
     </div>
     <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
@@ -70,15 +85,15 @@
       <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
       <a href="notifications.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
       <div class="sidebar-divider"></div>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
       <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
     </nav>
     <div class="sidebar-support">
       <p class="t">Hỗ trợ học tập</p>
       <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
-      <a class="btn btn-outline btn-sm" href="#" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+      <a class="btn btn-outline btn-sm" href="mentor.html" style="width:100%; justify-content:center;">Liên hệ mentor</a>
     </div>
   </aside>
 
@@ -107,6 +122,22 @@
   })();
   document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
 
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) menu.classList.remove('open');
+    });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) {
+      e.preventDefault();
+      signOut();
+    });
+  })();
+
   function escapeHtml(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -121,8 +152,11 @@
     var userId = session.user.id;
     var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
     document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-dd').textContent = name;
+    document.getElementById('user-email-dd').textContent = session.user.email || '—';
     var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
     document.getElementById('user-avatar').textContent = initials || 'HV';
+    document.getElementById('user-avatar-dd').textContent = initials || 'HV';
 
     Promise.all([fetchNotificationEvents(userId), fetchLastReadAt(userId)]).then(function (r) {
       var events = r[0], lastReadAt = r[1];
