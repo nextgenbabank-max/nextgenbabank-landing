@@ -11,6 +11,8 @@
   .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
   .admin-tabs button { padding: 0.6em 1.2em; border-radius: 9px; border: 1.5px solid var(--border); background: var(--card); color: var(--text-body); font-weight: 700; font-size: 0.88rem; cursor: pointer; }
   .admin-tabs button.active { background: var(--gold-grad); color: #fff; border-color: transparent; }
+  .admin-subtabs button { padding: 0.5em 1em; border-radius: 8px; border: 1.5px solid var(--border); background: var(--card); color: var(--text-body); font-weight: 700; font-size: 0.82rem; cursor: pointer; }
+  .admin-subtabs button.active { background: var(--teal); color: #fff; border-color: transparent; }
   .admin-panel { display: none; }
   .admin-panel.active { display: block; }
   .split { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.2rem; align-items: start; }
@@ -18,6 +20,12 @@
   .row-click { cursor: pointer; }
   .row-click:hover { background: var(--bg-soft); }
   .pct-tag { font-size: 0.78rem; font-weight: 700; color: var(--gold-dark); }
+  .content-subpanel { display: none; }
+  .content-subpanel.active { display: block; }
+  .qq-item { padding: 0.7rem 0; border-top: 1px solid var(--border); }
+  .qq-item:first-child { border-top: none; }
+  .qq-item .opt { font-size: 0.82rem; padding: 2px 0; color: var(--text-body); }
+  .qq-item .opt.correct { color: var(--green); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -49,6 +57,8 @@
     <button class="active" data-tab="students">Học viên</button>
     <button data-tab="mentors">Mentor</button>
     <button data-tab="classes">Lớp học</button>
+    <button data-tab="content">Nội dung học</button>
+    <button data-tab="grading">Chấm bài</button>
   </div>
 
   <!-- TAB: Học viên -->
@@ -119,6 +129,196 @@
       </div>
     </div>
   </div>
+
+  <!-- TAB: Nội dung học -->
+  <div class="admin-panel" id="tab-content">
+    <div class="admin-subtabs" style="display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
+      <button class="active" data-subtab="modules">Buổi học</button>
+      <button data-subtab="assignments">Bài tập &amp; Quiz</button>
+      <button data-subtab="casestudies">Case study</button>
+      <button data-subtab="documents">Tài liệu</button>
+      <button data-subtab="sessions">Lịch Meet</button>
+    </div>
+
+    <div class="content-subpanel active" id="sub-modules">
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Buổi học (modules)</h2></div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>#</th><th>Tên buổi học</th><th>Chặng</th><th></th></tr></thead>
+            <tbody id="modules-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="module-form-title">Thêm buổi học mới</h2></div>
+          <form id="module-form">
+            <input type="hidden" id="mod-id" />
+            <div class="tfield"><label for="mod-title">Tên buổi học</label><input id="mod-title" type="text" required /></div>
+            <div class="tfield"><label for="mod-order">Thứ tự</label><input id="mod-order" type="number" value="1" required /></div>
+            <div class="tfield"><label for="mod-phase">Chặng</label><select id="mod-phase"></select></div>
+            <div class="tfield"><label for="mod-desc">Mô tả</label><textarea id="mod-desc"></textarea></div>
+            <button class="btn btn-gold" type="submit" id="module-submit-btn">Thêm buổi học</button>
+            <button class="btn btn-outline" type="button" id="module-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
+            <p class="msg-error" id="module-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-subpanel" id="sub-assignments">
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Bài tập &amp; Quiz</h2></div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>Tên bài tập</th><th>Loại</th><th>Chặng</th><th>Mentor</th><th></th></tr></thead>
+            <tbody id="assignments-admin-tbody"><tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="assignment-form-title">Thêm bài tập mới</h2></div>
+          <form id="assignment-form">
+            <input type="hidden" id="asg-id" />
+            <div class="tfield"><label for="asg-title">Tên bài tập</label><input id="asg-title" type="text" required /></div>
+            <div class="tfield"><label for="asg-type">Loại</label><select id="asg-type"><option value="quiz">Quiz</option><option value="essay">Tự luận</option><option value="file">Nộp file</option></select></div>
+            <div class="tfield"><label for="asg-desc">Mô tả</label><textarea id="asg-desc"></textarea></div>
+            <div class="tfield"><label for="asg-maxscore">Điểm tối đa</label><input id="asg-maxscore" type="number" value="10" /></div>
+            <div class="tfield"><label for="asg-due">Hạn nộp</label><input id="asg-due" type="datetime-local" /></div>
+            <div class="tfield"><label for="asg-doctype">Loại tài liệu (portfolio)</label><input id="asg-doctype" type="text" placeholder="vd BRD, Essay, Quiz" /></div>
+            <div class="tfield"><label for="asg-phase">Chặng</label><select id="asg-phase"></select></div>
+            <div class="tfield"><label for="asg-mentor">Mentor phụ trách</label><select id="asg-mentor"><option value="">-- Không gán --</option></select></div>
+            <button class="btn btn-gold" type="submit" id="assignment-submit-btn">Thêm bài tập</button>
+            <button class="btn btn-outline" type="button" id="assignment-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
+            <p class="msg-error" id="assignment-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          </form>
+        </div>
+      </div>
+      <div class="card" id="quiz-questions-card" style="display:none; margin-top:1.2rem;">
+        <div class="card-head"><h2 id="quiz-questions-title">Câu hỏi quiz</h2></div>
+        <div id="quiz-questions-list"></div>
+        <div class="ud-divider" style="margin:1rem 0;"></div>
+        <form id="quiz-question-form">
+          <div class="tfield"><label for="qq-text">Câu hỏi</label><textarea id="qq-text" required></textarea></div>
+          <div class="tfield"><label>Đáp án (chọn radio ở đáp án đúng)</label>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="0" checked /><input type="text" id="qq-opt0" placeholder="Đáp án 1" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="1" /><input type="text" id="qq-opt1" placeholder="Đáp án 2" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="2" /><input type="text" id="qq-opt2" placeholder="Đáp án 3" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+            <div style="display:flex; align-items:center; gap:8px;"><input type="radio" name="qq-correct" value="3" /><input type="text" id="qq-opt3" placeholder="Đáp án 4" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+          </div>
+          <button class="btn btn-gold" type="submit">Thêm câu hỏi</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="content-subpanel" id="sub-casestudies">
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Case study</h2></div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>Tên</th><th>Lĩnh vực</th><th>Mentor</th><th></th></tr></thead>
+            <tbody id="cs-admin-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="cs-form-title">Thêm case study mới</h2></div>
+          <form id="cs-form">
+            <input type="hidden" id="cs-id" />
+            <div class="tfield"><label for="cs-title">Tên case study</label><input id="cs-title" type="text" required /></div>
+            <div class="tfield"><label for="cs-domain">Lĩnh vực</label><input id="cs-domain" type="text" placeholder="vd Digital Banking" /></div>
+            <div class="tfield"><label for="cs-desc">Mô tả</label><textarea id="cs-desc"></textarea></div>
+            <div class="tfield"><label for="cs-due">Hạn hoàn thành</label><input id="cs-due" type="datetime-local" /></div>
+            <div class="tfield"><label for="cs-mentor">Mentor phụ trách</label><select id="cs-mentor"><option value="">-- Không gán --</option></select></div>
+            <button class="btn btn-gold" type="submit" id="cs-submit-btn">Thêm case study</button>
+            <button class="btn btn-outline" type="button" id="cs-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
+            <p class="msg-error" id="cs-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          </form>
+        </div>
+      </div>
+      <div class="card" id="cs-tasks-card" style="display:none; margin-top:1.2rem;">
+        <div class="card-head"><h2 id="cs-tasks-title">Nhiệm vụ</h2></div>
+        <div id="cs-tasks-list"></div>
+        <div class="ud-divider" style="margin:1rem 0;"></div>
+        <form id="cs-task-form" style="display:flex; gap:0.6rem; align-items:flex-end;">
+          <div class="tfield" style="margin:0; flex:1;"><label for="cst-title">Tên nhiệm vụ mới</label><input id="cst-title" type="text" required /></div>
+          <button class="btn btn-gold" type="submit">Thêm</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="content-subpanel" id="sub-documents">
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Tài liệu</h2></div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>Tên tài liệu</th><th>Chặng</th><th>Loại</th><th></th></tr></thead>
+            <tbody id="docs-admin-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="doc-form-title">Thêm tài liệu mới</h2></div>
+          <form id="doc-form">
+            <input type="hidden" id="doc-id" />
+            <div class="tfield"><label for="doc-title">Tên tài liệu</label><input id="doc-title" type="text" required /></div>
+            <div class="tfield"><label for="doc-url">Link Google Drive</label><input id="doc-url" type="url" required /></div>
+            <div class="tfield"><label for="doc-phase">Chặng</label><select id="doc-phase"></select></div>
+            <div class="tfield"><label for="doc-type">Loại tài liệu</label><input id="doc-type" type="text" placeholder="vd Slide Deck, Template" /></div>
+            <button class="btn btn-gold" type="submit" id="doc-submit-btn">Thêm tài liệu</button>
+            <button class="btn btn-outline" type="button" id="doc-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
+            <p class="msg-error" id="doc-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-subpanel" id="sub-sessions">
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Lịch Meet</h2></div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>Tên buổi</th><th>Thời gian</th><th>Loại</th><th></th></tr></thead>
+            <tbody id="sessions-admin-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="session-form-title">Thêm buổi Meet mới</h2></div>
+          <form id="session-form">
+            <input type="hidden" id="sess-id" />
+            <div class="tfield"><label for="sess-title">Tên buổi</label><input id="sess-title" type="text" required /></div>
+            <div class="tfield"><label for="sess-link">Link Meet</label><input id="sess-link" type="url" /></div>
+            <div class="tfield"><label for="sess-time">Thời gian</label><input id="sess-time" type="datetime-local" required /></div>
+            <div class="tfield"><label for="sess-type">Loại buổi</label><select id="sess-type">
+              <option value="live">Live cùng Mentor</option>
+              <option value="workshop">Workshop</option>
+              <option value="study-group">Study Group</option>
+              <option value="one-on-one">1:1 với mentor</option>
+            </select></div>
+            <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; margin:0.8rem 0;"><input type="checkbox" id="sess-reg" /> Cần đăng ký trước</label>
+            <button class="btn btn-gold" type="submit" id="session-submit-btn">Thêm buổi</button>
+            <button class="btn btn-outline" type="button" id="session-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
+            <p class="msg-error" id="session-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Chấm bài -->
+  <div class="admin-panel" id="tab-grading">
+    <div class="split">
+      <div class="card">
+        <div class="card-head"><h2>Bài chờ chấm</h2>
+          <label style="font-size:0.8rem; font-weight:600; display:flex; align-items:center; gap:6px;"><input type="checkbox" id="grading-show-all" /> Hiện cả bài đã chấm</label>
+        </div>
+        <div class="table-wrap"><table class="data-table">
+          <thead><tr><th>Học viên</th><th>Bài tập</th><th>Loại</th><th>Trạng thái</th></tr></thead>
+          <tbody id="grading-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2 id="grading-detail-title">Chọn 1 bài để chấm</h2></div>
+        <div id="grading-detail-body"><p style="color:var(--text-soft); font-size:0.85rem;">Chưa chọn bài nào.</p></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -158,6 +358,13 @@
       loadStudents();
       loadMentors();
       loadClasses();
+      loadPhasesForDropdowns();
+      loadModulesAdmin();
+      loadAssignmentsAdmin();
+      loadCaseStudiesAdmin();
+      loadDocumentsAdmin();
+      loadSessionsAdmin();
+      loadGrading();
     });
   });
 
@@ -293,6 +500,7 @@
       allMentors = res.data || [];
       renderMentorsTable();
       renderClassMentorOptions();
+      populateMentorSelects();
     });
   }
 
@@ -446,6 +654,533 @@
           });
         });
       }
+    });
+  }
+
+  // ---------- Sub-tabs (Nội dung học) ----------
+  document.querySelectorAll('.admin-subtabs button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.admin-subtabs button').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.content-subpanel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('sub-' + btn.getAttribute('data-subtab')).classList.add('active');
+    });
+  });
+
+  function fmtDT(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+  function toLocalInputValue(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    var pad = function (n) { return String(n).padStart(2, '0'); };
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
+  var allPhasesAdmin = [];
+  function loadPhasesForDropdowns() {
+    window.sb.from('phases').select('id,title,order_index').order('order_index').then(function (res) {
+      allPhasesAdmin = res.data || [];
+      ['mod-phase', 'asg-phase', 'doc-phase'].forEach(function (id) {
+        var sel = document.getElementById(id);
+        sel.innerHTML = '<option value="">-- Không gán --</option>' + allPhasesAdmin.map(function (p) {
+          return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>';
+        }).join('');
+      });
+    });
+  }
+
+  function populateMentorSelects() {
+    ['asg-mentor', 'cs-mentor'].forEach(function (id) {
+      var sel = document.getElementById(id);
+      var current = sel.value;
+      sel.innerHTML = '<option value="">-- Không gán --</option>' + allMentors.map(function (m) {
+        return '<option value="' + m.id + '">' + escapeHtml(m.full_name) + '</option>';
+      }).join('');
+      sel.value = current;
+    });
+  }
+
+  // ---------- Buổi học (modules) ----------
+  var allModulesAdmin = [];
+  function loadModulesAdmin() {
+    window.sb.from('modules').select('id,title,order_index,phase_id,description').order('order_index').then(function (res) {
+      allModulesAdmin = res.data || [];
+      var tbody = document.getElementById('modules-tbody');
+      if (allModulesAdmin.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào.</td></tr>'; return; }
+      tbody.innerHTML = allModulesAdmin.map(function (m) {
+        var phase = allPhasesAdmin.find(function (p) { return p.id === m.phase_id; });
+        return '<tr><td>' + m.order_index + '</td><td>' + escapeHtml(m.title) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td>' +
+          '<td><button class="row-action-btn" data-edit-mod="' + m.id + '">Sửa</button> <button class="row-action-btn" data-del-mod="' + m.id + '">Xoá</button></td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-edit-mod]').forEach(function (btn) { btn.addEventListener('click', function () { editModule(btn.getAttribute('data-edit-mod')); }); });
+      tbody.querySelectorAll('[data-del-mod]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá buổi học này?')) return;
+          window.sb.from('modules').delete().eq('id', btn.getAttribute('data-del-mod')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadModulesAdmin(); });
+        });
+      });
+    });
+  }
+  function editModule(id) {
+    var m = allModulesAdmin.find(function (x) { return x.id === id; });
+    if (!m) return;
+    document.getElementById('mod-id').value = m.id;
+    document.getElementById('mod-title').value = m.title;
+    document.getElementById('mod-order').value = m.order_index;
+    document.getElementById('mod-phase').value = m.phase_id || '';
+    document.getElementById('mod-desc').value = m.description || '';
+    document.getElementById('module-form-title').textContent = 'Sửa buổi học';
+    document.getElementById('module-submit-btn').textContent = 'Lưu thay đổi';
+    document.getElementById('module-cancel-btn').style.display = 'inline-flex';
+  }
+  document.getElementById('module-cancel-btn').addEventListener('click', function () {
+    document.getElementById('module-form').reset();
+    document.getElementById('mod-id').value = '';
+    document.getElementById('module-form-title').textContent = 'Thêm buổi học mới';
+    document.getElementById('module-submit-btn').textContent = 'Thêm buổi học';
+    document.getElementById('module-cancel-btn').style.display = 'none';
+  });
+  document.getElementById('module-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('mod-id').value;
+    var payload = {
+      title: document.getElementById('mod-title').value.trim(),
+      order_index: parseInt(document.getElementById('mod-order').value, 10) || 1,
+      phase_id: document.getElementById('mod-phase').value || null,
+      description: document.getElementById('mod-desc').value.trim()
+    };
+    var errorOut = document.getElementById('module-error');
+    errorOut.style.display = 'none';
+    var action = id ? window.sb.from('modules').update(payload).eq('id', id) : window.sb.from('modules').insert(payload);
+    action.then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('module-cancel-btn').click();
+      loadModulesAdmin();
+    });
+  });
+
+  // ---------- Bài tập & Quiz ----------
+  var allAssignmentsAdmin = [];
+  var activeQuizAssignmentId = null;
+
+  function loadAssignmentsAdmin() {
+    window.sb.from('assignments').select('id,title,type,description,max_score,due_date,doc_type,phase_id,mentor_id').order('created_at', { ascending: false }).then(function (res) {
+      allAssignmentsAdmin = res.data || [];
+      var tbody = document.getElementById('assignments-admin-tbody');
+      if (allAssignmentsAdmin.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập nào.</td></tr>'; return; }
+      tbody.innerHTML = allAssignmentsAdmin.map(function (a) {
+        var phase = allPhasesAdmin.find(function (p) { return p.id === a.phase_id; });
+        var mentor = allMentors.find(function (m) { return m.id === a.mentor_id; });
+        return '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.type) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td><td>' + (mentor ? escapeHtml(mentor.full_name) : '—') + '</td>' +
+          '<td><button class="row-action-btn" data-edit-asg="' + a.id + '">Sửa</button> <button class="row-action-btn" data-del-asg="' + a.id + '">Xoá</button></td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-edit-asg]').forEach(function (btn) { btn.addEventListener('click', function () { editAssignment(btn.getAttribute('data-edit-asg')); }); });
+      tbody.querySelectorAll('[data-del-asg]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá bài tập này? (Sẽ xoá luôn câu hỏi/bài nộp liên quan)')) return;
+          window.sb.from('assignments').delete().eq('id', btn.getAttribute('data-del-asg')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadAssignmentsAdmin(); });
+        });
+      });
+    });
+  }
+  function editAssignment(id) {
+    var a = allAssignmentsAdmin.find(function (x) { return x.id === id; });
+    if (!a) return;
+    document.getElementById('asg-id').value = a.id;
+    document.getElementById('asg-title').value = a.title;
+    document.getElementById('asg-type').value = a.type;
+    document.getElementById('asg-desc').value = a.description || '';
+    document.getElementById('asg-maxscore').value = a.max_score;
+    document.getElementById('asg-due').value = toLocalInputValue(a.due_date);
+    document.getElementById('asg-doctype').value = a.doc_type || '';
+    document.getElementById('asg-phase').value = a.phase_id || '';
+    document.getElementById('asg-mentor').value = a.mentor_id || '';
+    document.getElementById('assignment-form-title').textContent = 'Sửa bài tập';
+    document.getElementById('assignment-submit-btn').textContent = 'Lưu thay đổi';
+    document.getElementById('assignment-cancel-btn').style.display = 'inline-flex';
+    if (a.type === 'quiz') { showQuizQuestions(a.id, a.title); } else { document.getElementById('quiz-questions-card').style.display = 'none'; }
+  }
+  document.getElementById('assignment-cancel-btn').addEventListener('click', function () {
+    document.getElementById('assignment-form').reset();
+    document.getElementById('asg-id').value = '';
+    document.getElementById('assignment-form-title').textContent = 'Thêm bài tập mới';
+    document.getElementById('assignment-submit-btn').textContent = 'Thêm bài tập';
+    document.getElementById('assignment-cancel-btn').style.display = 'none';
+    document.getElementById('quiz-questions-card').style.display = 'none';
+  });
+  document.getElementById('assignment-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('asg-id').value;
+    var dueVal = document.getElementById('asg-due').value;
+    var payload = {
+      title: document.getElementById('asg-title').value.trim(),
+      type: document.getElementById('asg-type').value,
+      description: document.getElementById('asg-desc').value.trim(),
+      max_score: parseFloat(document.getElementById('asg-maxscore').value) || 10,
+      due_date: dueVal ? new Date(dueVal).toISOString() : null,
+      doc_type: document.getElementById('asg-doctype').value.trim(),
+      phase_id: document.getElementById('asg-phase').value || null,
+      mentor_id: document.getElementById('asg-mentor').value || null
+    };
+    var errorOut = document.getElementById('assignment-error');
+    errorOut.style.display = 'none';
+    var action = id ? window.sb.from('assignments').update(payload).eq('id', id) : window.sb.from('assignments').insert(payload);
+    action.then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('assignment-cancel-btn').click();
+      loadAssignmentsAdmin();
+    });
+  });
+
+  function showQuizQuestions(assignmentId, title) {
+    activeQuizAssignmentId = assignmentId;
+    document.getElementById('quiz-questions-card').style.display = 'block';
+    document.getElementById('quiz-questions-title').textContent = 'Câu hỏi quiz — ' + title;
+    loadQuizQuestions();
+  }
+  function loadQuizQuestions() {
+    window.sb.from('quiz_questions').select('id,question_text,options,correct_index,order_index').eq('assignment_id', activeQuizAssignmentId).order('order_index').then(function (res) {
+      var list = document.getElementById('quiz-questions-list');
+      var qs = res.data || [];
+      if (qs.length === 0) { list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có câu hỏi nào.</p>'; return; }
+      list.innerHTML = qs.map(function (q, idx) {
+        var opts = (q.options || []).map(function (opt, i) {
+          return '<div class="opt' + (i === q.correct_index ? ' correct' : '') + '">' + (i === q.correct_index ? '✓ ' : '') + escapeHtml(opt) + '</div>';
+        }).join('');
+        return '<div class="qq-item"><b>Câu ' + (idx + 1) + '.</b> ' + escapeHtml(q.question_text) + opts +
+          '<button class="row-action-btn" data-del-qq="' + q.id + '" style="margin-top:6px;">Xoá câu hỏi</button></div>';
+      }).join('');
+      list.querySelectorAll('[data-del-qq]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          window.sb.from('quiz_questions').delete().eq('id', btn.getAttribute('data-del-qq')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadQuizQuestions(); });
+        });
+      });
+    });
+  }
+  document.getElementById('quiz-question-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!activeQuizAssignmentId) return;
+    var options = [document.getElementById('qq-opt0').value.trim(), document.getElementById('qq-opt1').value.trim(), document.getElementById('qq-opt2').value.trim(), document.getElementById('qq-opt3').value.trim()];
+    var correctIndex = parseInt(document.querySelector('input[name="qq-correct"]:checked').value, 10);
+    window.sb.from('quiz_questions').select('id', { count: 'exact', head: true }).eq('assignment_id', activeQuizAssignmentId).then(function (countRes) {
+      var orderIndex = (countRes.count || 0) + 1;
+      window.sb.from('quiz_questions').insert({
+        assignment_id: activeQuizAssignmentId,
+        question_text: document.getElementById('qq-text').value.trim(),
+        options: options,
+        correct_index: correctIndex,
+        order_index: orderIndex
+      }).then(function (res) {
+        if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+        document.getElementById('quiz-question-form').reset();
+        loadQuizQuestions();
+      });
+    });
+  });
+
+  // ---------- Case study ----------
+  var allCaseStudiesAdmin = [];
+  var activeCaseStudyId = null;
+
+  function loadCaseStudiesAdmin() {
+    window.sb.from('case_studies').select('id,title,domain,description,due_date,mentor_id').order('order_index').then(function (res) {
+      allCaseStudiesAdmin = res.data || [];
+      var tbody = document.getElementById('cs-admin-tbody');
+      if (allCaseStudiesAdmin.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có case study nào.</td></tr>'; return; }
+      tbody.innerHTML = allCaseStudiesAdmin.map(function (c) {
+        var mentor = allMentors.find(function (m) { return m.id === c.mentor_id; });
+        return '<tr><td>' + escapeHtml(c.title) + '</td><td>' + escapeHtml(c.domain || '') + '</td><td>' + (mentor ? escapeHtml(mentor.full_name) : '—') + '</td>' +
+          '<td><button class="row-action-btn" data-edit-cs="' + c.id + '">Sửa</button> <button class="row-action-btn" data-del-cs="' + c.id + '">Xoá</button></td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-edit-cs]').forEach(function (btn) { btn.addEventListener('click', function () { editCaseStudy(btn.getAttribute('data-edit-cs')); }); });
+      tbody.querySelectorAll('[data-del-cs]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá case study này? (Sẽ xoá luôn nhiệm vụ liên quan)')) return;
+          window.sb.from('case_studies').delete().eq('id', btn.getAttribute('data-del-cs')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadCaseStudiesAdmin(); });
+        });
+      });
+    });
+  }
+  function editCaseStudy(id) {
+    var c = allCaseStudiesAdmin.find(function (x) { return x.id === id; });
+    if (!c) return;
+    document.getElementById('cs-id').value = c.id;
+    document.getElementById('cs-title').value = c.title;
+    document.getElementById('cs-domain').value = c.domain || '';
+    document.getElementById('cs-desc').value = c.description || '';
+    document.getElementById('cs-due').value = toLocalInputValue(c.due_date);
+    document.getElementById('cs-mentor').value = c.mentor_id || '';
+    document.getElementById('cs-form-title').textContent = 'Sửa case study';
+    document.getElementById('cs-submit-btn').textContent = 'Lưu thay đổi';
+    document.getElementById('cs-cancel-btn').style.display = 'inline-flex';
+    showCaseStudyTasks(c.id, c.title);
+  }
+  document.getElementById('cs-cancel-btn').addEventListener('click', function () {
+    document.getElementById('cs-form').reset();
+    document.getElementById('cs-id').value = '';
+    document.getElementById('cs-form-title').textContent = 'Thêm case study mới';
+    document.getElementById('cs-submit-btn').textContent = 'Thêm case study';
+    document.getElementById('cs-cancel-btn').style.display = 'none';
+    document.getElementById('cs-tasks-card').style.display = 'none';
+  });
+  document.getElementById('cs-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('cs-id').value;
+    var dueVal = document.getElementById('cs-due').value;
+    var payload = {
+      title: document.getElementById('cs-title').value.trim(),
+      domain: document.getElementById('cs-domain').value.trim(),
+      description: document.getElementById('cs-desc').value.trim(),
+      due_date: dueVal ? new Date(dueVal).toISOString() : null,
+      mentor_id: document.getElementById('cs-mentor').value || null
+    };
+    var errorOut = document.getElementById('cs-error');
+    errorOut.style.display = 'none';
+    var action = id ? window.sb.from('case_studies').update(payload).eq('id', id) : window.sb.from('case_studies').insert(payload);
+    action.then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('cs-cancel-btn').click();
+      loadCaseStudiesAdmin();
+    });
+  });
+
+  function showCaseStudyTasks(caseStudyId, title) {
+    activeCaseStudyId = caseStudyId;
+    document.getElementById('cs-tasks-card').style.display = 'block';
+    document.getElementById('cs-tasks-title').textContent = 'Nhiệm vụ — ' + title;
+    loadCaseStudyTasks();
+  }
+  function loadCaseStudyTasks() {
+    window.sb.from('case_study_tasks').select('id,title,order_index').eq('case_study_id', activeCaseStudyId).order('order_index').then(function (res) {
+      var list = document.getElementById('cs-tasks-list');
+      var tasks = res.data || [];
+      if (tasks.length === 0) { list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có nhiệm vụ nào.</p>'; return; }
+      list.innerHTML = tasks.map(function (t, idx) {
+        return '<div class="toggle-row"><span class="t" style="font-weight:600;">' + (idx + 1) + '. ' + escapeHtml(t.title) + '</span><button class="row-action-btn" data-del-task="' + t.id + '">Xoá</button></div>';
+      }).join('');
+      list.querySelectorAll('[data-del-task]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          window.sb.from('case_study_tasks').delete().eq('id', btn.getAttribute('data-del-task')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadCaseStudyTasks(); });
+        });
+      });
+    });
+  }
+  document.getElementById('cs-task-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!activeCaseStudyId) return;
+    window.sb.from('case_study_tasks').select('id', { count: 'exact', head: true }).eq('case_study_id', activeCaseStudyId).then(function (countRes) {
+      var orderIndex = (countRes.count || 0) + 1;
+      window.sb.from('case_study_tasks').insert({ case_study_id: activeCaseStudyId, title: document.getElementById('cst-title').value.trim(), order_index: orderIndex }).then(function (res) {
+        if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+        document.getElementById('cs-task-form').reset();
+        loadCaseStudyTasks();
+      });
+    });
+  });
+
+  // ---------- Tài liệu ----------
+  var allDocumentsAdmin = [];
+  function loadDocumentsAdmin() {
+    window.sb.from('documents').select('id,title,url,phase_id,doc_type').order('created_at', { ascending: false }).then(function (res) {
+      allDocumentsAdmin = res.data || [];
+      var tbody = document.getElementById('docs-admin-tbody');
+      if (allDocumentsAdmin.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có tài liệu nào.</td></tr>'; return; }
+      tbody.innerHTML = allDocumentsAdmin.map(function (d) {
+        var phase = allPhasesAdmin.find(function (p) { return p.id === d.phase_id; });
+        return '<tr><td>' + escapeHtml(d.title) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td><td>' + escapeHtml(d.doc_type || '') + '</td>' +
+          '<td><button class="row-action-btn" data-edit-doc="' + d.id + '">Sửa</button> <button class="row-action-btn" data-del-doc="' + d.id + '">Xoá</button></td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-edit-doc]').forEach(function (btn) { btn.addEventListener('click', function () { editDocument(btn.getAttribute('data-edit-doc')); }); });
+      tbody.querySelectorAll('[data-del-doc]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá tài liệu này?')) return;
+          window.sb.from('documents').delete().eq('id', btn.getAttribute('data-del-doc')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadDocumentsAdmin(); });
+        });
+      });
+    });
+  }
+  function editDocument(id) {
+    var d = allDocumentsAdmin.find(function (x) { return x.id === id; });
+    if (!d) return;
+    document.getElementById('doc-id').value = d.id;
+    document.getElementById('doc-title').value = d.title;
+    document.getElementById('doc-url').value = d.url;
+    document.getElementById('doc-phase').value = d.phase_id || '';
+    document.getElementById('doc-type').value = d.doc_type || '';
+    document.getElementById('doc-form-title').textContent = 'Sửa tài liệu';
+    document.getElementById('doc-submit-btn').textContent = 'Lưu thay đổi';
+    document.getElementById('doc-cancel-btn').style.display = 'inline-flex';
+  }
+  document.getElementById('doc-cancel-btn').addEventListener('click', function () {
+    document.getElementById('doc-form').reset();
+    document.getElementById('doc-id').value = '';
+    document.getElementById('doc-form-title').textContent = 'Thêm tài liệu mới';
+    document.getElementById('doc-submit-btn').textContent = 'Thêm tài liệu';
+    document.getElementById('doc-cancel-btn').style.display = 'none';
+  });
+  document.getElementById('doc-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('doc-id').value;
+    var payload = {
+      title: document.getElementById('doc-title').value.trim(),
+      url: document.getElementById('doc-url').value.trim(),
+      phase_id: document.getElementById('doc-phase').value || null,
+      doc_type: document.getElementById('doc-type').value.trim()
+    };
+    var errorOut = document.getElementById('doc-error');
+    errorOut.style.display = 'none';
+    var action = id ? window.sb.from('documents').update(payload).eq('id', id) : window.sb.from('documents').insert(payload);
+    action.then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('doc-cancel-btn').click();
+      loadDocumentsAdmin();
+    });
+  });
+
+  // ---------- Lịch Meet ----------
+  var allSessionsAdmin = [];
+  function loadSessionsAdmin() {
+    window.sb.from('class_sessions').select('id,title,meet_link,scheduled_at,session_type,registration_required').order('scheduled_at', { ascending: false }).then(function (res) {
+      allSessionsAdmin = res.data || [];
+      var tbody = document.getElementById('sessions-admin-tbody');
+      if (allSessionsAdmin.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi nào.</td></tr>'; return; }
+      tbody.innerHTML = allSessionsAdmin.map(function (s) {
+        return '<tr><td>' + escapeHtml(s.title) + '</td><td>' + fmtDT(s.scheduled_at) + '</td><td>' + escapeHtml(s.session_type) + '</td>' +
+          '<td><button class="row-action-btn" data-edit-sess="' + s.id + '">Sửa</button> <button class="row-action-btn" data-del-sess="' + s.id + '">Xoá</button></td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-edit-sess]').forEach(function (btn) { btn.addEventListener('click', function () { editSession(btn.getAttribute('data-edit-sess')); }); });
+      tbody.querySelectorAll('[data-del-sess]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá buổi Meet này?')) return;
+          window.sb.from('class_sessions').delete().eq('id', btn.getAttribute('data-del-sess')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadSessionsAdmin(); });
+        });
+      });
+    });
+  }
+  function editSession(id) {
+    var s = allSessionsAdmin.find(function (x) { return x.id === id; });
+    if (!s) return;
+    document.getElementById('sess-id').value = s.id;
+    document.getElementById('sess-title').value = s.title;
+    document.getElementById('sess-link').value = s.meet_link || '';
+    document.getElementById('sess-time').value = toLocalInputValue(s.scheduled_at);
+    document.getElementById('sess-type').value = s.session_type;
+    document.getElementById('sess-reg').checked = !!s.registration_required;
+    document.getElementById('session-form-title').textContent = 'Sửa buổi Meet';
+    document.getElementById('session-submit-btn').textContent = 'Lưu thay đổi';
+    document.getElementById('session-cancel-btn').style.display = 'inline-flex';
+  }
+  document.getElementById('session-cancel-btn').addEventListener('click', function () {
+    document.getElementById('session-form').reset();
+    document.getElementById('sess-id').value = '';
+    document.getElementById('session-form-title').textContent = 'Thêm buổi Meet mới';
+    document.getElementById('session-submit-btn').textContent = 'Thêm buổi';
+    document.getElementById('session-cancel-btn').style.display = 'none';
+  });
+  document.getElementById('session-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('sess-id').value;
+    var timeVal = document.getElementById('sess-time').value;
+    var payload = {
+      title: document.getElementById('sess-title').value.trim(),
+      meet_link: document.getElementById('sess-link').value.trim(),
+      scheduled_at: timeVal ? new Date(timeVal).toISOString() : null,
+      session_type: document.getElementById('sess-type').value,
+      registration_required: document.getElementById('sess-reg').checked
+    };
+    var errorOut = document.getElementById('session-error');
+    errorOut.style.display = 'none';
+    var action = id ? window.sb.from('class_sessions').update(payload).eq('id', id) : window.sb.from('class_sessions').insert(payload);
+    action.then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('session-cancel-btn').click();
+      loadSessionsAdmin();
+    });
+  });
+
+  // ---------- Chấm bài ----------
+  var allGradingSubs = [];
+  function loadGrading() {
+    var showAll = document.getElementById('grading-show-all').checked;
+    var query = window.sb.from('submissions').select('id,assignment_id,user_id,type,answer_text,file_path,drive_link,score,max_score,graded,feedback,submitted_at').in('type', ['essay', 'file']).order('submitted_at', { ascending: false });
+    if (!showAll) query = query.eq('graded', false);
+    Promise.all([
+      query,
+      window.sb.from('profiles').select('id,full_name,email'),
+      window.sb.from('assignments').select('id,title,max_score')
+    ]).then(function (r) {
+      allGradingSubs = r[0].data || [];
+      var profilesMap = {}; (r[1].data || []).forEach(function (p) { profilesMap[p.id] = p; });
+      var assignmentsMap = {}; (r[2].data || []).forEach(function (a) { assignmentsMap[a.id] = a; });
+
+      var tbody = document.getElementById('grading-tbody');
+      if (allGradingSubs.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Không có bài nào.</td></tr>'; return; }
+      tbody.innerHTML = allGradingSubs.map(function (s) {
+        var student = profilesMap[s.user_id];
+        var assignment = assignmentsMap[s.assignment_id];
+        var status = s.graded ? '<span class="badge b-done">Đã chấm: ' + s.score + '/' + s.max_score + '</span>' : '<span class="badge b-review">Chờ chấm</span>';
+        return '<tr class="row-click" data-grade="' + s.id + '"><td>' + escapeHtml(student ? (student.full_name || student.email) : '') + '</td><td>' + escapeHtml(assignment ? assignment.title : '') + '</td><td>' + escapeHtml(s.type) + '</td><td>' + status + '</td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-grade]').forEach(function (row) {
+        row.addEventListener('click', function () { openGradingDetail(row.getAttribute('data-grade'), profilesMap, assignmentsMap); });
+      });
+    });
+  }
+  document.getElementById('grading-show-all').addEventListener('change', loadGrading);
+
+  function openGradingDetail(subId, profilesMap, assignmentsMap) {
+    var s = allGradingSubs.find(function (x) { return x.id === subId; });
+    if (!s) return;
+    var student = profilesMap[s.user_id];
+    var assignment = assignmentsMap[s.assignment_id];
+    document.getElementById('grading-detail-title').textContent = (student ? (student.full_name || student.email) : '') + ' — ' + (assignment ? assignment.title : '');
+
+    var contentHtml = '';
+    if (s.type === 'essay') {
+      contentHtml = '<div class="tfield"><label>Bài làm</label><textarea disabled style="min-height:160px;">' + escapeHtml(s.answer_text || '') + '</textarea></div>';
+    } else if (s.drive_link) {
+      contentHtml = '<p>Link Drive: <a href="' + escapeHtml(s.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(s.drive_link) + '</a></p>';
+    } else if (s.file_path) {
+      contentHtml = '<p><button class="row-action-btn" id="download-file-btn">Tải file bài nộp</button></p>';
+    }
+
+    var body = document.getElementById('grading-detail-body');
+    body.innerHTML = contentHtml +
+      '<form id="grade-form" style="margin-top:1rem;">' +
+      '<div class="tfield"><label for="grade-score">Điểm (tối đa ' + (assignment ? assignment.max_score : 10) + ')</label><input id="grade-score" type="number" step="0.5" min="0" max="' + (assignment ? assignment.max_score : 10) + '" value="' + (s.score != null ? s.score : '') + '" required /></div>' +
+      '<div class="tfield"><label for="grade-feedback">Nhận xét</label><textarea id="grade-feedback">' + escapeHtml(s.feedback || '') + '</textarea></div>' +
+      '<button class="btn btn-gold" type="submit">Lưu điểm</button>' +
+      '<p class="msg-success" id="grade-success" style="display:none; color:var(--green); font-size:0.82rem; margin-top:0.6rem;"></p>' +
+      '</form>';
+
+    var dlBtn = document.getElementById('download-file-btn');
+    if (dlBtn) {
+      dlBtn.addEventListener('click', function () {
+        window.sb.storage.from('submissions').createSignedUrl(s.file_path, 3600).then(function (res) {
+          if (res.error) { alert('Không tải được file: ' + res.error.message); return; }
+          window.open(res.data.signedUrl, '_blank');
+        });
+      });
+    }
+
+    document.getElementById('grade-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var maxScore = assignment ? assignment.max_score : 10;
+      window.sb.from('submissions').update({
+        score: parseFloat(document.getElementById('grade-score').value),
+        max_score: maxScore,
+        feedback: document.getElementById('grade-feedback').value.trim(),
+        graded: true,
+        graded_at: new Date().toISOString()
+      }).eq('id', subId).then(function (res) {
+        if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+        document.getElementById('grade-success').textContent = 'Đã lưu điểm!';
+        document.getElementById('grade-success').style.display = 'block';
+        loadGrading();
+      });
     });
   }
 </script>
