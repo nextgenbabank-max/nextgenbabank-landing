@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thiết kế lộ trình học tập — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <a class="t-brand" href="teacher-dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">TA</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Giảng viên</div>
+        <div class="name" id="user-name">Trần Minh Anh</div>
+        <div class="online"><span class="d"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="teacher-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="teacher-dashboard.html#meet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg>Tạo link Meet</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="teacher-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài<span class="badge-num">18</span></a>
+      <a href="teacher-learning-path.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num">6</span></a>
+      <div class="t-nav-divider"></div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Báo cáo</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
+    </nav>
+
+    <div class="t-support">
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3ZM3 19a2 2 0 0 0 2 2h1v-6H3Z"/></svg>
+        <div>Nếu bạn cần hỗ trợ, hãy liên hệ<br><a href="mailto:support@nextgenbabanker.vn">support@nextgenbabanker.vn</a></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div class="t-topbar-actions">
+          <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">2</span></button>
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">TA</span>
+            <span class="meta"><span class="u-name" id="user-name-2">Trần Minh Anh</span><span class="u-role">Giảng viên</span></span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head">
+        <div><h1>Thiết kế lộ trình học tập</h1><p class="d">Tùy chỉnh lộ trình học tập cá nhân hóa cho từng học viên</p></div>
+        <a class="btn btn-outline btn-sm" href="teacher-dashboard.html"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Quay lại danh sách lộ trình</a>
+      </div>
+
+      <div style="display:grid; grid-template-columns:280px 1.6fr 1fr; gap:1.2rem; align-items:start;" id="path-grid">
+        <div class="card">
+          <div class="card-head"><h2>Chọn học viên</h2></div>
+          <div class="search" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" placeholder="Tìm kiếm học viên..." /></div>
+          <div class="tabs" style="gap:1rem; margin-bottom:0.6rem;">
+            <a href="#" class="active">Tất cả 142</a>
+            <a href="#">Đã có lộ trình 86</a>
+          </div>
+          <div id="student-list">
+            <div class="student-row active" data-name="Nguyễn Thị Mai" data-pct="60">
+              <span class="av" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">NM</span>
+              <div class="body"><div class="n">Nguyễn Thị Mai</div><div class="p">60% hoàn thành</div><div class="pbar"><i class="green" style="width:60%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Trần Văn Hoàng" data-pct="25">
+              <span class="av" style="background:linear-gradient(120deg,#34D399,var(--green));">TH</span>
+              <div class="body"><div class="n">Trần Văn Hoàng</div><div class="p">25% hoàn thành</div><div class="pbar"><i class="gold" style="width:25%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Lê Phương Anh" data-pct="10">
+              <span class="av" style="background:linear-gradient(120deg,#A78BFA,var(--violet));">LP</span>
+              <div class="body"><div class="n">Lê Phương Anh</div><div class="p">10% hoàn thành</div><div class="pbar"><i class="gold" style="width:10%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Phạm Minh Đức" data-pct="40">
+              <span class="av" style="background:linear-gradient(120deg,#E6AC2E,var(--amber));">PM</span>
+              <div class="body"><div class="n">Phạm Minh Đức</div><div class="p">40% hoàn thành</div><div class="pbar"><i class="gold" style="width:40%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Vũ Thanh Thảo" data-pct="75">
+              <span class="av" style="background:#E86A8A;">VT</span>
+              <div class="body"><div class="n">Vũ Thanh Thảo</div><div class="p">75% hoàn thành</div><div class="pbar"><i class="green" style="width:75%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Hoàng Đức Long" data-pct="0">
+              <span class="av" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">HL</span>
+              <div class="body"><div class="n">Hoàng Đức Long</div><div class="p">0% hoàn thành</div><div class="pbar"><i class="gold" style="width:0%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Đặng Thùy Linh" data-pct="30">
+              <span class="av" style="background:linear-gradient(120deg,#34D399,var(--green));">DL</span>
+              <div class="body"><div class="n">Đặng Thùy Linh</div><div class="p">30% hoàn thành</div><div class="pbar"><i class="gold" style="width:30%;"></i></div></div>
+            </div>
+            <div class="student-row" data-name="Ngô Quốc Bảo" data-pct="15">
+              <span class="av" style="background:linear-gradient(120deg,#A78BFA,var(--violet));">NB</span>
+              <div class="body"><div class="n">Ngô Quốc Bảo</div><div class="p">15% hoàn thành</div><div class="pbar"><i class="gold" style="width:15%;"></i></div></div>
+            </div>
+          </div>
+          <div class="pagination" style="margin-top:0.8rem;">
+            <div class="info" style="font-size:0.74rem;">Hiển thị 1–8 của 142 học viên</div>
+          </div>
+          <div class="pages" style="margin-top:0.4rem; justify-content:center; display:flex;">
+            <button disabled><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="active">1</button><button>2</button><button>3</button><span style="padding:0 4px; color:var(--text-soft);">…</span><button>18</button>
+            <button><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="path-header">
+            <span class="av avatar" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));" id="ph-avatar">NM</span>
+            <div>
+              <div class="name" id="ph-name">Nguyễn Thị Mai <span class="badge b-progress">Đang học</span></div>
+              <div class="meta">Lớp: BA Fundamentals - K02 · Ngày bắt đầu: 10/05/2025</div>
+            </div>
+            <div class="overall">
+              <div class="lbl">Tiến độ tổng thể</div>
+              <div class="val" id="ph-pct">60%</div>
+              <div class="pbar"><i class="green" id="ph-bar" style="width:60%;"></i></div>
+            </div>
+          </div>
+
+          <h3 style="font-size:0.94rem; font-weight:800; margin-bottom:1rem;">Lộ trình học tập cá nhân</h3>
+          <div class="path-list">
+            <div class="path-step">
+              <span class="num" style="background:var(--green);"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div class="body2">
+                <div class="top"><div><div class="t">BA Fundamentals</div><div class="d">Nắm vững tư duy BA và các khái niệm nền tảng</div></div><div class="right"><span class="badge b-done">Hoàn thành</span><div class="due">Hạn hoàn thành<br>25/05/2025</div></div></div>
+                <div class="pbar-row"><span class="pbar"><i class="green" style="width:100%;"></i></span><span class="pct">100%</span></div>
+              </div>
+            </div>
+            <div class="path-step">
+              <span class="num" style="background:var(--blue);">2</span>
+              <div class="body2">
+                <div class="top"><div><div class="t">Process &amp; Banking Domain</div><div class="d">Hiểu quy trình nghiệp vụ &amp; các sản phẩm ngân hàng</div></div><div class="right"><span class="badge b-new">Đang học</span><div class="due">Hạn hoàn thành<br>08/06/2025</div></div></div>
+                <div class="pbar-row"><span class="pbar"><i class="blue" style="width:70%;"></i></span><span class="pct">70%</span></div>
+              </div>
+            </div>
+            <div class="path-step">
+              <span class="num" style="background:var(--amber);">3</span>
+              <div class="body2">
+                <div class="top"><div><div class="t">Requirement Analysis</div><div class="d">Thu thập, phân tích và quản lý yêu cầu</div></div><div class="right"><span class="badge b-new">Đang học</span><div class="due">Hạn hoàn thành<br>22/06/2025</div></div></div>
+                <div class="pbar-row"><span class="pbar"><i class="gold" style="width:40%;"></i></span><span class="pct">40%</span></div>
+              </div>
+            </div>
+            <div class="path-step">
+              <span class="num" style="background:var(--border); color:var(--text-soft);">4</span>
+              <div class="body2">
+                <div class="top"><div><div class="t">BA Documentation</div><div class="d">Đặc tả yêu cầu và tài liệu chuyên nghiệp</div></div><div class="right"><span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa bắt đầu</span><div class="due">Hạn hoàn thành<br>06/07/2025</div></div></div>
+                <div class="pbar-row"><span class="pbar"><i class="gold" style="width:15%;"></i></span><span class="pct">15%</span></div>
+              </div>
+            </div>
+            <div class="path-step">
+              <span class="num" style="background:var(--border); color:var(--text-soft);">5</span>
+              <div class="body2">
+                <div class="top"><div><div class="t">Banking Project Practice</div><div class="d">Thực hành dự án ngân hàng thực tế</div></div><div class="right"><span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa bắt đầu</span><div class="due">Hạn hoàn thành<br>27/07/2025</div></div></div>
+                <div class="pbar-row"><span class="pbar"><i class="gold" style="width:0%;"></i></span><span class="pct">0%</span></div>
+              </div>
+            </div>
+            <div class="path-step">
+              <span class="num" style="background:var(--border); color:var(--text-soft);">6</span>
+              <div class="body2">
+                <div class="top"><div><div class="t">Go-live Ready</div><div class="d">Chuẩn bị kỹ năng triển khai &amp; hỗ trợ vận hành</div></div><div class="right"><span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa bắt đầu</span><div class="due">Hạn hoàn thành<br>10/08/2025</div></div></div>
+                <div class="pbar-row"><span class="pbar"><i class="gold" style="width:0%;"></i></span><span class="pct">0%</span></div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-outline" style="width:100%; justify-content:center; margin-top:0.4rem;">+ Thêm bước học mới</button>
+
+          <h3 style="font-size:0.9rem; font-weight:800; margin-top:1.4rem; margin-bottom:0.5rem;">Ghi chú &amp; định hướng cho học viên</h3>
+          <p style="font-size:0.76rem; color:var(--text-soft); margin-bottom:0.5rem;">Ghi chú này chỉ học viên được chọn nhìn thấy</p>
+          <textarea class="rte-body" style="border-radius:9px;" id="path-note">Mai cần tập trung cải thiện kỹ năng phân tích yêu cầu và đặt câu hỏi sâu.
+Nên dành thêm thời gian cho các case study ngân hàng và thực hành viết BRD.
+Hãy cố gắng hoàn thành đúng hạn các bước để kịp tham gia dự án thực tế nhé!</textarea>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.6rem;">
+            <span style="font-size:0.74rem; color:var(--text-soft);">Cập nhật lần cuối: 19/05/2025 21:30</span>
+            <button class="btn btn-outline btn-sm">Lưu ghi chú</button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h2>Thêm bước học mới</h2></div>
+            <div class="tfield"><label for="step-name">Tên bước học</label><input id="step-name" type="text" placeholder="Nhập tên bước học..." /></div>
+            <div class="tfield"><label for="step-desc">Mô tả bước học</label><textarea id="step-desc" placeholder="Mô tả mục tiêu và nội dung chính..." style="min-height:70px;"></textarea></div>
+            <div class="tfield"><label for="step-track">Chọn track</label><select id="step-track"><option value="">Chọn track</option><option>Business Analysis Competency</option><option>Banking Domain</option></select></div>
+            <div class="tfield"><label for="step-due">Hạn hoàn thành</label><input id="step-due" type="date" /></div>
+            <div class="tfield"><label for="step-assign">Gán bài tập / Case study (tùy chọn)</label><select id="step-assign"><option value="">Chọn bài tập hoặc case study</option></select></div>
+            <p style="font-size:0.72rem; color:var(--text-soft); margin-top:-0.5rem; margin-bottom:0.8rem;">Học viên sẽ thấy bài tập này trong bước học tương ứng.</p>
+            <button class="btn btn-blue" style="width:100%; justify-content:center;">+ Thêm bước học</button>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h2>Cài đặt lộ trình</h2></div>
+            <div class="tfield"><label for="path-start">Ngày bắt đầu lộ trình</label><input id="path-start" type="date" value="2025-05-10" /></div>
+            <div class="toggle-row">
+              <div><div class="t">Tự động gợi ý deadline</div><div class="d">Dựa trên thời lượng mặc định của từng bước</div></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div><div class="t">Hiển thị lộ trình cho học viên</div><div class="d">Học viên có thể xem lộ trình và tiến độ</div></div>
+              <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            </div>
+            <button class="btn btn-gold" style="width:100%; justify-content:center; margin-top:1rem;"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Lưu thay đổi</button>
+            <button class="btn btn-outline" style="width:100%; justify-content:center; margin-top:0.6rem;">↺ Đặt lại lộ trình</button>
+          </div>
+        </div>
+      </div>
+      <style>@media (max-width: 1280px) { #path-grid { grid-template-columns: 1fr 1fr !important; } #path-grid > *:first-child { grid-column: 1 / -1; } }
+      @media (max-width: 760px) { #path-grid { grid-template-columns: 1fr !important; } #path-grid > *:first-child { grid-column: auto; } }</style>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+
+  document.querySelectorAll('.student-row').forEach(function (row) {
+    row.addEventListener('click', function () {
+      document.querySelectorAll('.student-row').forEach(function (r) { r.classList.remove('active'); });
+      row.classList.add('active');
+      var name = row.getAttribute('data-name');
+      var pct = row.getAttribute('data-pct');
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('ph-avatar').textContent = initials;
+      document.getElementById('ph-name').innerHTML = name + ' <span class="badge b-progress">Đang học</span>';
+      document.getElementById('ph-pct').textContent = pct + '%';
+      document.getElementById('ph-bar').style.width = pct + '%';
+    });
+  });
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-2').textContent = name;
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'GV';
+    document.getElementById('user-avatar-2').textContent = initials || 'GV';
+  });
+</script>
+</body>
+</html>

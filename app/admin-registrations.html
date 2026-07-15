@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Đăng ký tài khoản — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <a class="t-brand" href="admin-dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">AD</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Admin</div>
+        <div class="name" id="user-name">Admin System</div>
+        <div class="online">Quản trị hệ thống</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="admin-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="admin-registrations.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>Đăng ký tài khoản<span class="badge-num">12</span></a>
+      <a href="admin-create-account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Tạo tài khoản</a>
+      <a href="admin-permissions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Phân quyền</a>
+      <a href="admin-mentor-assignment.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="3"/><path d="M2 20c0-3 2.5-5 5-5s5 2 5 5"/><circle cx="17" cy="8" r="3"/><path d="M12 20c0-3 2.5-5 5-5s5 2 5 5"/><path d="m9.5 9.5 1.8 1.8M14.5 9.5l-1.8 1.8"/></svg>Phân công Mentor</a>
+      <a href="admin-create-class.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/></svg>Tạo lớp học</a>
+      <a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Nội dung học &amp; Chấm bài</a>
+      <div class="t-nav-divider"></div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Người dùng</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6l9 4 9-4-9-4Z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>Vai trò &amp; Quyền</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>Nhật ký hoạt động</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt hệ thống</a>
+    </nav>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div class="t-topbar-actions">
+          <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">12</span></button>
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">AD</span>
+            <span class="meta"><span class="u-name" id="user-name-2">Admin System</span><span class="u-role">Admin</span></span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head"><div><h1>Đăng ký tài khoản</h1><p class="d">Xem, phê duyệt và quản lý các yêu cầu đăng ký tài khoản mới.</p></div></div>
+
+      <div class="stat-grid cols-3">
+        <div class="stat-card">
+          <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div><div class="n" id="stat-pending">–</div><div class="l">Chờ phê duyệt</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <div><div class="n" id="stat-approved">–</div><div class="l">Đã phê duyệt</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic" style="background:linear-gradient(120deg,#EE7A8F,var(--danger));" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></span>
+          <div><div class="n" id="stat-rejected">–</div><div class="l">Đã từ chối</div></div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:1.2rem; align-items:start;" id="reg-grid">
+        <div class="card">
+          <div class="tabs">
+            <a href="#" class="active" data-tab="pending">Chờ phê duyệt <span class="count" id="tab-count-pending" style="background:var(--gold); color:#fff; border-radius:999px; font-size:0.68rem; padding:0.1em 0.5em; margin-left:4px;">0</span></a>
+            <a href="#" data-tab="approved">Đã duyệt</a>
+            <a href="#" data-tab="rejected">Đã từ chối</a>
+          </div>
+          <div class="filter-row">
+            <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="reg-search" placeholder="Tìm kiếm theo tên, email..." /></div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="reg-table">
+              <thead><tr><th>Họ tên</th><th>Email</th><th>Ngày đăng ký</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+              <tbody id="reg-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" id="detail-panel" style="display:none;">
+          <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem;">
+            <span class="avatar" id="d-avatar" style="width:48px; height:48px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:800; background:linear-gradient(120deg,#5B9BFA,var(--blue));">NA</span>
+            <div><p id="d-name" style="font-size:1.02rem; font-weight:800; color:var(--navy-ink);">–</p><span class="badge b-progress" id="d-status">–</span></div>
+          </div>
+          <div class="info-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="v" id="d-email">–</span></div>
+          <div class="info-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 3a2 2 0 0 1-.4 2.1L8 10.3a16 16 0 0 0 6 6l1.5-1.5a2 2 0 0 1 2-.5c1 .3 2 .5 3 .6a2 2 0 0 1 1.5 2Z"/></svg><span class="v" id="d-phone">–</span></div>
+
+          <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Thông tin đăng ký</p>
+          <div class="info-line" style="border-top:none;"><span class="l" style="flex:1;">Ngày đăng ký</span><span class="v" id="d-date">–</span></div>
+          <div class="info-line"><span class="l" style="flex:1;">Vai trò hiện tại (tự khai)</span><span class="v" id="d-role">–</span></div>
+
+          <div style="display:flex; gap:0.7rem; margin-top:1.2rem;" id="d-actions">
+            <button class="btn btn-outline" style="flex:1; justify-content:center; border-color:var(--danger); color:var(--danger);" id="d-reject">Từ chối</button>
+            <button class="btn btn-blue" style="flex:1; justify-content:center;" id="d-approve">Phê duyệt</button>
+          </div>
+        </div>
+      </div>
+      <style>@media (max-width: 1180px) { #reg-grid { grid-template-columns: 1fr !important; } }</style>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+
+  var currentTab = 'pending';
+  var currentRows = [];
+  var selectedId = null;
+
+  function initialsOf(name) {
+    return (name || '?').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || '?';
+  }
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+  function statusLabel(status) {
+    if (status === 'approved') return '<span class="badge b-done">Đã duyệt</span>';
+    if (status === 'rejected') return '<span class="badge" style="background:var(--danger-soft); color:var(--danger);">Đã từ chối</span>';
+    return '<span class="badge b-progress">Chờ duyệt</span>';
+  }
+
+  function loadStats() {
+    Promise.all([
+      window.sb.from('profiles').select('id', { count: 'exact', head: true }).eq('approval_status', 'pending'),
+      window.sb.from('profiles').select('id', { count: 'exact', head: true }).eq('approval_status', 'approved'),
+      window.sb.from('profiles').select('id', { count: 'exact', head: true }).eq('approval_status', 'rejected')
+    ]).then(function (r) {
+      document.getElementById('stat-pending').textContent = r[0].count || 0;
+      document.getElementById('stat-approved').textContent = r[1].count || 0;
+      document.getElementById('stat-rejected').textContent = r[2].count || 0;
+      document.getElementById('tab-count-pending').textContent = r[0].count || 0;
+    });
+  }
+
+  function renderTable() {
+    var q = (document.getElementById('reg-search').value || '').toLowerCase();
+    var filtered = currentRows.filter(function (r) {
+      return !q || (r.full_name || '').toLowerCase().indexOf(q) !== -1 || (r.email || '').toLowerCase().indexOf(q) !== -1;
+    });
+    var tbody = document.getElementById('reg-tbody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Không có tài khoản nào.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = filtered.map(function (r) {
+      var init = initialsOf(r.full_name);
+      return '<tr class="reg-row' + (r.id === selectedId ? ' sel' : '') + '" data-id="' + r.id + '">' +
+        '<td><div class="cell-item"><span class="ic" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">' + init + '</span><div class="t">' + escapeHtml(r.full_name || '(chưa đặt tên)') + '</div></div></td>' +
+        '<td>' + escapeHtml(r.email || '') + '</td>' +
+        '<td>' + fmtDate(r.created_at) + '</td>' +
+        '<td>' + statusLabel(r.approval_status) + '</td>' +
+        '<td class="action-pair">' + (r.approval_status === 'pending'
+          ? '<button class="icon-action approve" data-approve="' + r.id + '" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>' +
+            '<button class="icon-action reject" data-reject="' + r.id + '" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>'
+          : '') + '</td></tr>';
+    }).join('');
+
+    tbody.querySelectorAll('.reg-row').forEach(function (row) {
+      row.addEventListener('click', function (e) {
+        if (e.target.closest('.icon-action')) return;
+        selectedId = row.getAttribute('data-id');
+        showDetail(currentRows.find(function (r) { return r.id === selectedId; }));
+      });
+    });
+    tbody.querySelectorAll('[data-approve]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) { e.stopPropagation(); setApproval(btn.getAttribute('data-approve'), 'approved'); });
+    });
+    tbody.querySelectorAll('[data-reject]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) { e.stopPropagation(); setApproval(btn.getAttribute('data-reject'), 'rejected'); });
+    });
+  }
+
+  function showDetail(r) {
+    var panel = document.getElementById('detail-panel');
+    if (!r) { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    document.getElementById('d-avatar').textContent = initialsOf(r.full_name);
+    document.getElementById('d-name').textContent = r.full_name || '(chưa đặt tên)';
+    var statusEl = document.getElementById('d-status');
+    statusEl.className = 'badge ' + (r.approval_status === 'approved' ? 'b-done' : r.approval_status === 'rejected' ? '' : 'b-progress');
+    if (r.approval_status === 'rejected') { statusEl.style.background = 'var(--danger-soft)'; statusEl.style.color = 'var(--danger)'; } else { statusEl.style.background = ''; statusEl.style.color = ''; }
+    statusEl.textContent = r.approval_status === 'approved' ? 'Đã duyệt' : r.approval_status === 'rejected' ? 'Đã từ chối' : 'Chờ duyệt';
+    document.getElementById('d-email').textContent = r.email || '–';
+    document.getElementById('d-phone').textContent = r.phone || '–';
+    document.getElementById('d-date').textContent = fmtDate(r.created_at);
+    document.getElementById('d-role').textContent = r.role || '–';
+    document.getElementById('d-actions').style.display = r.approval_status === 'pending' ? 'flex' : 'none';
+  }
+
+  function setApproval(id, status) {
+    window.sb.auth.getSession().then(function (sessionRes) {
+      var adminId = sessionRes.data.session.user.id;
+      window.sb.from('profiles').update({
+        approval_status: status,
+        approved_at: new Date().toISOString(),
+        approved_by: adminId
+      }).eq('id', id).then(function (res) {
+        if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+        selectedId = null;
+        document.getElementById('detail-panel').style.display = 'none';
+        loadStats();
+        loadTab(currentTab);
+      });
+    });
+  }
+
+  function loadTab(tab) {
+    currentTab = tab;
+    window.sb.from('profiles').select('id,full_name,email,phone,role,approval_status,created_at').eq('approval_status', tab).order('created_at', { ascending: false }).then(function (res) {
+      currentRows = res.data || [];
+      renderTable();
+    });
+  }
+
+  document.querySelectorAll('[data-tab]').forEach(function (tab) {
+    tab.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelectorAll('[data-tab]').forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      selectedId = null;
+      document.getElementById('detail-panel').style.display = 'none';
+      loadTab(tab.getAttribute('data-tab'));
+    });
+  });
+  document.getElementById('reg-search').addEventListener('input', renderTable);
+  document.getElementById('d-approve').addEventListener('click', function () { if (selectedId) setApproval(selectedId, 'approved'); });
+  document.getElementById('d-reject').addEventListener('click', function () { if (selectedId) setApproval(selectedId, 'rejected'); });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_admin,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_admin) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      var name = res.data.full_name || session.user.email;
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-2').textContent = name;
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-avatar').textContent = initials || 'AD';
+      document.getElementById('user-avatar-2').textContent = initials || 'AD';
+      loadStats();
+      loadTab('pending');
+    });
+  });
+</script>
+</body>
+</html>

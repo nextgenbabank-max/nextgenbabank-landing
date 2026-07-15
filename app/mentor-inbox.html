@@ -95,6 +95,7 @@
       mentorInitials = initialsOf(name);
       document.getElementById('user-name').textContent = name;
       document.getElementById('user-avatar').textContent = mentorInitials;
+      window.sb.rpc('has_permission', { p_feature_key: 'mentor', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
       loadStudents();
     });
   });

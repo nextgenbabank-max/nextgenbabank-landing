@@ -3,21 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Thông báo — NextGen BA Banker</title>
+<title>Cài đặt tài khoản — NextGen BA Banker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="shared/dash.css" />
 <style>
-  .notif-row { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.9rem 0; border-top: 1px solid var(--border); }
-  .notif-row:first-child { border-top: none; }
-  .notif-row .ic { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; }
-  .notif-row .ic.grade { background: var(--blue-soft); color: var(--blue); }
-  .notif-row .ic.achievement { background: var(--gold-soft); color: var(--gold-dark); }
-  .notif-row .body { flex: 1; }
-  .notif-row .t { font-size: 0.9rem; font-weight: 700; color: var(--navy-ink); }
-  .notif-row .d { font-size: 0.82rem; color: var(--text-soft); margin-top: 2px; }
-  .notif-row .time { font-size: 0.74rem; color: var(--text-soft); margin-top: 4px; }
-  .notif-row.unread { background: var(--gold-soft); margin: 0 -1.25rem; padding-left: 1.25rem; padding-right: 1.25rem; border-radius: 8px; }
-  .notif-row.unread .t { color: var(--navy-ink); }
+  .settings-section { display: flex; align-items: flex-start; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--border); }
+  .settings-section:first-child { border-top: none; padding-top: 0; }
+  .settings-section .ic { flex: none; width: 42px; height: 42px; border-radius: 10px; background: var(--gold-soft); color: var(--gold-dark); display: grid; place-items: center; }
+  .settings-section .body { flex: 1; }
+  .settings-section h3 { font-size: 0.94rem; font-weight: 800; color: var(--navy-ink); }
+  .settings-section .d { font-size: 0.8rem; color: var(--text-soft); margin-top: 2px; margin-bottom: 0.9rem; }
 </style>
 </head>
 <body>
@@ -38,21 +33,21 @@
       <a href="assignments.html">Bài tập</a>
       <a href="case-studies.html">Case study</a>
       <a href="progress.html">Tiến độ</a>
-      <a href="notifications.html" class="active">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
+      <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
     </nav>
     <div class="topbar-actions">
       <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
       <a class="icon-btn" href="notifications.html" aria-label="Thông báo" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="notif-dot" style="display:none;"></span></a>
       <div class="user-menu" id="user-menu">
         <div class="user-trigger" id="user-trigger-btn">
-          <span class="avatar" id="user-avatar">HV</span>
-          <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">BA Learner</span><span class="u-role">Học viên</span></span>
           <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </div>
         <div class="user-dropdown">
           <div class="ud-head">
-            <span class="avatar" id="user-avatar-dd">HV</span>
-            <div><div class="n" id="user-name-dd">Học viên</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+            <span class="avatar" id="user-avatar-dd">BL</span>
+            <div><div class="n" id="user-name-dd">BA Learner</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
           </div>
           <div class="ud-divider"></div>
           <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
@@ -71,7 +66,7 @@
     <a href="assignments.html">Bài tập</a>
     <a href="case-studies.html">Case study</a>
     <a href="progress.html">Tiến độ</a>
-    <a href="notifications.html" class="active">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
+    <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
     <a href="#" id="mobile-logout">Đăng xuất</a>
   </div>
 </header>
@@ -83,7 +78,7 @@
       <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
       <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
       <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
-      <a href="notifications.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
+      <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
       <div class="sidebar-divider"></div>
       <a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
       <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
@@ -99,14 +94,60 @@
 
   <main class="main">
     <div class="page-head">
-      <div>
-        <h1>Thông báo</h1>
-        <p class="d">Cập nhật bài tập được chấm và huy hiệu bạn đạt được.</p>
-      </div>
+      <div><h1>Cài đặt tài khoản</h1><p class="d">Quản lý thông tin tài khoản và tuỳ chỉnh thông báo.</p></div>
     </div>
 
     <div class="card">
-      <div id="notif-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+      <div class="settings-section">
+        <span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg></span>
+        <div class="body">
+          <h3>Tài khoản đăng nhập</h3>
+          <p class="d">Email hiện tại: <b id="current-email">—</b></p>
+          <form id="email-form" style="display:flex; gap:0.6rem; align-items:flex-end; flex-wrap:wrap;">
+            <div class="tfield" style="margin:0; flex:1; min-width:220px;">
+              <label for="f-new-email">Đổi email</label>
+              <input id="f-new-email" type="email" placeholder="email-moi@vidu.com" />
+            </div>
+            <button class="btn btn-gold" type="submit">Đổi email</button>
+          </form>
+          <p class="msg-error" id="email-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          <p class="msg-success" id="email-success" style="display:none; color:var(--green); font-size:0.82rem; margin-top:0.6rem;"></p>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+        <div class="body" style="width:100%;">
+          <h3>Thông báo</h3>
+          <p class="d">Tuỳ chỉnh các loại thông báo bạn muốn nhận từ hệ thống.</p>
+          <div class="toggle-row">
+            <div><div class="t">Thông báo hệ thống</div><div class="d" style="margin-bottom:0;">Cập nhật bài chấm, huy hiệu trên trang Thông báo</div></div>
+            <label class="switch"><input type="checkbox" id="t-system" /><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t">Nhắc hạn nộp bài</div><div class="d" style="margin-bottom:0;">Hiện khối "Bài sắp đến hạn"</div></div>
+            <label class="switch"><input type="checkbox" id="t-due" /><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t">Phản hồi từ mentor</div><div class="d" style="margin-bottom:0;">Hiện feed nhận xét/chấm bài trên trang Bài tập</div></div>
+            <label class="switch"><input type="checkbox" id="t-mentor" /><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t">Lịch học &amp; Meet</div><div class="d" style="margin-bottom:0;">Hiện widget buổi học tiếp theo trên Tổng quan</div></div>
+            <label class="switch"><input type="checkbox" id="t-meet" /><span class="slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <span class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5Z"/></svg></span>
+        <div class="body">
+          <h3>Bảo mật</h3>
+          <p class="d">Đăng xuất khỏi mọi phiên đăng nhập trên tất cả thiết bị.</p>
+          <button class="btn btn-outline" id="signout-all-btn">Đăng xuất khỏi tất cả thiết bị</button>
+          <p class="msg-success" id="signout-success" style="display:none; color:var(--green); font-size:0.82rem; margin-top:0.6rem;"></p>
+        </div>
+      </div>
     </div>
   </main>
 </div>
@@ -138,48 +179,68 @@
     });
   })();
 
-  function escapeHtml(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-  function fmtDateTime(d) {
-    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-  }
+  var currentUserId = null;
 
   requireAuth().then(function (session) {
     if (!session) return;
-    window.sb.rpc('has_permission', { p_feature_key: 'notifications', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
-    var userId = session.user.id;
+    window.sb.rpc('has_permission', { p_feature_key: 'account_settings', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
+    currentUserId = session.user.id;
     var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
     document.getElementById('user-name').textContent = name;
     document.getElementById('user-name-dd').textContent = name;
     document.getElementById('user-email-dd').textContent = session.user.email || '—';
-    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
-    document.getElementById('user-avatar').textContent = initials || 'HV';
-    document.getElementById('user-avatar-dd').textContent = initials || 'HV';
+    document.getElementById('current-email').textContent = session.user.email || '—';
+    var init = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = init || 'HV';
+    document.getElementById('user-avatar-dd').textContent = init || 'HV';
+    loadNotificationBadge(currentUserId);
 
-    Promise.all([fetchNotificationEvents(userId), fetchLastReadAt(userId)]).then(function (r) {
-      var events = r[0], lastReadAt = r[1];
-      var container = document.getElementById('notif-list');
+    window.sb.from('profiles').select('notify_system,notify_due_reminder,notify_mentor_feedback,notify_meet_reminder').eq('id', currentUserId).single().then(function (res) {
+      if (res.error || !res.data) return;
+      document.getElementById('t-system').checked = res.data.notify_system;
+      document.getElementById('t-due').checked = res.data.notify_due_reminder;
+      document.getElementById('t-mentor').checked = res.data.notify_mentor_feedback;
+      document.getElementById('t-meet').checked = res.data.notify_meet_reminder;
+    });
+  });
 
-      if (events.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có thông báo nào.</p>';
-      } else {
-        container.innerHTML = events.map(function (e) {
-          var unread = e.time > lastReadAt;
-          var iconSvg = e.type === 'achievement'
-            ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0Z"/><path d="M7 6H4a3 3 0 0 0 3 3M17 6h3a3 3 0 0 1-3 3"/></svg>'
-            : '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
-          return '<div class="notif-row' + (unread ? ' unread' : '') + '">' +
-            '<span class="ic ' + e.type + '">' + iconSvg + '</span>' +
-            '<div class="body"><div class="t">' + escapeHtml(e.title) + '</div><div class="d">' + escapeHtml(e.detail) + '</div><div class="time">' + fmtDateTime(e.time) + '</div></div>' +
-            '</div>';
-        }).join('');
-      }
+  document.getElementById('email-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var newEmail = document.getElementById('f-new-email').value.trim();
+    var errorOut = document.getElementById('email-error');
+    var successOut = document.getElementById('email-success');
+    errorOut.style.display = 'none';
+    successOut.style.display = 'none';
+    if (!newEmail) return;
 
-      updateNotificationBadges(0);
-      markNotificationsRead(userId);
+    window.sb.auth.updateUser({ email: newEmail }).then(function (res) {
+      if (res.error) throw res.error;
+      successOut.textContent = 'Đã gửi email xác nhận tới ' + newEmail + '. Vui lòng kiểm tra hộp thư để hoàn tất đổi email.';
+      successOut.style.display = 'block';
+      document.getElementById('f-new-email').value = '';
+    }).catch(function (err) {
+      errorOut.textContent = err.message || 'Có lỗi khi đổi email.';
+      errorOut.style.display = 'block';
+    });
+  });
+
+  function bindToggle(id, column) {
+    document.getElementById(id).addEventListener('change', function () {
+      var updates = {};
+      updates[column] = this.checked;
+      window.sb.from('profiles').update(updates).eq('id', currentUserId).then(function (res) {
+        if (res.error) alert('Không lưu được: ' + res.error.message);
+      });
+    });
+  }
+  bindToggle('t-system', 'notify_system');
+  bindToggle('t-due', 'notify_due_reminder');
+  bindToggle('t-mentor', 'notify_mentor_feedback');
+  bindToggle('t-meet', 'notify_meet_reminder');
+
+  document.getElementById('signout-all-btn').addEventListener('click', function () {
+    window.sb.auth.signOut({ scope: 'global' }).then(function () {
+      window.location.href = '/app/login.html';
     });
   });
 </script>

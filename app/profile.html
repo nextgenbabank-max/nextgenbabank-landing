@@ -223,6 +223,7 @@
 
   requireAuth().then(function (session) {
     if (!session) return;
+    window.sb.rpc('has_permission', { p_feature_key: 'profile', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
     currentUserId = session.user.id;
     loadNotificationBadge(currentUserId);
     document.getElementById('user-email-dd').textContent = session.user.email || '—';

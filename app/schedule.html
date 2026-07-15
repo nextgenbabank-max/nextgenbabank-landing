@@ -182,6 +182,7 @@
 
   requireAuth().then(function (session) {
     if (!session) return;
+    window.sb.rpc('has_permission', { p_feature_key: 'schedule', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
     currentUserId = session.user.id;
     var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
     document.getElementById('user-name').textContent = name;
@@ -197,11 +198,13 @@
 
   function loadSchedule(userId) {
     Promise.all([
-      window.sb.from('class_sessions').select('id,title,meet_link,scheduled_at,session_type,registration_required').order('scheduled_at'),
+      window.sb.from('class_sessions').select('id,title,meet_link,scheduled_at,session_type,registration_required,class_id').order('scheduled_at'),
       window.sb.from('class_session_registrations').select('session_id,registered_at,attended').eq('user_id', userId),
-      window.sb.from('mentors').select('full_name,role_title').limit(1)
+      window.sb.from('mentors').select('full_name,role_title').limit(1),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
-      var sessions = r[0].data || [];
+      var myClassIds = (r[3].data || []).map(function (cm) { return cm.class_id; });
+      var sessions = (r[0].data || []).filter(function (s) { return !s.class_id || myClassIds.indexOf(s.class_id) !== -1; });
       var registrations = r[1].data || [];
       mentorInfo = (r[2].data || [])[0];
 

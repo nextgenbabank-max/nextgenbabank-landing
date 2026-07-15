@@ -213,6 +213,7 @@
 
   requireAuth().then(function (session) {
     if (!session) return;
+    window.sb.rpc('has_permission', { p_feature_key: 'progress', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
     var userId = session.user.id;
     loadNotificationBadge(userId);
     var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;

@@ -610,9 +610,21 @@
     });
 
     function redirectAfterLogin(userId) {
-      window.sb.from('profiles').select('is_admin,is_mentor').eq('id', userId).single().then(function (res) {
+      window.sb.from('profiles').select('is_admin,is_mentor,approval_status').eq('id', userId).single().then(function (res) {
+        if (res.data && res.data.approval_status && res.data.approval_status !== 'approved') {
+          var pendingMsg = res.data.approval_status === 'rejected'
+            ? 'Yêu cầu đăng ký của bạn đã bị từ chối. Vui lòng liên hệ giảng viên để biết thêm chi tiết.'
+            : 'Tài khoản của bạn đang chờ admin phê duyệt. Vui lòng quay lại sau.';
+          window.sb.auth.signOut().then(function () {
+            errorOut.textContent = pendingMsg;
+            errorOut.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = isSignup ? 'Tạo tài khoản' : 'Đăng nhập';
+          });
+          return;
+        }
         if (res.data && res.data.is_admin) {
-          window.location.href = '/app/admin.html';
+          window.location.href = '/app/admin-dashboard.html';
         } else if (res.data && res.data.is_mentor) {
           window.location.href = '/app/mentor-inbox.html';
         } else {
@@ -628,6 +640,12 @@
     var urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('err') === 'google_not_registered') {
       errorOut.textContent = 'Email Google này chưa có tài khoản trong hệ thống. Vui lòng đăng ký bằng email/mật khẩu trước, hoặc liên hệ giảng viên.';
+      errorOut.style.display = 'block';
+    } else if (urlParams.get('err') === 'pending') {
+      errorOut.textContent = 'Tài khoản của bạn đang chờ admin phê duyệt. Vui lòng quay lại sau.';
+      errorOut.style.display = 'block';
+    } else if (urlParams.get('err') === 'rejected') {
+      errorOut.textContent = 'Yêu cầu đăng ký của bạn đã bị từ chối. Vui lòng liên hệ giảng viên để biết thêm chi tiết.';
       errorOut.style.display = 'block';
     }
   })();

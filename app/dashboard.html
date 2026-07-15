@@ -227,7 +227,7 @@
   function checkMentorThenInit(session) {
     window.sb.from('profiles').select('is_admin,is_mentor').eq('id', session.user.id).single().then(function (res) {
       if (res.data && res.data.is_admin) {
-        window.location.href = '/app/admin.html';
+        window.location.href = '/app/admin-dashboard.html';
         return;
       }
       if (res.data && res.data.is_mentor) {
@@ -251,12 +251,16 @@
     document.getElementById('user-email-dd').textContent = session.user.email || '—';
 
     loadAll(userId);
-    loadNextMeetSession();
+    loadNextMeetSession(userId);
   }
 
-  function loadNextMeetSession() {
-    window.sb.from('class_sessions').select('title,scheduled_at').gte('scheduled_at', new Date().toISOString()).order('scheduled_at').limit(1).then(function (res) {
-      var s = (res.data || [])[0];
+  function loadNextMeetSession(userId) {
+    Promise.all([
+      window.sb.from('class_sessions').select('title,scheduled_at,class_id').gte('scheduled_at', new Date().toISOString()).order('scheduled_at'),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
+    ]).then(function (r) {
+      var myClassIds = (r[1].data || []).map(function (cm) { return cm.class_id; });
+      var s = (r[0].data || []).find(function (sess) { return !sess.class_id || myClassIds.indexOf(sess.class_id) !== -1; });
       var titleEl = document.getElementById('next-session-title');
       var timeEl = document.getElementById('next-session-time');
       if (!s) { titleEl.textContent = 'Chưa có buổi học nào'; timeEl.textContent = ''; return; }

@@ -38,6 +38,7 @@
 
     requireAuth().then(function (session) {
       if (!session) return;
+      window.sb.rpc('has_permission', { p_feature_key: 'assignments', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
       loadQuiz(session.user.id);
     });
 

@@ -96,15 +96,18 @@
           <p style="font-size:1.05rem; font-weight:800; color:var(--navy-ink);" id="mentor-name">—</p>
           <p style="font-size:0.84rem; color:var(--text-soft); margin-top:2px;" id="mentor-role">—</p>
         </div>
-        <div class="info-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><div class="l">Thời gian phản hồi</div><div class="v">Trong vòng 24 giờ</div></div></div>
+        <div class="info-line" style="border-top:none;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><div class="l">Thời gian phản hồi</div><div class="v">Trong vòng 24 giờ</div></div></div>
+        <a class="btn btn-gold" href="schedule.html" style="width:100%; justify-content:center; margin-top:1.1rem;"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Đặt lịch 1:1</a>
       </div>
 
       <div class="card chat-card" id="chat">
         <div class="card-head"><h2>Trao đổi với mentor</h2></div>
         <div class="chat-window" id="chat-window">
-          <p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>
+          <div class="chat-day-divider">Hôm nay</div>
+          <div id="chat-messages"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
         </div>
         <div class="chat-input-row">
+          <button class="chat-round-btn attach" id="chat-attach" aria-label="Đính kèm file"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.4 11.1 12.5 20a5 5 0 0 1-7-7l9-9a3.5 3.5 0 0 1 5 5l-9 9a2 2 0 0 1-3-3l8-8"/></svg></button>
           <input type="text" id="chat-input" placeholder="Nhập tin nhắn cho mentor..." />
           <button class="chat-round-btn send" id="chat-send" aria-label="Gửi"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" stroke="none"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg></button>
         </div>
@@ -114,6 +117,11 @@
         <div class="card">
           <div class="card-head"><h2>Lịch hẹn sắp tới</h2><a class="more" href="schedule.html">Xem tất cả <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
           <div id="next-1on1-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Trao đổi gần đây</h2></div>
+          <div class="feed" id="recent-chat-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
         </div>
 
         <div class="card">
@@ -176,6 +184,7 @@
 
   requireAuth().then(function (session) {
     if (!session) return;
+    window.sb.rpc('has_permission', { p_feature_key: 'mentor', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
     currentUserId = session.user.id;
     var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
     document.getElementById('user-name').textContent = name;
@@ -219,22 +228,34 @@
 
   function loadChat(userId) {
     var win = document.getElementById('chat-window');
+    var msgBox = document.getElementById('chat-messages');
+    var recentBox = document.getElementById('recent-chat-body');
+    var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 
     function renderMessages(messages) {
       if (messages.length === 0) {
-        win.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tin nhắn nào. Gửi tin đầu tiên cho mentor nhé!</p>';
+        msgBox.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tin nhắn nào. Gửi tin đầu tiên cho mentor nhé!</p>';
+        recentBox.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có trao đổi nào.</p>';
         return;
       }
-      win.innerHTML = messages.map(function (m) {
+      msgBox.innerHTML = messages.map(function (m) {
         var mine = m.sender_id === userId;
         var initials = mine ? myInitials : mentorAvatarInitials;
         var bg = mine ? 'var(--navy)' : 'var(--gold-grad)';
         return '<div class="chat-msg' + (mine ? ' mine' : '') + '">' +
           '<span class="avatar" style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:0.66rem;font-weight:800;background:' + bg + ';">' + escapeHtml(initials) + '</span>' +
-          '<div class="col"><div class="bubble">' + escapeHtml(m.body) + '</div><div class="time">' + fmtTime(m.created_at) + '</div></div>' +
+          '<div class="col"><div class="bubble">' + escapeHtml(m.body) + '</div><div class="time">' + fmtTime(m.created_at) + (mine ? checkSvg : '') + '</div></div>' +
           '</div>';
       }).join('');
       win.scrollTop = win.scrollHeight;
+
+      recentBox.innerHTML = messages.slice(-3).reverse().map(function (m) {
+        var mine = m.sender_id === userId;
+        var who = mine ? 'Bạn' : 'Mentor';
+        var snippet = m.body.length > 46 ? m.body.slice(0, 46) + '…' : m.body;
+        return '<div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg></span>' +
+          '<p><b>' + who + ':</b> ' + escapeHtml(snippet) + '<br><span class="t">' + fmtTime(m.created_at) + '</span></p></div>';
+      }).join('');
     }
 
     window.sb.from('messages').select('id,sender_id,body,created_at').eq('student_id', userId).order('created_at').then(function (res) {

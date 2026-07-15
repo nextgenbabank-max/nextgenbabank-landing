@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chấm bài — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <a class="t-brand" href="teacher-dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">TA</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Giảng viên</div>
+        <div class="name" id="user-name">Trần Minh Anh</div>
+        <div class="online"><span class="d"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="teacher-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="teacher-dashboard.html#meet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/></svg>Tạo link Meet</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="teacher-grading.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài<span class="badge-num">18</span></a>
+      <a href="teacher-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num">6</span></a>
+      <div class="t-nav-divider"></div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Báo cáo</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
+    </nav>
+
+    <div class="t-support">
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3ZM3 19a2 2 0 0 0 2 2h1v-6H3Z"/></svg>
+        <div>Nếu bạn cần hỗ trợ, hãy liên hệ<br><a href="mailto:support@nextgenbabanker.vn">support@nextgenbabanker.vn</a></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div class="t-topbar-actions">
+          <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">2</span></button>
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">TA</span>
+            <span class="meta"><span class="u-name" id="user-name-2">Trần Minh Anh</span><span class="u-role">Giảng viên</span></span>
+            <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head"><div><h1>Chấm bài</h1><p class="d">Xem bài nộp, chấm điểm và gửi nhận xét cho học viên.</p></div></div>
+
+      <div class="stat-grid cols-4">
+        <div class="stat-card">
+          <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6"/></svg></span>
+          <div><div class="n">18</div><div class="l">Bài chờ chấm</div><div class="sub">+4 so với hôm qua</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+          <div><div class="n">12</div><div class="l">Đã chấm hôm nay</div><div class="sub">+2 so với hôm qua</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+          <div><div class="n">07</div><div class="l">Chờ phản hồi</div><div class="sub">Cần phản hồi học viên</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          <div><div class="n">7.8 <span style="font-size:0.7rem; color:var(--text-soft); font-weight:600;">/10</span></div><div class="l">Điểm trung bình</div><div class="sub">+0.6 so với tuần trước</div></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:1.2rem;">
+        <div class="tabs">
+          <a href="#" class="active">Tất cả bài nộp</a>
+          <a href="#">Bài của tôi giao</a>
+        </div>
+        <div class="filter-row">
+          <select><option>Chọn lớp học</option></select>
+          <select><option>Chọn bài tập</option></select>
+          <select><option>Tất cả trạng thái</option></select>
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" placeholder="Tìm kiếm học viên..." /></div>
+          <button class="icon-btn" aria-label="Sắp xếp" style="background:var(--bg-soft); color:var(--text-soft);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg></button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Học viên</th><th>Lớp</th><th>Bài tập</th><th>Thời gian nộp ↓</th><th>Trạng thái</th><th>Điểm</th><th>Thao tác</th></tr></thead>
+            <tbody id="grading-tbody">
+              <tr class="sel">
+                <td><span class="mentor-chip"><span class="av" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">MT</span><span class="info"><span class="n">Nguyễn Thị Mai</span><span class="r">HV10023</span></span></span></td>
+                <td>BA Fundamentals - K02</td>
+                <td>Bài tập: Elicitation</td>
+                <td>19/05/2025 21:30<br><span style="font-size:0.74rem; color:var(--text-soft);">2 giờ trước</span></td>
+                <td><span class="badge b-progress">Chờ chấm</span></td>
+                <td>–</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="mentor-chip"><span class="av" style="background:linear-gradient(120deg,#34D399,var(--green));">TH</span><span class="info"><span class="n">Trần Văn Hoàng</span><span class="r">HV10018</span></span></span></td>
+                <td>Requirement Analysis - K01</td>
+                <td>Bài tập: Use Case</td>
+                <td>19/05/2025 20:45<br><span style="font-size:0.74rem; color:var(--text-soft);">3 giờ trước</span></td>
+                <td><span class="badge b-progress">Chờ chấm</span></td>
+                <td>–</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="mentor-chip"><span class="av" style="background:linear-gradient(120deg,#A78BFA,var(--violet));">LP</span><span class="info"><span class="n">Lê Phương Anh</span><span class="r">HV10031</span></span></span></td>
+                <td>BA Techniques - K01</td>
+                <td>Bài tập: Process Modeling</td>
+                <td>19/05/2025 18:20<br><span style="font-size:0.74rem; color:var(--text-soft);">5 giờ trước</span></td>
+                <td><span class="badge b-progress">Chờ chấm</span></td>
+                <td>–</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="mentor-chip"><span class="av" style="background:linear-gradient(120deg,#E6AC2E,var(--amber));">PM</span><span class="info"><span class="n">Phạm Minh Đức</span><span class="r">HV10011</span></span></span></td>
+                <td>BA Fundamentals - K02</td>
+                <td>Bài tập: Stakeholder</td>
+                <td>19/05/2025 17:10<br><span style="font-size:0.74rem; color:var(--text-soft);">6 giờ trước</span></td>
+                <td><span class="badge b-done">Đã chấm</span></td>
+                <td>8.5</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="mentor-chip"><span class="av" style="background:#E86A8A;">VT</span><span class="info"><span class="n">Vũ Thanh Thảo</span><span class="r">HV10027</span></span></span></td>
+                <td>Requirement Analysis - K01</td>
+                <td>Bài tập: Requirements Elicitation</td>
+                <td>19/05/2025 16:05<br><span style="font-size:0.74rem; color:var(--text-soft);">7 giờ trước</span></td>
+                <td><span class="badge b-done">Đã chấm</span></td>
+                <td>7.5</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="mentor-chip"><span class="av" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">NH</span><span class="info"><span class="n">Nguyễn Hoàng Nam</span><span class="r">HV10034</span></span></span></td>
+                <td>BA Fundamentals - K02</td>
+                <td>Bài tập: Elicitation Techniques</td>
+                <td>19/05/2025 15:30<br><span style="font-size:0.74rem; color:var(--text-soft);">7 giờ trước</span></td>
+                <td><span class="badge" style="background:var(--danger-soft); color:var(--danger);">Quá hạn</span></td>
+                <td>–</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="mentor-chip"><span class="av" style="background:linear-gradient(120deg,#34D399,var(--green));">DH</span><span class="info"><span class="n">Đỗ Thu Hương</span><span class="r">HV10029</span></span></span></td>
+                <td>BA Techniques - K01</td>
+                <td>Bài tập: Process Modeling</td>
+                <td>19/05/2025 14:20<br><span style="font-size:0.74rem; color:var(--text-soft);">8 giờ trước</span></td>
+                <td><span class="badge" style="background:var(--danger-soft); color:var(--danger);">Quá hạn</span></td>
+                <td>–</td>
+                <td><button class="icon-btn" style="background:var(--bg-soft); color:var(--text-soft);" aria-label="Xem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <div class="info">Hiển thị <select style="border:1.5px solid var(--border); border-radius:7px; padding:0.2em 0.4em; font-family:inherit;"><option>10</option></select> trên tổng số 58 bài nộp</div>
+          <div class="pages">
+            <button disabled><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="active">1</button><button>2</button><button>3</button><button>4</button><button>5</button>
+            <button><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:1rem;">
+            <h2 style="font-size:1.02rem; font-weight:800;">Bài nộp của: Nguyễn Thị Mai <span style="font-weight:600; color:var(--text-soft); font-size:0.85rem;">(HV10023)</span></h2>
+            <span class="badge b-done">Đã nộp đúng hạn</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; background:var(--bg-soft); border-radius:10px; padding:0.8rem 1rem; margin-bottom:1.2rem;">
+            <div style="display:flex; align-items:center; gap:0.7rem;">
+              <span style="width:36px; height:36px; border-radius:9px; background:var(--blue-soft); color:var(--blue); display:grid; place-items:center; flex:none;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4"/></svg></span>
+              <div><div style="font-size:0.88rem; font-weight:700; color:var(--navy-ink);">BA Fundamentals - K02</div><div style="font-size:0.78rem; color:var(--text-soft);">Bài tập: Elicitation Techniques</div></div>
+            </div>
+            <div style="text-align:right;"><div style="font-size:0.76rem; color:var(--text-soft);">Thời gian nộp</div><div style="font-size:0.84rem; font-weight:700; color:var(--navy-ink);">19/05/2025 21:30</div></div>
+            <a class="btn btn-outline btn-sm" href="#">Xem bài nộp <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg></a>
+          </div>
+
+          <h3 style="font-size:0.9rem; font-weight:800; margin-bottom:0.2rem;">Rubric chấm điểm</h3>
+          <table class="rubric-table">
+            <thead><tr><th>Tiêu chí</th><th>Mô tả</th><th>Thang điểm</th><th>Điểm đạt được</th></tr></thead>
+            <tbody>
+              <tr><td>Hiểu yêu cầu nghiệp vụ</td><td>Xác định đúng vấn đề và các yêu cầu chính của nghiệp vụ.</td><td>0 - 2 điểm</td><td><select><option>1.5</option></select> / 2</td></tr>
+              <tr><td>Kỹ thuật đặt câu hỏi</td><td>Sử dụng kỹ thuật phù hợp, câu hỏi rõ ràng và logic.</td><td>0 - 2 điểm</td><td><select><option>1.5</option></select> / 2</td></tr>
+              <tr><td>Khai thác thông tin</td><td>Thu thập đầy đủ thông tin, làm rõ các yêu cầu.</td><td>0 - 2 điểm</td><td><select><option>1.0</option></select> / 2</td></tr>
+              <tr><td>Trình bày &amp; cấu trúc</td><td>Bài viết rõ ràng, cấu trúc hợp lý, dễ theo dõi.</td><td>0 - 2 điểm</td><td><select><option>1.5</option></select> / 2</td></tr>
+              <tr><td>Ví dụ minh họa</td><td>Đưa ra ví dụ thực tế phù hợp và thuyết phục.</td><td>0 - 2 điểm</td><td><select><option>1.5</option></select> / 2</td></tr>
+            </tbody>
+          </table>
+          <div class="rubric-total">Tổng điểm <span class="val">7.0</span> / 10</div>
+        </div>
+
+        <div class="card">
+          <h2 style="font-size:1.02rem; font-weight:800; margin-bottom:0.9rem;">Nhận xét cho học viên</h2>
+          <div class="rte-toolbar">
+            <button aria-label="Đậm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h6a3.5 3.5 0 0 1 0 7H6zM6 11h7a3.5 3.5 0 0 1 0 7H6z"/></svg></button>
+            <button aria-label="Nghiêng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4h6M8 20h6M13 4 11 20"/></svg></button>
+            <button aria-label="Gạch chân"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a6 6 0 0 0 12 0V3M4 21h16"/></svg></button>
+            <button aria-label="Danh sách"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></button>
+            <button aria-label="Danh sách số"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11M4 6h1v3M4 13h2l-2 2h2"/></svg></button>
+            <button aria-label="Hoàn tác"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg></button>
+            <button aria-label="Liên kết"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-2 2"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l2-2"/></svg></button>
+          </div>
+          <textarea class="rte-body" id="fb-text" placeholder="Nhận xét tổng quan về bài làm của học viên..." maxlength="1000"></textarea>
+          <div style="text-align:right; font-size:0.74rem; color:var(--text-soft); margin-top:0.3rem;"><span id="fb-count">0</span>/1000</div>
+          <p style="font-size:0.78rem; color:var(--text-soft); margin-top:0.6rem;">Nhận xét sẽ được gửi đến học viên khi bạn hoàn tất chấm.</p>
+          <div style="display:flex; gap:0.7rem; margin-top:1.1rem; flex-wrap:wrap;">
+            <button class="btn btn-outline">Lưu nháp</button>
+            <button class="btn btn-outline">Gửi nhận xét</button>
+            <button class="btn btn-blue" style="margin-left:auto;">Hoàn tất chấm</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:1.2rem;" id="grading-bottom-grid">
+        <div class="card">
+          <div class="card-head"><h2>Bài nộp quá hạn</h2><a class="more" href="#">Xem tất cả</a></div>
+          <div class="overdue-row"><span class="dot"></span><div style="flex:1;"><div class="t">Nguyễn Hoàng Nam</div><div class="s">BA Fundamentals - K02</div><div class="s">Hạn: 19/05/2025 12:00</div></div><span class="warn">Quá hạn 3 giờ</span></div>
+          <div class="overdue-row"><span class="dot"></span><div style="flex:1;"><div class="t">Đỗ Thu Hương</div><div class="s">BA Techniques - K01</div><div class="s">Hạn: 19/05/2025 12:00</div></div><span class="warn">Quá hạn 3 giờ</span></div>
+          <div class="overdue-row"><span class="dot"></span><div style="flex:1;"><div class="t">Lý Minh Quân</div><div class="s">Requirement Analysis - K01</div><div class="s">Hạn: 19/05/2025 12:00</div></div><span class="warn">Quá hạn 3 giờ</span></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Thông báo chấm bài</h2><a class="more" href="#">Xem tất cả</a></div>
+          <div class="feed">
+            <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></span><p>07 bài cần phản hồi<br><span class="t">Học viên đã phản hồi nhận xét · 2 giờ trước</span></p></div>
+            <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><p>04 bài sắp đến hạn<br><span class="t">Hạn nộp trong 6 giờ tới · 3 giờ trước</span></p></div>
+            <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3"/></svg></span><p>12 bài chờ chấm<br><span class="t">Bài nộp mới hôm nay · 5 giờ trước</span></p></div>
+          </div>
+        </div>
+      </div>
+      <style>@media (max-width: 900px) { #grading-bottom-grid { grid-template-columns: 1fr !important; } }</style>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+
+  document.getElementById('fb-text').addEventListener('input', function (e) {
+    document.getElementById('fb-count').textContent = e.target.value.length;
+  });
+
+  document.querySelectorAll('#grading-tbody tr').forEach(function (row) {
+    row.style.cursor = 'pointer';
+    row.addEventListener('click', function () {
+      document.querySelectorAll('#grading-tbody tr').forEach(function (r) { r.style.background = ''; });
+      row.style.background = 'var(--gold-soft)';
+    });
+  });
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-name-2').textContent = name;
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'GV';
+    document.getElementById('user-avatar-2').textContent = initials || 'GV';
+  });
+</script>
+</body>
+</html>
