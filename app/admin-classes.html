@@ -166,14 +166,65 @@
         </div>
 
         <div class="card" id="detail-panel" style="display:none;">
-          <a href="#" class="more" id="detail-close" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Đóng</a>
-          <p id="d-name" style="font-size:1.05rem; font-weight:800; color:var(--navy-ink); margin-bottom:0.3rem;">–</p>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.6rem;">
+            <a href="#" class="more" id="detail-close"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Đóng</a>
+            <div style="display:flex; gap:0.5rem;">
+              <button class="btn btn-outline btn-sm" id="d-edit-btn">Chỉnh sửa lớp</button>
+              <button class="btn btn-outline btn-sm" id="d-announce-btn">Gửi thông báo</button>
+            </div>
+          </div>
+          <p id="d-name" style="font-size:1.05rem; font-weight:800; color:var(--navy-ink); margin-bottom:0.3rem; margin-top:0.7rem;">–</p>
           <span class="badge b-progress" id="d-status">–</span>
+          <p style="font-size:0.8rem; color:var(--text-soft); margin-top:0.4rem;">Mã lớp: <b id="d-code" style="color:var(--navy-ink);">–</b> <button class="row-action-btn" id="d-code-copy-btn" style="margin-left:6px;">Copy</button></p>
 
-          <div class="info-line" style="border-top:none; margin-top:0.8rem;"><span class="l" style="flex:1;">Mã lớp</span><span class="v" id="d-code">–</span></div>
-          <div class="info-line"><span class="l" style="flex:1;">Ngày bắt đầu</span><span class="v" id="d-start">–</span></div>
+          <div class="info-line" style="border-top:none; margin-top:0.6rem;"><span class="l" style="flex:1;">Ngày bắt đầu</span><span class="v" id="d-start">–</span></div>
           <div class="info-line"><span class="l" style="flex:1;">Ngày kết thúc</span><span class="v" id="d-end">–</span></div>
-          <div class="info-line"><span class="l" style="flex:1;">Tiến độ tổng thể</span><span class="v" id="d-progress">–</span></div>
+
+          <div class="stat-grid" style="grid-template-columns:repeat(2,1fr); margin-top:0.9rem;">
+            <div class="stat-card"><div><div class="n" id="d-stat-students" style="font-size:1.2rem;">–</div><div class="l">Số học viên</div></div></div>
+            <div class="stat-card"><div><div class="n" id="d-stat-assignments" style="font-size:1.2rem;">–</div><div class="l">Bài tập hoàn thành</div></div></div>
+            <div class="stat-card"><div><div class="n" id="d-stat-attendance" style="font-size:1.2rem;">–</div><div class="l">Tỷ lệ tham gia</div></div></div>
+            <div class="stat-card"><div><div class="n" id="d-progress" style="font-size:1.2rem;">–</div><div class="l">Tiến độ trung bình</div></div></div>
+          </div>
+
+          <div class="card" id="d-edit-card" style="display:none; margin-top:0.9rem; background:var(--bg-soft);">
+            <div class="card-head"><h2>Chỉnh sửa thông tin lớp</h2></div>
+            <div class="grid-2" style="gap:1rem 1.2rem;">
+              <div class="tfield"><label for="de-name">Tên lớp học *</label><input id="de-name" type="text" /></div>
+              <div class="tfield"><label for="de-teacher">Giảng viên phụ trách *</label><select id="de-teacher"></select></div>
+            </div>
+            <div class="grid-2" style="gap:1rem 1.2rem;">
+              <div class="tfield"><label for="de-track">Khóa học / Lộ trình *</label><select id="de-track"></select></div>
+              <div class="tfield">
+                <label>Hình thức học *</label>
+                <div style="display:flex; gap:1rem; align-items:center; height:2.6rem;">
+                  <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="radio" name="de-mode" value="online" /> Online</label>
+                  <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="radio" name="de-mode" value="offline" /> Offline</label>
+                  <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="radio" name="de-mode" value="hybrid" /> Hybrid</label>
+                </div>
+              </div>
+            </div>
+            <div class="grid-2" style="gap:1rem 1.2rem;">
+              <div class="tfield"><label for="de-start">Ngày bắt đầu *</label><input id="de-start" type="date" /></div>
+              <div class="tfield"><label for="de-end">Ngày kết thúc *</label><input id="de-end" type="date" /></div>
+            </div>
+            <p class="msg-error" id="de-error" style="display:none; color:var(--danger);"></p>
+            <div style="display:flex; gap:0.7rem;">
+              <button class="btn btn-outline" id="de-cancel-btn" type="button" style="flex:1; justify-content:center;">Huỷ</button>
+              <button class="btn btn-gold" id="de-save-btn" type="button" style="flex:1; justify-content:center;">Lưu thay đổi</button>
+            </div>
+          </div>
+
+          <div class="card" id="d-announce-card" style="display:none; margin-top:0.9rem; background:var(--bg-soft);">
+            <div class="card-head"><h2>Gửi thông báo cho lớp</h2></div>
+            <div class="tfield"><label for="da-message">Nội dung thông báo *</label><textarea id="da-message" style="min-height:70px;" placeholder="Nhập nội dung thông báo gửi tới toàn bộ học viên trong lớp..."></textarea></div>
+            <p class="msg-error" id="da-error" style="display:none; color:var(--danger);"></p>
+            <p class="msg-success" id="da-success" style="display:none;">Đã gửi thông báo tới toàn bộ học viên trong lớp.</p>
+            <div style="display:flex; gap:0.7rem;">
+              <button class="btn btn-outline" id="da-cancel-btn" type="button" style="flex:1; justify-content:center;">Huỷ</button>
+              <button class="btn btn-gold" id="da-send-btn" type="button" style="flex:1; justify-content:center;">Gửi thông báo</button>
+            </div>
+          </div>
 
           <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Giảng viên phụ trách</p>
           <div class="mentor-chip" id="d-mentor-chip"><span class="av" id="d-mentor-av">–</span><span class="info" style="flex:1;"><span class="n" id="d-mentor-name">–</span><span class="r" id="d-mentor-email">–</span></span></div>
@@ -186,7 +237,7 @@
           <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Danh sách học viên (<span id="d-roster-count">0</span>)</p>
           <div class="table-wrap">
             <table class="data-table" id="d-roster-table">
-              <thead><tr><th><input type="checkbox" id="d-roster-chk-all" /></th><th>Họ và tên</th><th>Email</th><th>Tiến độ</th></tr></thead>
+              <thead><tr><th><input type="checkbox" id="d-roster-chk-all" /></th><th>Họ và tên</th><th>Email</th><th>Tiến độ</th><th>Bài tập</th></tr></thead>
               <tbody id="d-roster-tbody"></tbody>
             </table>
           </div>
@@ -204,6 +255,14 @@
               </table>
             </div>
             <button class="btn btn-gold btn-sm" id="d-add-confirm-btn" style="margin-top:0.6rem;">Thêm vào lớp</button>
+          </div>
+
+          <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Buổi học sắp tới</p>
+          <div class="table-wrap">
+            <table class="data-table" id="d-sessions-table">
+              <thead><tr><th>Ngày</th><th>Chủ đề</th><th>Thời gian</th><th>Hình thức</th><th>Meet</th></tr></thead>
+              <tbody id="d-sessions-tbody"></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -246,7 +305,7 @@
     if (c.status === 'draft') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Nháp</span>';
     if (c.status === 'archived') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Đã lưu trữ</span>';
     var today = new Date().toISOString().slice(0, 10);
-    if (c.start_date && today < c.start_date) return '<span class="badge b-progress">Chờ bắt đầu</span>';
+    if (c.start_date && today < c.start_date) return '<span class="badge b-progress">Sắp khai giảng</span>';
     if (c.end_date && today > c.end_date) return '<span class="badge b-done">Hoàn thành</span>';
     return '<span class="badge" style="background:var(--green-soft); color:var(--green);">Đang học</span>';
   }
@@ -433,6 +492,7 @@
       return;
     }
     payload.status = 'active';
+    payload.code = generateClassCode(payload.name, payload.start_date);
     window.sb.from('classes').insert(payload).select('id').single().then(function (res) {
       if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
       var classId = res.data.id;
@@ -461,7 +521,7 @@
   });
 
   function computeProgressForStudents(studentIds) {
-    if (studentIds.length === 0) return Promise.resolve({});
+    if (studentIds.length === 0) return Promise.resolve({ pctByStudent: {}, assignDoneByStudent: {}, totalAssignments: 0 });
     return Promise.all([
       window.sb.from('phases').select('id'),
       window.sb.from('modules').select('id,phase_id'),
@@ -475,6 +535,7 @@
       var moduleProgress = r[3].data || [];
       var submissions = r[4].data || [];
       var pctByStudent = {};
+      var assignDoneByStudent = {};
       studentIds.forEach(function (uid) {
         var progressByModule = {};
         moduleProgress.filter(function (p) { return p.user_id === uid; }).forEach(function (p) { progressByModule[p.module_id] = p.completed; });
@@ -489,9 +550,17 @@
           return total ? Math.round(done / total * 100) : 0;
         });
         pctByStudent[uid] = pctByPhase.length ? Math.round(pctByPhase.reduce(function (s, p) { return s + p; }, 0) / pctByPhase.length) : 0;
+        assignDoneByStudent[uid] = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
       });
-      return pctByStudent;
+      return { pctByStudent: pctByStudent, assignDoneByStudent: assignDoneByStudent, totalAssignments: assignments.length };
     });
+  }
+
+  function generateClassCode(name, startDate) {
+    var slug = (name || 'LOP').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd')
+      .toUpperCase().replace(/[^A-Z0-9]+/g, '').slice(0, 10) || 'LOP';
+    var ym = startDate ? startDate.slice(0, 7).replace('-', '') : '';
+    return 'LOP-' + slug + (ym ? '-' + ym : '');
   }
 
   function openDetail(classId) {
@@ -500,13 +569,16 @@
     if (!c) return;
     document.getElementById('detail-panel').style.display = 'block';
     document.getElementById('d-add-picker').style.display = 'none';
+    document.getElementById('d-edit-card').style.display = 'none';
+    document.getElementById('d-announce-card').style.display = 'none';
     document.getElementById('d-name').textContent = c.name;
     var statusEl = document.getElementById('d-status');
     statusEl.outerHTML = classStatusBadge(c).replace('<span', '<span id="d-status"');
     document.getElementById('d-code').textContent = c.code || '–';
     document.getElementById('d-start').textContent = fmtDate(c.start_date);
     document.getElementById('d-end').textContent = fmtDate(c.end_date);
-    document.getElementById('d-progress').textContent = 'Đang tính...';
+    document.getElementById('d-progress').textContent = '...';
+    document.getElementById('d-stat-assignments').textContent = '...';
 
     var mentor = allMentors.find(function (m) { return m.id === c.mentor_id; });
     document.getElementById('d-mentor-av').textContent = mentor ? initialsOf(mentor.full_name) : '?';
@@ -518,24 +590,55 @@
 
     var roster = allStudents.filter(function (s) { return c._members.indexOf(s.id) !== -1; });
     document.getElementById('d-roster-count').textContent = roster.length;
+    document.getElementById('d-stat-students').textContent = roster.length;
     var rosterTbody = document.getElementById('d-roster-tbody');
     if (roster.length === 0) {
-      rosterTbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</td></tr>';
+      rosterTbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</td></tr>';
     } else {
       rosterTbody.innerHTML = roster.map(function (s) {
-        return '<tr><td><input type="checkbox" class="roster-chk" value="' + s.id + '" /></td><td>' + escapeHtml(s.full_name || '(chưa đặt tên)') + '</td><td>' + escapeHtml(s.email || '') + '</td><td class="roster-pct" data-uid="' + s.id + '">–</td></tr>';
+        return '<tr><td><input type="checkbox" class="roster-chk" value="' + s.id + '" /></td><td>' + escapeHtml(s.full_name || '(chưa đặt tên)') + '</td><td>' + escapeHtml(s.email || '') + '</td><td class="roster-pct" data-uid="' + s.id + '">–</td><td class="roster-assign" data-uid="' + s.id + '">–</td></tr>';
       }).join('');
     }
 
     var studentIds = roster.map(function (s) { return s.id; });
-    computeProgressForStudents(studentIds).then(function (pctByStudent) {
+    computeProgressForStudents(studentIds).then(function (result) {
+      var pctByStudent = result.pctByStudent, assignDoneByStudent = result.assignDoneByStudent, totalAssignments = result.totalAssignments;
       document.querySelectorAll('.roster-pct').forEach(function (cell) {
         var uid = cell.getAttribute('data-uid');
         cell.textContent = (pctByStudent[uid] || 0) + '%';
       });
+      document.querySelectorAll('.roster-assign').forEach(function (cell) {
+        var uid = cell.getAttribute('data-uid');
+        cell.textContent = (assignDoneByStudent[uid] || 0) + '/' + totalAssignments;
+      });
       var vals = studentIds.map(function (uid) { return pctByStudent[uid] || 0; });
       var overall = vals.length ? Math.round(vals.reduce(function (s, v) { return s + v; }, 0) / vals.length) : 0;
-      document.getElementById('d-progress').textContent = vals.length ? overall + '%' : 'Chưa có học viên';
+      document.getElementById('d-progress').textContent = vals.length ? overall + '%' : '–';
+      var totalDone = studentIds.reduce(function (s, uid) { return s + (assignDoneByStudent[uid] || 0); }, 0);
+      var totalSlots = totalAssignments * studentIds.length;
+      document.getElementById('d-stat-assignments').textContent = totalSlots ? totalDone + '/' + totalSlots : '–';
+    });
+
+    window.sb.from('class_session_registrations').select('attended,session_id,class_sessions!inner(class_id)').eq('class_sessions.class_id', classId).then(function (res) {
+      var regs = res.data || [];
+      var attEl = document.getElementById('d-stat-attendance');
+      if (regs.length === 0) { attEl.textContent = '–'; return; }
+      var attended = regs.filter(function (r) { return r.attended; }).length;
+      attEl.textContent = Math.round(attended / regs.length * 100) + '%';
+    });
+
+    window.sb.from('class_sessions').select('id,title,meet_link,scheduled_at,ends_at,mode').eq('class_id', classId).gte('scheduled_at', new Date().toISOString()).order('scheduled_at').limit(5).then(function (res) {
+      var sessions = res.data || [];
+      var tbody = document.getElementById('d-sessions-tbody');
+      if (sessions.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Không có buổi học sắp tới.</td></tr>'; return; }
+      tbody.innerHTML = sessions.map(function (s) {
+        var start = new Date(s.scheduled_at);
+        var end = s.ends_at ? new Date(s.ends_at) : null;
+        var timeStr = start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + (end ? ' - ' + end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) : '');
+        var modeLabel = s.mode === 'online' ? 'Online' : s.mode === 'hybrid' ? 'Hybrid' : 'Offline';
+        var meetLink = s.meet_link ? '<a href="' + escapeHtml(s.meet_link) + '" target="_blank" rel="noopener">Mở link</a>' : '–';
+        return '<tr><td>' + fmtDate(s.scheduled_at) + '</td><td>' + escapeHtml(s.title) + '</td><td>' + timeStr + '</td><td>' + modeLabel + '</td><td>' + meetLink + '</td></tr>';
+      }).join('');
     });
   }
 
@@ -557,6 +660,81 @@
       if (res.error) { msg.style.color = 'var(--danger)'; msg.textContent = 'Lỗi: ' + res.error.message; msg.style.display = 'block'; return; }
       msg.style.color = 'var(--green)'; msg.textContent = 'Đã đổi giảng viên.'; msg.style.display = 'block';
       loadAll();
+    });
+  });
+
+  document.getElementById('d-code-copy-btn').addEventListener('click', function () {
+    var code = document.getElementById('d-code').textContent;
+    if (code && code !== '–' && navigator.clipboard) navigator.clipboard.writeText(code);
+  });
+
+  document.getElementById('d-edit-btn').addEventListener('click', function () {
+    var c = allClasses.find(function (x) { return x.id === selectedClassId; });
+    if (!c) return;
+    document.getElementById('de-name').value = c.name || '';
+    document.getElementById('de-start').value = c.start_date || '';
+    document.getElementById('de-end').value = c.end_date || '';
+    var deTrack = document.getElementById('de-track');
+    deTrack.innerHTML = allPhases.map(function (p) { return '<option value="' + p.id + '"' + (p.id === c.phase_id ? ' selected' : '') + '>' + escapeHtml(p.title) + '</option>'; }).join('');
+    var deTeacher = document.getElementById('de-teacher');
+    deTeacher.innerHTML = allMentors.map(function (m) { return '<option value="' + m.id + '"' + (m.id === c.mentor_id ? ' selected' : '') + '>' + escapeHtml(m.full_name) + '</option>'; }).join('');
+    document.querySelectorAll('input[name="de-mode"]').forEach(function (r) { r.checked = (r.value === c.mode); });
+    document.getElementById('de-error').style.display = 'none';
+    document.getElementById('d-edit-card').style.display = 'block';
+  });
+  document.getElementById('de-cancel-btn').addEventListener('click', function () {
+    document.getElementById('d-edit-card').style.display = 'none';
+  });
+  document.getElementById('de-save-btn').addEventListener('click', function () {
+    var errorOut = document.getElementById('de-error');
+    var modeEl = document.querySelector('input[name="de-mode"]:checked');
+    var payload = {
+      name: document.getElementById('de-name').value.trim(),
+      phase_id: document.getElementById('de-track').value || null,
+      mentor_id: document.getElementById('de-teacher').value || null,
+      start_date: document.getElementById('de-start').value || null,
+      end_date: document.getElementById('de-end').value || null,
+      mode: modeEl ? modeEl.value : null
+    };
+    if (!payload.name || !payload.phase_id || !payload.mentor_id || !payload.start_date || !payload.end_date || !payload.mode) {
+      errorOut.textContent = 'Vui lòng điền đủ các trường bắt buộc (*).';
+      errorOut.style.display = 'block';
+      return;
+    }
+    window.sb.from('classes').update(payload).eq('id', selectedClassId).then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('d-edit-card').style.display = 'none';
+      loadAll();
+    });
+  });
+
+  document.getElementById('d-announce-btn').addEventListener('click', function () {
+    document.getElementById('da-message').value = '';
+    document.getElementById('da-error').style.display = 'none';
+    document.getElementById('da-success').style.display = 'none';
+    document.getElementById('d-announce-card').style.display = 'block';
+  });
+  document.getElementById('da-cancel-btn').addEventListener('click', function () {
+    document.getElementById('d-announce-card').style.display = 'none';
+  });
+  document.getElementById('da-send-btn').addEventListener('click', function () {
+    var errorOut = document.getElementById('da-error');
+    var successOut = document.getElementById('da-success');
+    errorOut.style.display = 'none';
+    successOut.style.display = 'none';
+    var message = document.getElementById('da-message').value.trim();
+    if (!message || !selectedClassId) {
+      errorOut.textContent = 'Vui lòng nhập nội dung thông báo.';
+      errorOut.style.display = 'block';
+      return;
+    }
+    window.sb.auth.getSession().then(function (sessionRes) {
+      var adminId = sessionRes.data.session.user.id;
+      window.sb.from('class_announcements').insert({ class_id: selectedClassId, message: message, created_by: adminId }).then(function (res) {
+        if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+        successOut.style.display = 'block';
+        document.getElementById('da-message').value = '';
+      });
     });
   });
 
