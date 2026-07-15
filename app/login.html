@@ -586,6 +586,14 @@
       action.then(function (res) {
         if (res.error) throw res.error;
         if (isSignup && !res.data.session) {
+          var identities = res.data.user && res.data.user.identities;
+          if (identities && identities.length === 0) {
+            errorOut.textContent = 'Email này đã có tài khoản. Vui lòng đăng nhập hoặc bấm "Quên mật khẩu?" nếu không nhớ mật khẩu.';
+            errorOut.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Tạo tài khoản';
+            return;
+          }
           successOut.textContent = 'Đăng ký thành công. Kiểm tra email để xác nhận tài khoản trước khi đăng nhập.';
           successOut.style.display = 'block';
           submitBtn.disabled = false;
@@ -604,6 +612,12 @@
     window.sb.auth.getSession().then(function (res) {
       if (res.data.session) window.location.href = '/app/dashboard.html';
     });
+
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('err') === 'google_not_registered') {
+      errorOut.textContent = 'Email Google này chưa có tài khoản trong hệ thống. Vui lòng đăng ký bằng email/mật khẩu trước, hoặc liên hệ giảng viên.';
+      errorOut.style.display = 'block';
+    }
   })();
 </script>
 </body>
