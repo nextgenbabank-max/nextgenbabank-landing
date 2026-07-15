@@ -130,3 +130,4 @@ export async function onRequestPost(context) {
 
   return json(200, { ok: true, user_id: newUserId, temp_password: password });
 }
+
