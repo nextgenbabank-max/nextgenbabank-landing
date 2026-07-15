@@ -93,28 +93,64 @@
 
       <div class="card" id="create-class-card" style="display:none; margin-bottom:1.2rem;">
         <div class="card-head"><h2 id="create-class-title">Tạo lớp học mới</h2></div>
-        <input type="hidden" id="cc-id" />
+
+        <p style="font-weight:700; color:var(--navy-ink); margin:0.3rem 0 0.8rem;">1. Thông tin cơ bản</p>
         <div class="grid-2" style="gap:1rem 1.2rem;">
-          <div class="tfield"><label for="cc-name">Tên lớp *</label><input id="cc-name" type="text" placeholder="Nhập tên lớp học" /></div>
-          <div class="tfield"><label for="cc-code">Mã lớp *</label><input id="cc-code" type="text" placeholder="Nhập mã lớp (viết liền, không dấu)" /></div>
-        </div>
-        <div class="grid-2" style="gap:1rem 1.2rem;">
-          <div class="tfield"><label for="cc-track">Lộ trình / Chương học *</label><select id="cc-track"><option value="">Chọn lộ trình / chương học</option></select></div>
+          <div class="tfield"><label for="cc-name">Tên lớp học *</label><input id="cc-name" type="text" placeholder="Nhập tên lớp học" /></div>
           <div class="tfield"><label for="cc-teacher">Giảng viên phụ trách *</label><select id="cc-teacher"><option value="">Chọn giảng viên phụ trách</option></select></div>
         </div>
+        <div class="grid-2" style="gap:1rem 1.2rem;">
+          <div class="tfield"><label for="cc-track">Khóa học / Lộ trình *</label><select id="cc-track"><option value="">Chọn khóa học hoặc lộ trình</option></select></div>
+          <div class="tfield">
+            <label>Hình thức học *</label>
+            <div style="display:flex; gap:1.2rem; align-items:center; height:2.6rem;">
+              <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="radio" name="cc-mode" value="online" /> Online</label>
+              <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="radio" name="cc-mode" value="offline" /> Offline</label>
+              <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="radio" name="cc-mode" value="hybrid" /> Kết hợp (Online + Offline)</label>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-weight:700; color:var(--navy-ink); margin:1rem 0 0.8rem;">2. Thời gian học</p>
         <div class="grid-2" style="gap:1rem 1.2rem;">
           <div class="tfield"><label for="cc-start">Ngày bắt đầu *</label><input id="cc-start" type="date" /></div>
           <div class="tfield"><label for="cc-end">Ngày kết thúc *</label><input id="cc-end" type="date" /></div>
         </div>
-        <div class="grid-2" style="gap:1rem 1.2rem; align-items:end;">
-          <div class="tfield"><label for="cc-mode">Hình thức học *</label><select id="cc-mode"><option value="">Chọn hình thức học</option><option value="offline">Học trực tiếp</option><option value="online">Học trực tuyến</option><option value="hybrid">Kết hợp (Hybrid)</option></select></div>
-          <div class="tfield"><label for="cc-max">Số lượng tối đa</label><input id="cc-max" type="number" min="1" value="30" /></div>
+
+        <p style="font-weight:700; color:var(--navy-ink); margin:1rem 0 0.2rem;">3. Lịch học cố định</p>
+        <p style="font-size:0.82rem; color:var(--text-soft); margin-bottom:0.7rem;">Chọn thứ trong tuần và khung giờ. Hệ thống sẽ tự động tạo các buổi học trong phạm vi từ ngày bắt đầu đến ngày kết thúc.</p>
+        <div class="tfield">
+          <label>Ngày trong tuần *</label>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="1" /> Thứ 2</label>
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="2" /> Thứ 3</label>
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="3" /> Thứ 4</label>
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="4" /> Thứ 5</label>
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="5" /> Thứ 6</label>
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="6" /> Thứ 7</label>
+            <label style="display:flex; align-items:center; gap:0.4rem; font-weight:400;"><input type="checkbox" class="cc-weekday" value="0" /> Chủ nhật</label>
+          </div>
         </div>
-        <div class="tfield"><label for="cc-desc">Mô tả lớp</label><textarea id="cc-desc" style="min-height:70px;" placeholder="Mô tả, mục tiêu, đối tượng..."></textarea></div>
+        <div class="grid-2" style="gap:1rem 1.2rem;">
+          <div class="tfield"><label for="cc-time-start">Giờ bắt đầu *</label><input id="cc-time-start" type="time" value="08:00" /></div>
+          <div class="tfield"><label for="cc-time-end">Giờ kết thúc *</label><input id="cc-time-end" type="time" value="10:00" /></div>
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-soft); margin:-0.4rem 0 0.8rem;">Thời lượng mỗi buổi: <b id="cc-duration" style="color:var(--navy-ink);">2 giờ</b></p>
+        <p style="font-size:0.82rem; color:var(--text-soft); margin-bottom:0.8rem;"><a href="#" id="cc-preview-toggle">Xem trước lịch học dự kiến</a></p>
+        <div id="cc-preview-list" style="display:none; max-height:160px; overflow-y:auto; border:1px solid var(--border); border-radius:8px; padding:0.6rem 0.9rem; margin-bottom:0.8rem; font-size:0.82rem; color:var(--text-body);"></div>
+
+        <p style="font-weight:700; color:var(--navy-ink); margin:1rem 0 0.8rem;">4. Danh sách học viên</p>
+        <div style="display:flex; gap:0.6rem; margin-bottom:0.8rem;">
+          <select id="cc-student-picker" style="flex:1;"><option value="">Tìm kiếm và chọn học viên</option></select>
+          <button class="btn btn-outline btn-sm" id="cc-add-student-btn" type="button">+ Thêm</button>
+        </div>
+        <p style="font-size:0.8rem; font-weight:700; color:var(--text-soft); margin-bottom:0.4rem;">Danh sách học viên đã chọn (<span id="cc-selected-count">0</span>)</p>
+        <div id="cc-selected-list" style="border:1px solid var(--border); border-radius:8px; padding:0.8rem; min-height:60px; font-size:0.85rem; color:var(--text-soft); margin-bottom:1rem;">Chưa có học viên nào được thêm.</div>
+
         <p class="msg-error" id="cc-error" style="display:none; color:var(--danger);"></p>
         <div style="display:flex; gap:0.7rem;">
           <button class="btn btn-outline" id="cc-cancel-btn" type="button" style="flex:1; justify-content:center;">Huỷ</button>
-          <button class="btn btn-gold" id="cc-save-btn" type="button" style="flex:1; justify-content:center;">Lưu lớp học</button>
+          <button class="btn btn-gold" id="cc-save-btn" type="button" style="flex:1; justify-content:center;">Tạo lớp học</button>
         </div>
       </div>
 
@@ -280,11 +316,96 @@
   document.getElementById('cls-filter-phase').addEventListener('change', renderClassTable);
   document.getElementById('cls-filter-status').addEventListener('change', renderClassTable);
 
+  var ccSelectedStudents = [];
+
+  function renderCcSelectedList() {
+    document.getElementById('cc-selected-count').textContent = ccSelectedStudents.length;
+    var list = document.getElementById('cc-selected-list');
+    if (ccSelectedStudents.length === 0) {
+      list.style.color = 'var(--text-soft)';
+      list.textContent = 'Chưa có học viên nào được thêm.';
+      return;
+    }
+    list.style.color = '';
+    list.innerHTML = ccSelectedStudents.map(function (s) {
+      return '<div class="toggle-row"><span class="t">' + escapeHtml(s.full_name || s.email) + '</span><button class="row-action-btn" data-remove-cc-student="' + s.id + '">Bỏ chọn</button></div>';
+    }).join('');
+    list.querySelectorAll('[data-remove-cc-student]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-remove-cc-student');
+        ccSelectedStudents = ccSelectedStudents.filter(function (s) { return s.id !== id; });
+        renderCcSelectedList();
+        populateCcStudentPicker();
+      });
+    });
+  }
+  function populateCcStudentPicker() {
+    var picker = document.getElementById('cc-student-picker');
+    var available = allStudents.filter(function (s) { return !ccSelectedStudents.some(function (sel) { return sel.id === s.id; }); });
+    picker.innerHTML = '<option value="">Tìm kiếm và chọn học viên</option>' + available.map(function (s) {
+      return '<option value="' + s.id + '">' + escapeHtml(s.full_name || s.email) + '</option>';
+    }).join('');
+  }
+  document.getElementById('cc-add-student-btn').addEventListener('click', function () {
+    var picker = document.getElementById('cc-student-picker');
+    var id = picker.value;
+    if (!id) return;
+    var student = allStudents.find(function (s) { return s.id === id; });
+    if (student) ccSelectedStudents.push(student);
+    renderCcSelectedList();
+    populateCcStudentPicker();
+  });
+
+  function updateCcDuration() {
+    var start = document.getElementById('cc-time-start').value;
+    var end = document.getElementById('cc-time-end').value;
+    if (!start || !end) { document.getElementById('cc-duration').textContent = '–'; return; }
+    var mins = (parseInt(end.split(':')[0], 10) * 60 + parseInt(end.split(':')[1], 10)) - (parseInt(start.split(':')[0], 10) * 60 + parseInt(start.split(':')[1], 10));
+    if (mins <= 0) { document.getElementById('cc-duration').textContent = '–'; return; }
+    var h = Math.floor(mins / 60), m = mins % 60;
+    document.getElementById('cc-duration').textContent = (h ? h + ' giờ ' : '') + (m ? m + ' phút' : '') || '0 phút';
+  }
+  document.getElementById('cc-time-start').addEventListener('change', updateCcDuration);
+  document.getElementById('cc-time-end').addEventListener('change', updateCcDuration);
+
+  function computeSessionDates() {
+    var startDate = document.getElementById('cc-start').value;
+    var endDate = document.getElementById('cc-end').value;
+    var weekdays = Array.from(document.querySelectorAll('.cc-weekday:checked')).map(function (c) { return parseInt(c.value, 10); });
+    var dates = [];
+    if (!startDate || !endDate || weekdays.length === 0) return dates;
+    var cur = new Date(startDate + 'T00:00:00');
+    var end = new Date(endDate + 'T00:00:00');
+    var guard = 0;
+    while (cur <= end && guard < 400) {
+      if (weekdays.indexOf(cur.getDay()) !== -1) dates.push(cur.toISOString().slice(0, 10));
+      cur.setDate(cur.getDate() + 1);
+      guard++;
+    }
+    return dates;
+  }
+  document.getElementById('cc-preview-toggle').addEventListener('click', function (e) {
+    e.preventDefault();
+    var box = document.getElementById('cc-preview-list');
+    var dates = computeSessionDates();
+    box.innerHTML = dates.length
+      ? dates.map(function (d, i) { return (i + 1) + '. ' + new Date(d + 'T00:00:00').toLocaleDateString('vi-VN'); }).join('<br>')
+      : 'Chưa đủ thông tin để xem trước (chọn ngày bắt đầu/kết thúc và ít nhất 1 thứ trong tuần).';
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  });
+
   document.getElementById('open-create-btn').addEventListener('click', function () {
-    document.getElementById('cc-id').value = '';
     document.getElementById('create-class-title').textContent = 'Tạo lớp học mới';
-    ['cc-name', 'cc-code', 'cc-track', 'cc-teacher', 'cc-start', 'cc-end', 'cc-mode', 'cc-desc'].forEach(function (id) { document.getElementById(id).value = ''; });
-    document.getElementById('cc-max').value = 30;
+    ['cc-name', 'cc-track', 'cc-teacher', 'cc-start', 'cc-end'].forEach(function (id) { document.getElementById(id).value = ''; });
+    document.querySelectorAll('input[name="cc-mode"]').forEach(function (r) { r.checked = false; });
+    document.querySelectorAll('.cc-weekday').forEach(function (c) { c.checked = false; });
+    document.getElementById('cc-time-start').value = '08:00';
+    document.getElementById('cc-time-end').value = '10:00';
+    updateCcDuration();
+    document.getElementById('cc-preview-list').style.display = 'none';
+    ccSelectedStudents = [];
+    renderCcSelectedList();
+    populateCcStudentPicker();
     document.getElementById('cc-error').style.display = 'none';
     document.getElementById('create-class-card').style.display = 'block';
   });
@@ -294,27 +415,48 @@
   document.getElementById('cc-save-btn').addEventListener('click', function () {
     var errorOut = document.getElementById('cc-error');
     errorOut.style.display = 'none';
+    var modeEl = document.querySelector('input[name="cc-mode"]:checked');
     var payload = {
       name: document.getElementById('cc-name').value.trim(),
-      code: document.getElementById('cc-code').value.trim(),
       phase_id: document.getElementById('cc-track').value || null,
       mentor_id: document.getElementById('cc-teacher').value || null,
       start_date: document.getElementById('cc-start').value || null,
       end_date: document.getElementById('cc-end').value || null,
-      mode: document.getElementById('cc-mode').value || null,
-      max_students: parseInt(document.getElementById('cc-max').value, 10) || null,
-      description: document.getElementById('cc-desc').value.trim()
+      mode: modeEl ? modeEl.value : null
     };
-    if (!payload.name || !payload.code || !payload.phase_id || !payload.mentor_id || !payload.start_date || !payload.end_date || !payload.mode) {
-      errorOut.textContent = 'Vui lòng điền đủ các trường bắt buộc (*).';
+    var sessionDates = computeSessionDates();
+    var timeStart = document.getElementById('cc-time-start').value;
+    var timeEnd = document.getElementById('cc-time-end').value;
+    if (!payload.name || !payload.phase_id || !payload.mentor_id || !payload.start_date || !payload.end_date || !payload.mode || sessionDates.length === 0 || !timeStart || !timeEnd) {
+      errorOut.textContent = 'Vui lòng điền đủ các trường bắt buộc (*), bao gồm chọn ít nhất 1 thứ trong tuần.';
       errorOut.style.display = 'block';
       return;
     }
     payload.status = 'active';
-    window.sb.from('classes').insert(payload).then(function (res) {
+    window.sb.from('classes').insert(payload).select('id').single().then(function (res) {
       if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
-      document.getElementById('create-class-card').style.display = 'none';
-      loadAll();
+      var classId = res.data.id;
+      var memberInsert = ccSelectedStudents.length
+        ? window.sb.from('class_members').insert(ccSelectedStudents.map(function (s) { return { class_id: classId, student_id: s.id }; }))
+        : Promise.resolve({ error: null });
+      var sessionRows = sessionDates.map(function (d, i) {
+        return {
+          class_id: classId,
+          title: payload.name,
+          scheduled_at: new Date(d + 'T' + timeStart + ':00').toISOString(),
+          ends_at: new Date(d + 'T' + timeEnd + ':00').toISOString(),
+          mode: payload.mode,
+          session_type: 'live',
+          order_index: i + 1
+        };
+      });
+      var sessionInsert = window.sb.from('class_sessions').insert(sessionRows);
+      Promise.all([memberInsert, sessionInsert]).then(function (results) {
+        var err = results.find(function (r) { return r.error; });
+        if (err) { errorOut.textContent = 'Đã tạo lớp nhưng lỗi khi lưu học viên/lịch học: ' + err.error.message; errorOut.style.display = 'block'; return; }
+        document.getElementById('create-class-card').style.display = 'none';
+        loadAll();
+      });
     });
   });
 
