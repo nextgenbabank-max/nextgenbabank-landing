@@ -6,6 +6,10 @@
 <title>Phân quyền tính năng — NextGen BA Banker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .row-click { cursor: pointer; }
+  .row-click:hover { background: var(--bg-soft); }
+</style>
 </head>
 <body>
 
@@ -95,20 +99,30 @@
         <div class="stack">
           <div class="card">
             <div class="card-head"><h2>Vai trò &amp; Quyền hệ thống</h2></div>
-            <div class="role-card">
+            <div class="role-card row-click" data-role-filter="admin">
               <span class="ic" style="background:var(--gold-grad);"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9 6 12l2.5-6L12 12l3.5-6 2.5 6 3.5-3v9h-19Z"/><path d="M3.5 19h17"/></svg></span>
               <div><div class="t">Admin</div><div class="d">Quản trị toàn bộ hệ thống</div></div>
               <div class="count"><div class="n" id="count-admin">–</div><div class="l">người dùng</div></div>
             </div>
-            <div class="role-card">
+            <div class="role-card row-click" data-role-filter="mentor">
               <span class="ic" style="background:linear-gradient(120deg,#A78BFA,var(--violet));"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg></span>
               <div><div class="t">Giảng viên</div><div class="d">Giảng dạy và quản lý học viên</div></div>
               <div class="count"><div class="n" id="count-mentor">–</div><div class="l">người dùng</div></div>
             </div>
-            <div class="role-card">
+            <div class="role-card row-click" data-role-filter="student">
               <span class="ic" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
               <div><div class="t">Học viên</div><div class="d">Học tập và tương tác cùng giảng viên</div></div>
               <div class="count"><div class="n" id="count-student">–</div><div class="l">người dùng</div></div>
+            </div>
+          </div>
+
+          <div class="card" id="role-users-card" style="display:none;">
+            <div class="card-head"><h2 id="role-users-title">Danh sách người dùng</h2><a href="#" class="more" id="role-users-close"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg>Đóng</a></div>
+            <div class="table-wrap" style="max-height:320px; overflow-y:auto;">
+              <table class="data-table" id="role-users-table">
+                <thead><tr><th>Họ và tên</th><th>Email</th></tr></thead>
+                <tbody id="role-users-tbody"></tbody>
+              </table>
             </div>
           </div>
 
@@ -139,6 +153,12 @@
     });
     backdrop.addEventListener('click', close);
   })();
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
 
   var FEATURES = [
     { group: 'Tổng quan', key: 'overview', label: 'Tổng quan' },
@@ -232,6 +252,36 @@
       document.getElementById('count-student').textContent = r[2].count || 0;
     });
   }
+
+  var roleFilterTitles = { admin: 'Danh sách Admin', mentor: 'Danh sách Giảng viên', student: 'Danh sách Học viên' };
+
+  function loadRoleUsers(role) {
+    var query = window.sb.from('profiles').select('full_name,email');
+    if (role === 'admin') query = query.eq('is_admin', true);
+    else if (role === 'mentor') query = query.eq('is_mentor', true).eq('is_admin', false);
+    else query = query.eq('is_mentor', false).eq('is_admin', false);
+    query.order('full_name').then(function (res) {
+      var tbody = document.getElementById('role-users-tbody');
+      var rows = res.data || [];
+      if (rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-soft); font-size:0.85rem;">Không có người dùng nào.</td></tr>';
+      } else {
+        tbody.innerHTML = rows.map(function (p) {
+          return '<tr><td>' + escapeHtml(p.full_name || '(chưa đặt tên)') + '</td><td>' + escapeHtml(p.email || '') + '</td></tr>';
+        }).join('');
+      }
+      document.getElementById('role-users-title').textContent = roleFilterTitles[role] || 'Danh sách người dùng';
+      document.getElementById('role-users-card').style.display = 'block';
+    });
+  }
+
+  document.querySelectorAll('[data-role-filter]').forEach(function (card) {
+    card.addEventListener('click', function () { loadRoleUsers(card.getAttribute('data-role-filter')); });
+  });
+  document.getElementById('role-users-close').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.getElementById('role-users-card').style.display = 'none';
+  });
 
   requireAuth().then(function (session) {
     if (!session) return;
