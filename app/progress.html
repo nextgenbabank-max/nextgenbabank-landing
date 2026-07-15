@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tiến độ học tập — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html">Tổng quan</a>
+      <a href="assignments.html">Bài tập</a>
+      <a href="case-studies.html">Case study</a>
+      <a href="progress.html" class="active">Tiến độ</a>
+      <a href="dashboard.html#portfolio">Portfolio</a>
+      <a href="dashboard.html#feed">Thông báo <span class="count">3</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">3</span></button>
+      <div class="user-trigger">
+        <span class="avatar" id="user-avatar">HV</span>
+        <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html">Tổng quan</a>
+    <a href="assignments.html">Bài tập</a>
+    <a href="case-studies.html">Case study</a>
+    <a href="progress.html" class="active">Tiến độ</a>
+    <a href="dashboard.html#portfolio">Portfolio</a>
+    <a href="dashboard.html#feed">Thông báo <span class="count">3</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
+      <a href="progress.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="dashboard.html#portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Portfolio</a>
+      <a href="dashboard.html#feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="#" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Tiến độ học tập</h1>
+        <p class="d">Theo dõi hành trình học tập và chinh phục mục tiêu của bạn.</p>
+      </div>
+      <select style="border:1.5px solid var(--border); border-radius:9px; padding:0.55em 0.9em; font-family:inherit; font-size:0.85rem; background:var(--card); color:var(--navy-ink);">
+        <option>Tháng 5, 2024</option>
+      </select>
+    </div>
+
+    <div class="stat-grid cols-4">
+      <div class="stat-card ring-card">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 84 84">
+            <circle cx="42" cy="42" r="36" fill="none" stroke="var(--bg-soft)" stroke-width="8"/>
+            <circle id="ring-circle" cx="42" cy="42" r="36" fill="none" stroke="var(--green)" stroke-width="8" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="226"/>
+          </svg>
+          <span class="pct" id="ring-pct">—</span>
+        </div>
+        <div>
+          <div class="l">Tiến độ tổng thể</div>
+          <div class="n" id="ring-label">—</div>
+          <div class="sub" id="ring-current">Đang học: <b>—</b></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 11l2 2 4-4"/></svg></span>
+        <div style="flex:1;"><div class="n" id="st-assign-frac">—</div><div class="l">Bài tập hoàn thành</div><div class="pbar" style="margin-top:6px;"><i class="blue" id="st-assign-bar" style="width:0%;"></i></div><div class="sub" style="margin-top:4px;" id="st-assign-pct"></div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+        <div style="flex:1;"><div class="n" id="st-cs-frac">—</div><div class="l">Case study hoàn thành</div><div class="pbar" style="margin-top:6px;"><i class="violet" id="st-cs-bar" style="width:0%;"></i></div><div class="sub" style="margin-top:4px;" id="st-cs-pct"></div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic gold" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></span>
+        <div style="flex:1;"><div class="n" id="st-week-frac">—</div><div class="l">Mục tiêu tuần này</div><div class="pbar" style="margin-top:6px;"><i class="gold" id="st-week-bar" style="width:0%;"></i></div><div class="sub" style="margin-top:4px;" id="st-week-pct"></div></div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:1.2rem;">
+      <div class="card">
+        <div class="card-head"><h2>Tiến độ theo chặng học</h2></div>
+        <div id="phase-milestone-list" style="display:flex; flex-direction:column;"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Tổng quan tiến độ theo tuần</h2></div>
+        <div class="chart-legend">
+          <span><span class="dot" style="background:var(--blue);"></span>Bài tập hoàn thành</span>
+          <span><span class="dot" style="background:var(--violet);"></span>Case study hoàn thành</span>
+        </div>
+        <div id="trend-chart-container"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        <div class="chart-x" id="chart-x-labels"></div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;" id="progress-bottom-grid">
+      <div class="card">
+        <div class="card-head"><h2>Mục tiêu cá nhân (Tuần này)</h2></div>
+        <div id="weekly-goal-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Thành tích &amp; Milestone</h2></div>
+        <div id="achievements-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Cần cải thiện</h2></div>
+        <p style="font-size:0.8rem; color:var(--text-soft); margin-bottom:0.8rem;">Dựa trên tiến độ của bạn, hãy tập trung vào những mảng sau để cải thiện hiệu quả học tập.</p>
+        <div id="improve-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+      </div>
+    </div>
+    <style>@media (max-width: 1180px) { #progress-bottom-grid { grid-template-columns: 1fr !important; } }</style>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleDateString('vi-VN');
+  }
+  function startOfWeek(d) {
+    var date = new Date(d);
+    var day = (date.getDay() + 6) % 7;
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - day);
+    return date;
+  }
+  function weekLabel(d) {
+    var end = new Date(d); end.setDate(end.getDate() + 6);
+    function two(n) { return String(n).padStart(2, '0'); }
+    return two(d.getDate()) + '/' + two(d.getMonth() + 1) + '-' + two(end.getDate()) + '/' + two(end.getMonth() + 1);
+  }
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    var userId = session.user.id;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'HV';
+
+    Promise.all([
+      window.sb.from('phases').select('id,title,description,order_index').order('order_index'),
+      window.sb.from('modules').select('id,title,phase_id'),
+      window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
+      window.sb.from('assignments').select('id,title,phase_id,due_date'),
+      window.sb.from('submissions').select('assignment_id,graded,graded_at').eq('user_id', userId),
+      window.sb.from('case_studies').select('id'),
+      window.sb.from('case_study_tasks').select('id,case_study_id'),
+      window.sb.from('case_study_task_progress').select('task_id,completed,completed_at').eq('user_id', userId),
+      window.sb.from('achievements').select('id,code,title,description'),
+      window.sb.from('user_achievements').select('achievement_id,earned_at').eq('user_id', userId)
+    ]).then(function (r) {
+      var phases = r[0].data || [];
+      var modules = r[1].data || [];
+      var moduleProgress = r[2].data || [];
+      var assignments = r[3].data || [];
+      var submissions = r[4].data || [];
+      var caseStudies = r[5].data || [];
+      var csTasks = r[6].data || [];
+      var csTaskProgress = r[7].data || [];
+      var achievements = r[8].data || [];
+      var userAchievements = r[9].data || [];
+
+      var progressByModule = {};
+      moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });
+      var subByAssignment = {};
+      submissions.forEach(function (s) { subByAssignment[s.assignment_id] = s; });
+      var progressByTask = {};
+      csTaskProgress.forEach(function (p) { progressByTask[p.task_id] = p; });
+
+      var pctByPhase = phases.map(function (phase) {
+        var phaseModules = modules.filter(function (m) { return m.phase_id === phase.id; });
+        var phaseAssignments = assignments.filter(function (a) { return a.phase_id === phase.id; });
+        var total = phaseModules.length + phaseAssignments.length;
+        var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length +
+          phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+        return { id: phase.id, title: phase.title, description: phase.description, order_index: phase.order_index, pct: total ? Math.round(done / total * 100) : 0 };
+      });
+
+      renderRing(pctByPhase);
+      renderStatCards(assignments, subByAssignment, caseStudies, csTasks, progressByTask);
+      renderPhaseList(pctByPhase);
+      renderTrendChart(submissions, csTaskProgress);
+      renderWeeklyGoal(assignments, subByAssignment, csTasks, progressByTask);
+      renderAchievements(achievements, userAchievements);
+      renderImprove(pctByPhase);
+    });
+  });
+
+  function renderRing(pctByPhase) {
+    var overall = pctByPhase.length ? Math.round(pctByPhase.reduce(function (s, p) { return s + p.pct; }, 0) / pctByPhase.length) : 0;
+    var circumference = 226;
+    var offset = Math.round(circumference * (1 - overall / 100));
+    document.getElementById('ring-circle').setAttribute('stroke-dashoffset', offset);
+    document.getElementById('ring-pct').textContent = overall + '%';
+    document.getElementById('ring-label').textContent = 'Hoàn thành ' + overall + '%';
+    var current = pctByPhase.find(function (p) { return p.pct < 100; }) || pctByPhase[pctByPhase.length - 1];
+    document.getElementById('ring-current').innerHTML = 'Đang học: <b>' + escapeHtml(current ? current.title : '—') + '</b>';
+  }
+
+  function renderStatCards(assignments, subByAssignment, caseStudies, csTasks, progressByTask) {
+    var doneAssign = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+    var pctAssign = assignments.length ? Math.round(doneAssign / assignments.length * 100) : 0;
+    document.getElementById('st-assign-frac').textContent = doneAssign + ' / ' + assignments.length;
+    document.getElementById('st-assign-bar').style.width = pctAssign + '%';
+    document.getElementById('st-assign-pct').textContent = 'Hoàn thành ' + pctAssign + '%';
+
+    var csTotal = caseStudies.length;
+    var csDone = caseStudies.filter(function (cs) {
+      var tasks = csTasks.filter(function (t) { return t.case_study_id === cs.id; });
+      return tasks.length > 0 && tasks.every(function (t) { return progressByTask[t.id] && progressByTask[t.id].completed; });
+    }).length;
+    var pctCs = csTotal ? Math.round(csDone / csTotal * 100) : 0;
+    document.getElementById('st-cs-frac').textContent = csDone + ' / ' + csTotal;
+    document.getElementById('st-cs-bar').style.width = pctCs + '%';
+    document.getElementById('st-cs-pct').textContent = 'Hoàn thành ' + pctCs + '%';
+  }
+
+  function renderPhaseList(pctByPhase) {
+    var container = document.getElementById('phase-milestone-list');
+    if (pctByPhase.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có chặng học nào.</p>';
+      return;
+    }
+    var currentFound = false;
+    container.innerHTML = pctByPhase.map(function (p) {
+      var isCurrent = !currentFound && p.pct < 100;
+      if (isCurrent) currentFound = true;
+      var cls = p.pct === 100 ? 'green' : 'gold';
+      var badge = isCurrent ? '<br><span class="badge b-progress" style="margin-top:2px;">Đang học</span>' : '';
+      return '<div class="milestone-row" style="align-items:center;">' +
+        '<span class="ic" style="background:var(--' + cls + '-soft); color:var(--' + cls + ');"></span>' +
+        '<div style="flex:1;"><div class="t">' + escapeHtml(p.title) + '</div><div class="d">' + escapeHtml(p.description || '') + '</div><div class="pbar" style="margin-top:6px;"><i class="' + cls + '" style="width:' + p.pct + '%;"></i></div></div>' +
+        '<div style="width:70px; text-align:right;"><span style="font-weight:800; color:var(--navy-ink); font-size:0.86rem;">' + p.pct + '%</span>' + badge + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderTrendChart(submissions, csTaskProgress) {
+    var now = new Date();
+    var weeks = [];
+    for (var i = 3; i >= 0; i--) {
+      var start = startOfWeek(now);
+      start.setDate(start.getDate() - i * 7);
+      var end = new Date(start); end.setDate(end.getDate() + 7);
+      weeks.push({ start: start, end: end });
+    }
+    var assignCounts = weeks.map(function (w) {
+      return submissions.filter(function (s) { return s.graded && s.graded_at && new Date(s.graded_at) >= w.start && new Date(s.graded_at) < w.end; }).length;
+    });
+    var csCounts = weeks.map(function (w) {
+      return csTaskProgress.filter(function (p) { return p.completed && p.completed_at && new Date(p.completed_at) >= w.start && new Date(p.completed_at) < w.end; }).length;
+    });
+
+    document.getElementById('chart-x-labels').innerHTML = weeks.map(function (w) {
+      return '<span>' + weekLabel(w.start) + '</span>';
+    }).join('');
+
+    var maxVal = Math.max(1, assignCounts.reduce(function (a, b) { return Math.max(a, b); }, 0), csCounts.reduce(function (a, b) { return Math.max(a, b); }, 0));
+    var xs = [30, 220, 420, 610];
+    function yFor(v) { return 140 - Math.round((v / maxVal) * 125); }
+
+    var assignPts = xs.map(function (x, i) { return x + ',' + yFor(assignCounts[i]); }).join(' ');
+    var csPts = xs.map(function (x, i) { return x + ',' + yFor(csCounts[i]); }).join(' ');
+
+    var svg = '<svg viewBox="0 0 640 170" style="width:100%; height:auto;">' +
+      '<line x1="10" y1="10" x2="630" y2="10" stroke="var(--border)" stroke-dasharray="3 4"/>' +
+      '<line x1="10" y1="140" x2="630" y2="140" stroke="var(--border)"/>' +
+      '<polyline points="' + assignPts + '" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<polyline points="' + csPts + '" fill="none" stroke="var(--violet)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      xs.map(function (x, i) { return '<text x="' + x + '" y="' + (yFor(assignCounts[i]) - 8) + '" font-size="10" font-weight="700" fill="var(--blue)" text-anchor="middle">' + assignCounts[i] + '</text><circle cx="' + x + '" cy="' + yFor(assignCounts[i]) + '" r="3.5" fill="var(--blue)"/>'; }).join('') +
+      xs.map(function (x, i) { return '<text x="' + x + '" y="' + (yFor(csCounts[i]) + 16) + '" font-size="10" font-weight="700" fill="var(--violet)" text-anchor="middle">' + csCounts[i] + '</text><circle cx="' + x + '" cy="' + yFor(csCounts[i]) + '" r="3.5" fill="var(--violet)"/>'; }).join('') +
+      '</svg>';
+    document.getElementById('trend-chart-container').innerHTML = svg;
+  }
+
+  function renderWeeklyGoal(assignments, subByAssignment, csTasks, progressByTask) {
+    var now = new Date();
+    var weekStart = startOfWeek(now);
+    var weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
+    var thisWeekAssign = assignments.filter(function (a) { return a.due_date && new Date(a.due_date) >= weekStart && new Date(a.due_date) < weekEnd; });
+    var doneAssign = thisWeekAssign.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+
+    var container = document.getElementById('weekly-goal-body');
+    if (thisWeekAssign.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Không có mục tiêu nào trong tuần này.</p>';
+      return;
+    }
+    var pct = Math.round(doneAssign / thisWeekAssign.length * 100);
+    container.innerHTML =
+      '<p style="font-size:0.8rem; color:var(--text-soft); margin-bottom:0.6rem;">Hoàn thành <b style="color:var(--navy-ink);">' + doneAssign + ' / ' + thisWeekAssign.length + '</b></p>' +
+      thisWeekAssign.map(function (a) {
+        var done = subByAssignment[a.id] && subByAssignment[a.id].graded;
+        return '<div class="check-row ' + (done ? 'done' : 'pending') + '"><span class="dot-check">' + (done ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : '') + '</span><span class="lbl" style="flex:1;">' + escapeHtml(a.title) + '</span></div>';
+      }).join('');
+  }
+
+  function renderAchievements(achievements, userAchievements) {
+    var earnedById = {};
+    userAchievements.forEach(function (ua) { earnedById[ua.achievement_id] = ua.earned_at; });
+    var container = document.getElementById('achievements-list');
+    var earned = achievements.filter(function (a) { return earnedById[a.id]; });
+    if (earned.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa đạt huy hiệu nào. Tiếp tục cố gắng nhé!</p>';
+      return;
+    }
+    container.innerHTML = earned.map(function (a) {
+      return '<div class="milestone-row">' +
+        '<span class="ic"></span>' +
+        '<div style="flex:1;"><div class="t">' + escapeHtml(a.title) + '</div><div class="d">' + escapeHtml(a.description || '') + '</div></div>' +
+        '<div style="text-align:right;"><div style="font-size:0.72rem; color:var(--text-soft);">' + fmtDate(earnedById[a.id]) + '</div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.3 2.3L16 9.7"/></svg></span></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderImprove(pctByPhase) {
+    var container = document.getElementById('improve-list');
+    var list = pctByPhase.filter(function (p) { return p.pct < 100; }).sort(function (a, b) { return a.pct - b.pct; }).slice(0, 4);
+    if (list.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Bạn đã hoàn thành tất cả các chặng!</p>';
+      return;
+    }
+    container.innerHTML = list.map(function (p) {
+      return '<div class="improve-row"><div class="body"><div class="top"><span class="lbl">' + escapeHtml(p.title) + '</span><span class="pct">' + p.pct + '%</span></div><div class="pbar"><i class="gold" style="width:' + p.pct + '%;"></i></div></div></div>';
+    }).join('');
+  }
+</script>
+</body>
+</html>
