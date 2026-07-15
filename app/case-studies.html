@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Case study — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html">Tổng quan</a>
+      <a href="assignments.html">Bài tập</a>
+      <a href="case-studies.html" class="active">Case study</a>
+      <a href="progress.html">Tiến độ</a>
+      <a href="dashboard.html#portfolio">Portfolio</a>
+      <a href="dashboard.html#feed">Thông báo <span class="count">3</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn search-only" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">3</span></button>
+      <div class="user-trigger">
+        <span class="avatar" id="user-avatar">BL</span>
+        <span class="meta"><span class="u-name" id="user-name">BA Learner</span><span class="u-role">Học viên</span></span>
+        <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html">Tổng quan</a>
+    <a href="assignments.html">Bài tập</a>
+    <a href="case-studies.html" class="active">Case study</a>
+    <a href="progress.html">Tiến độ</a>
+    <a href="dashboard.html#portfolio">Portfolio</a>
+    <a href="dashboard.html#feed">Thông báo <span class="count">3</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="case-studies.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
+      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="dashboard.html#portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Portfolio</a>
+      <a href="dashboard.html#feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ BA Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="#" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Case study</h1>
+        <p class="d" style="max-width:56ch;">Các dự án mô phỏng nghiệp vụ ngân hàng giúp bạn áp dụng kiến thức vào thực tế, rèn luyện kỹ năng BA và xây dựng portfolio chuyên nghiệp.</p>
+      </div>
+      <div class="card" style="display:flex; align-items:center; gap:0.8rem; padding:0.9rem 1.1rem;">
+        <span style="flex:none; width:38px; height:38px; border-radius:10px; background:var(--blue-soft); color:var(--blue); display:grid; place-items:center;"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>
+        <div><p style="font-size:0.86rem; font-weight:800; color:var(--navy-ink);">Hướng dẫn học Case study</p><a class="more" href="#" style="margin-top:0.15rem;">Xem cách học hiệu quả</a></div>
+      </div>
+    </div>
+
+    <div class="stat-grid cols-4">
+      <div class="stat-card">
+        <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg></span>
+        <div><div class="n" id="cs-total">—</div><div class="l">Tổng case study</div><div class="sub">Tất cả dự án mô phỏng</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <div><div class="n" id="cs-inprogress">—</div><div class="l">Đang thực hiện</div><div class="sub">Đang trong tiến trình</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.3 2.3L16 9.7"/></svg></span>
+        <div><div class="n" id="cs-done">—</div><div class="l">Đã hoàn thành</div><div class="sub">Hoàn thành xuất sắc</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18"/><path d="M5 4h13l-3 4 3 4H5"/></svg></span>
+        <div><div class="n" id="cs-milestone">—</div><div class="l">Case sắp đến hạn (3 ngày)</div><div class="sub"></div></div>
+      </div>
+    </div>
+
+    <div class="grid-main-side">
+      <div class="card">
+        <div class="card-head">
+          <h2>Danh sách case study</h2>
+          <select><option>Tất cả trạng thái</option></select>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Case study</th><th>Tiến độ</th><th>Mentor phụ trách</th><th>Deadline</th><th>Nhiệm vụ</th><th></th></tr></thead>
+            <tbody id="cs-tbody">
+              <tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <a class="more" href="#" style="display:block; text-align:center; margin-top:1rem;">Hiển thị thêm case study <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="card-head"><h2>Case study hiện tại</h2></div>
+          <div id="current-cs-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleDateString('vi-VN');
+  }
+  function daysLeft(iso) {
+    if (!iso) return null;
+    return Math.ceil((new Date(iso) - new Date()) / 86400000);
+  }
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    var userId = session.user.id;
+    var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+    document.getElementById('user-name').textContent = name;
+    var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'HV';
+
+    Promise.all([
+      window.sb.from('case_studies').select('id,title,domain,description,mentor_id,due_date,order_index').order('order_index'),
+      window.sb.from('case_study_tasks').select('id,case_study_id,title,order_index').order('order_index'),
+      window.sb.from('case_study_task_progress').select('task_id,completed').eq('user_id', userId),
+      window.sb.from('mentors').select('id,full_name,role_title,avatar_initials,avatar_color')
+    ]).then(function (r) {
+      var caseStudies = r[0].data || [];
+      var tasks = r[1].data || [];
+      var progress = r[2].data || [];
+      var mentors = r[3].data || [];
+
+      var progressByTask = {};
+      progress.forEach(function (p) { progressByTask[p.task_id] = p.completed; });
+      var mentorById = {};
+      mentors.forEach(function (m) { mentorById[m.id] = m; });
+      var tasksByCase = {};
+      tasks.forEach(function (t) {
+        if (!tasksByCase[t.case_study_id]) tasksByCase[t.case_study_id] = [];
+        tasksByCase[t.case_study_id].push(t);
+      });
+
+      renderStats(caseStudies, tasksByCase, progressByTask);
+      renderTable(caseStudies, tasksByCase, progressByTask, mentorById);
+      renderCurrentCase(caseStudies, tasksByCase, progressByTask);
+    });
+  });
+
+  function csPercent(caseId, tasksByCase, progressByTask) {
+    var list = tasksByCase[caseId] || [];
+    if (list.length === 0) return { pct: 0, done: 0, total: 0 };
+    var done = list.filter(function (t) { return progressByTask[t.id]; }).length;
+    return { pct: Math.round(done / list.length * 100), done: done, total: list.length };
+  }
+
+  function renderStats(caseStudies, tasksByCase, progressByTask) {
+    var total = caseStudies.length;
+    var done = 0, inProgress = 0, dueSoon = 0;
+    caseStudies.forEach(function (cs) {
+      var p = csPercent(cs.id, tasksByCase, progressByTask);
+      if (p.pct === 100) done++;
+      else if (p.pct > 0) inProgress++;
+      var dl = daysLeft(cs.due_date);
+      if (dl != null && dl >= 0 && dl <= 3 && p.pct < 100) dueSoon++;
+    });
+    document.getElementById('cs-total').textContent = total;
+    document.getElementById('cs-inprogress').textContent = inProgress;
+    document.getElementById('cs-done').textContent = done;
+    document.getElementById('cs-milestone').textContent = dueSoon;
+  }
+
+  function renderTable(caseStudies, tasksByCase, progressByTask, mentorById) {
+    var tbody = document.getElementById('cs-tbody');
+    if (caseStudies.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có case study nào.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = caseStudies.map(function (cs) {
+      var p = csPercent(cs.id, tasksByCase, progressByTask);
+      var mentor = mentorById[cs.mentor_id];
+      var mentorHtml = mentor
+        ? '<span class="mentor-chip"><span class="av" style="background:' + escapeHtml(mentor.avatar_color || 'var(--gold)') + ';">' + escapeHtml(mentor.avatar_initials || '') + '</span><span class="info"><span class="n">' + escapeHtml(mentor.full_name) + '</span><span class="r">' + escapeHtml(mentor.role_title || '') + '</span></span></span>'
+        : '—';
+      var due = cs.due_date ? fmtDate(cs.due_date) + (daysLeft(cs.due_date) != null ? '<br>(' + daysLeft(cs.due_date) + ' ngày nữa)' : '') : '—';
+      var action = p.pct === 100 ? 'Xem chi tiết' : 'Tiếp tục';
+      return '<tr>' +
+        '<td><div class="cell-item"><div><div class="t">' + escapeHtml(cs.title) + '</div><div class="s">' + escapeHtml(cs.domain || '') + '</div></div></div></td>' +
+        '<td><div style="display:flex; align-items:center; gap:8px;"><span class="pbar" style="width:70px;"><i class="gold" style="width:' + p.pct + '%;"></i></span><span style="font-size:0.78rem; font-weight:700; color:var(--text-soft);">' + p.pct + '%</span></div></td>' +
+        '<td>' + mentorHtml + '</td>' +
+        '<td><span class="due-cell">' + due + '</span></td>' +
+        '<td>' + p.done + ' / ' + p.total + '</td>' +
+        '<td><a class="row-action-btn primary" href="#">' + action + '</a></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function renderCurrentCase(caseStudies, tasksByCase, progressByTask) {
+    var container = document.getElementById('current-cs-body');
+    var current = caseStudies.find(function (cs) {
+      var p = csPercent(cs.id, tasksByCase, progressByTask);
+      return p.pct < 100;
+    }) || caseStudies[0];
+
+    if (!current) {
+      container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có case study nào.</p>';
+      return;
+    }
+
+    var p = csPercent(current.id, tasksByCase, progressByTask);
+    var tasks = tasksByCase[current.id] || [];
+    var firstIncompleteFound = false;
+    var stepsHtml = tasks.map(function (t, idx) {
+      var done = progressByTask[t.id];
+      var cls, statusText, numHtml;
+      if (done) {
+        cls = 'done'; statusText = 'Hoàn thành';
+        numHtml = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+      } else if (!firstIncompleteFound) {
+        firstIncompleteFound = true;
+        cls = 'active'; statusText = 'Đang thực hiện'; numHtml = String(idx + 1);
+      } else {
+        cls = 'todo'; statusText = 'Chưa bắt đầu'; numHtml = String(idx + 1);
+      }
+      return '<div class="step ' + cls + '"><span class="num">' + numHtml + '</span><div class="txt"><div class="t">' + escapeHtml(t.title) + '</div><div class="s">' + statusText + '</div></div></div>';
+    }).join('');
+
+    container.innerHTML =
+      '<p style="font-size:0.94rem; font-weight:800; color:var(--navy-ink);">' + escapeHtml(current.title) + '</p>' +
+      '<div style="display:flex; align-items:center; gap:0.5rem; margin-top:0.35rem; margin-bottom:1rem;"><span style="font-size:0.78rem; color:var(--text-soft);">' + escapeHtml(current.domain || '') + '</span><span class="badge ' + (p.pct === 100 ? 'b-done' : 'b-progress') + '">' + (p.pct === 100 ? 'Đã hoàn thành' : 'Đang thực hiện') + '</span></div>' +
+      '<div style="display:flex; align-items:center; justify-content:space-between; font-size:0.8rem; margin-bottom:0.35rem;"><span style="color:var(--text-soft);">Tiến độ tổng thể</span><span style="font-weight:800; color:var(--navy-ink);">' + p.pct + '%</span></div>' +
+      '<div class="pbar" style="margin-bottom:1.2rem;"><i class="gold" style="width:' + p.pct + '%;"></i></div>' +
+      '<div class="step-tracker">' + (stepsHtml || '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có nhiệm vụ nào.</p>') + '</div>';
+  }
+</script>
+</body>
+</html>
