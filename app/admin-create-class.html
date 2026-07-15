@@ -96,7 +96,7 @@
               <div class="tfield"><label for="cl-end">Ngày kết thúc *</label><input id="cl-end" type="date" /></div>
             </div>
             <div class="grid-2" style="gap:1rem 1.2rem; align-items:end;">
-              <div class="tfield"><label for="cl-mode">Hình thức học *</label><select id="cl-mode"><option value="">Chọn hình thức học</option><option>Học trực tiếp</option><option>Học trực tuyến</option><option>Kết hợp (Hybrid)</option></select></div>
+              <div class="tfield"><label for="cl-mode">Hình thức học *</label><select id="cl-mode"><option value="">Chọn hình thức học</option><option value="offline">Học trực tiếp</option><option value="online">Học trực tuyến</option><option value="hybrid">Kết hợp (Hybrid)</option></select></div>
               <div class="tfield">
                 <label for="cl-max">Số lượng tối đa *</label>
                 <div class="stepper"><button type="button" id="cl-max-dec">−</button><input id="cl-max" type="text" value="30" /><button type="button" id="cl-max-inc">+</button></div>
@@ -141,22 +141,6 @@
             <button class="btn btn-gold" style="flex:1; justify-content:center;" id="create-class-btn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Tạo lớp học</button>
           </div>
           <p class="msg-success" id="create-success" style="display:none; text-align:center;">Đã tạo lớp học thành công.</p>
-        </div>
-
-        <div class="stack">
-          <div class="card">
-            <div class="card-head"><h2>Thông tin lớp (tóm tắt)</h2></div>
-            <div class="info-line" style="border-top:none;"><span class="l" style="flex:1;">Tên lớp</span><span class="v" id="p-name">–</span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Mã lớp</span><span class="v" id="p-code">–</span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Lộ trình / Chương học</span><span class="v" id="p-track">–</span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Giảng viên phụ trách</span><span class="v" style="display:flex; align-items:center; gap:6px;"><span class="avatar" id="p-teacher-av" style="width:22px; height:22px; font-size:0.6rem; display:none;"></span><span id="p-teacher">–</span></span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Hình thức học</span><span class="v" id="p-mode">–</span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Ngày bắt đầu</span><span class="v" id="p-start">–</span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Ngày kết thúc</span><span class="v" id="p-end">–</span></div>
-            <div class="info-line"><span class="l" style="flex:1;">Số lượng tối đa</span><span class="v" id="p-max">30</span></div>
-            <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1rem 0 0.2rem;">Số học viên đã chọn</p>
-            <p style="font-size:1.1rem; font-weight:800; color:var(--navy-ink);" id="p-student-count">0 học viên</p>
-          </div>
         </div>
       </div>
       <style>@media (max-width: 1180px) { .grid-main-side { grid-template-columns: 1fr !important; } }</style>
@@ -274,38 +258,9 @@
   document.getElementById('add-session-btn').addEventListener('click', addSessionRow);
 
   function updatePreview() {
-    document.getElementById('p-name').textContent = document.getElementById('cl-name').value || '–';
-    document.getElementById('p-code').textContent = document.getElementById('cl-code').value || '–';
-    var trackSel = document.getElementById('cl-track');
-    document.getElementById('p-track').textContent = trackSel.value ? trackSel.options[trackSel.selectedIndex].textContent : '–';
-    document.getElementById('p-mode').textContent = document.getElementById('cl-mode').value || '–';
-    document.getElementById('p-start').textContent = document.getElementById('cl-start').value || '–';
-    document.getElementById('p-end').textContent = document.getElementById('cl-end').value || '–';
-    document.getElementById('p-max').textContent = document.getElementById('cl-max').value || '0';
-
-    var teacherSel = document.getElementById('cl-teacher');
-    var av = document.getElementById('p-teacher-av');
-    if (teacherSel.value) {
-      document.getElementById('p-teacher').textContent = teacherSel.options[teacherSel.selectedIndex].textContent;
-      av.textContent = initialsOf(teacherSel.options[teacherSel.selectedIndex].textContent);
-      av.style.background = 'linear-gradient(120deg,#5B9BFA,var(--blue))';
-      av.style.display = 'grid';
-      av.style.placeItems = 'center';
-      av.style.color = '#fff';
-    } else {
-      document.getElementById('p-teacher').textContent = '–';
-      av.style.display = 'none';
-    }
-
     var checked = document.querySelectorAll('.cl-student-chk:checked').length;
-    document.getElementById('p-student-count').textContent = checked + ' học viên';
     document.getElementById('cl-selected-count').textContent = checked;
   }
-
-  ['cl-name', 'cl-code', 'cl-track', 'cl-teacher', 'cl-start', 'cl-end', 'cl-mode'].forEach(function (id) {
-    document.getElementById(id).addEventListener('input', updatePreview);
-    document.getElementById(id).addEventListener('change', updatePreview);
-  });
 
   function saveClass(status) {
     var errorOut = document.getElementById('create-success');
