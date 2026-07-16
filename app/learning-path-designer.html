@@ -27,15 +27,18 @@
 
 <div class="t-shell">
   <aside class="t-sidebar" id="t-sidebar">
-    <a class="t-brand" href="admin-dashboard.html">
-      <span class="icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
-          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
-          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
-        </svg>
-      </span>
-      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
-    </a>
+    <div class="t-sidebar-head">
+      <a class="t-brand" href="admin-dashboard.html">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+            <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+          </svg>
+        </span>
+        <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+      </a>
+      <button class="t-sidebar-toggle" id="t-sidebar-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    </div>
 
     <div class="t-profile">
       <span class="ph"><span class="avatar" id="user-avatar">AD</span><span class="status-dot"></span></span>
@@ -87,15 +90,51 @@
     </header>
 
     <main class="t-main">
+      <div id="lp-list-view">
+        <div class="page-head">
+          <div>
+            <h1>Thiết kế lộ trình học</h1>
+            <p class="d">Quản lý các khóa học/lộ trình chuẩn và theo dõi lớp học đang áp dụng.</p>
+          </div>
+          <button class="btn btn-gold" id="lp-add-btn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Thêm khóa học/lộ trình mới</button>
+        </div>
+
+        <div class="stat-grid cols-4">
+          <div class="stat-card"><div><div class="n" id="lp-stat-total">–</div><div class="l">Tổng số lộ trình</div></div></div>
+          <div class="stat-card"><div><div class="n" id="lp-stat-active">–</div><div class="l">Lộ trình đang có lớp áp dụng</div></div></div>
+          <div class="stat-card"><div><div class="n" id="lp-stat-classes">–</div><div class="l">Lớp đang áp dụng</div></div></div>
+          <div class="stat-card"><div><div class="n" id="lp-stat-students">–</div><div class="l">Học viên đang theo lộ trình</div></div></div>
+        </div>
+
+        <div class="card" id="lp-create-card" style="display:none;">
+          <div class="card-head"><h2>Khóa học/lộ trình mới</h2></div>
+          <div class="tfield"><label for="lp-new-title">Tên khóa học/lộ trình *</label><input id="lp-new-title" type="text" placeholder="VD: BA Foundation" /></div>
+          <p class="msg-error" id="lp-new-error" style="display:none; color:var(--danger);"></p>
+          <div style="display:flex; gap:0.7rem;">
+            <button class="btn btn-outline" id="lp-new-cancel" type="button" style="flex:1; justify-content:center;">Huỷ</button>
+            <button class="btn btn-gold" id="lp-new-save" type="button" style="flex:1; justify-content:center;">Tạo lộ trình &amp; thêm buổi học</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2 id="lp-list-title">Danh sách lộ trình</h2></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Tên lộ trình</th><th>Số buổi học</th><th>Lớp đang áp dụng</th><th>Học viên</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+              <tbody id="lp-list-tbody"><tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="lp-detail-view" style="display:none;">
+      <p><a href="#" id="lp-back-link">&larr; Quay lại danh sách lộ trình</a></p>
       <div class="page-head">
         <div>
-          <h1>Thiết kế lộ trình học</h1>
-          <p class="d">Tạo và cấu hình lộ trình chuẩn để áp dụng cho lớp học và học viên.</p>
+          <h1 id="lp-detail-title">–</h1>
+          <p class="d">Cấu hình buổi học, bài tập và theo dõi lớp áp dụng lộ trình này.</p>
         </div>
-        <div style="display:flex; gap:0.6rem;">
-          <select id="phase-select" style="min-width:220px;"></select>
-          <button class="btn btn-outline btn-sm" id="duplicate-phase-btn">Nhân bản lộ trình</button>
-        </div>
+        <button class="btn btn-outline btn-sm" id="duplicate-phase-btn">Nhân bản lộ trình</button>
       </div>
 
       <div class="stat-grid cols-4">
@@ -207,6 +246,7 @@
         </div>
         <p class="msg-success" id="assign-class-msg" style="display:none; font-size:0.82rem;"></p>
       </div>
+      </div>
       <style>@media (max-width: 1180px) { .grid-main-side { grid-template-columns: 1fr !important; } }</style>
     </main>
   </div>
@@ -227,6 +267,16 @@
       backdrop.style.display = open ? 'block' : 'none';
     });
     backdrop.addEventListener('click', close);
+  })();
+  (function () {
+    var shell = document.querySelector('.t-shell');
+    var collapseBtn = document.getElementById('t-sidebar-toggle');
+    var KEY = 'mentorSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') shell.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = shell.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
   })();
 
   function escapeHtml(s) {
@@ -290,20 +340,111 @@
   var activeQuizAssignmentId = null;
   var activeCaseStudyId = null;
 
-  function loadPhases() {
-    window.sb.from('phases').select('id,title,order_index').order('order_index').then(function (res) {
-      allPhases = res.data || [];
-      var sel = document.getElementById('phase-select');
-      sel.innerHTML = allPhases.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>'; }).join('');
-      currentPhaseId = allPhases.length ? allPhases[0].id : null;
-      sel.value = currentPhaseId;
-      loadPhaseData();
+  function showListView() {
+    currentPhaseId = null;
+    document.getElementById('lp-detail-view').style.display = 'none';
+    document.getElementById('lp-list-view').style.display = 'block';
+    loadPhaseList();
+  }
+  function showDetailView(phaseId) {
+    currentPhaseId = phaseId;
+    document.getElementById('module-config-card').style.display = 'none';
+    document.getElementById('lp-list-view').style.display = 'none';
+    document.getElementById('lp-detail-view').style.display = 'block';
+    var p = allPhases.find(function (x) { return x.id === phaseId; });
+    document.getElementById('lp-detail-title').textContent = p ? p.title : 'Lộ trình học';
+    loadPhaseData();
+  }
+  document.getElementById('lp-back-link').addEventListener('click', function (e) { e.preventDefault(); showListView(); });
+
+  function loadPhaseList() {
+    Promise.all([
+      window.sb.from('phases').select('id,title,order_index').order('order_index'),
+      window.sb.from('modules').select('id,phase_id'),
+      window.sb.from('classes').select('id,phase_id'),
+      window.sb.from('class_members').select('class_id,student_id')
+    ]).then(function (r) {
+      allPhases = r[0].data || [];
+      var modules = r[1].data || [];
+      var classes = r[2].data || [];
+      var classMembers = r[3].data || [];
+
+      var classesWithPhase = classes.filter(function (c) { return c.phase_id; });
+      var activePhases = new Set(classesWithPhase.map(function (c) { return c.phase_id; }));
+      var allStudentsOnPaths = new Set(classMembers.filter(function (m) {
+        return classesWithPhase.some(function (c) { return c.id === m.class_id; });
+      }).map(function (m) { return m.student_id; }));
+
+      document.getElementById('lp-stat-total').textContent = allPhases.length;
+      document.getElementById('lp-stat-active').textContent = activePhases.size;
+      document.getElementById('lp-stat-classes').textContent = classesWithPhase.length;
+      document.getElementById('lp-stat-students').textContent = allStudentsOnPaths.size;
+
+      document.getElementById('lp-list-title').textContent = 'Danh sách lộ trình (' + allPhases.length + ')';
+      var tbody = document.getElementById('lp-list-tbody');
+      if (allPhases.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có lộ trình nào. Bấm "Thêm khóa học/lộ trình mới" để bắt đầu.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = allPhases.map(function (p) {
+        var moduleCount = modules.filter(function (m) { return m.phase_id === p.id; }).length;
+        var classesOnPhase = classesWithPhase.filter(function (c) { return c.phase_id === p.id; });
+        var studentsOnPhase = new Set(classMembers.filter(function (m) {
+          return classesOnPhase.some(function (c) { return c.id === m.class_id; });
+        }).map(function (m) { return m.student_id; }));
+        var statusBadge = moduleCount === 0
+          ? '<span class="badge" style="background:var(--border); color:var(--text-soft);">Nháp — chưa có buổi học</span>'
+          : classesOnPhase.length > 0
+            ? '<span class="badge" style="background:var(--green-soft); color:var(--green);">Đang áp dụng</span>'
+            : '<span class="badge b-progress">Sẵn sàng — chưa có lớp</span>';
+        return '<tr class="row-click" data-open="' + p.id + '">' +
+          '<td><div class="t" style="font-weight:800; color:var(--navy-ink);">' + escapeHtml(p.title) + '</div></td>' +
+          '<td>' + moduleCount + '</td>' +
+          '<td>' + classesOnPhase.length + '</td>' +
+          '<td>' + studentsOnPhase.size + '</td>' +
+          '<td>' + statusBadge + '</td>' +
+          '<td class="action-pair">' +
+          '<button class="row-action-btn primary" data-open="' + p.id + '">Xem chi tiết</button>' +
+          '<button class="row-action-btn" data-dup-phase="' + p.id + '">Nhân bản</button>' +
+          '</td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-open]').forEach(function (el) {
+        el.addEventListener('click', function (e) { e.stopPropagation(); showDetailView(el.getAttribute('data-open')); });
+      });
+      tbody.querySelectorAll('[data-dup-phase]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (!confirm('Nhân bản lộ trình này (kèm toàn bộ buổi học, bài tập, case study, câu hỏi quiz) thành 1 lộ trình mới?')) return;
+          window.sb.rpc('duplicate_phase', { p_phase_id: btn.getAttribute('data-dup-phase') }).then(function (res) {
+            if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+            loadPhaseList();
+          });
+        });
+      });
     });
   }
-  document.getElementById('phase-select').addEventListener('change', function () {
-    currentPhaseId = this.value;
-    document.getElementById('module-config-card').style.display = 'none';
-    loadPhaseData();
+
+  document.getElementById('lp-add-btn').addEventListener('click', function () {
+    document.getElementById('lp-new-title').value = '';
+    document.getElementById('lp-new-error').style.display = 'none';
+    document.getElementById('lp-create-card').style.display = 'block';
+    document.getElementById('lp-new-title').focus();
+  });
+  document.getElementById('lp-new-cancel').addEventListener('click', function () {
+    document.getElementById('lp-create-card').style.display = 'none';
+  });
+  document.getElementById('lp-new-save').addEventListener('click', function () {
+    var title = document.getElementById('lp-new-title').value.trim();
+    var errorOut = document.getElementById('lp-new-error');
+    if (!title) { errorOut.textContent = 'Vui lòng nhập tên khóa học/lộ trình.'; errorOut.style.display = 'block'; return; }
+    var maxOrder = allPhases.reduce(function (s, p) { return Math.max(s, p.order_index || 0); }, 0);
+    window.sb.from('phases').insert({ title: title, order_index: maxOrder + 1 }).select('id,title,order_index').then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('lp-create-card').style.display = 'none';
+      var newPhase = res.data && res.data[0];
+      allPhases.push(newPhase);
+      if (newPhase) showDetailView(newPhase.id);
+    });
   });
 
   function loadPhaseData() {
@@ -688,7 +829,7 @@
     if (!confirm('Nhân bản lộ trình này (kèm toàn bộ buổi học, bài tập, case study, câu hỏi quiz) thành 1 lộ trình mới?')) return;
     window.sb.rpc('duplicate_phase', { p_phase_id: currentPhaseId }).then(function (res) {
       if (res.error) { alert('Lỗi: ' + res.error.message); return; }
-      loadPhases();
+      showListView();
     });
   });
 
@@ -708,7 +849,7 @@
       document.getElementById('user-avatar-dd').textContent = initials || 'AD';
       document.getElementById('user-name-dd').textContent = name;
       document.getElementById('user-email-dd').textContent = session.user.email || '—';
-      loadPhases();
+      showListView();
     });
   });
 
