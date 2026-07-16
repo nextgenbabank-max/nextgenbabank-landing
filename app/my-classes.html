@@ -7,14 +7,14 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="shared/dash.css" />
 <style>
-  .mc-class-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1.5px solid var(--border); border-radius: 12px; margin-bottom: 0.7rem; cursor: pointer; }
-  .mc-class-card:hover { border-color: var(--gold); }
   .mc-tabs { display: flex; gap: 0.5rem; margin: 1.2rem 0 1rem; border-bottom: 1.5px solid var(--border); }
   .mc-tab-btn { padding: 0.6rem 1rem; border: none; background: none; font-weight: 700; font-size: 0.86rem; color: var(--text-soft); cursor: pointer; border-bottom: 2px solid transparent; }
   .mc-tab-btn.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
   .mc-tab-panel { display: none; }
   .mc-tab-panel.active { display: block; }
   .mc-filter-row { display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  #mc-list-tbody tr.row-click { cursor: pointer; }
+  #mc-list-tbody tr.row-click:hover { background: var(--bg-soft); }
 </style>
 </head>
 <body>
@@ -96,7 +96,44 @@
       <div><h1>Lớp học của tôi</h1><p class="d" id="mc-subtitle">Đang tải...</p></div>
     </div>
 
-    <div id="mc-class-list" style="display:none;"></div>
+    <div id="mc-class-list" style="display:none;">
+      <div class="stat-grid cols-4" id="mc-list-stats"></div>
+
+      <div class="filter-row">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="mc-list-search" placeholder="Tìm theo tên lớp, mã lớp..." /></div>
+        <select id="mc-list-status">
+          <option value="">Trạng thái: Tất cả</option>
+          <option value="ongoing">Đang học</option>
+          <option value="upcoming">Sắp khai giảng</option>
+          <option value="done">Hoàn thành</option>
+          <option value="archived">Đã lưu trữ</option>
+        </select>
+      </div>
+
+      <div class="grid-main-side">
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Tên lớp</th><th>Mã lớp</th><th>Mentor phụ trách</th><th>Thời gian</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+              <tbody id="mc-list-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <div class="card-head"><h2>Lớp đang học</h2></div>
+            <div id="mc-list-current"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+          </div>
+
+          <div class="card help-card">
+            <p class="t">Cần hỗ trợ?</p>
+            <p class="d">Liên hệ Mentor nếu bạn có thắc mắc về lớp học đang tham gia.</p>
+            <a class="btn btn-gold btn-sm" href="mentor.html" style="width:100%; justify-content:center;">Liên hệ Mentor</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div id="mc-detail" style="display:none;">
       <div class="card" id="mc-info-card"></div>
@@ -168,12 +205,19 @@
     return days[d.getDay()] + ', ' + d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
   }
   function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
-  function classStatusBadge(c) {
+  function classStatusKey(c) {
     var now = new Date();
-    if (c.status === 'archived') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Đã lưu trữ</span>';
-    if (c.start_date && now < new Date(c.start_date)) return '<span class="badge b-new">Sắp khai giảng</span>';
-    if (c.end_date && now > new Date(c.end_date)) return '<span class="badge b-done">Hoàn thành</span>';
-    return '<span class="badge b-review">Đang học</span>';
+    if (c.status === 'archived') return 'archived';
+    if (c.start_date && now < new Date(c.start_date)) return 'upcoming';
+    if (c.end_date && now > new Date(c.end_date)) return 'done';
+    return 'ongoing';
+  }
+  var CLASS_STATUS_LABEL = { archived: 'Đã lưu trữ', upcoming: 'Sắp khai giảng', done: 'Hoàn thành', ongoing: 'Đang học' };
+  var CLASS_STATUS_BADGE = { archived: '', upcoming: 'b-new', done: 'b-done', ongoing: 'b-review' };
+  function classStatusBadge(c) {
+    var key = classStatusKey(c);
+    var style = key === 'archived' ? ' style="background:var(--border); color:var(--text-soft);"' : '';
+    return '<span class="badge ' + CLASS_STATUS_BADGE[key] + '"' + style + '>' + CLASS_STATUS_LABEL[key] + '</span>';
   }
 
   var userId = null;
@@ -195,6 +239,8 @@
     loadClasses();
   });
 
+  var myMentorsById = {};
+
   function loadClasses() {
     window.sb.from('class_members').select('class_id').eq('student_id', userId).then(function (r1) {
       var classIds = (r1.data || []).map(function (m) { return m.class_id; });
@@ -204,13 +250,20 @@
       }
       window.sb.from('classes').select('id,name,code,mentor_id,phase_id,start_date,end_date,status').in('id', classIds).then(function (r2) {
         myClasses = r2.data || [];
-        document.getElementById('mc-subtitle').textContent = 'Quản lý lịch học, tài liệu và bài tập theo từng lớp bạn đang tham gia.';
-        var preferredId = new URLSearchParams(window.location.search).get('class');
-        if (myClasses.length > 1 && !preferredId) {
-          renderClassList();
-        } else {
-          selectClass(preferredId && myClasses.some(function (c) { return c.id === preferredId; }) ? preferredId : myClasses[0].id);
-        }
+        var mentorIds = Array.from(new Set(myClasses.map(function (c) { return c.mentor_id; }).filter(Boolean)));
+        var mentorsP = mentorIds.length ? window.sb.from('mentors').select('id,full_name,role_title,avatar_initials,avatar_color').in('id', mentorIds) : Promise.resolve({ data: [] });
+        mentorsP.then(function (mRes) {
+          myMentorsById = {};
+          (mRes.data || []).forEach(function (m) { myMentorsById[m.id] = m; });
+
+          document.getElementById('mc-subtitle').textContent = 'Quản lý lịch học, tài liệu và bài tập theo từng lớp bạn đang tham gia.';
+          var preferredId = new URLSearchParams(window.location.search).get('class');
+          if (myClasses.length > 1 && !preferredId) {
+            renderClassList();
+          } else {
+            selectClass(preferredId && myClasses.some(function (c) { return c.id === preferredId; }) ? preferredId : myClasses[0].id);
+          }
+        });
       });
     });
   }
@@ -219,11 +272,63 @@
     var el = document.getElementById('mc-class-list');
     el.style.display = 'block';
     document.getElementById('mc-detail').style.display = 'none';
-    el.innerHTML = myClasses.map(function (c) {
-      return '<div class="mc-class-card" data-pick="' + c.id + '"><div style="flex:1;"><div style="font-weight:800; color:var(--navy-ink);">' + escapeHtml(c.name) + '</div><div style="font-size:0.8rem; color:var(--text-soft);">' + escapeHtml(c.code || '') + '</div></div>' + classStatusBadge(c) + '</div>';
+
+    var counts = { ongoing: 0, upcoming: 0, done: 0, archived: 0 };
+    myClasses.forEach(function (c) { counts[classStatusKey(c)]++; });
+    document.getElementById('mc-list-stats').innerHTML =
+      statCard('blue', myClasses.length, 'Tổng số lớp') +
+      statCard('green', counts.ongoing, 'Đang học') +
+      statCard('amber', counts.upcoming, 'Sắp khai giảng') +
+      statCard('violet', counts.done, 'Hoàn thành');
+
+    var current = myClasses.find(function (c) { return classStatusKey(c) === 'ongoing'; });
+    var curBody = document.getElementById('mc-list-current');
+    if (!current) {
+      curBody.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Không có lớp nào đang học.</p>';
+    } else {
+      var mentor = myMentorsById[current.mentor_id];
+      curBody.innerHTML =
+        '<p style="font-size:0.94rem; font-weight:800; color:var(--navy-ink);">' + escapeHtml(current.name) + '</p>' +
+        '<p style="font-size:0.8rem; color:var(--text-soft); margin:0.2rem 0 0.8rem;">' + escapeHtml(current.code || '') + '</p>' +
+        (mentor ? '<div class="mentor-chip"><span class="av" style="background:' + escapeHtml(mentor.avatar_color || 'var(--gold)') + ';">' + escapeHtml(mentor.avatar_initials || '') + '</span><span class="info"><span class="n">' + escapeHtml(mentor.full_name) + '</span><span class="r">' + escapeHtml(mentor.role_title || '') + '</span></span></div>' : '') +
+        '<a class="btn btn-gold btn-sm" href="?class=' + current.id + '" style="width:100%; justify-content:center; margin-top:0.9rem;">Xem chi tiết</a>';
+    }
+
+    renderClassTable();
+    ['mc-list-search', 'mc-list-status'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', renderClassTable);
+    });
+  }
+
+  function renderClassTable() {
+    var q = (document.getElementById('mc-list-search').value || '').toLowerCase();
+    var statusFilter = document.getElementById('mc-list-status').value;
+    var filtered = myClasses.filter(function (c) {
+      if (q && (c.name || '').toLowerCase().indexOf(q) === -1 && (c.code || '').toLowerCase().indexOf(q) === -1) return false;
+      if (statusFilter && classStatusKey(c) !== statusFilter) return false;
+      return true;
+    });
+    var tbody = document.getElementById('mc-list-tbody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Không có lớp nào khớp bộ lọc.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = filtered.map(function (c) {
+      var mentor = myMentorsById[c.mentor_id];
+      var mentorHtml = mentor
+        ? '<span class="mentor-chip"><span class="av" style="background:' + escapeHtml(mentor.avatar_color || 'var(--gold)') + ';">' + escapeHtml(mentor.avatar_initials || '') + '</span><span class="info"><span class="n">' + escapeHtml(mentor.full_name) + '</span></span></span>'
+        : '—';
+      return '<tr class="row-click" data-pick="' + c.id + '">' +
+        '<td><div class="t" style="font-weight:800; color:var(--navy-ink);">' + escapeHtml(c.name) + '</div></td>' +
+        '<td>' + escapeHtml(c.code || '—') + '</td>' +
+        '<td>' + mentorHtml + '</td>' +
+        '<td>' + fmtDate(c.start_date) + ' – ' + fmtDate(c.end_date) + '</td>' +
+        '<td>' + classStatusBadge(c) + '</td>' +
+        '<td><button class="row-action-btn primary" data-pick="' + c.id + '">Xem chi tiết</button></td>' +
+        '</tr>';
     }).join('');
-    el.querySelectorAll('[data-pick]').forEach(function (card) {
-      card.addEventListener('click', function () { selectClass(card.getAttribute('data-pick')); });
+    tbody.querySelectorAll('[data-pick]').forEach(function (el) {
+      el.addEventListener('click', function (e) { e.stopPropagation(); selectClass(el.getAttribute('data-pick')); });
     });
   }
 
