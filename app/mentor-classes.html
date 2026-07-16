@@ -157,6 +157,7 @@
           <div class="mc-tabs" id="mc-tabs" style="display:flex; gap:0.5rem; margin:1.1rem 0 1rem; border-bottom:1.5px solid var(--border);">
             <button type="button" class="mc-tab-btn active" data-tab="schedule">Lịch học</button>
             <button type="button" class="mc-tab-btn" data-tab="assignments">Bài tập theo buổi</button>
+            <button type="button" class="mc-tab-btn" data-tab="documents">Tài liệu</button>
           </div>
 
           <div class="mc-tab-panel active" data-panel="schedule" id="mc-tab-schedule">
@@ -201,6 +202,27 @@
 
           <div class="mc-tab-panel" data-panel="assignments" id="mc-tab-assignments" style="display:none;">
             <div id="d-assignments-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+          </div>
+
+          <div class="mc-tab-panel" data-panel="documents" id="mc-tab-documents" style="display:none;">
+            <div class="card" style="box-shadow:none; border:1px solid var(--border); margin-bottom:1rem;">
+              <div class="card-head"><h2 style="font-size:0.9rem;">Thêm tài liệu cho lớp</h2></div>
+              <div class="grid-2" style="gap:0.8rem 1rem;">
+                <div class="tfield"><label for="doc-title">Tên tài liệu *</label><input id="doc-title" type="text" placeholder="VD: Slide buổi 1 - Elicitation" /></div>
+                <div class="tfield"><label for="doc-type">Loại tài liệu</label>
+                  <select id="doc-type">
+                    <option value="Slide Deck">Slide Deck</option>
+                    <option value="Template">Template</option>
+                    <option value="Tài liệu tham khảo">Tài liệu tham khảo</option>
+                    <option value="Khác">Khác</option>
+                  </select>
+                </div>
+              </div>
+              <div class="tfield"><label for="doc-url">Link Google Drive *</label><input id="doc-url" type="url" placeholder="https://drive.google.com/..." /></div>
+              <p class="msg-error" id="doc-error" style="display:none; color:var(--danger); font-size:0.82rem;"></p>
+              <button class="btn btn-gold btn-sm" id="doc-add-btn" type="button">+ Thêm tài liệu</button>
+            </div>
+            <div id="d-documents-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
           </div>
       </div>
       <style>
@@ -455,7 +477,9 @@
     document.querySelectorAll('.mc-tab-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === 'schedule'); });
     document.getElementById('mc-tab-schedule').style.display = 'block';
     document.getElementById('mc-tab-assignments').style.display = 'none';
+    document.getElementById('mc-tab-documents').style.display = 'none';
     document.getElementById('d-assignments-body').innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+    document.getElementById('d-documents-list').innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
     document.getElementById('d-avatar').textContent = initialsOf(c.name);
     document.getElementById('d-name').textContent = c.name;
     var statusEl = document.getElementById('d-status');
@@ -593,6 +617,50 @@
       var panel = document.querySelector('[data-panel="' + btn.getAttribute('data-tab') + '"]');
       panel.style.display = 'block';
       if (btn.getAttribute('data-tab') === 'assignments' && selectedClassId) loadAssignmentsTab(selectedClassId);
+      if (btn.getAttribute('data-tab') === 'documents' && selectedClassId) loadDocumentsTab(selectedClassId);
+    });
+  });
+
+  function loadDocumentsTab(classId) {
+    var list = document.getElementById('d-documents-list');
+    list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+    window.sb.from('documents').select('id,title,url,doc_type,created_at').eq('class_id', classId).order('created_at', { ascending: false }).then(function (res) {
+      var docs = res.data || [];
+      if (docs.length === 0) {
+        list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tài liệu nào cho lớp này.</p>';
+        return;
+      }
+      list.innerHTML = '<div class="table-wrap"><table class="data-table"><thead><tr><th>Tên tài liệu</th><th>Loại</th><th>Ngày thêm</th><th></th></tr></thead><tbody>' +
+        docs.map(function (d) {
+          return '<tr><td>' + escapeHtml(d.title) + '</td><td>' + escapeHtml(d.doc_type || '') + '</td><td>' + fmtDate(d.created_at) + '</td>' +
+            '<td><a class="row-action-btn" href="' + escapeHtml(d.url) + '" target="_blank" rel="noopener">Mở link</a> <button class="row-action-btn" data-del-doc="' + d.id + '" style="color:var(--danger);">Xoá</button></td></tr>';
+        }).join('') + '</tbody></table></div>';
+      list.querySelectorAll('[data-del-doc]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá tài liệu này?')) return;
+          window.sb.from('documents').delete().eq('id', btn.getAttribute('data-del-doc')).then(function (res2) {
+            if (res2.error) { alert('Lỗi: ' + res2.error.message); return; }
+            loadDocumentsTab(classId);
+          });
+        });
+      });
+    });
+  }
+
+  document.getElementById('doc-add-btn').addEventListener('click', function () {
+    var errorOut = document.getElementById('doc-error');
+    errorOut.style.display = 'none';
+    var title = document.getElementById('doc-title').value.trim();
+    var url = document.getElementById('doc-url').value.trim();
+    if (!title || !url) { errorOut.textContent = 'Vui lòng nhập tên tài liệu và link Google Drive.'; errorOut.style.display = 'block'; return; }
+    if (!/^https?:\/\//.test(url)) { errorOut.textContent = 'Link không hợp lệ (phải bắt đầu bằng http/https).'; errorOut.style.display = 'block'; return; }
+    window.sb.from('documents').insert({
+      title: title, url: url, doc_type: document.getElementById('doc-type').value, class_id: selectedClassId
+    }).then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('doc-title').value = '';
+      document.getElementById('doc-url').value = '';
+      loadDocumentsTab(selectedClassId);
     });
   });
 
