@@ -575,6 +575,33 @@ table.data-table tr:last-child td { border-bottom: none; }
 .t-topbar-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 .t-topbar .icon-btn { background: var(--bg-soft); color: var(--text-soft); }
 .t-topbar .icon-btn:hover { background: var(--border); color: var(--navy-ink); }
+
+/* ---------- Top horizontal quick-nav (mirrors sidebar, desktop only) ---------- */
+.t-mainnav { display: flex; align-items: center; gap: 2px; overflow-x: auto; }
+.t-mainnav a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; color: var(--text-soft); font-size: 0.82rem; font-weight: 700; border-radius: 8px; white-space: nowrap; }
+.t-mainnav a svg { width: 15px; height: 15px; flex: none; }
+.t-mainnav a:hover { background: var(--bg-soft); color: var(--navy-ink); }
+.t-mainnav a.active { background: var(--gold-soft); color: var(--gold-dark); }
+.t-mainnav a .badge-num { background: var(--danger); color: #fff; font-size: 0.6rem; font-weight: 800; border-radius: 999px; min-width: 15px; height: 15px; padding: 0 4px; display: grid; place-items: center; }
+@media (max-width: 1200px) { .t-mainnav { display: none; } }
+
+/* ---------- Sidebar collapse toggle (desktop) ---------- */
+.t-sidebar-head { display: flex; align-items: center; gap: 6px; }
+.t-sidebar-head .t-brand { flex: 1; min-width: 0; }
+.t-sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 7px; border: none; background: rgba(255,255,255,0.08); color: #C8D3E6; cursor: pointer; flex: none; }
+.t-sidebar-toggle:hover { background: rgba(255,255,255,0.16); color: #fff; }
+.t-sidebar-toggle svg { width: 15px; height: 15px; }
+@media (max-width: 980px) { .t-sidebar-toggle { display: none; } }
+@media (min-width: 981px) {
+  .t-shell.collapsed .t-sidebar { width: 74px; padding-left: 0.6rem; padding-right: 0.6rem; overflow: hidden; }
+  .t-shell.collapsed .t-brand { justify-content: center; padding-left: 0; padding-right: 0; }
+  .t-shell.collapsed .t-brand .name, .t-shell.collapsed .t-brand .tagline { display: none; }
+  .t-shell.collapsed .t-sidebar-head { justify-content: center; }
+  .t-shell.collapsed .t-profile { justify-content: center; padding: 0.6rem 0.4rem; }
+  .t-shell.collapsed .t-profile > div:last-child { display: none; }
+  .t-shell.collapsed .t-nav a { overflow: hidden; white-space: nowrap; }
+  .t-shell.collapsed .t-support { display: none; }
+}
 .t-topbar .icon-btn .dot { border-color: var(--card); }
 .t-user-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .t-user-trigger .avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 0.78rem; background: var(--gold-grad); }

@@ -31,15 +31,18 @@
 
 <div class="t-shell">
   <aside class="t-sidebar" id="t-sidebar">
-    <a class="t-brand" href="mentor-dashboard.html">
-      <span class="icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
-          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
-          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
-        </svg>
-      </span>
-      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
-    </a>
+    <div class="t-sidebar-head">
+      <a class="t-brand" href="mentor-dashboard.html">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+            <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+          </svg>
+        </span>
+        <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+      </a>
+      <button class="t-sidebar-toggle" id="t-sidebar-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    </div>
 
     <div class="t-profile">
       <span class="ph"><span class="avatar" id="user-avatar">GV</span><span class="status-dot"></span></span>
@@ -69,6 +72,16 @@
     <header class="t-topbar">
       <div class="t-topbar-inner">
         <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <nav class="t-mainnav">
+          <a href="mentor-dashboard.html">Tổng quan</a>
+          <a href="mentor-classes.html">Lớp học của tôi</a>
+          <a href="mentor-inbox.html" class="active">Tin nhắn học viên<span class="badge-num" id="tn-unread-count" style="display:none;"></span></a>
+          <a href="#">Quản lý bài tập</a>
+          <a href="teacher-grading.html">Chấm bài</a>
+          <a href="teacher-learning-path.html">Lộ trình học tập</a>
+          <a href="#">Học viên</a>
+          <a href="#">Thông báo</a>
+        </nav>
         <div class="t-topbar-actions">
           <div class="t-user-trigger">
             <span class="avatar" id="user-avatar-2">GV</span>
@@ -189,6 +202,16 @@
     });
     backdrop.addEventListener('click', close);
   })();
+  (function () {
+    var shell = document.querySelector('.t-shell');
+    var collapseBtn = document.getElementById('t-sidebar-toggle');
+    var KEY = 'mentorSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') shell.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = shell.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
+  })();
   document.getElementById('logout-btn').addEventListener('click', signOut);
 
   function escapeHtml(s) {
@@ -284,9 +307,11 @@
 
       var totalUnread = students.reduce(function (s, x) { return s + x.unread; }, 0);
       if (totalUnread > 0) {
-        var badge = document.getElementById('nav-unread-count');
-        badge.textContent = totalUnread;
-        badge.style.display = 'inline-flex';
+        ['nav-unread-count', 'tn-unread-count'].forEach(function (id) {
+          var el = document.getElementById(id);
+          el.textContent = totalUnread;
+          el.style.display = 'inline-flex';
+        });
       }
 
       renderStudentList();
