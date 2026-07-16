@@ -162,6 +162,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/app.js"></script>
 <script src="shared/notifications.js"></script>
+<script src="shared/due-date.js"></script>
 <script>
   (function () {
     var toggle = document.getElementById('nav-toggle');
@@ -223,15 +224,20 @@
     document.getElementById('user-email-dd').textContent = session.user.email || '—';
 
     Promise.all([
-      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,max_score').order('due_date', { ascending: true, nullsFirst: false }),
+      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score').order('created_at', { ascending: false }),
       window.sb.from('submissions').select('assignment_id,score,max_score,graded,graded_at').eq('user_id', userId),
       window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color'),
-      window.sb.from('phases').select('id,title')
+      window.sb.from('phases').select('id,title'),
+      window.sb.from('modules').select('id,order_index'),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1)
     ]).then(function (r) {
       var assignments = r[0].data || [];
       var submissions = r[1].data || [];
       var mentors = r[2].data || [];
       var phases = r[3].data || [];
+      var modulesById = {};
+      (r[4].data || []).forEach(function (m) { modulesById[m.id] = m; });
+      var myClassId = (r[5].data || [])[0] && r[5].data[0].class_id;
 
       var subByAssignment = {};
       submissions.forEach(function (s) { subByAssignment[s.assignment_id] = s; });
@@ -240,10 +246,23 @@
       var phaseById = {};
       phases.forEach(function (p) { phaseById[p.id] = p; });
 
-      renderStats(assignments, subByAssignment);
-      renderTable(assignments, subByAssignment, mentorById, phaseById);
-      renderDueSoon(assignments, subByAssignment);
-      renderFeedback(assignments, subByAssignment, mentorById);
+      var sessionsQuery = myClassId
+        ? window.sb.from('class_sessions').select('module_id,order_index,scheduled_at').eq('class_id', myClassId)
+        : Promise.resolve({ data: [] });
+
+      sessionsQuery.then(function (sessionsRes) {
+        annotateEffectiveDueDates(assignments, sessionsRes.data || [], modulesById);
+        assignments.sort(function (a, b) {
+          if (!a._effectiveDueDate) return 1;
+          if (!b._effectiveDueDate) return -1;
+          return a._effectiveDueDate - b._effectiveDueDate;
+        });
+
+        renderStats(assignments, subByAssignment);
+        renderTable(assignments, subByAssignment, mentorById, phaseById);
+        renderDueSoon(assignments, subByAssignment);
+        renderFeedback(assignments, subByAssignment, mentorById);
+      });
     });
   });
 
@@ -253,8 +272,8 @@
     var reviewCount = assignments.filter(function (a) { return subByAssignment[a.id] && !subByAssignment[a.id].graded; }).length;
     var doneCount = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
     var dueSoonCount = assignments.filter(function (a) {
-      if (subByAssignment[a.id] || !a.due_date) return false;
-      var d = daysLeft(a.due_date);
+      if (subByAssignment[a.id] || !a._effectiveDueDate) return false;
+      var d = daysLeft(a._effectiveDueDate);
       return d != null && d >= 0 && d <= 7;
     }).length;
 
@@ -277,7 +296,7 @@
     tbody.innerHTML = assignments.map(function (a) {
       var sub = subByAssignment[a.id];
       var st = assignmentStatus(sub);
-      var due = a.due_date ? fmtDate(a.due_date) + (daysLeft(a.due_date) != null ? ' <span class="due-soon">(' + daysLeft(a.due_date) + ' ngày nữa)</span>' : '') : '—';
+      var due = a._effectiveDueDate ? fmtDate(a._effectiveDueDate) + (daysLeft(a._effectiveDueDate) != null ? ' <span class="due-soon">(' + daysLeft(a._effectiveDueDate) + ' ngày nữa)</span>' : '') : '—';
       var phase = phaseById[a.phase_id];
       var mentor = mentorById[a.mentor_id];
       var mentorHtml = mentor
@@ -295,8 +314,8 @@
   }
 
   function renderDueSoon(assignments, subByAssignment) {
-    var list = assignments.filter(function (a) { return !subByAssignment[a.id] && a.due_date && daysLeft(a.due_date) >= 0; })
-      .sort(function (a, b) { return new Date(a.due_date) - new Date(b.due_date); })
+    var list = assignments.filter(function (a) { return !subByAssignment[a.id] && a._effectiveDueDate && daysLeft(a._effectiveDueDate) >= 0; })
+      .sort(function (a, b) { return a._effectiveDueDate - b._effectiveDueDate; })
       .slice(0, 3);
     var container = document.getElementById('due-soon-list');
     if (list.length === 0) {
@@ -304,9 +323,9 @@
       return;
     }
     container.innerHTML = list.map(function (a) {
-      var d = new Date(a.due_date);
+      var d = a._effectiveDueDate;
       return '<div class="due-tile-row"><span class="date-box"><span class="d">' + d.getDate() + '</span><span class="m">Th' + (d.getMonth() + 1) + '</span></span>' +
-        '<div class="body"><div class="t">' + escapeHtml(a.title) + '</div><div class="s">Hạn nộp: ' + fmtDate(a.due_date) + '<br>' + daysLeft(a.due_date) + ' ngày nữa</div></div></div>';
+        '<div class="body"><div class="t">' + escapeHtml(a.title) + '</div><div class="s">Hạn nộp: ' + fmtDate(a._effectiveDueDate) + '<br>' + daysLeft(a._effectiveDueDate) + ' ngày nữa</div></div></div>';
     }).join('');
   }
 

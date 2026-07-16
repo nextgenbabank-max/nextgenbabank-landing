@@ -176,6 +176,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/app.js"></script>
 <script src="shared/notifications.js"></script>
+<script src="shared/due-date.js"></script>
 <script>
   (function () {
     var toggle = document.getElementById('nav-toggle');
@@ -292,9 +293,10 @@
       window.sb.from('phases').select('id,title,order_index').order('order_index'),
       window.sb.from('modules').select('id,title,phase_id,order_index').order('order_index'),
       window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
-      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,max_score').order('due_date', { ascending: true, nullsFirst: false }),
+      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score').order('created_at', { ascending: false }),
       window.sb.from('submissions').select('assignment_id,score,max_score,graded,graded_at,submitted_at').eq('user_id', userId),
-      window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color')
+      window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color'),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
@@ -302,6 +304,7 @@
       var assignments = r[3].data || [];
       var submissions = r[4].data || [];
       var mentors = r[5].data || [];
+      var myClassId = (r[6].data || [])[0] && r[6].data[0].class_id;
 
       var progressByModule = {};
       moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });
@@ -312,20 +315,30 @@
 
       var phaseById = {};
       phases.forEach(function (p) { phaseById[p.id] = p; });
+      var modulesById = {};
+      modules.forEach(function (m) { modulesById[m.id] = m; });
 
-      renderPhaseStats(phases, modules, progressByModule, assignments, subByAssignment);
-      renderAssignmentsTable(assignments, subByAssignment, mentorById, phaseById);
-      renderCurrentPhase(phases, modules, progressByModule);
-      renderWeeklyGoal(assignments, subByAssignment);
-      renderFeed(assignments, subByAssignment, mentorById);
+      var sessionsQuery = myClassId
+        ? window.sb.from('class_sessions').select('module_id,order_index,scheduled_at').eq('class_id', myClassId)
+        : Promise.resolve({ data: [] });
 
-      var doneCount = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
-      var pendingCount = assignments.filter(function (a) { return !subByAssignment[a.id]; }).length;
-      document.getElementById('stat-done-frac').textContent = doneCount + ' / ' + assignments.length;
-      document.getElementById('stat-done-pct').textContent = assignments.length ? 'Hoàn thành ' + Math.round(doneCount / assignments.length * 100) + '%' : '—';
-      document.getElementById('stat-pending').textContent = pendingCount;
-      var nextDue = assignments.filter(function (a) { return !subByAssignment[a.id] && a.due_date; }).map(function (a) { return daysLeft(a.due_date); }).sort(function (a, b) { return a - b; })[0];
-      document.getElementById('stat-pending-due').textContent = nextDue != null ? 'Hạn gần nhất: ' + nextDue + ' ngày' : 'Không có hạn nộp';
+      sessionsQuery.then(function (sessionsRes) {
+        annotateEffectiveDueDates(assignments, sessionsRes.data || [], modulesById);
+
+        renderPhaseStats(phases, modules, progressByModule, assignments, subByAssignment);
+        renderAssignmentsTable(assignments, subByAssignment, mentorById, phaseById);
+        renderCurrentPhase(phases, modules, progressByModule);
+        renderWeeklyGoal(assignments, subByAssignment);
+        renderFeed(assignments, subByAssignment, mentorById);
+
+        var doneCount = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+        var pendingCount = assignments.filter(function (a) { return !subByAssignment[a.id]; }).length;
+        document.getElementById('stat-done-frac').textContent = doneCount + ' / ' + assignments.length;
+        document.getElementById('stat-done-pct').textContent = assignments.length ? 'Hoàn thành ' + Math.round(doneCount / assignments.length * 100) + '%' : '—';
+        document.getElementById('stat-pending').textContent = pendingCount;
+        var nextDue = assignments.filter(function (a) { return !subByAssignment[a.id] && a._effectiveDueDate; }).map(function (a) { return daysLeft(a._effectiveDueDate); }).sort(function (a, b) { return a - b; })[0];
+        document.getElementById('stat-pending-due').textContent = nextDue != null ? 'Hạn gần nhất: ' + nextDue + ' ngày' : 'Không có hạn nộp';
+      });
     });
   }
 
@@ -376,7 +389,7 @@
     tbody.innerHTML = assignments.slice(0, 6).map(function (a) {
       var sub = subByAssignment[a.id];
       var st = assignmentStatus(a, sub);
-      var due = a.due_date ? fmtDate(a.due_date) + (daysLeft(a.due_date) != null ? ' <span class="due-soon">(' + daysLeft(a.due_date) + ' ngày nữa)</span>' : '') : '—';
+      var due = a._effectiveDueDate ? fmtDate(a._effectiveDueDate) + (daysLeft(a._effectiveDueDate) != null ? ' <span class="due-soon">(' + daysLeft(a._effectiveDueDate) + ' ngày nữa)</span>' : '') : '—';
       var phase = phaseById[a.phase_id];
       return '<tr>' +
         '<td><div class="cell-item"><div><div class="t">' + escapeHtml(a.title) + '</div><div class="s">' + escapeHtml(a.doc_type || '') + '</div></div></div></td>' +
@@ -417,8 +430,8 @@
     var weekStart = startOfWeek(now);
     var weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
     var thisWeek = assignments.filter(function (a) {
-      if (!a.due_date) return false;
-      var d = new Date(a.due_date);
+      if (!a._effectiveDueDate) return false;
+      var d = a._effectiveDueDate;
       return d >= weekStart && d < weekEnd;
     });
     var doneThisWeek = thisWeek.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;

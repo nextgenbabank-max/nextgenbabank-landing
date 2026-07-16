@@ -165,6 +165,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/app.js"></script>
 <script src="shared/notifications.js"></script>
+<script src="shared/due-date.js"></script>
 <script>
   (function () {
     var toggle = document.getElementById('nav-toggle');
@@ -226,15 +227,16 @@
 
     Promise.all([
       window.sb.from('phases').select('id,title,description,order_index').order('order_index'),
-      window.sb.from('modules').select('id,title,phase_id'),
+      window.sb.from('modules').select('id,title,phase_id,order_index'),
       window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
-      window.sb.from('assignments').select('id,title,phase_id,due_date'),
+      window.sb.from('assignments').select('id,title,phase_id,due_date,due_offset_days,module_id'),
       window.sb.from('submissions').select('assignment_id,graded,graded_at').eq('user_id', userId),
       window.sb.from('case_studies').select('id'),
       window.sb.from('case_study_tasks').select('id,case_study_id'),
       window.sb.from('case_study_task_progress').select('task_id,completed,completed_at').eq('user_id', userId),
       window.sb.from('achievements').select('id,code,title,description'),
-      window.sb.from('user_achievements').select('achievement_id,earned_at').eq('user_id', userId)
+      window.sb.from('user_achievements').select('achievement_id,earned_at').eq('user_id', userId),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
@@ -246,6 +248,7 @@
       var csTaskProgress = r[7].data || [];
       var achievements = r[8].data || [];
       var userAchievements = r[9].data || [];
+      var myClassId = (r[10].data || [])[0] && r[10].data[0].class_id;
 
       var progressByModule = {};
       moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });
@@ -253,6 +256,8 @@
       submissions.forEach(function (s) { subByAssignment[s.assignment_id] = s; });
       var progressByTask = {};
       csTaskProgress.forEach(function (p) { progressByTask[p.task_id] = p; });
+      var modulesById = {};
+      modules.forEach(function (m) { modulesById[m.id] = m; });
 
       var pctByPhase = phases.map(function (phase) {
         var phaseModules = modules.filter(function (m) { return m.phase_id === phase.id; });
@@ -263,13 +268,21 @@
         return { id: phase.id, title: phase.title, description: phase.description, order_index: phase.order_index, pct: total ? Math.round(done / total * 100) : 0 };
       });
 
-      renderRing(pctByPhase);
-      renderStatCards(assignments, subByAssignment, caseStudies, csTasks, progressByTask);
-      renderPhaseList(pctByPhase);
-      renderTrendChart(submissions, csTaskProgress);
-      renderWeeklyGoal(assignments, subByAssignment, csTasks, progressByTask);
-      renderAchievements(achievements, userAchievements);
-      renderImprove(pctByPhase);
+      var sessionsQuery = myClassId
+        ? window.sb.from('class_sessions').select('module_id,order_index,scheduled_at').eq('class_id', myClassId)
+        : Promise.resolve({ data: [] });
+
+      sessionsQuery.then(function (sessionsRes) {
+        annotateEffectiveDueDates(assignments, sessionsRes.data || [], modulesById);
+
+        renderRing(pctByPhase);
+        renderStatCards(assignments, subByAssignment, caseStudies, csTasks, progressByTask);
+        renderPhaseList(pctByPhase);
+        renderTrendChart(submissions, csTaskProgress);
+        renderWeeklyGoal(assignments, subByAssignment, csTasks, progressByTask);
+        renderAchievements(achievements, userAchievements);
+        renderImprove(pctByPhase);
+      });
     });
   });
 
@@ -364,7 +377,7 @@
     var now = new Date();
     var weekStart = startOfWeek(now);
     var weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
-    var thisWeekAssign = assignments.filter(function (a) { return a.due_date && new Date(a.due_date) >= weekStart && new Date(a.due_date) < weekEnd; });
+    var thisWeekAssign = assignments.filter(function (a) { return a._effectiveDueDate && a._effectiveDueDate >= weekStart && a._effectiveDueDate < weekEnd; });
     var doneAssign = thisWeekAssign.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
 
     var container = document.getElementById('weekly-goal-body');
