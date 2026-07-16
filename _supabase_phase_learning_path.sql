@@ -3,22 +3,22 @@
 
 -- 1) modules: mở rộng thông tin buổi học
 alter table modules
-  add column objectives text,
-  add column duration_minutes int,
-  add column is_visible boolean not null default true;
+  add column if not exists objectives text,
+  add column if not exists duration_minutes int,
+  add column if not exists is_visible boolean not null default true;
 
 -- 2) case_studies: gắn vào 1 buổi học cụ thể + hạn nộp tương đối
 alter table case_studies
-  add column module_id uuid references modules(id) on delete set null,
-  add column due_offset_days int;
+  add column if not exists module_id uuid references modules(id) on delete set null,
+  add column if not exists due_offset_days int;
 
 -- 3) documents: gắn vào 1 buổi học cụ thể (ngoài phase_id đã có)
 alter table documents
-  add column module_id uuid references modules(id) on delete set null;
+  add column if not exists module_id uuid references modules(id) on delete set null;
 
 -- 4) assignments: hạn nộp tương đối + loại 'project'
 alter table assignments
-  add column due_offset_days int;
+  add column if not exists due_offset_days int;
 
 alter table assignments drop constraint if exists assignments_type_check;
 alter table assignments add constraint assignments_type_check
@@ -26,17 +26,19 @@ alter table assignments add constraint assignments_type_check
 
 -- 5) class_sessions: hardening liên kết buổi học <-> session thật (FK thay vì chỉ khớp order_index lỏng lẻo)
 alter table class_sessions
-  add column module_id uuid references modules(id) on delete set null;
+  add column if not exists module_id uuid references modules(id) on delete set null;
 
 update class_sessions cs
 set module_id = m.id
-from classes c
-join modules m on m.phase_id = c.phase_id and m.order_index = cs.order_index
+from classes c, modules m
 where cs.class_id = c.id
+  and m.phase_id = c.phase_id
+  and m.order_index = cs.order_index
   and cs.module_id is null
   and cs.order_index is not null;
 
 -- 6) RLS: modules chỉ hiện cho học viên/mentor khi is_visible=true (admin luôn thấy hết)
+drop policy if exists "Non-admins see only visible modules" on modules;
 create policy "Non-admins see only visible modules"
   on modules as restrictive for select
   to authenticated
