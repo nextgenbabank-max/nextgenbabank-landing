@@ -21,6 +21,9 @@
   .module-row .d { font-size: 0.78rem; color: var(--text-soft); }
   .module-row .badges { display: flex; gap: 6px; margin-top: 4px; }
   .module-row .actions { flex: none; display: flex; gap: 4px; }
+  #lp-list-tbody td { white-space: nowrap; vertical-align: middle; }
+  #lp-list-tbody td:first-child { white-space: normal; min-width: 180px; }
+  #lp-list-tbody .action-pair { flex-wrap: nowrap; }
 </style>
 </head>
 <body>
@@ -393,10 +396,10 @@
           return classesOnPhase.some(function (c) { return c.id === m.class_id; });
         }).map(function (m) { return m.student_id; }));
         var statusBadge = moduleCount === 0
-          ? '<span class="badge" style="background:var(--border); color:var(--text-soft);">Nháp — chưa có buổi học</span>'
+          ? '<span class="badge" style="background:var(--border); color:var(--text-soft);">Nháp</span>'
           : classesOnPhase.length > 0
             ? '<span class="badge" style="background:var(--green-soft); color:var(--green);">Đang áp dụng</span>'
-            : '<span class="badge b-progress">Sẵn sàng — chưa có lớp</span>';
+            : '<span class="badge b-progress">Sẵn sàng</span>';
         return '<tr class="row-click" data-open="' + p.id + '">' +
           '<td><div class="t" style="font-weight:800; color:var(--navy-ink);">' + escapeHtml(p.title) + '</div></td>' +
           '<td>' + moduleCount + '</td>' +
