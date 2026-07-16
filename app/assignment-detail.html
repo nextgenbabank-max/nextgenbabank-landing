@@ -254,6 +254,11 @@
       return;
     }
 
+    var latestVersion = versions.find(function (v) { return v.action === 'draft_saved' || v.action === 'submitted'; });
+    var latestLinks = latestVersion
+      ? (filesByVersion[latestVersion.id] || []).filter(function (f) { return f.drive_link; }).map(function (f) { return f.drive_link; })
+      : [];
+
     var banner = '';
     if (submission && submission.status === 'needs_revision') {
       banner = '<p class="msg-error" style="background:var(--danger-soft); border-radius:8px; padding:0.7rem 0.9rem;">' +
@@ -262,13 +267,21 @@
     } else if (submission) {
       banner = '<p style="color:var(--text-soft); font-size:0.85rem;">Bạn đã ' + (submission.status === 'draft' ? 'lưu nháp' : 'nộp bài này') + '. Nộp lại sẽ tạo 1 phiên bản mới, không mất bản cũ.</p>';
     }
+    if (latestLinks.length) {
+      banner += '<div class="tfield"><label>Bài đã nộp</label>' + latestLinks.map(function (l) {
+        return '<div><a href="' + escapeHtml(l) + '" target="_blank" rel="noopener">' + escapeHtml(l) + '</a></div>';
+      }).join('') + '</div>';
+    }
 
     var showTextarea = assignment.type === 'essay';
     var showFiles = assignment.type === 'file' || assignment.type === 'project' || assignment.type === 'case_study';
+    var driveLinksHtml = (latestLinks.length ? latestLinks : ['']).map(function (l) {
+      return '<div class="adt-file-row"><input type="url" class="f-drive-link" value="' + escapeHtml(l) + '" placeholder="https://drive.google.com/..." /></div>';
+    }).join('');
 
     el.innerHTML = banner + '<form id="work-form">' +
       (showTextarea ? '<div class="tfield"><label for="f-answer">Bài làm của bạn</label><textarea id="f-answer" style="min-height:160px;">' + escapeHtml((submission && submission.answer_text) || '') + '</textarea></div>' : '') +
-      (showFiles ? '<div class="tfield" id="drive-links-wrap"><label>Link Google Drive</label><div id="drive-links-list"><div class="adt-file-row"><input type="url" class="f-drive-link" placeholder="https://drive.google.com/..." /></div></div><button type="button" class="row-action-btn" id="add-drive-link">+ Thêm link</button></div>' : '') +
+      (showFiles ? '<div class="tfield" id="drive-links-wrap"><label>Link Google Drive</label><div id="drive-links-list">' + driveLinksHtml + '</div><button type="button" class="row-action-btn" id="add-drive-link">+ Thêm link</button></div>' : '') +
       '<div class="tfield"><label for="f-note">Ghi chú cho Mentor (tuỳ chọn)</label><textarea id="f-note">' + escapeHtml((submission && submission.note_to_mentor) || '') + '</textarea></div>' +
       '<div style="display:flex; gap:0.7rem; margin-top:0.6rem;">' +
       '<button class="btn btn-outline" type="button" id="draft-btn">Lưu nháp</button>' +
