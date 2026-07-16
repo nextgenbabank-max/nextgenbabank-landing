@@ -61,7 +61,6 @@
       <a href="mentor-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
       <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
       <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo</a>
       <div class="t-nav-divider"></div>
       <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
       <a href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
@@ -72,16 +71,6 @@
     <header class="t-topbar">
       <div class="t-topbar-inner">
         <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-        <nav class="t-mainnav">
-          <a href="mentor-dashboard.html">Tổng quan</a>
-          <a href="mentor-classes.html">Lớp học của tôi</a>
-          <a href="mentor-inbox.html" class="active">Tin nhắn học viên<span class="badge-num" id="tn-unread-count" style="display:none;"></span></a>
-          <a href="mentor-assignments.html">Quản lý câu hỏi</a>
-          <a href="mentor-grading.html">Chấm bài</a>
-          <a href="mentor-learning-path.html">Lộ trình học tập</a>
-          <a href="mentor-students.html">Học viên</a>
-          <a href="#">Thông báo</a>
-        </nav>
         <div class="t-topbar-actions">
           <div class="t-user-trigger">
             <span class="avatar" id="user-avatar-2">GV</span>
@@ -307,11 +296,9 @@
 
       var totalUnread = students.reduce(function (s, x) { return s + x.unread; }, 0);
       if (totalUnread > 0) {
-        ['nav-unread-count', 'tn-unread-count'].forEach(function (id) {
-          var el = document.getElementById(id);
-          el.textContent = totalUnread;
-          el.style.display = 'inline-flex';
-        });
+        var navBadge = document.getElementById('nav-unread-count');
+        navBadge.textContent = totalUnread;
+        navBadge.style.display = 'inline-flex';
       }
 
       renderStudentList();
@@ -362,7 +349,6 @@
     document.getElementById('chat-header').innerHTML =
       '<h2 style="display:flex; align-items:center; gap:10px;"><span class="avatar" style="width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:0.7rem;font-weight:800;background:var(--navy);">' + escapeHtml(initialsOf(student.name)) + '</span><span>' + escapeHtml(student.name) + '<br><span style="font-size:0.72rem; font-weight:400; color:var(--text-soft);">' + escapeHtml(student.className || '') + '</span></span></h2>' +
       '<div style="display:flex; gap:0.5rem;">' +
-      '<button class="btn btn-outline btn-sm" id="btn-view-progress" type="button">Xem tiến độ</button>' +
       '<button class="btn btn-outline btn-sm" id="btn-view-submissions" type="button">Xem bài nộp</button>' +
       '<a class="btn btn-gold btn-sm" href="mentor-classes.html' + (classesByStudent[studentId] ? '?class=' + classesByStudent[studentId] : '') + '">Tạo lịch Meet</a>' +
       '</div>';
@@ -381,7 +367,6 @@
       })
       .subscribe();
 
-    document.getElementById('btn-view-progress').addEventListener('click', function () { showInfo('Tiến độ học tập', document.getElementById('sp-progress-phase').textContent + ' — ' + document.getElementById('sp-progress-pct').textContent + '\n' + document.getElementById('sp-progress-detail').textContent); });
     document.getElementById('btn-view-submissions').addEventListener('click', function () { showSubmissionsModal(studentId); });
   }
 
@@ -574,9 +559,6 @@
     });
   });
 
-  function showInfo(title, text) {
-    alert(title + '\n\n' + text);
-  }
   function showSubmissionsModal(studentId) {
     var assignmentIds = myAssignments.map(function (a) { return a.id; });
     var query = assignmentIds.length ? window.sb.from('submissions').select('assignment_id,score,max_score,graded,submitted_at').eq('user_id', studentId).in('assignment_id', assignmentIds).order('submitted_at', { ascending: false }) : Promise.resolve({ data: [] });
