@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tạo tài khoản mới — NextGen BA Banker</title>
+<title>Quản lý người dùng — NextGen BA Banker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .row-click { cursor: pointer; }
+  .row-click:hover { background: var(--bg-soft); }
+</style>
 </head>
 <body>
 
@@ -36,8 +40,8 @@
     <nav class="t-nav">
       <a href="admin-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
       <a href="admin-registrations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>Đăng ký tài khoản<span class="badge-num">12</span></a>
-      <a href="admin-create-account.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Tạo tài khoản</a>
-      <a href="admin-users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Quản lý người dùng</a>
+      <a href="admin-create-account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Tạo tài khoản</a>
+      <a href="admin-users.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Quản lý người dùng</a>
       <a href="admin-permissions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Phân quyền</a>
       <a href="admin-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/></svg>Quản lý lớp học</a>
       <a href="learning-path-designer.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Thiết kế lộ trình học</a>
@@ -52,14 +56,13 @@
         <nav class="t-mainnav">
           <a href="admin-dashboard.html">Tổng quan</a>
           <a href="admin-registrations.html">Đăng ký tài khoản</a>
-          <a href="admin-create-account.html" class="active">Tạo tài khoản</a>
-          <a href="admin-users.html">Quản lý người dùng</a>
+          <a href="admin-create-account.html">Tạo tài khoản</a>
+          <a href="admin-users.html" class="active">Quản lý người dùng</a>
           <a href="admin-permissions.html">Phân quyền</a>
           <a href="admin-classes.html">Quản lý lớp học</a>
           <a href="learning-path-designer.html">Thiết kế lộ trình học</a>
         </nav>
         <div class="t-topbar-actions">
-          <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">12</span></button>
           <div class="user-menu" id="user-menu">
             <div class="t-user-trigger" id="user-trigger-btn">
               <span class="avatar" id="user-avatar-2">AD</span>
@@ -84,64 +87,44 @@
     </header>
 
     <main class="t-main">
-      <div class="page-head"><div><h1>Tạo tài khoản mới</h1><p class="d">Tạo trực tiếp tài khoản học viên hoặc giảng viên mà không cần chờ đăng ký.</p></div></div>
-
-      <div class="grid-2">
-        <div class="card">
-          <div class="tabs">
-            <a href="#" class="active" data-role-tab="hv">Tạo tài khoản học viên</a>
-            <a href="#" data-role-tab="gv">Tạo tài khoản giảng viên</a>
-          </div>
-          <form id="create-form">
-            <div class="tfield"><label for="ca-name">Họ và tên *</label><input id="ca-name" type="text" placeholder="Nhập họ và tên" required /></div>
-            <div class="tfield"><label for="ca-email">Email *</label><input id="ca-email" type="email" placeholder="Nhập email" required /></div>
-            <div class="tfield"><label for="ca-phone">Số điện thoại</label><input id="ca-phone" type="tel" placeholder="Nhập số điện thoại" /></div>
-            <div class="tfield" id="ca-org-field" style="display:none;"><label for="ca-org">Chức danh / Công ty</label><input id="ca-org" type="text" placeholder="Nhập chức danh hoặc công ty" /></div>
-
-            <div class="tfield">
-              <label for="ca-pass">Mật khẩu tạm *</label>
-              <div style="display:flex; align-items:center; gap:0.7rem;">
-                <input id="ca-pass" type="text" placeholder="Nhập mật khẩu tạm" style="flex:1;" />
-                <label class="switch" title="Tự động tạo mật khẩu"><input type="checkbox" id="ca-autopass" /><span class="slider"></span></label>
-                <span style="font-size:0.78rem; color:var(--text-soft); white-space:nowrap;">Tự động tạo</span>
-              </div>
-            </div>
-
-            <div class="tfield"><label for="ca-note">Ghi chú</label><textarea id="ca-note" placeholder="Ghi chú (nếu có)" style="min-height:70px;"></textarea></div>
-
-            <p style="font-size:0.78rem; color:var(--text-soft); margin-bottom:1.2rem;">Hệ thống chưa tích hợp gửi email tự động — vui lòng tự gửi email/mật khẩu tạm cho người dùng sau khi tạo.</p>
-
-            <div style="display:flex; gap:0.7rem;">
-              <button type="button" class="btn btn-outline" style="flex:1; justify-content:center;">Hủy</button>
-              <button type="submit" class="btn btn-blue" style="flex:1; justify-content:center;" id="ca-submit-btn">Tạo tài khoản</button>
-            </div>
-            <p class="msg-error" id="ca-error" style="display:none; margin-top:0.8rem; color:var(--danger);"></p>
-            <p class="msg-success" id="ca-success" style="display:none; margin-top:0.8rem;"></p>
-          </form>
+      <div class="page-head">
+        <div>
+          <h1>Quản lý người dùng</h1>
+          <p class="d">Xem danh sách, kích hoạt/ngưng hoạt động tài khoản, đặt lại mật khẩu.</p>
         </div>
+      </div>
 
-        <div class="stack">
-          <div class="card">
-            <div class="card-head"><h2>Quyền mặc định</h2></div>
-            <p style="font-size:0.82rem; color:var(--text-soft); margin-bottom:0.8rem;">Tài khoản mới sẽ được gán quyền mặc định theo vai trò <b id="role-preview-name" style="color:var(--navy-ink);">Học viên</b>. Bạn có thể chỉnh sửa chi tiết sau tại trang <a href="admin-permissions.html" style="color:var(--gold-dark); font-weight:700;">Phân quyền</a>.</p>
-            <div id="perm-preview-hv">
-              <div class="check-row done"><span class="dot-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="lbl">Học tập &amp; làm bài tập</span></div>
-              <div class="check-row done"><span class="dot-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="lbl">Theo dõi tiến độ cá nhân</span></div>
-              <div class="check-row done"><span class="dot-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="lbl">Trao đổi với mentor</span></div>
-              <div class="check-row pending"><span class="dot-check"></span><span class="lbl">Quản lý lớp học, chấm bài</span></div>
-            </div>
-            <div id="perm-preview-gv" style="display:none;">
-              <div class="check-row done"><span class="dot-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="lbl">Tạo link Meet giảng dạy</span></div>
-              <div class="check-row done"><span class="dot-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="lbl">Chấm bài học viên</span></div>
-              <div class="check-row done"><span class="dot-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="lbl">Thiết kế lộ trình học tập</span></div>
-              <div class="check-row pending"><span class="dot-check"></span><span class="lbl">Quản trị hệ thống</span></div>
-            </div>
-          </div>
+      <div class="stat-grid cols-4">
+        <div class="stat-card"><div><div class="n" id="stat-total">–</div><div class="l">Tổng người dùng</div></div></div>
+        <div class="stat-card"><div><div class="n" id="stat-students">–</div><div class="l">Học viên</div></div></div>
+        <div class="stat-card"><div><div class="n" id="stat-mentors">–</div><div class="l">Giảng viên</div></div></div>
+        <div class="stat-card"><div><div class="n" id="stat-inactive">–</div><div class="l">Đang ngưng hoạt động</div></div></div>
+      </div>
 
-          <div class="card help-card">
-            <p class="t">Lưu ý</p>
-            <p class="d">Mật khẩu tạm sẽ được yêu cầu đổi trong lần đăng nhập đầu tiên. Nếu bật "Tự động tạo", hệ thống sẽ sinh mật khẩu ngẫu nhiên và gửi kèm email thông báo.</p>
-          </div>
+      <div class="filter-row">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="u-search" placeholder="Tìm theo tên, email..." /></div>
+        <select id="u-filter-role"><option value="">Vai trò: Tất cả</option><option value="admin">Admin</option><option value="mentor">Giảng viên</option><option value="student">Học viên</option></select>
+        <select id="u-filter-status"><option value="">Trạng thái: Tất cả</option><option value="active">Hoạt động</option><option value="inactive">Ngưng hoạt động</option></select>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2 id="u-list-title">Danh sách người dùng</h2></div>
+        <div class="table-wrap">
+          <table class="data-table" id="u-table">
+            <thead><tr><th>Họ và tên</th><th>Email</th><th>Vai trò</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+            <tbody id="u-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" id="reset-pw-card" style="display:none; max-width:420px; margin-top:1.2rem;">
+        <div class="card-head"><h2 id="reset-pw-title">Đặt lại mật khẩu</h2></div>
+        <div class="tfield"><label for="rp-password">Mật khẩu mới *</label><input id="rp-password" type="text" placeholder="Tối thiểu 8 ký tự" /></div>
+        <p class="msg-error" id="rp-error" style="display:none; color:var(--danger);"></p>
+        <p class="msg-success" id="rp-success" style="display:none;"></p>
+        <div style="display:flex; gap:0.7rem;">
+          <button class="btn btn-outline" id="rp-cancel-btn" type="button" style="flex:1; justify-content:center;">Huỷ</button>
+          <button class="btn btn-gold" id="rp-save-btn" type="button" style="flex:1; justify-content:center;">Lưu mật khẩu mới</button>
         </div>
       </div>
     </main>
@@ -175,82 +158,133 @@
     });
   })();
 
-  (function () {
-    var tabs = document.querySelectorAll('[data-role-tab]');
-    var orgField = document.getElementById('ca-org-field');
-    var previewHv = document.getElementById('perm-preview-hv');
-    var previewGv = document.getElementById('perm-preview-gv');
-    var previewName = document.getElementById('role-preview-name');
-    tabs.forEach(function (tab) {
-      tab.addEventListener('click', function (e) {
-        e.preventDefault();
-        tabs.forEach(function (t) { t.classList.remove('active'); });
-        tab.classList.add('active');
-        var isGv = tab.getAttribute('data-role-tab') === 'gv';
-        orgField.style.display = isGv ? 'block' : 'none';
-        previewHv.style.display = isGv ? 'none' : 'block';
-        previewGv.style.display = isGv ? 'block' : 'none';
-        previewName.textContent = isGv ? 'Giảng viên' : 'Học viên';
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var allUsers = [];
+  var currentAdminId = null;
+  var resetTargetId = null;
+
+  function roleOf(u) {
+    if (u.is_admin) return 'admin';
+    if (u.is_mentor) return 'mentor';
+    return 'student';
+  }
+  function roleLabel(role) {
+    return role === 'admin' ? 'Admin' : role === 'mentor' ? 'Giảng viên' : 'Học viên';
+  }
+  function roleBadgeClass(role) {
+    return role === 'admin' ? 'b-done' : role === 'mentor' ? 'b-review' : 'b-new';
+  }
+
+  function loadUsers() {
+    window.sb.from('profiles').select('id,full_name,email,is_admin,is_mentor,is_active').order('full_name').then(function (res) {
+      allUsers = res.data || [];
+      document.getElementById('stat-total').textContent = allUsers.length;
+      document.getElementById('stat-students').textContent = allUsers.filter(function (u) { return roleOf(u) === 'student'; }).length;
+      document.getElementById('stat-mentors').textContent = allUsers.filter(function (u) { return roleOf(u) === 'mentor'; }).length;
+      document.getElementById('stat-inactive').textContent = allUsers.filter(function (u) { return u.is_active === false; }).length;
+      renderTable();
+    });
+  }
+
+  function renderTable() {
+    var q = (document.getElementById('u-search').value || '').toLowerCase();
+    var roleFilter = document.getElementById('u-filter-role').value;
+    var statusFilter = document.getElementById('u-filter-status').value;
+    var filtered = allUsers.filter(function (u) {
+      if (q && (u.full_name || '').toLowerCase().indexOf(q) === -1 && (u.email || '').toLowerCase().indexOf(q) === -1) return false;
+      if (roleFilter && roleOf(u) !== roleFilter) return false;
+      if (statusFilter === 'active' && u.is_active === false) return false;
+      if (statusFilter === 'inactive' && u.is_active !== false) return false;
+      return true;
+    });
+    document.getElementById('u-list-title').textContent = 'Danh sách người dùng (' + filtered.length + ')';
+    var tbody = document.getElementById('u-tbody');
+    if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Không có người dùng nào.</td></tr>'; return; }
+    tbody.innerHTML = filtered.map(function (u) {
+      var role = roleOf(u);
+      var active = u.is_active !== false;
+      var isSelf = u.id === currentAdminId;
+      var statusBadge = active ? '<span class="badge b-done">Hoạt động</span>' : '<span class="badge" style="background:var(--danger-soft); color:var(--danger);">Ngưng hoạt động</span>';
+      var toggleBtn = isSelf
+        ? '<span style="color:var(--text-soft); font-size:0.78rem;">(Tài khoản của bạn)</span>'
+        : '<button class="row-action-btn" data-toggle-active="' + u.id + '" data-current="' + active + '">' + (active ? 'Ngưng hoạt động' : 'Kích hoạt') + '</button>';
+      return '<tr>' +
+        '<td>' + escapeHtml(u.full_name || '(chưa đặt tên)') + '</td>' +
+        '<td>' + escapeHtml(u.email || '') + '</td>' +
+        '<td><span class="badge ' + roleBadgeClass(role) + '">' + roleLabel(role) + '</span></td>' +
+        '<td>' + statusBadge + '</td>' +
+        '<td class="action-pair">' + toggleBtn + ' <button class="row-action-btn" data-reset-pw="' + u.id + '" data-name="' + escapeHtml(u.full_name || u.email || '') + '">Đặt lại mật khẩu</button></td>' +
+        '</tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-toggle-active]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-toggle-active');
+        var current = btn.getAttribute('data-current') === 'true';
+        var confirmMsg = current ? 'Ngưng hoạt động tài khoản này? Người dùng sẽ không đăng nhập được nữa.' : 'Kích hoạt lại tài khoản này?';
+        if (!confirm(confirmMsg)) return;
+        window.sb.from('profiles').update({ is_active: !current }).eq('id', id).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          loadUsers();
+        });
       });
     });
-  })();
+    tbody.querySelectorAll('[data-reset-pw]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        resetTargetId = btn.getAttribute('data-reset-pw');
+        document.getElementById('reset-pw-title').textContent = 'Đặt lại mật khẩu — ' + btn.getAttribute('data-name');
+        document.getElementById('rp-password').value = '';
+        document.getElementById('rp-error').style.display = 'none';
+        document.getElementById('rp-success').style.display = 'none';
+        document.getElementById('reset-pw-card').style.display = 'block';
+        document.getElementById('reset-pw-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  }
 
-  document.getElementById('ca-autopass').addEventListener('change', function (e) {
-    var input = document.getElementById('ca-pass');
-    if (e.target.checked) {
-      input.value = Math.random().toString(36).slice(-10);
-      input.disabled = true;
-    } else {
-      input.value = '';
-      input.disabled = false;
-    }
+  document.getElementById('u-search').addEventListener('input', renderTable);
+  document.getElementById('u-filter-role').addEventListener('change', renderTable);
+  document.getElementById('u-filter-status').addEventListener('change', renderTable);
+
+  document.getElementById('rp-cancel-btn').addEventListener('click', function () {
+    document.getElementById('reset-pw-card').style.display = 'none';
+    resetTargetId = null;
   });
-
-  document.getElementById('create-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var errorOut = document.getElementById('ca-error');
-    var successOut = document.getElementById('ca-success');
-    var submitBtn = document.getElementById('ca-submit-btn');
+  document.getElementById('rp-save-btn').addEventListener('click', function () {
+    var errorOut = document.getElementById('rp-error');
+    var successOut = document.getElementById('rp-success');
     errorOut.style.display = 'none';
     successOut.style.display = 'none';
-
-    var isGv = document.querySelector('[data-role-tab].active').getAttribute('data-role-tab') === 'gv';
-    var payload = {
-      full_name: document.getElementById('ca-name').value.trim(),
-      email: document.getElementById('ca-email').value.trim(),
-      phone: document.getElementById('ca-phone').value.trim(),
-      temp_password: document.getElementById('ca-pass').value.trim(),
-      role: isGv ? 'mentor' : 'student',
-      org_title: document.getElementById('ca-org').value.trim(),
-      note: document.getElementById('ca-note').value.trim()
-    };
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Đang tạo...';
-
+    var newPassword = document.getElementById('rp-password').value.trim();
+    if (!newPassword || newPassword.length < 8) {
+      errorOut.textContent = 'Mật khẩu mới phải có ít nhất 8 ký tự.';
+      errorOut.style.display = 'block';
+      return;
+    }
     window.sb.auth.getSession().then(function (sessionRes) {
       var token = sessionRes.data.session && sessionRes.data.session.access_token;
-      return fetch('/api/admin/create-account', {
+      return fetch('/api/admin/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ user_id: resetTargetId, new_password: newPassword })
       });
     }).then(function (res) {
       return res.json().then(function (body) { return { ok: res.ok, body: body }; });
     }).then(function (result) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Tạo tài khoản';
       if (!result.ok || !result.body.ok) {
-        errorOut.textContent = (result.body && result.body.error) || 'Tạo tài khoản thất bại, vui lòng thử lại.';
+        errorOut.textContent = (result.body && result.body.error) || 'Đặt lại mật khẩu thất bại.';
         errorOut.style.display = 'block';
         return;
       }
-      successOut.textContent = 'Đã tạo tài khoản thành công. Mật khẩu tạm: ' + result.body.temp_password;
+      successOut.textContent = 'Đã đặt mật khẩu mới thành công.';
       successOut.style.display = 'block';
-      document.getElementById('create-form').reset();
+      document.getElementById('rp-password').value = '';
     }).catch(function () {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Tạo tài khoản';
       errorOut.textContent = 'Có lỗi xảy ra. Vui lòng thử lại.';
       errorOut.style.display = 'block';
     });
@@ -263,6 +297,7 @@
         window.location.href = '/app/dashboard.html';
         return;
       }
+      currentAdminId = session.user.id;
       var name = res.data.full_name || session.user.email;
       document.getElementById('user-name').textContent = name;
       document.getElementById('user-name-2').textContent = name;
@@ -272,6 +307,7 @@
       document.getElementById('user-avatar-dd').textContent = initials || 'AD';
       document.getElementById('user-name-dd').textContent = name;
       document.getElementById('user-email-dd').textContent = session.user.email || '—';
+      loadUsers();
     });
   });
 

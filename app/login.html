@@ -610,13 +610,22 @@
     });
 
     function redirectAfterLogin(userId) {
-      window.sb.from('profiles').select('is_admin,is_mentor,approval_status').eq('id', userId).single().then(function (res) {
+      window.sb.from('profiles').select('is_admin,is_mentor,approval_status,is_active').eq('id', userId).single().then(function (res) {
         if (res.data && res.data.approval_status && res.data.approval_status !== 'approved') {
           var pendingMsg = res.data.approval_status === 'rejected'
             ? 'Yêu cầu đăng ký của bạn đã bị từ chối. Vui lòng liên hệ giảng viên để biết thêm chi tiết.'
             : 'Tài khoản của bạn đang chờ admin phê duyệt. Vui lòng quay lại sau.';
           window.sb.auth.signOut().then(function () {
             errorOut.textContent = pendingMsg;
+            errorOut.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = isSignup ? 'Tạo tài khoản' : 'Đăng nhập';
+          });
+          return;
+        }
+        if (res.data && res.data.is_active === false) {
+          window.sb.auth.signOut().then(function () {
+            errorOut.textContent = 'Tài khoản của bạn đã bị ngưng hoạt động. Vui lòng liên hệ quản trị viên.';
             errorOut.style.display = 'block';
             submitBtn.disabled = false;
             submitBtn.textContent = isSignup ? 'Tạo tài khoản' : 'Đăng nhập';
@@ -646,6 +655,9 @@
       errorOut.style.display = 'block';
     } else if (urlParams.get('err') === 'rejected') {
       errorOut.textContent = 'Yêu cầu đăng ký của bạn đã bị từ chối. Vui lòng liên hệ giảng viên để biết thêm chi tiết.';
+      errorOut.style.display = 'block';
+    } else if (urlParams.get('err') === 'inactive') {
+      errorOut.textContent = 'Tài khoản của bạn đã bị ngưng hoạt động. Vui lòng liên hệ quản trị viên.';
       errorOut.style.display = 'block';
     }
   })();

@@ -166,6 +166,15 @@ header.topbar { position: sticky; top: 0; z-index: 40; background: var(--navy); 
 .sidebar-support p.t { font-size: 0.84rem; font-weight: 700; color: var(--navy-ink); }
 .sidebar-support p.d { font-size: 0.78rem; color: var(--text-soft); margin-top: 0.25rem; margin-bottom: 0.8rem; }
 
+.sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text-soft); cursor: pointer; margin-bottom: 0.9rem; flex: none; }
+.sidebar-toggle:hover { background: var(--bg-soft); color: var(--navy-ink); }
+.sidebar-toggle svg { width: 16px; height: 16px; }
+@media (min-width: 981px) {
+  .dash-layout.collapsed .sidebar { width: 68px; padding-left: 0.6rem; padding-right: 0.6rem; overflow: hidden; }
+  .dash-layout.collapsed .sidebar-nav a { overflow: hidden; white-space: nowrap; }
+  .dash-layout.collapsed .sidebar-support { display: none; }
+}
+
 .main { flex: 1; min-width: 0; padding: 1.6rem clamp(1rem, 3vw, 2rem) 3rem; }
 .page-head { margin-bottom: 1.4rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .page-head h1 { font-size: 1.55rem; font-weight: 800; }

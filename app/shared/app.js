@@ -9,11 +9,16 @@ async function requireAuth() {
     window.location.href = '/app/login.html';
     return null;
   }
-  var profileRes = await window.sb.from('profiles').select('approval_status').eq('id', session.user.id).single();
+  var profileRes = await window.sb.from('profiles').select('approval_status,is_active').eq('id', session.user.id).single();
   var status = profileRes.data && profileRes.data.approval_status;
   if (status && status !== 'approved') {
     await window.sb.auth.signOut();
     window.location.href = '/app/login.html?err=' + status;
+    return null;
+  }
+  if (profileRes.data && profileRes.data.is_active === false) {
+    await window.sb.auth.signOut();
+    window.location.href = '/app/login.html?err=inactive';
     return null;
   }
   return session;
