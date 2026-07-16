@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lộ trình học tập — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <div class="t-sidebar-head">
+      <a class="t-brand" href="mentor-dashboard.html">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+            <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+          </svg>
+        </span>
+        <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+      </a>
+      <button class="t-sidebar-toggle" id="t-sidebar-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    </div>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">GV</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Giảng viên</div>
+        <div class="name" id="user-name">–</div>
+        <div class="online"><span class="d"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="mentor-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="mentor-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
+      <a href="mentor-assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="mentor-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
+      <a href="mentor-learning-path.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
+      <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo</a>
+      <div class="t-nav-divider"></div>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
+    </nav>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <nav class="t-mainnav">
+          <a href="mentor-dashboard.html">Tổng quan</a>
+          <a href="mentor-classes.html">Lớp học của tôi</a>
+          <a href="mentor-inbox.html">Tin nhắn học viên</a>
+          <a href="mentor-assignments.html">Quản lý bài tập</a>
+          <a href="mentor-grading.html">Chấm bài</a>
+          <a href="mentor-learning-path.html" class="active">Lộ trình học tập</a>
+          <a href="mentor-students.html">Học viên</a>
+        </nav>
+        <div class="t-topbar-actions">
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">GV</span>
+            <span class="meta"><span class="u-name" id="user-name-2">–</span><span class="u-role">Giảng viên</span></span>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head">
+        <div><h1>Lộ trình học tập</h1><p class="d">Tuỳ chỉnh lộ trình học tập cá nhân hoá cho từng học viên.</p></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:280px 1.6fr 1fr; gap:1.2rem; align-items:start;" id="path-grid">
+        <div class="card">
+          <div class="card-head"><h2>Chọn học viên</h2></div>
+          <div class="search" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="path-search" placeholder="Tìm kiếm học viên..." /></div>
+          <div id="student-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+
+        <div class="card" id="path-main-card" style="display:none;">
+          <div class="path-header">
+            <span class="av avatar" style="background:var(--navy); display:grid; place-items:center; color:#fff; font-weight:800;" id="ph-avatar">–</span>
+            <div>
+              <div class="name" id="ph-name">–</div>
+              <div class="meta" id="ph-meta">–</div>
+            </div>
+            <div class="overall">
+              <div class="lbl">Tiến độ tổng thể</div>
+              <div class="val" id="ph-pct">–</div>
+              <div class="pbar"><i class="green" id="ph-bar" style="width:0%;"></i></div>
+            </div>
+          </div>
+
+          <h3 style="font-size:0.94rem; font-weight:800; margin-bottom:1rem;">Các bước học tập</h3>
+          <div class="path-list" id="path-list"><p style="color:var(--text-soft); font-size:0.85rem;">Chưa có bước học nào.</p></div>
+        </div>
+        <div class="card" id="path-empty-card">
+          <p style="color:var(--text-soft); font-size:0.85rem;">Chọn 1 học viên bên trái để xem/quản lý lộ trình học tập.</p>
+        </div>
+
+        <div class="stack" id="path-side" style="display:none;">
+          <div class="card">
+            <div class="card-head"><h2>Thêm bước học mới</h2></div>
+            <div class="tfield"><label for="step-name">Tên bước học</label><input id="step-name" type="text" placeholder="Nhập tên bước học..." /></div>
+            <div class="tfield"><label for="step-desc">Mô tả bước học</label><textarea id="step-desc" placeholder="Mô tả mục tiêu và nội dung chính..." style="min-height:70px;"></textarea></div>
+            <div class="tfield"><label for="step-due">Hạn hoàn thành</label><input id="step-due" type="date" /></div>
+            <p class="msg-error" id="step-error" style="display:none; color:var(--danger); font-size:0.82rem;"></p>
+            <button class="btn btn-blue" id="step-add-btn" type="button" style="width:100%; justify-content:center;">+ Thêm bước học</button>
+          </div>
+        </div>
+      </div>
+      <style>@media (max-width: 1280px) { #path-grid { grid-template-columns: 1fr 1fr !important; } #path-grid > *:first-child { grid-column: 1 / -1; } }
+      @media (max-width: 760px) { #path-grid { grid-template-columns: 1fr !important; } #path-grid > *:first-child { grid-column: auto; } }</style>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+  (function () {
+    var shell = document.querySelector('.t-shell');
+    var collapseBtn = document.getElementById('t-sidebar-toggle');
+    var KEY = 'mentorSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') shell.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = shell.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
+  })();
+  document.getElementById('logout-btn').addEventListener('click', signOut);
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function initialsOf(name) {
+    return (name || 'HV').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || 'HV';
+  }
+  function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
+
+  var myMentorId = null;
+  var students = [];
+  var activeStudentId = null;
+  var activeSteps = [];
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_mentor,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_mentor) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      var name = res.data.full_name || session.user.email;
+      var initials = initialsOf(name);
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-2').textContent = name;
+      document.getElementById('user-avatar').textContent = initials;
+      document.getElementById('user-avatar-2').textContent = initials;
+
+      window.sb.from('mentors').select('id').eq('user_id', session.user.id).single().then(function (mRes) {
+        if (mRes.error || !mRes.data) return;
+        myMentorId = mRes.data.id;
+        loadStudents();
+      });
+    });
+  });
+
+  function computeProgressForStudents(studentIds) {
+    if (studentIds.length === 0) return Promise.resolve({});
+    return Promise.all([
+      window.sb.from('phases').select('id'),
+      window.sb.from('modules').select('id,phase_id'),
+      window.sb.from('assignments').select('id,phase_id'),
+      window.sb.from('module_progress').select('user_id,module_id,completed').in('user_id', studentIds),
+      window.sb.from('submissions').select('user_id,assignment_id,graded').in('user_id', studentIds)
+    ]).then(function (r) {
+      var phases = r[0].data || [];
+      var modules = r[1].data || [];
+      var assignments = r[2].data || [];
+      var moduleProgress = r[3].data || [];
+      var submissions = r[4].data || [];
+      var pctByStudent = {};
+      studentIds.forEach(function (uid) {
+        var progressByModule = {};
+        moduleProgress.filter(function (p) { return p.user_id === uid; }).forEach(function (p) { progressByModule[p.module_id] = p.completed; });
+        var subByAssignment = {};
+        submissions.filter(function (s) { return s.user_id === uid; }).forEach(function (s) { subByAssignment[s.assignment_id] = s; });
+        var pctByPhase = phases.map(function (phase) {
+          var phaseModules = modules.filter(function (m) { return m.phase_id === phase.id; });
+          var phaseAssignments = assignments.filter(function (a) { return a.phase_id === phase.id; });
+          var total = phaseModules.length + phaseAssignments.length;
+          var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length +
+            phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+          return total ? Math.round(done / total * 100) : 0;
+        });
+        pctByStudent[uid] = pctByPhase.length ? Math.round(pctByPhase.reduce(function (s, p) { return s + p; }, 0) / pctByPhase.length) : 0;
+      });
+      return pctByStudent;
+    });
+  }
+
+  function loadStudents() {
+    window.sb.from('classes').select('id,name').eq('mentor_id', myMentorId).then(function (clsRes) {
+      var myClasses = clsRes.data || [];
+      var classIds = myClasses.map(function (c) { return c.id; });
+      if (classIds.length === 0) {
+        document.getElementById('student-list').innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Bạn chưa được phân công lớp học nào.</p>';
+        return;
+      }
+      Promise.all([
+        window.sb.from('class_members').select('class_id,student_id').in('class_id', classIds),
+        window.sb.from('profiles').select('id,full_name,email')
+      ]).then(function (r) {
+        var members = r[0].data || [];
+        var profilesMap = {}; (r[1].data || []).forEach(function (p) { profilesMap[p.id] = p; });
+        var classesByStudent = {};
+        members.forEach(function (m) { (classesByStudent[m.student_id] = classesByStudent[m.student_id] || []).push(m.class_id); });
+        var studentIds = Object.keys(classesByStudent);
+        students = studentIds.map(function (uid) {
+          var p = profilesMap[uid];
+          var cls = myClasses.find(function (c) { return classesByStudent[uid].indexOf(c.id) !== -1; });
+          return { id: uid, name: p ? (p.full_name || p.email) : '(không rõ)', className: cls ? cls.name : '' };
+        });
+        computeProgressForStudents(studentIds).then(function (pctByStudent) {
+          students.forEach(function (s) { s.pct = pctByStudent[s.id] || 0; });
+          renderStudentList();
+        });
+      });
+    });
+  }
+
+  function renderStudentList() {
+    var q = (document.getElementById('path-search').value || '').toLowerCase();
+    var filtered = students.filter(function (s) { return !q || s.name.toLowerCase().indexOf(q) !== -1; });
+    var container = document.getElementById('student-list');
+    if (filtered.length === 0) { container.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Không có học viên nào.</p>'; return; }
+    container.innerHTML = filtered.map(function (s) {
+      var barClass = s.pct >= 70 ? 'green' : 'gold';
+      return '<div class="student-row' + (s.id === activeStudentId ? ' active' : '') + '" data-student="' + s.id + '">' +
+        '<span class="av" style="background:var(--navy); color:#fff; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; font-weight:800; font-size:0.76rem;">' + escapeHtml(initialsOf(s.name)) + '</span>' +
+        '<div class="body"><div class="n">' + escapeHtml(s.name) + '</div><div class="p">' + s.pct + '% hoàn thành</div><div class="pbar"><i class="' + barClass + '" style="width:' + s.pct + '%;"></i></div></div>' +
+        '</div>';
+    }).join('');
+    container.querySelectorAll('[data-student]').forEach(function (row) {
+      row.addEventListener('click', function () { openStudent(row.getAttribute('data-student')); });
+    });
+  }
+  document.getElementById('path-search').addEventListener('input', renderStudentList);
+
+  function openStudent(studentId) {
+    activeStudentId = studentId;
+    renderStudentList();
+    var s = students.find(function (x) { return x.id === studentId; });
+    if (!s) return;
+    document.getElementById('path-main-card').style.display = 'block';
+    document.getElementById('path-empty-card').style.display = 'none';
+    document.getElementById('path-side').style.display = 'flex';
+    document.getElementById('ph-avatar').textContent = initialsOf(s.name);
+    document.getElementById('ph-name').textContent = s.name;
+    document.getElementById('ph-meta').textContent = 'Lớp: ' + (s.className || 'Chưa xếp lớp');
+    document.getElementById('ph-pct').textContent = s.pct + '%';
+    document.getElementById('ph-bar').style.width = s.pct + '%';
+    loadSteps(studentId);
+  }
+
+  function loadSteps(studentId) {
+    window.sb.from('learning_path_steps').select('id,title,description,due_date,status,order_index').eq('mentor_id', myMentorId).eq('student_id', studentId).order('order_index').then(function (res) {
+      activeSteps = res.data || [];
+      renderSteps();
+    });
+  }
+
+  function statusBadge(status) {
+    if (status === 'done') return '<span class="badge b-done">Hoàn thành</span>';
+    if (status === 'in_progress') return '<span class="badge b-new">Đang học</span>';
+    return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa bắt đầu</span>';
+  }
+  function statusPct(status) { return status === 'done' ? 100 : status === 'in_progress' ? 50 : 0; }
+  function statusColor(status) { return status === 'done' ? 'green' : status === 'in_progress' ? 'blue' : 'gold'; }
+  function numColor(status) { return status === 'done' ? 'var(--green)' : status === 'in_progress' ? 'var(--blue)' : 'var(--border)'; }
+
+  function renderSteps() {
+    var box = document.getElementById('path-list');
+    if (activeSteps.length === 0) { box.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có bước học nào. Thêm bước học mới ở bên phải.</p>'; return; }
+    box.innerHTML = activeSteps.map(function (step, idx) {
+      var pct = statusPct(step.status);
+      return '<div class="path-step">' +
+        '<span class="num" style="background:' + numColor(step.status) + '; color:' + (step.status === 'pending' ? 'var(--text-soft)' : '#fff') + ';">' + (idx + 1) + '</span>' +
+        '<div class="body2">' +
+        '<div class="top"><div><div class="t">' + escapeHtml(step.title) + '</div><div class="d">' + escapeHtml(step.description || '') + '</div></div>' +
+        '<div class="right">' + statusBadge(step.status) + '<div class="due">Hạn hoàn thành<br>' + fmtDate(step.due_date) + '</div></div></div>' +
+        '<div class="pbar-row"><span class="pbar"><i class="' + statusColor(step.status) + '" style="width:' + pct + '%;"></i></span><span class="pct">' + pct + '%</span></div>' +
+        '<div style="display:flex; gap:0.5rem; margin-top:0.7rem;">' +
+        '<select class="step-status-select" data-step="' + step.id + '" style="font-size:0.78rem; padding:0.3em 0.5em; border-radius:6px; border:1px solid var(--border);">' +
+        '<option value="pending"' + (step.status === 'pending' ? ' selected' : '') + '>Chưa bắt đầu</option>' +
+        '<option value="in_progress"' + (step.status === 'in_progress' ? ' selected' : '') + '>Đang học</option>' +
+        '<option value="done"' + (step.status === 'done' ? ' selected' : '') + '>Hoàn thành</option>' +
+        '</select>' +
+        '<button class="row-action-btn" data-del-step="' + step.id + '" style="color:var(--danger);">Xoá</button>' +
+        '</div></div></div>';
+    }).join('');
+    box.querySelectorAll('.step-status-select').forEach(function (sel) {
+      sel.addEventListener('change', function () {
+        window.sb.from('learning_path_steps').update({ status: sel.value, updated_at: new Date().toISOString() }).eq('id', sel.getAttribute('data-step')).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          loadSteps(activeStudentId);
+        });
+      });
+    });
+    box.querySelectorAll('[data-del-step]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!confirm('Xoá bước học này?')) return;
+        window.sb.from('learning_path_steps').delete().eq('id', btn.getAttribute('data-del-step')).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          loadSteps(activeStudentId);
+        });
+      });
+    });
+  }
+
+  document.getElementById('step-add-btn').addEventListener('click', function () {
+    var errorOut = document.getElementById('step-error');
+    errorOut.style.display = 'none';
+    if (!activeStudentId) return;
+    var title = document.getElementById('step-name').value.trim();
+    if (!title) { errorOut.textContent = 'Vui lòng nhập tên bước học.'; errorOut.style.display = 'block'; return; }
+    var payload = {
+      mentor_id: myMentorId,
+      student_id: activeStudentId,
+      title: title,
+      description: document.getElementById('step-desc').value.trim(),
+      due_date: document.getElementById('step-due').value || null,
+      order_index: activeSteps.length + 1
+    };
+    window.sb.from('learning_path_steps').insert(payload).then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('step-name').value = '';
+      document.getElementById('step-desc').value = '';
+      document.getElementById('step-due').value = '';
+      loadSteps(activeStudentId);
+    });
+  });
+</script>
+</body>
+</html>

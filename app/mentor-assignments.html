@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quản lý bài tập — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .qq-item { padding: 0.7rem 0; border-top: 1px solid var(--border); }
+  .qq-item:first-child { border-top: none; }
+  .qq-item .opt { font-size: 0.82rem; padding: 2px 0; color: var(--text-body); }
+  .qq-item .opt.correct { color: var(--green); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <div class="t-sidebar-head">
+      <a class="t-brand" href="mentor-dashboard.html">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+            <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+          </svg>
+        </span>
+        <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+      </a>
+      <button class="t-sidebar-toggle" id="t-sidebar-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    </div>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">GV</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Giảng viên</div>
+        <div class="name" id="user-name">–</div>
+        <div class="online"><span class="d"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="mentor-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="mentor-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
+      <a href="mentor-assignments.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="mentor-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
+      <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
+      <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo</a>
+      <div class="t-nav-divider"></div>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
+    </nav>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <nav class="t-mainnav">
+          <a href="mentor-dashboard.html">Tổng quan</a>
+          <a href="mentor-classes.html">Lớp học của tôi</a>
+          <a href="mentor-inbox.html">Tin nhắn học viên</a>
+          <a href="mentor-assignments.html" class="active">Quản lý bài tập</a>
+          <a href="mentor-grading.html">Chấm bài</a>
+          <a href="mentor-learning-path.html">Lộ trình học tập</a>
+          <a href="mentor-students.html">Học viên</a>
+        </nav>
+        <div class="t-topbar-actions">
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">GV</span>
+            <span class="meta"><span class="u-name" id="user-name-2">–</span><span class="u-role">Giảng viên</span></span>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head">
+        <div>
+          <h1>Quản lý bài tập</h1>
+          <p class="d">Tạo và quản lý bài tập cho các lớp bạn phụ trách.</p>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Bài tập của tôi</h2></div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>Tên bài tập</th><th>Loại</th><th>Chặng</th><th>Hạn nộp</th><th></th></tr></thead>
+            <tbody id="assignments-tbody"><tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="assignment-form-title">Thêm bài tập mới</h2></div>
+          <form id="assignment-form">
+            <input type="hidden" id="asg-id" />
+            <div class="tfield"><label for="asg-title">Tên bài tập</label><input id="asg-title" type="text" required /></div>
+            <div class="tfield"><label for="asg-type">Loại</label><select id="asg-type"><option value="quiz">Quiz</option><option value="essay">Tự luận</option><option value="file">Nộp file</option></select></div>
+            <div class="tfield"><label for="asg-desc">Mô tả</label><textarea id="asg-desc"></textarea></div>
+            <div class="tfield"><label for="asg-maxscore">Điểm tối đa</label><input id="asg-maxscore" type="number" value="10" /></div>
+            <div class="tfield"><label for="asg-due">Hạn nộp</label><input id="asg-due" type="datetime-local" /></div>
+            <div class="tfield"><label for="asg-doctype">Loại tài liệu (portfolio)</label><input id="asg-doctype" type="text" placeholder="vd BRD, Essay, Quiz" /></div>
+            <div class="tfield"><label for="asg-phase">Chặng</label><select id="asg-phase"></select></div>
+            <button class="btn btn-gold" type="submit" id="assignment-submit-btn">Thêm bài tập</button>
+            <button class="btn btn-outline" type="button" id="assignment-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
+            <p class="msg-error" id="assignment-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+          </form>
+        </div>
+      </div>
+      <style>@media (max-width: 900px) { .split { grid-template-columns: 1fr !important; } }</style>
+
+      <div class="card" id="quiz-questions-card" style="display:none; margin-top:1.2rem;">
+        <div class="card-head"><h2 id="quiz-questions-title">Câu hỏi quiz</h2></div>
+        <div id="quiz-questions-list"></div>
+        <div class="ud-divider" style="margin:1rem 0;"></div>
+        <form id="quiz-question-form">
+          <div class="tfield"><label for="qq-text">Câu hỏi</label><textarea id="qq-text" required></textarea></div>
+          <div class="tfield"><label>Đáp án (chọn radio ở đáp án đúng)</label>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="0" checked /><input type="text" id="qq-opt0" placeholder="Đáp án 1" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="1" /><input type="text" id="qq-opt1" placeholder="Đáp án 2" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="2" /><input type="text" id="qq-opt2" placeholder="Đáp án 3" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+            <div style="display:flex; align-items:center; gap:8px;"><input type="radio" name="qq-correct" value="3" /><input type="text" id="qq-opt3" placeholder="Đáp án 4" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+          </div>
+          <button class="btn btn-gold" type="submit">Thêm câu hỏi</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+  (function () {
+    var shell = document.querySelector('.t-shell');
+    var collapseBtn = document.getElementById('t-sidebar-toggle');
+    var KEY = 'mentorSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') shell.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = shell.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
+  })();
+  document.getElementById('logout-btn').addEventListener('click', signOut);
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function toLocalInputValue(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
+  function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
+
+  var myMentorId = null;
+  var allAssignments = [];
+  var allPhases = [];
+  var activeQuizAssignmentId = null;
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_mentor,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_mentor) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      var name = res.data.full_name || session.user.email;
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-2').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'GV';
+      document.getElementById('user-avatar-2').textContent = initials || 'GV';
+
+      window.sb.from('mentors').select('id').eq('user_id', session.user.id).single().then(function (mRes) {
+        if (mRes.error || !mRes.data) return;
+        myMentorId = mRes.data.id;
+        window.sb.from('phases').select('id,title').order('order_index').then(function (pRes) {
+          allPhases = pRes.data || [];
+          document.getElementById('asg-phase').innerHTML = '<option value="">-- Không gán --</option>' + allPhases.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>'; }).join('');
+          loadAssignments();
+        });
+      });
+    });
+  });
+
+  function loadAssignments() {
+    window.sb.from('assignments').select('id,title,type,description,max_score,due_date,doc_type,phase_id').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (res) {
+      allAssignments = res.data || [];
+      var tbody = document.getElementById('assignments-tbody');
+      if (allAssignments.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập nào.</td></tr>'; return; }
+      tbody.innerHTML = allAssignments.map(function (a) {
+        var phase = allPhases.find(function (p) { return p.id === a.phase_id; });
+        return '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.type) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td><td>' + fmtDate(a.due_date) + '</td>' +
+          '<td><button class="row-action-btn" data-edit-asg="' + a.id + '">Sửa</button> <button class="row-action-btn" data-del-asg="' + a.id + '">Xoá</button></td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-edit-asg]').forEach(function (btn) { btn.addEventListener('click', function () { editAssignment(btn.getAttribute('data-edit-asg')); }); });
+      tbody.querySelectorAll('[data-del-asg]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!confirm('Xoá bài tập này? (Sẽ xoá luôn câu hỏi/bài nộp liên quan)')) return;
+          window.sb.from('assignments').delete().eq('id', btn.getAttribute('data-del-asg')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadAssignments(); });
+        });
+      });
+    });
+  }
+
+  function editAssignment(id) {
+    var a = allAssignments.find(function (x) { return x.id === id; });
+    if (!a) return;
+    document.getElementById('asg-id').value = a.id;
+    document.getElementById('asg-title').value = a.title;
+    document.getElementById('asg-type').value = a.type;
+    document.getElementById('asg-desc').value = a.description || '';
+    document.getElementById('asg-maxscore').value = a.max_score;
+    document.getElementById('asg-due').value = toLocalInputValue(a.due_date);
+    document.getElementById('asg-doctype').value = a.doc_type || '';
+    document.getElementById('asg-phase').value = a.phase_id || '';
+    document.getElementById('assignment-form-title').textContent = 'Sửa bài tập';
+    document.getElementById('assignment-submit-btn').textContent = 'Lưu thay đổi';
+    document.getElementById('assignment-cancel-btn').style.display = 'inline-flex';
+    if (a.type === 'quiz') { showQuizQuestions(a.id, a.title); } else { document.getElementById('quiz-questions-card').style.display = 'none'; }
+  }
+  document.getElementById('assignment-cancel-btn').addEventListener('click', function () {
+    document.getElementById('assignment-form').reset();
+    document.getElementById('asg-id').value = '';
+    document.getElementById('assignment-form-title').textContent = 'Thêm bài tập mới';
+    document.getElementById('assignment-submit-btn').textContent = 'Thêm bài tập';
+    document.getElementById('assignment-cancel-btn').style.display = 'none';
+    document.getElementById('quiz-questions-card').style.display = 'none';
+  });
+  document.getElementById('assignment-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('asg-id').value;
+    var dueVal = document.getElementById('asg-due').value;
+    var payload = {
+      title: document.getElementById('asg-title').value.trim(),
+      type: document.getElementById('asg-type').value,
+      description: document.getElementById('asg-desc').value.trim(),
+      max_score: parseFloat(document.getElementById('asg-maxscore').value) || 10,
+      due_date: dueVal ? new Date(dueVal).toISOString() : null,
+      doc_type: document.getElementById('asg-doctype').value.trim(),
+      phase_id: document.getElementById('asg-phase').value || null,
+      mentor_id: myMentorId
+    };
+    var errorOut = document.getElementById('assignment-error');
+    errorOut.style.display = 'none';
+    var action = id ? window.sb.from('assignments').update(payload).eq('id', id) : window.sb.from('assignments').insert(payload);
+    action.then(function (res) {
+      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('assignment-cancel-btn').click();
+      loadAssignments();
+    });
+  });
+
+  function showQuizQuestions(assignmentId, title) {
+    activeQuizAssignmentId = assignmentId;
+    document.getElementById('quiz-questions-card').style.display = 'block';
+    document.getElementById('quiz-questions-title').textContent = 'Câu hỏi quiz — ' + title;
+    loadQuizQuestions();
+  }
+  function loadQuizQuestions() {
+    window.sb.from('quiz_questions').select('id,question_text,options,correct_index,order_index').eq('assignment_id', activeQuizAssignmentId).order('order_index').then(function (res) {
+      var list = document.getElementById('quiz-questions-list');
+      var qs = res.data || [];
+      if (qs.length === 0) { list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có câu hỏi nào.</p>'; return; }
+      list.innerHTML = qs.map(function (q, idx) {
+        var opts = (q.options || []).map(function (opt, i) {
+          return '<div class="opt' + (i === q.correct_index ? ' correct' : '') + '">' + (i === q.correct_index ? '✓ ' : '') + escapeHtml(opt) + '</div>';
+        }).join('');
+        return '<div class="qq-item"><b>Câu ' + (idx + 1) + '.</b> ' + escapeHtml(q.question_text) + opts +
+          '<button class="row-action-btn" data-del-qq="' + q.id + '" style="margin-top:6px;">Xoá câu hỏi</button></div>';
+      }).join('');
+      list.querySelectorAll('[data-del-qq]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          window.sb.from('quiz_questions').delete().eq('id', btn.getAttribute('data-del-qq')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadQuizQuestions(); });
+        });
+      });
+    });
+  }
+  document.getElementById('quiz-question-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!activeQuizAssignmentId) return;
+    var options = [document.getElementById('qq-opt0').value.trim(), document.getElementById('qq-opt1').value.trim(), document.getElementById('qq-opt2').value.trim(), document.getElementById('qq-opt3').value.trim()];
+    var correctIndex = parseInt(document.querySelector('input[name="qq-correct"]:checked').value, 10);
+    window.sb.from('quiz_questions').select('id', { count: 'exact', head: true }).eq('assignment_id', activeQuizAssignmentId).then(function (countRes) {
+      var orderIndex = (countRes.count || 0) + 1;
+      window.sb.from('quiz_questions').insert({
+        assignment_id: activeQuizAssignmentId,
+        question_text: document.getElementById('qq-text').value.trim(),
+        options: options,
+        correct_index: correctIndex,
+        order_index: orderIndex
+      }).then(function (res) {
+        if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+        document.getElementById('quiz-question-form').reset();
+        loadQuizQuestions();
+      });
+    });
+  });
+</script>
+</body>
+</html>

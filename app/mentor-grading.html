@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chấm bài — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <div class="t-sidebar-head">
+      <a class="t-brand" href="mentor-dashboard.html">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+            <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+          </svg>
+        </span>
+        <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+      </a>
+      <button class="t-sidebar-toggle" id="t-sidebar-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    </div>
+
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">GV</span><span class="status-dot"></span></span>
+      <div>
+        <div class="role">Giảng viên</div>
+        <div class="name" id="user-name">–</div>
+        <div class="online"><span class="d"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="t-nav">
+      <a href="mentor-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="mentor-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
+      <a href="mentor-assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="mentor-grading.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài<span class="badge-num" id="nav-grading-count" style="display:none;"></span></a>
+      <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
+      <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo</a>
+      <div class="t-nav-divider"></div>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
+      <a href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt</a>
+    </nav>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <nav class="t-mainnav">
+          <a href="mentor-dashboard.html">Tổng quan</a>
+          <a href="mentor-classes.html">Lớp học của tôi</a>
+          <a href="mentor-inbox.html">Tin nhắn học viên</a>
+          <a href="mentor-assignments.html">Quản lý bài tập</a>
+          <a href="mentor-grading.html" class="active">Chấm bài</a>
+          <a href="mentor-learning-path.html">Lộ trình học tập</a>
+          <a href="mentor-students.html">Học viên</a>
+        </nav>
+        <div class="t-topbar-actions">
+          <div class="t-user-trigger">
+            <span class="avatar" id="user-avatar-2">GV</span>
+            <span class="meta"><span class="u-name" id="user-name-2">–</span><span class="u-role">Giảng viên</span></span>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head">
+        <div>
+          <h1>Chấm bài</h1>
+          <p class="d">Chấm điểm và gửi nhận xét cho bài tập của học viên trong các lớp bạn phụ trách.</p>
+        </div>
+      </div>
+
+      <div class="stat-grid cols-3">
+        <div class="stat-card">
+          <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <div><div class="n" id="stat-pending">–</div><div class="l">Chờ chấm</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <div><div class="n" id="stat-graded-today">–</div><div class="l">Đã chấm hôm nay</div></div>
+        </div>
+        <div class="stat-card">
+          <span class="ic" style="background:var(--danger);" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span>
+          <div><div class="n" id="stat-overdue">–</div><div class="l">Học viên trễ hạn</div></div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><h2>Bài chờ chấm</h2>
+            <label style="font-size:0.8rem; font-weight:600; display:flex; align-items:center; gap:6px;"><input type="checkbox" id="grading-show-all" /> Hiện cả bài đã chấm</label>
+          </div>
+          <div class="table-wrap"><table class="data-table">
+            <thead><tr><th>Học viên</th><th>Bài tập</th><th>Loại</th><th>Trạng thái</th></tr></thead>
+            <tbody id="grading-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2 id="grading-detail-title">Chọn 1 bài để chấm</h2></div>
+          <div id="grading-detail-body"><p style="color:var(--text-soft); font-size:0.85rem;">Chưa chọn bài nào.</p></div>
+        </div>
+      </div>
+      <style>@media (max-width: 900px) { .split { grid-template-columns: 1fr !important; } }</style>
+
+      <div class="card" style="margin-top:1.2rem;">
+        <div class="card-head"><h2>Học viên trễ hạn</h2></div>
+        <div class="table-wrap"><table class="data-table">
+          <thead><tr><th>Học viên</th><th>Bài tập</th><th>Hạn nộp</th><th>Trễ</th></tr></thead>
+          <tbody id="overdue-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+        </table></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () {
+      var open = sidebar.classList.toggle('open');
+      backdrop.style.display = open ? 'block' : 'none';
+    });
+    backdrop.addEventListener('click', close);
+  })();
+  (function () {
+    var shell = document.querySelector('.t-shell');
+    var collapseBtn = document.getElementById('t-sidebar-toggle');
+    var KEY = 'mentorSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') shell.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = shell.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
+  })();
+  document.getElementById('logout-btn').addEventListener('click', signOut);
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDateTime(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+  function daysBetween(a, b) { return Math.floor((a - b) / (1000 * 60 * 60 * 24)); }
+  function isSameDay(iso) {
+    var d = new Date(iso), now = new Date();
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+  }
+
+  var myMentorId = null;
+  var myAssignments = [];
+  var myClassIds = [];
+  var allGradingSubs = [];
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_mentor,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_mentor) {
+        window.location.href = '/app/dashboard.html';
+        return;
+      }
+      var name = res.data.full_name || session.user.email;
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-2').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'GV';
+      document.getElementById('user-avatar-2').textContent = initials || 'GV';
+
+      window.sb.from('mentors').select('id').eq('user_id', session.user.id).single().then(function (mRes) {
+        if (mRes.error || !mRes.data) return;
+        myMentorId = mRes.data.id;
+        init();
+      });
+    });
+  });
+
+  function init() {
+    Promise.all([
+      window.sb.from('assignments').select('id,title,max_score,due_date').eq('mentor_id', myMentorId),
+      window.sb.from('classes').select('id').eq('mentor_id', myMentorId)
+    ]).then(function (r) {
+      myAssignments = r[0].data || [];
+      myClassIds = (r[1].data || []).map(function (c) { return c.id; });
+      loadGrading();
+      loadOverdue();
+    });
+  }
+
+  function loadGrading() {
+    var assignmentIds = myAssignments.map(function (a) { return a.id; });
+    if (assignmentIds.length === 0) {
+      document.getElementById('grading-tbody').innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Bạn chưa có bài tập nào.</td></tr>';
+      document.getElementById('stat-pending').textContent = 0;
+      document.getElementById('stat-graded-today').textContent = 0;
+      return;
+    }
+    var showAll = document.getElementById('grading-show-all').checked;
+    var query = window.sb.from('submissions').select('id,assignment_id,user_id,type,answer_text,file_path,drive_link,score,max_score,graded,graded_at,feedback,submitted_at').in('assignment_id', assignmentIds).in('type', ['essay', 'file']).order('submitted_at', { ascending: false });
+    if (!showAll) query = query.eq('graded', false);
+    Promise.all([
+      query,
+      window.sb.from('submissions').select('graded,graded_at').in('assignment_id', assignmentIds).eq('graded', false),
+      window.sb.from('profiles').select('id,full_name,email')
+    ]).then(function (r) {
+      allGradingSubs = r[0].data || [];
+      var pendingAll = r[1].data || [];
+      var profilesMap = {}; (r[2].data || []).forEach(function (p) { profilesMap[p.id] = p; });
+      var assignmentMap = {}; myAssignments.forEach(function (a) { assignmentMap[a.id] = a; });
+
+      document.getElementById('stat-pending').textContent = pendingAll.length;
+      window.sb.from('submissions').select('graded_at').in('assignment_id', assignmentIds).eq('graded', true).then(function (gRes) {
+        var gradedToday = (gRes.data || []).filter(function (s) { return s.graded_at && isSameDay(s.graded_at); }).length;
+        document.getElementById('stat-graded-today').textContent = gradedToday;
+      });
+
+      var tbody = document.getElementById('grading-tbody');
+      if (allGradingSubs.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Không có bài nào.</td></tr>'; return; }
+      tbody.innerHTML = allGradingSubs.map(function (s) {
+        var student = profilesMap[s.user_id];
+        var assignment = assignmentMap[s.assignment_id];
+        var status = s.graded ? '<span class="badge b-done">Đã chấm: ' + s.score + '/' + s.max_score + '</span>' : '<span class="badge b-review">Chờ chấm</span>';
+        return '<tr class="row-click" data-grade="' + s.id + '"><td>' + escapeHtml(student ? (student.full_name || student.email) : '') + '</td><td>' + escapeHtml(assignment ? assignment.title : '') + '</td><td>' + escapeHtml(s.type) + '</td><td>' + status + '</td></tr>';
+      }).join('');
+      tbody.querySelectorAll('[data-grade]').forEach(function (row) {
+        row.addEventListener('click', function () { openGradingDetail(row.getAttribute('data-grade'), profilesMap, assignmentMap); });
+      });
+    });
+  }
+  document.getElementById('grading-show-all').addEventListener('change', loadGrading);
+
+  function openGradingDetail(subId, profilesMap, assignmentMap) {
+    var s = allGradingSubs.find(function (x) { return x.id === subId; });
+    if (!s) return;
+    var student = profilesMap[s.user_id];
+    var assignment = assignmentMap[s.assignment_id];
+    document.getElementById('grading-detail-title').textContent = (student ? (student.full_name || student.email) : '') + ' — ' + (assignment ? assignment.title : '');
+
+    var contentHtml = '';
+    if (s.type === 'essay') {
+      contentHtml = '<div class="tfield"><label>Bài làm</label><textarea disabled style="min-height:160px;">' + escapeHtml(s.answer_text || '') + '</textarea></div>';
+    } else if (s.drive_link) {
+      contentHtml = '<p>Link Drive: <a href="' + escapeHtml(s.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(s.drive_link) + '</a></p>';
+    } else if (s.file_path) {
+      contentHtml = '<p><button class="row-action-btn" id="download-file-btn">Tải file bài nộp</button></p>';
+    }
+
+    var body = document.getElementById('grading-detail-body');
+    body.innerHTML = contentHtml +
+      '<form id="grade-form" style="margin-top:1rem;">' +
+      '<div class="tfield"><label for="grade-score">Điểm (tối đa ' + (assignment ? assignment.max_score : 10) + ')</label><input id="grade-score" type="number" step="0.5" min="0" max="' + (assignment ? assignment.max_score : 10) + '" value="' + (s.score != null ? s.score : '') + '" required /></div>' +
+      '<div class="tfield"><label for="grade-feedback">Nhận xét</label><textarea id="grade-feedback">' + escapeHtml(s.feedback || '') + '</textarea></div>' +
+      '<button class="btn btn-gold" type="submit">Lưu điểm</button>' +
+      '<p class="msg-success" id="grade-success" style="display:none; color:var(--green); font-size:0.82rem; margin-top:0.6rem;"></p>' +
+      '<p class="msg-error" id="grade-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>' +
+      '</form>';
+
+    var dlBtn = document.getElementById('download-file-btn');
+    if (dlBtn) {
+      dlBtn.addEventListener('click', function () {
+        window.sb.storage.from('submissions').createSignedUrl(s.file_path, 3600).then(function (res) {
+          if (res.error) { alert('Không tải được file: ' + res.error.message); return; }
+          window.open(res.data.signedUrl, '_blank');
+        });
+      });
+    }
+
+    document.getElementById('grade-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var maxScore = assignment ? assignment.max_score : 10;
+      window.sb.from('submissions').update({
+        score: parseFloat(document.getElementById('grade-score').value),
+        max_score: maxScore,
+        feedback: document.getElementById('grade-feedback').value.trim(),
+        graded: true,
+        graded_at: new Date().toISOString()
+      }).eq('id', subId).then(function (res) {
+        if (res.error) { document.getElementById('grade-error').textContent = 'Lỗi: ' + res.error.message; document.getElementById('grade-error').style.display = 'block'; return; }
+        document.getElementById('grade-success').textContent = 'Đã lưu điểm!';
+        document.getElementById('grade-success').style.display = 'block';
+        loadGrading();
+      });
+    });
+  }
+
+  function loadOverdue() {
+    var tbody = document.getElementById('overdue-tbody');
+    var overdueAssignments = myAssignments.filter(function (a) { return a.due_date && new Date(a.due_date) < new Date(); });
+    if (overdueAssignments.length === 0 || myClassIds.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Không có học viên trễ hạn.</td></tr>';
+      document.getElementById('stat-overdue').textContent = 0;
+      return;
+    }
+    var assignmentIds = overdueAssignments.map(function (a) { return a.id; });
+    Promise.all([
+      window.sb.from('class_members').select('student_id').in('class_id', myClassIds),
+      window.sb.from('submissions').select('assignment_id,user_id').in('assignment_id', assignmentIds),
+      window.sb.from('profiles').select('id,full_name,email')
+    ]).then(function (r) {
+      var studentIds = Array.from(new Set((r[0].data || []).map(function (m) { return m.student_id; })));
+      var submissions = r[1].data || [];
+      var profilesMap = {}; (r[2].data || []).forEach(function (p) { profilesMap[p.id] = p; });
+      var submittedSet = {};
+      submissions.forEach(function (s) { submittedSet[s.assignment_id + '|' + s.user_id] = true; });
+
+      var rows = [];
+      overdueAssignments.forEach(function (a) {
+        studentIds.forEach(function (uid) {
+          if (!submittedSet[a.id + '|' + uid]) rows.push({ assignment: a, studentId: uid });
+        });
+      });
+
+      document.getElementById('stat-overdue').textContent = new Set(rows.map(function (r2) { return r2.studentId; })).size;
+      if (rows.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Không có học viên trễ hạn.</td></tr>'; return; }
+      tbody.innerHTML = rows.map(function (row) {
+        var student = profilesMap[row.studentId];
+        var days = daysBetween(new Date(), new Date(row.assignment.due_date));
+        return '<tr><td>' + escapeHtml(student ? (student.full_name || student.email) : '') + '</td><td>' + escapeHtml(row.assignment.title) + '</td><td>' + fmtDateTime(row.assignment.due_date) + '</td><td style="color:var(--danger); font-weight:700;">' + days + ' ngày</td></tr>';
+      }).join('');
+    });
+  }
+</script>
+</body>
+</html>
