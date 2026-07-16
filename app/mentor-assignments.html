@@ -307,12 +307,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Quiz question management (for editing existing quiz assignments from the list) -->
-      <div class="card" id="quiz-questions-card" style="display:none; margin-top:1.2rem;">
-        <div class="card-head"><h2 id="quiz-questions-title">Câu hỏi quiz</h2><a href="#" class="more" id="quiz-questions-close">Đóng</a></div>
-        <div id="quiz-questions-list"></div>
-      </div>
     </main>
   </div>
 </div>
@@ -518,7 +512,7 @@
         '<td>' + statusBadge(assignmentStatus(a)) + '</td>' +
         '<td><button class="row-action-btn" data-edit="' + a.id + '">Sửa</button> <button class="row-action-btn" data-del="' + a.id + '">Xoá</button></td></tr>';
     }).join('');
-    tbody.querySelectorAll('[data-edit]').forEach(function (btn) { btn.addEventListener('click', function () { openQuizManageOrAlert(btn.getAttribute('data-edit')); }); });
+    tbody.querySelectorAll('[data-edit]').forEach(function (btn) { btn.addEventListener('click', function () { openEditWizard(btn.getAttribute('data-edit')); }); });
     tbody.querySelectorAll('[data-del]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         if (!confirm('Xoá câu hỏi này? (Sẽ xoá luôn câu hỏi con/bài nộp liên quan)')) return;
@@ -527,37 +521,55 @@
     });
   }
 
-  function openQuizManageOrAlert(id) {
-    var a = allAssignments.find(function (x) { return x.id === id; });
-    if (!a) return;
-    if (a.type !== 'quiz') {
-      alert('Sửa nội dung Case Study/Project: vui lòng xoá và tạo lại câu hỏi mới (chưa hỗ trợ sửa trực tiếp ở bản này).');
-      return;
-    }
-    document.getElementById('quiz-questions-card').style.display = 'block';
-    document.getElementById('quiz-questions-title').textContent = 'Câu hỏi quiz — ' + a.title;
-    window.sb.from('quiz_questions').select('id,question_text,options,correct_index,order_index').eq('assignment_id', id).order('order_index').then(function (res) {
-      var list = document.getElementById('quiz-questions-list');
-      var qs = res.data || [];
-      if (qs.length === 0) { list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có câu hỏi nào.</p>'; return; }
-      list.innerHTML = qs.map(function (qq, idx) {
-        var opts = (qq.options || []).map(function (opt, i) {
-          return '<div class="opt' + (i === qq.correct_index ? ' correct' : '') + '">' + (i === qq.correct_index ? '✓ ' : '') + escapeHtml(opt) + '</div>';
-        }).join('');
-        return '<div class="qq-item"><b>Câu ' + (idx + 1) + '.</b> ' + escapeHtml(qq.question_text) + opts + '</div>';
-      }).join('');
-    });
-    document.getElementById('quiz-questions-card').scrollIntoView({ behavior: 'smooth' });
-  }
-  document.getElementById('quiz-questions-close').addEventListener('click', function (e) {
-    e.preventDefault();
-    document.getElementById('quiz-questions-card').style.display = 'none';
-  });
-
   // ============ WIZARD ============
   var wizType = null;
+  var wizEditId = null;
   var wizQuestions = [];
   var wizData = {};
+
+  function openEditWizard(id) {
+    var a = allAssignments.find(function (x) { return x.id === id; });
+    if (!a) return;
+    wizEditId = a.id;
+    wizType = a.type === 'essay' ? 'case_study' : (a.type === 'file' ? 'project' : a.type);
+    wizQuestions = [];
+    resetWizardForm();
+    document.getElementById('view-list').style.display = 'none';
+    document.getElementById('view-wizard').style.display = 'block';
+    document.getElementById('wiz-title').textContent = 'Sửa câu hỏi — ' + (TYPE_LABEL[wizType] || wizType);
+    document.getElementById('wiz-subtitle').textContent = 'Cập nhật thông tin câu hỏi và phạm vi áp dụng';
+    document.getElementById('wiz-form-quiz').style.display = wizType === 'quiz' ? 'block' : 'none';
+    document.getElementById('wiz-form-cs').style.display = wizType !== 'quiz' ? 'block' : 'none';
+    document.getElementById('wiz-back-1').style.display = 'none';
+    document.getElementById('wiz-next-2').textContent = 'Tiếp tục';
+    document.getElementById('wiz-save-final').textContent = 'Lưu thay đổi';
+
+    if (wizType === 'quiz') {
+      document.getElementById('q-title').value = a.title;
+      document.getElementById('q-desc').value = a.description || '';
+      document.getElementById('q-due').value = toLocalInputValue(a.due_date);
+      document.getElementById('q-time-limit').value = a.quiz_time_limit_minutes || 20;
+      document.getElementById('q-show-score').checked = a.quiz_show_score_after_submit !== false;
+      document.getElementById('q-shuffle').checked = !!a.quiz_shuffle_answers;
+      window.sb.from('quiz_questions').select('question_text,options,correct_index,order_index').eq('assignment_id', a.id).order('order_index').then(function (res) {
+        var qs = res.data || [];
+        wizQuestions = qs.length ? qs.map(function (q) { return { text: q.question_text, options: (q.options && q.options.length ? q.options : ['', '', '', '']).slice(), correct: q.correct_index || 0 }; }) : [{ text: '', options: ['', '', '', ''], correct: 0 }];
+        renderQuizBuilder();
+      });
+    } else {
+      document.getElementById('cs-desc-label').textContent = wizType === 'project' ? 'Mô tả đề bài *' : 'Mô tả tình huống *';
+      document.getElementById('cs-objective-label').textContent = wizType === 'project' ? 'Mục tiêu *' : 'Yêu cầu đầu ra *';
+      document.getElementById('cs-title').value = a.title;
+      document.getElementById('cs-desc').value = a.description || '';
+      document.getElementById('cs-objective').value = a.objective || '';
+      document.getElementById('cs-reference').value = a.reference_url || '';
+      document.getElementById('cs-deliverables').value = a.deliverables || '';
+      document.getElementById('cs-due').value = toLocalInputValue(a.due_date);
+      document.getElementById('cs-maxscore').value = a.max_score || 100;
+      document.getElementById('cs-notes').value = a.student_notes || '';
+    }
+    showWizardStep(2);
+  }
 
   function showWizardStep(n) {
     [1, 2, 3].forEach(function (i) {
@@ -586,6 +598,7 @@
 
   document.getElementById('open-wizard-btn').addEventListener('click', function () {
     wizType = null;
+    wizEditId = null;
     wizQuestions = [];
     wizData = {};
     resetWizardForm();
@@ -595,9 +608,13 @@
     document.getElementById('wiz-subtitle').textContent = 'Chọn loại câu hỏi phù hợp với mục tiêu giảng dạy';
     document.getElementById('wiz-form-quiz').style.display = 'none';
     document.getElementById('wiz-form-cs').style.display = 'none';
+    document.getElementById('wiz-back-1').style.display = 'inline-flex';
+    document.getElementById('wiz-next-2').textContent = 'Lưu';
+    document.getElementById('wiz-save-final').textContent = 'Lưu & Giao bài';
     showWizardStep(1);
   });
   document.getElementById('close-wizard-btn').addEventListener('click', function () {
+    wizEditId = null;
     document.getElementById('view-wizard').style.display = 'none';
     document.getElementById('view-list').style.display = 'block';
   });
@@ -735,6 +752,22 @@
     document.getElementById('scope-session').innerHTML = '<option value="">-- Không gắn buổi học --</option>';
     document.getElementById('scope-preview').textContent = 'Chọn lớp học để xem trước.';
     renderSummary('wiz-summary-body-3');
+
+    if (wizEditId) {
+      var a = allAssignments.find(function (x) { return x.id === wizEditId; });
+      if (a) {
+        var phaseSel = document.getElementById('scope-phase');
+        phaseSel.value = a.phase_id || '';
+        phaseSel.dispatchEvent(new Event('change'));
+        if (a.class_id) {
+          var classSel = document.getElementById('scope-class');
+          classSel.value = a.class_id;
+          classSel.dispatchEvent(new Event('change'));
+          var sess = sessionForAssignment(a);
+          if (sess) document.getElementById('scope-session').value = sess.id;
+        }
+      }
+    }
   }
   document.getElementById('scope-phase').addEventListener('change', function (e) {
     var phaseId = e.target.value;
@@ -789,18 +822,28 @@
       module_id: moduleId,
       mentor_id: myMentorId
     });
-    window.sb.from('assignments').insert(payload).select('id').single().then(function (res) {
+    var action = wizEditId
+      ? window.sb.from('assignments').update(payload).eq('id', wizEditId).select('id').single()
+      : window.sb.from('assignments').insert(payload).select('id').single();
+
+    action.then(function (res) {
       if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
-      var assignmentId = res.data.id;
-      if (wizType === 'quiz' && wizQuestions.length) {
-        var rows = wizQuestions.map(function (q, i) { return { assignment_id: assignmentId, question_text: q.text, options: q.options, correct_index: q.correct, order_index: i + 1 }; });
-        window.sb.from('quiz_questions').insert(rows).then(function () {
-          document.getElementById('close-wizard-btn').click();
-          loadAssignments();
-        });
-      } else {
+      var assignmentId = wizEditId || res.data.id;
+      function finish() {
         document.getElementById('close-wizard-btn').click();
         loadAssignments();
+      }
+      if (wizType === 'quiz') {
+        window.sb.from('quiz_questions').delete().eq('assignment_id', assignmentId).then(function () {
+          if (wizQuestions.length) {
+            var rows = wizQuestions.map(function (q, i) { return { assignment_id: assignmentId, question_text: q.text, options: q.options, correct_index: q.correct, order_index: i + 1 }; });
+            window.sb.from('quiz_questions').insert(rows).then(finish);
+          } else {
+            finish();
+          }
+        });
+      } else {
+        finish();
       }
     });
   });
