@@ -151,10 +151,6 @@
     });
   });
 
-  var ALLOWED_EXT = ['pdf', 'docx', 'xlsx', 'pptx', 'png', 'jpg', 'jpeg', 'zip'];
-  var MAX_FILE_MB = 20;
-  var MAX_FILES = 5;
-
   function escapeHtml(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -272,8 +268,7 @@
 
     el.innerHTML = banner + '<form id="work-form">' +
       (showTextarea ? '<div class="tfield"><label for="f-answer">Bài làm của bạn</label><textarea id="f-answer" style="min-height:160px;">' + escapeHtml((submission && submission.answer_text) || '') + '</textarea></div>' : '') +
-      (showFiles ? '<div class="tfield"><label for="f-files">File đính kèm (PDF, DOCX, XLSX, PPTX, PNG, JPG, ZIP — tối đa ' + MAX_FILES + ' file, ' + MAX_FILE_MB + 'MB/file)</label><input id="f-files" type="file" multiple accept=".pdf,.docx,.xlsx,.pptx,.png,.jpg,.jpeg,.zip" /></div>' +
-        '<div class="tfield" id="drive-links-wrap"><label>Link Google Drive (nếu có)</label><div id="drive-links-list"><div class="adt-file-row"><input type="url" class="f-drive-link" placeholder="https://drive.google.com/..." /></div></div><button type="button" class="row-action-btn" id="add-drive-link">+ Thêm link</button></div>' : '') +
+      (showFiles ? '<div class="tfield" id="drive-links-wrap"><label>Link Google Drive</label><div id="drive-links-list"><div class="adt-file-row"><input type="url" class="f-drive-link" placeholder="https://drive.google.com/..." /></div></div><button type="button" class="row-action-btn" id="add-drive-link">+ Thêm link</button></div>' : '') +
       '<div class="tfield"><label for="f-note">Ghi chú cho Mentor (tuỳ chọn)</label><textarea id="f-note">' + escapeHtml((submission && submission.note_to_mentor) || '') + '</textarea></div>' +
       '<div style="display:flex; gap:0.7rem; margin-top:0.6rem;">' +
       '<button class="btn btn-outline" type="button" id="draft-btn">Lưu nháp</button>' +
@@ -310,54 +305,21 @@
     var answerText = answerEl ? answerEl.value.trim() : null;
     var note = document.getElementById('f-note').value.trim() || null;
 
-    var fileInput = document.getElementById('f-files');
-    var selectedFiles = fileInput ? Array.prototype.slice.call(fileInput.files) : [];
     var driveLinks = collectDriveLinks();
-
-    if (selectedFiles.length > MAX_FILES) {
-      errEl.textContent = 'Chỉ được chọn tối đa ' + MAX_FILES + ' file.';
-      errEl.style.display = 'block';
-      return;
-    }
-    for (var i = 0; i < selectedFiles.length; i++) {
-      var f = selectedFiles[i];
-      var ext = (f.name.split('.').pop() || '').toLowerCase();
-      if (ALLOWED_EXT.indexOf(ext) === -1) {
-        errEl.textContent = 'File "' + f.name + '" không đúng định dạng cho phép (PDF, DOCX, XLSX, PPTX, PNG, JPG, ZIP).';
-        errEl.style.display = 'block';
-        return;
-      }
-      if (f.size > MAX_FILE_MB * 1024 * 1024) {
-        errEl.textContent = 'File "' + f.name + '" vượt quá ' + MAX_FILE_MB + 'MB.';
-        errEl.style.display = 'block';
-        return;
-      }
-    }
 
     var submitBtn = document.getElementById('submit-btn');
     var draftBtn = document.getElementById('draft-btn');
     submitBtn.disabled = true; draftBtn.disabled = true;
     submitBtn.textContent = action === 'submitted' ? 'Đang nộp...' : 'Đang lưu...';
 
-    var nextVersionGuess = submission ? (submission.current_version_number || 1) + 1 : 1;
+    var fileEntries = driveLinks.map(function (link) { return { drive_link: link }; });
 
-    var uploadPromises = selectedFiles.map(function (f) {
-      var path = userId + '/' + assignmentId + '/v' + nextVersionGuess + '/' + Date.now() + '-' + f.name;
-      return window.sb.storage.from('submissions').upload(path, f).then(function (res) {
-        if (res.error) throw res.error;
-        return { file_path: path, file_name: f.name, file_size: f.size, file_type: f.type || null };
-      });
-    });
-
-    Promise.all(uploadPromises).then(function (uploadedFiles) {
-      var fileEntries = uploadedFiles.concat(driveLinks.map(function (link) { return { drive_link: link }; }));
-      return window.sb.rpc('submit_assignment_version', {
-        p_assignment_id: assignmentId,
-        p_action: action,
-        p_answer_text: answerText,
-        p_note_to_mentor: note,
-        p_files: fileEntries
-      });
+    window.sb.rpc('submit_assignment_version', {
+      p_assignment_id: assignmentId,
+      p_action: action,
+      p_answer_text: answerText,
+      p_note_to_mentor: note,
+      p_files: fileEntries
     }).then(function (res) {
       if (res.error) throw res.error;
       okEl.textContent = action === 'submitted' ? 'Đã nộp bài thành công, đang chờ Mentor chấm.' : 'Đã lưu nháp.';
