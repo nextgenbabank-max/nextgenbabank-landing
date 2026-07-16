@@ -170,6 +170,7 @@
   var allUsers = [];
   var currentAdminId = null;
   var resetTargetId = null;
+  var mentorLinkedIds = {};
 
   function roleOf(u) {
     if (u.is_admin) return 'admin';
@@ -182,10 +183,18 @@
   function roleBadgeClass(role) {
     return role === 'admin' ? 'b-done' : role === 'mentor' ? 'b-review' : 'b-new';
   }
+  function initialsOf(name) {
+    return (name || '?').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || '?';
+  }
 
   function loadUsers() {
-    window.sb.from('profiles').select('id,full_name,email,is_admin,is_mentor,is_active').order('full_name').then(function (res) {
-      allUsers = res.data || [];
+    Promise.all([
+      window.sb.from('profiles').select('id,full_name,email,is_admin,is_mentor,is_active').order('full_name'),
+      window.sb.from('mentors').select('user_id').not('user_id', 'is', null)
+    ]).then(function (results) {
+      allUsers = results[0].data || [];
+      mentorLinkedIds = {};
+      (results[1].data || []).forEach(function (m) { mentorLinkedIds[m.user_id] = true; });
       document.getElementById('stat-total').textContent = allUsers.length;
       document.getElementById('stat-students').textContent = allUsers.filter(function (u) { return roleOf(u) === 'student'; }).length;
       document.getElementById('stat-mentors').textContent = allUsers.filter(function (u) { return roleOf(u) === 'mentor'; }).length;
@@ -216,12 +225,18 @@
       var toggleBtn = isSelf
         ? '<span style="color:var(--text-soft); font-size:0.78rem;">(Tài khoản của bạn)</span>'
         : '<button class="row-action-btn" data-toggle-active="' + u.id + '" data-current="' + active + '">' + (active ? 'Ngưng hoạt động' : 'Kích hoạt') + '</button>';
+      var needsMentorLink = role === 'mentor' && !mentorLinkedIds[u.id];
+      var roleCell = '<span class="badge ' + roleBadgeClass(role) + '">' + roleLabel(role) + '</span>' +
+        (needsMentorLink ? '<br /><span class="badge" style="margin-top:4px; background:var(--gold-soft); color:var(--gold-dark);">Chưa liên kết lớp học</span>' : '');
+      var ensureMentorBtn = needsMentorLink
+        ? ' <button class="row-action-btn primary" data-ensure-mentor="' + u.id + '">Kích hoạt hồ sơ giảng viên</button>'
+        : '';
       return '<tr>' +
         '<td>' + escapeHtml(u.full_name || '(chưa đặt tên)') + '</td>' +
         '<td>' + escapeHtml(u.email || '') + '</td>' +
-        '<td><span class="badge ' + roleBadgeClass(role) + '">' + roleLabel(role) + '</span></td>' +
+        '<td>' + roleCell + '</td>' +
         '<td>' + statusBadge + '</td>' +
-        '<td class="action-pair">' + toggleBtn + ' <button class="row-action-btn" data-reset-pw="' + u.id + '" data-name="' + escapeHtml(u.full_name || u.email || '') + '">Đặt lại mật khẩu</button></td>' +
+        '<td class="action-pair">' + toggleBtn + ' <button class="row-action-btn" data-reset-pw="' + u.id + '" data-name="' + escapeHtml(u.full_name || u.email || '') + '">Đặt lại mật khẩu</button>' + ensureMentorBtn + '</td>' +
         '</tr>';
     }).join('');
 
@@ -246,6 +261,18 @@
         document.getElementById('rp-success').style.display = 'none';
         document.getElementById('reset-pw-card').style.display = 'block';
         document.getElementById('reset-pw-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+    tbody.querySelectorAll('[data-ensure-mentor]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-ensure-mentor');
+        var u = allUsers.find(function (x) { return x.id === id; });
+        if (!u) return;
+        if (!confirm('Kích hoạt hồ sơ giảng viên cho ' + (u.full_name || u.email) + '? Sau khi kích hoạt sẽ có thể gán làm giảng viên phụ trách lớp học.')) return;
+        window.sb.rpc('admin_ensure_mentor_row', { p_profile_id: id, p_avatar_initials: initialsOf(u.full_name || u.email) }).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          loadUsers();
+        });
       });
     });
   }
