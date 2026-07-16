@@ -272,18 +272,18 @@
     });
   }
 
-  function computeProgressForStudents(studentIds) {
+  function computeProgressForStudents(studentIds, classId) {
     if (studentIds.length === 0) return Promise.resolve({});
     return Promise.all([
       window.sb.from('phases').select('id'),
       window.sb.from('modules').select('id,phase_id'),
-      window.sb.from('assignments').select('id,phase_id'),
+      window.sb.from('assignments').select('id,phase_id,class_id'),
       window.sb.from('module_progress').select('user_id,module_id,completed').in('user_id', studentIds),
       window.sb.from('submissions').select('user_id,assignment_id,graded').in('user_id', studentIds)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
-      var assignments = r[2].data || [];
+      var assignments = (r[2].data || []).filter(function (a) { return !a.class_id || a.class_id === classId; });
       var moduleProgress = r[3].data || [];
       var submissions = r[4].data || [];
       var pctByStudent = {};
@@ -331,7 +331,7 @@
         }).join('');
       }
       var studentIds = roster.map(function (s) { return s.id; });
-      computeProgressForStudents(studentIds).then(function (pctByStudent) {
+      computeProgressForStudents(studentIds, classId).then(function (pctByStudent) {
         document.querySelectorAll('.roster-pct').forEach(function (cell) {
           var uid = cell.getAttribute('data-uid');
           cell.textContent = (pctByStudent[uid] || 0) + '%';

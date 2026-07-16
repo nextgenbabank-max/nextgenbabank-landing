@@ -274,7 +274,7 @@
       myClasses = clsRes.data || [];
       var classIds = myClasses.map(function (c) { return c.id; });
       var membersP = classIds.length ? window.sb.from('class_members').select('class_id,student_id').in('class_id', classIds) : Promise.resolve({ data: [] });
-      var assignmentsP = window.sb.from('assignments').select('id,title,due_date,max_score').eq('mentor_id', myMentorId);
+      var assignmentsP = window.sb.from('assignments').select('id,title,due_date,max_score,phase_id,class_id').eq('mentor_id', myMentorId);
       Promise.all([membersP, assignmentsP]).then(function (r) {
         var members = r[0].data || [];
         myAssignments = r[1].data || [];
@@ -490,11 +490,14 @@
       var progressByModule = {}; moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });
       var subByAssignment = {}; submissions.forEach(function (s) { subByAssignment[s.assignment_id] = s; });
 
+      var studentClassId = classesByStudent[studentId];
+      var scopedAssignments = myAssignments.filter(function (a) { return !a.class_id || a.class_id === studentClassId; });
       var pctByPhase = phases.map(function (phase) {
         var phaseModules = modules.filter(function (m) { return m.phase_id === phase.id; });
-        var phaseAssignments = myAssignments; // scoped already to this mentor; phase filter applied below via id match when available
-        var total = phaseModules.length;
-        var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length;
+        var phaseAssignments = scopedAssignments.filter(function (a) { return a.phase_id === phase.id; });
+        var total = phaseModules.length + phaseAssignments.length;
+        var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length +
+          phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
         return { phase: phase, total: total, done: done, pct: total ? Math.round(done / total * 100) : 0 };
       });
       var overall = pctByPhase.length ? Math.round(pctByPhase.reduce(function (s, p) { return s + p.pct; }, 0) / pctByPhase.length) : 0;
@@ -508,14 +511,16 @@
   }
 
   function loadAssignmentOverview(studentId) {
-    var assignmentIds = myAssignments.map(function (a) { return a.id; });
+    var studentClassId = classesByStudent[studentId];
+    var scopedAssignments = myAssignments.filter(function (a) { return !a.class_id || a.class_id === studentClassId; });
+    var assignmentIds = scopedAssignments.map(function (a) { return a.id; });
     var subsQuery = assignmentIds.length ? window.sb.from('submissions').select('assignment_id,graded').eq('user_id', studentId).in('assignment_id', assignmentIds) : Promise.resolve({ data: [] });
     subsQuery.then(function (res) {
       var subs = res.data || [];
       var submittedIds = {}; subs.forEach(function (s) { submittedIds[s.assignment_id] = s; });
       var pending = subs.filter(function (s) { return !s.graded; }).length;
       var now = new Date();
-      var overdue = myAssignments.filter(function (a) { return a.due_date && new Date(a.due_date) < now && !submittedIds[a.id]; }).length;
+      var overdue = scopedAssignments.filter(function (a) { return a.due_date && new Date(a.due_date) < now && !submittedIds[a.id]; }).length;
       document.getElementById('sp-submitted').textContent = subs.length;
       document.getElementById('sp-pending').textContent = pending;
       document.getElementById('sp-overdue').textContent = overdue;

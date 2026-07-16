@@ -46,8 +46,9 @@
 
     function load() {
       Promise.all([
-        window.sb.from('assignments').select('id,title,description,max_score').eq('id', assignmentId).single(),
-        window.sb.from('submissions').select('file_path,drive_link,score,max_score,graded,feedback').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle()
+        window.sb.from('assignments').select('id,title,description,max_score,class_id').eq('id', assignmentId).single(),
+        window.sb.from('submissions').select('file_path,drive_link,score,max_score,graded,feedback').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle(),
+        window.sb.from('class_members').select('class_id').eq('student_id', userId)
       ]).then(function (results) {
         var aRes = results[0], sRes = results[1];
         if (aRes.error || !aRes.data) {
@@ -56,6 +57,14 @@
         }
         document.getElementById('assignment-title').textContent = aRes.data.title;
         document.getElementById('assignment-desc').textContent = aRes.data.description || '';
+
+        if (aRes.data.class_id) {
+          var myClassIds = (results[2].data || []).map(function (m) { return m.class_id; });
+          if (myClassIds.indexOf(aRes.data.class_id) === -1) {
+            body.innerHTML = '<p class="msg-error">Bài tập này không thuộc lớp học của bạn.</p>';
+            return;
+          }
+        }
 
         var sub = sRes.data;
 

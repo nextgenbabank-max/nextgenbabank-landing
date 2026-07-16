@@ -236,7 +236,7 @@
 
       var membersP = classIds.length ? window.sb.from('class_members').select('class_id,student_id').in('class_id', classIds) : Promise.resolve({ data: [] });
       var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,title,scheduled_at,ends_at,meet_link,session_type,class_id').in('class_id', classIds).order('scheduled_at') : Promise.resolve({ data: [] });
-      var assignmentsP = window.sb.from('assignments').select('id,title,due_date').eq('mentor_id', myMentorId);
+      var assignmentsP = window.sb.from('assignments').select('id,title,due_date,class_id').eq('mentor_id', myMentorId);
 
       Promise.all([membersP, sessionsP, assignmentsP]).then(function (r) {
         var members = r[0].data || [];
@@ -263,10 +263,13 @@
           window.sb.from('submissions').select('assignment_id,user_id').in('assignment_id', overdueAssignmentIds).then(function (subRes2) {
             var submittedSet = {};
             (subRes2.data || []).forEach(function (s) { submittedSet[s.assignment_id + '|' + s.user_id] = true; });
-            var overdueStudentIds = new Set();
+            var studentIdsByClass = {};
+            members.forEach(function (m) { (studentIdsByClass[m.class_id] = studentIdsByClass[m.class_id] || []).push(m.student_id); });
             var allStudentIds = Array.from(new Set(members.map(function (m) { return m.student_id; })));
+            var overdueStudentIds = new Set();
             overdueAssignments.forEach(function (a) {
-              allStudentIds.forEach(function (uid) {
+              var scopedStudentIds = a.class_id ? (studentIdsByClass[a.class_id] || []) : allStudentIds;
+              scopedStudentIds.forEach(function (uid) {
                 if (!submittedSet[a.id + '|' + uid]) overdueStudentIds.add(uid);
               });
             });

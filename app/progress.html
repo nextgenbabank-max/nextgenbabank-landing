@@ -240,14 +240,15 @@
       window.sb.from('phases').select('id,title,description,order_index').order('order_index'),
       window.sb.from('modules').select('id,title,phase_id,order_index'),
       window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
-      window.sb.from('assignments').select('id,title,phase_id,due_date,due_offset_days,module_id'),
+      window.sb.from('assignments').select('id,title,phase_id,due_date,due_offset_days,module_id,class_id'),
       window.sb.from('submissions').select('assignment_id,graded,graded_at').eq('user_id', userId),
       window.sb.from('case_studies').select('id'),
       window.sb.from('case_study_tasks').select('id,case_study_id'),
       window.sb.from('case_study_task_progress').select('task_id,completed,completed_at').eq('user_id', userId),
       window.sb.from('achievements').select('id,code,title,description'),
       window.sb.from('user_achievements').select('achievement_id,earned_at').eq('user_id', userId),
-      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1)
+      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
@@ -260,6 +261,8 @@
       var achievements = r[8].data || [];
       var userAchievements = r[9].data || [];
       var myClassId = (r[10].data || [])[0] && r[10].data[0].class_id;
+      var myClassIds = (r[11].data || []).map(function (m) { return m.class_id; });
+      assignments = assignments.filter(function (a) { return !a.class_id || myClassIds.indexOf(a.class_id) !== -1; });
 
       var progressByModule = {};
       moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });

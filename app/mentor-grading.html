@@ -194,7 +194,7 @@
 
   function init() {
     Promise.all([
-      window.sb.from('assignments').select('id,title,max_score,due_date').eq('mentor_id', myMentorId),
+      window.sb.from('assignments').select('id,title,max_score,due_date,class_id').eq('mentor_id', myMentorId),
       window.sb.from('classes').select('id').eq('mentor_id', myMentorId)
     ]).then(function (r) {
       myAssignments = r[0].data || [];
@@ -310,11 +310,14 @@
     }
     var assignmentIds = overdueAssignments.map(function (a) { return a.id; });
     Promise.all([
-      window.sb.from('class_members').select('student_id').in('class_id', myClassIds),
+      window.sb.from('class_members').select('class_id,student_id').in('class_id', myClassIds),
       window.sb.from('submissions').select('assignment_id,user_id').in('assignment_id', assignmentIds),
       window.sb.from('profiles').select('id,full_name,email')
     ]).then(function (r) {
-      var studentIds = Array.from(new Set((r[0].data || []).map(function (m) { return m.student_id; })));
+      var members = r[0].data || [];
+      var studentIdsByClass = {};
+      members.forEach(function (m) { (studentIdsByClass[m.class_id] = studentIdsByClass[m.class_id] || []).push(m.student_id); });
+      var allStudentIds = Array.from(new Set(members.map(function (m) { return m.student_id; })));
       var submissions = r[1].data || [];
       var profilesMap = {}; (r[2].data || []).forEach(function (p) { profilesMap[p.id] = p; });
       var submittedSet = {};
@@ -322,7 +325,8 @@
 
       var rows = [];
       overdueAssignments.forEach(function (a) {
-        studentIds.forEach(function (uid) {
+        var scopedStudentIds = a.class_id ? (studentIdsByClass[a.class_id] || []) : allStudentIds;
+        scopedStudentIds.forEach(function (uid) {
           if (!submittedSet[a.id + '|' + uid]) rows.push({ assignment: a, studentId: uid });
         });
       });

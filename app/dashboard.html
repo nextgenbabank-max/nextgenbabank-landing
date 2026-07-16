@@ -304,10 +304,11 @@
       window.sb.from('phases').select('id,title,order_index').order('order_index'),
       window.sb.from('modules').select('id,title,phase_id,order_index').order('order_index'),
       window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
-      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score').order('created_at', { ascending: false }),
+      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score,class_id').order('created_at', { ascending: false }),
       window.sb.from('submissions').select('assignment_id,score,max_score,graded,graded_at,submitted_at').eq('user_id', userId),
       window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color'),
-      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1)
+      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
@@ -316,6 +317,8 @@
       var submissions = r[4].data || [];
       var mentors = r[5].data || [];
       var myClassId = (r[6].data || [])[0] && r[6].data[0].class_id;
+      var myClassIds = (r[7].data || []).map(function (m) { return m.class_id; });
+      assignments = assignments.filter(function (a) { return !a.class_id || myClassIds.indexOf(a.class_id) !== -1; });
 
       var progressByModule = {};
       moduleProgress.forEach(function (p) { progressByModule[p.module_id] = p.completed; });

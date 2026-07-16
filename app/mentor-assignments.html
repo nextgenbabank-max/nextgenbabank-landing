@@ -89,8 +89,8 @@
         <div class="card">
           <div class="card-head"><h2>Bài tập của tôi</h2></div>
           <div class="table-wrap"><table class="data-table">
-            <thead><tr><th>Tên bài tập</th><th>Loại</th><th>Chặng</th><th>Hạn nộp</th><th></th></tr></thead>
-            <tbody id="assignments-tbody"><tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+            <thead><tr><th>Tên bài tập</th><th>Loại</th><th>Chặng</th><th>Lớp</th><th>Hạn nộp</th><th></th></tr></thead>
+            <tbody id="assignments-tbody"><tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
           </table></div>
         </div>
         <div class="card">
@@ -98,12 +98,13 @@
           <form id="assignment-form">
             <input type="hidden" id="asg-id" />
             <div class="tfield"><label for="asg-title">Tên bài tập</label><input id="asg-title" type="text" required /></div>
-            <div class="tfield"><label for="asg-type">Loại</label><select id="asg-type"><option value="quiz">Quiz</option><option value="essay">Tự luận</option><option value="file">Nộp file</option></select></div>
+            <div class="tfield"><label for="asg-type">Loại</label><select id="asg-type"><option value="quiz">Quiz (trắc nghiệm)</option><option value="essay">Case study (tự luận)</option><option value="file">Nộp file (link Google Drive)</option></select></div>
             <div class="tfield"><label for="asg-desc">Mô tả</label><textarea id="asg-desc"></textarea></div>
             <div class="tfield"><label for="asg-maxscore">Điểm tối đa</label><input id="asg-maxscore" type="number" value="10" /></div>
             <div class="tfield"><label for="asg-due">Hạn nộp</label><input id="asg-due" type="datetime-local" /></div>
             <div class="tfield"><label for="asg-doctype">Loại tài liệu (portfolio)</label><input id="asg-doctype" type="text" placeholder="vd BRD, Essay, Quiz" /></div>
             <div class="tfield"><label for="asg-phase">Chặng</label><select id="asg-phase"></select></div>
+            <div class="tfield"><label for="asg-class">Giao cho lớp học</label><select id="asg-class"><option value="">-- Tất cả lớp (theo chặng) --</option></select></div>
             <button class="btn btn-gold" type="submit" id="assignment-submit-btn">Thêm bài tập</button>
             <button class="btn btn-outline" type="button" id="assignment-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
             <p class="msg-error" id="assignment-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
@@ -175,6 +176,7 @@
   var myMentorId = null;
   var allAssignments = [];
   var allPhases = [];
+  var allClasses = [];
   var activeQuizAssignmentId = null;
 
   requireAuth().then(function (session) {
@@ -194,9 +196,14 @@
       window.sb.from('mentors').select('id').eq('user_id', session.user.id).single().then(function (mRes) {
         if (mRes.error || !mRes.data) return;
         myMentorId = mRes.data.id;
-        window.sb.from('phases').select('id,title').order('order_index').then(function (pRes) {
-          allPhases = pRes.data || [];
+        Promise.all([
+          window.sb.from('phases').select('id,title').order('order_index'),
+          window.sb.from('classes').select('id,name').eq('mentor_id', myMentorId)
+        ]).then(function (r) {
+          allPhases = r[0].data || [];
+          allClasses = r[1].data || [];
           document.getElementById('asg-phase').innerHTML = '<option value="">-- Không gán --</option>' + allPhases.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>'; }).join('');
+          document.getElementById('asg-class').innerHTML = '<option value="">-- Tất cả lớp (theo chặng) --</option>' + allClasses.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
           loadAssignments();
         });
       });
@@ -204,13 +211,14 @@
   });
 
   function loadAssignments() {
-    window.sb.from('assignments').select('id,title,type,description,max_score,due_date,doc_type,phase_id').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (res) {
+    window.sb.from('assignments').select('id,title,type,description,max_score,due_date,doc_type,phase_id,class_id').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (res) {
       allAssignments = res.data || [];
       var tbody = document.getElementById('assignments-tbody');
-      if (allAssignments.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập nào.</td></tr>'; return; }
+      if (allAssignments.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập nào.</td></tr>'; return; }
       tbody.innerHTML = allAssignments.map(function (a) {
         var phase = allPhases.find(function (p) { return p.id === a.phase_id; });
-        return '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.type) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td><td>' + fmtDate(a.due_date) + '</td>' +
+        var cls = allClasses.find(function (c) { return c.id === a.class_id; });
+        return '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.type) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td><td>' + (cls ? escapeHtml(cls.name) : 'Tất cả lớp') + '</td><td>' + fmtDate(a.due_date) + '</td>' +
           '<td><button class="row-action-btn" data-edit-asg="' + a.id + '">Sửa</button> <button class="row-action-btn" data-del-asg="' + a.id + '">Xoá</button></td></tr>';
       }).join('');
       tbody.querySelectorAll('[data-edit-asg]').forEach(function (btn) { btn.addEventListener('click', function () { editAssignment(btn.getAttribute('data-edit-asg')); }); });
@@ -234,6 +242,7 @@
     document.getElementById('asg-due').value = toLocalInputValue(a.due_date);
     document.getElementById('asg-doctype').value = a.doc_type || '';
     document.getElementById('asg-phase').value = a.phase_id || '';
+    document.getElementById('asg-class').value = a.class_id || '';
     document.getElementById('assignment-form-title').textContent = 'Sửa bài tập';
     document.getElementById('assignment-submit-btn').textContent = 'Lưu thay đổi';
     document.getElementById('assignment-cancel-btn').style.display = 'inline-flex';
@@ -259,6 +268,7 @@
       due_date: dueVal ? new Date(dueVal).toISOString() : null,
       doc_type: document.getElementById('asg-doctype').value.trim(),
       phase_id: document.getElementById('asg-phase').value || null,
+      class_id: document.getElementById('asg-class').value || null,
       mentor_id: myMentorId
     };
     var errorOut = document.getElementById('assignment-error');

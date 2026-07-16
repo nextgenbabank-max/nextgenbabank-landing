@@ -44,9 +44,10 @@
 
     function loadQuiz(userId) {
       Promise.all([
-        window.sb.from('assignments').select('id,title,description,max_score').eq('id', assignmentId).single(),
+        window.sb.from('assignments').select('id,title,description,max_score,class_id').eq('id', assignmentId).single(),
         window.sb.from('quiz_questions_public').select('id,question_text,options,order_index').eq('assignment_id', assignmentId).order('order_index'),
-        window.sb.from('submissions').select('score,max_score,graded').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle()
+        window.sb.from('submissions').select('score,max_score,graded').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle(),
+        window.sb.from('class_members').select('class_id').eq('student_id', userId)
       ]).then(function (results) {
         var aRes = results[0], qRes = results[1], sRes = results[2];
         if (aRes.error || !aRes.data) {
@@ -55,6 +56,14 @@
         }
         document.getElementById('quiz-title').textContent = aRes.data.title;
         document.getElementById('quiz-desc').textContent = aRes.data.description || '';
+
+        if (aRes.data.class_id) {
+          var myClassIds = (results[3].data || []).map(function (m) { return m.class_id; });
+          if (myClassIds.indexOf(aRes.data.class_id) === -1) {
+            body.innerHTML = '<p class="msg-error">Bài tập này không thuộc lớp học của bạn.</p>';
+            return;
+          }
+        }
 
         if (sRes.data && sRes.data.graded) {
           body.innerHTML = '<p class="msg-success">Bạn đã làm bài này. Điểm: ' + sRes.data.score + '/' + sRes.data.max_score + '</p>' +

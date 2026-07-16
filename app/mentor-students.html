@@ -181,22 +181,24 @@
     });
   });
 
-  function computeProgressForStudents(studentIds) {
+  function computeProgressForStudents(studentIds, classIdsByStudent) {
     if (studentIds.length === 0) return Promise.resolve({});
     return Promise.all([
       window.sb.from('phases').select('id'),
       window.sb.from('modules').select('id,phase_id'),
-      window.sb.from('assignments').select('id,phase_id'),
+      window.sb.from('assignments').select('id,phase_id,class_id'),
       window.sb.from('module_progress').select('user_id,module_id,completed').in('user_id', studentIds),
       window.sb.from('submissions').select('user_id,assignment_id,graded').in('user_id', studentIds)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
-      var assignments = r[2].data || [];
+      var allAssignments = r[2].data || [];
       var moduleProgress = r[3].data || [];
       var submissions = r[4].data || [];
       var pctByStudent = {};
       studentIds.forEach(function (uid) {
+        var myClassIds = (classIdsByStudent && classIdsByStudent[uid]) || [];
+        var assignments = allAssignments.filter(function (a) { return !a.class_id || myClassIds.indexOf(a.class_id) !== -1; });
         var progressByModule = {};
         moduleProgress.filter(function (p) { return p.user_id === uid; }).forEach(function (p) { progressByModule[p.module_id] = p.completed; });
         var subByAssignment = {};
@@ -242,7 +244,7 @@
           }).filter(Boolean);
           return { id: uid, name: p ? (p.full_name || p.email) : '(không rõ)', email: p ? p.email : '', phone: p ? p.phone : '', classNames: classNames };
         });
-        computeProgressForStudents(studentIds).then(function (pctByStudent) {
+        computeProgressForStudents(studentIds, classesByStudent).then(function (pctByStudent) {
           students.forEach(function (s) { s.pct = pctByStudent[s.id] || 0; });
           renderTable();
         });

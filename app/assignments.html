@@ -235,12 +235,13 @@
     document.getElementById('user-email-dd').textContent = session.user.email || '—';
 
     Promise.all([
-      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score').order('created_at', { ascending: false }),
+      window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score,class_id').order('created_at', { ascending: false }),
       window.sb.from('submissions').select('assignment_id,score,max_score,graded,graded_at').eq('user_id', userId),
       window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color'),
       window.sb.from('phases').select('id,title'),
       window.sb.from('modules').select('id,order_index'),
-      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1)
+      window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
       var assignments = r[0].data || [];
       var submissions = r[1].data || [];
@@ -249,6 +250,8 @@
       var modulesById = {};
       (r[4].data || []).forEach(function (m) { modulesById[m.id] = m; });
       var myClassId = (r[5].data || [])[0] && r[5].data[0].class_id;
+      var myClassIds = (r[6].data || []).map(function (m) { return m.class_id; });
+      assignments = assignments.filter(function (a) { return !a.class_id || myClassIds.indexOf(a.class_id) !== -1; });
 
       var subByAssignment = {};
       submissions.forEach(function (s) { subByAssignment[s.assignment_id] = s; });

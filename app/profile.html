@@ -381,13 +381,15 @@
       window.sb.from('phases').select('id,title,order_index').order('order_index'),
       window.sb.from('modules').select('id,phase_id'),
       window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
-      window.sb.from('assignments').select('id,phase_id'),
-      window.sb.from('submissions').select('assignment_id,graded').eq('user_id', userId)
+      window.sb.from('assignments').select('id,phase_id,class_id'),
+      window.sb.from('submissions').select('assignment_id,graded').eq('user_id', userId),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
       var phases = r[0].data || [];
       var modules = r[1].data || [];
       var moduleProgress = r[2].data || [];
-      var assignments = r[3].data || [];
+      var myClassIds = (r[5].data || []).map(function (m) { return m.class_id; });
+      var assignments = (r[3].data || []).filter(function (a) { return !a.class_id || myClassIds.indexOf(a.class_id) !== -1; });
       var submissions = r[4].data || [];
 
       var progressByModule = {};
