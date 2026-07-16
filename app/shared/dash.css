@@ -585,14 +585,8 @@ table.data-table tr:last-child td { border-bottom: none; }
 .t-topbar .icon-btn { background: var(--bg-soft); color: var(--text-soft); }
 .t-topbar .icon-btn:hover { background: var(--border); color: var(--navy-ink); }
 
-/* ---------- Top horizontal quick-nav (mirrors sidebar, desktop only) ---------- */
-.t-mainnav { display: flex; align-items: center; gap: 2px; overflow-x: auto; }
-.t-mainnav a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; color: var(--text-soft); font-size: 0.82rem; font-weight: 700; border-radius: 8px; white-space: nowrap; }
-.t-mainnav a svg { width: 15px; height: 15px; flex: none; }
-.t-mainnav a:hover { background: var(--bg-soft); color: var(--navy-ink); }
-.t-mainnav a.active { background: var(--gold-soft); color: var(--gold-dark); }
-.t-mainnav a .badge-num { background: var(--danger); color: #fff; font-size: 0.6rem; font-weight: 800; border-radius: 999px; min-width: 15px; height: 15px; padding: 0 4px; display: grid; place-items: center; }
-@media (max-width: 1200px) { .t-mainnav { display: none; } }
+/* ---------- Top horizontal quick-nav (mirrors sidebar) — hidden, sidebar is the single nav ---------- */
+.t-mainnav { display: none; }
 
 /* ---------- Sidebar collapse toggle (desktop) ---------- */
 .t-sidebar-head { display: flex; align-items: center; gap: 6px; }
