@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chi tiết bài tập — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .adt-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1.5px solid var(--border); }
+  .adt-tab-btn { padding: 0.6rem 1rem; border: none; background: none; font-weight: 700; font-size: 0.86rem; color: var(--text-soft); cursor: pointer; border-bottom: 2px solid transparent; }
+  .adt-tab-btn.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+  .adt-tab-panel { display: none; }
+  .adt-tab-panel.active { display: block; }
+  .adt-file-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .adt-version-item { padding: 0.7rem 0; border-top: 1px solid var(--border); font-size: 0.84rem; }
+  .adt-version-item:first-child { border-top: none; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="dashboard.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="dashboard.html">Tổng quan</a>
+      <a href="my-classes.html">Lớp học của tôi</a>
+      <a href="assignments.html" class="active">Bài tập</a>
+      <a href="mentor.html">Liên hệ Mentor</a>
+      <a href="documents.html">Tài liệu</a>
+      <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="notifications.html" aria-label="Thông báo" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="notif-dot" style="display:none;"></span></a>
+      <div class="user-menu" id="user-menu">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">HV</span>
+          <span class="meta"><span class="u-name" id="user-name">–</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head">
+            <span class="avatar" id="user-avatar-dd">HV</span>
+            <div><div class="n" id="user-name-dd">–</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+          </div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="account-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Cài đặt tài khoản</a>
+          <a class="ud-item" href="change-password.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Đổi mật khẩu</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="dashboard.html">Tổng quan</a>
+    <a href="my-classes.html">Lớp học của tôi</a>
+    <a href="assignments.html" class="active">Bài tập</a>
+    <a href="mentor.html">Liên hệ Mentor</a>
+    <a href="documents.html">Tài liệu</a>
+    <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
+    <a href="#" id="mobile-logout">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <aside class="sidebar">
+    <button class="sidebar-toggle" id="sidebar-collapse-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="my-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
+      <a href="assignments.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
+      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Liên hệ Mentor</a>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu</a>
+      <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
+    </nav>
+    <div class="sidebar-support">
+      <p class="t">Hỗ trợ học tập</p>
+      <p class="d">Bạn cần hỗ trợ? Liên hệ Mentor ngay nhé!</p>
+      <a class="btn btn-outline btn-sm" href="mentor.html" style="width:100%; justify-content:center;">Liên hệ mentor</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <p><a href="assignments.html">&larr; Quay lại Bài tập</a></p>
+        <h1 id="a-title">Đang tải...</h1>
+        <p class="d" id="a-desc"></p>
+        <div id="a-badges" style="margin-top:0.5rem;"></div>
+      </div>
+    </div>
+
+    <div class="adt-tabs" id="adt-tabs" style="display:none;">
+      <button type="button" class="adt-tab-btn active" data-tab="work">Bài làm</button>
+      <button type="button" class="adt-tab-btn" data-tab="feedback">Phản hồi</button>
+      <button type="button" class="adt-tab-btn" data-tab="history">Lịch sử bài nộp</button>
+    </div>
+
+    <div class="card adt-tab-panel active" id="tab-work" data-tab-panel="work"></div>
+    <div class="card adt-tab-panel" id="tab-feedback" data-tab-panel="feedback"></div>
+    <div class="card adt-tab-panel" id="tab-history" data-tab-panel="history"></div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/notifications.js"></script>
+<script src="shared/due-date.js"></script>
+<script src="shared/assignment-status.js"></script>
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  (function () {
+    var layout = document.querySelector('.dash-layout');
+    var collapseBtn = document.getElementById('sidebar-collapse-toggle');
+    var KEY = 'studentSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') layout.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = layout.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
+  })();
+  document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click', function (e) { if (!menu.contains(e.target)) menu.classList.remove('open'); });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+  })();
+  document.querySelectorAll('.adt-tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.adt-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.adt-tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelector('[data-tab-panel="' + btn.getAttribute('data-tab') + '"]').classList.add('active');
+    });
+  });
+
+  var ALLOWED_EXT = ['pdf', 'docx', 'xlsx', 'pptx', 'png', 'jpg', 'jpeg', 'zip'];
+  var MAX_FILE_MB = 20;
+  var MAX_FILES = 5;
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDateTime(iso) {
+    if (!iso) return '–';
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var assignmentId = params.get('a');
+  var userId, assignment, submission, mentorMap = {};
+
+  if (!assignmentId) {
+    document.getElementById('a-title').textContent = 'Thiếu mã bài tập';
+  } else {
+    requireAuth().then(function (session) {
+      if (!session) return;
+      window.sb.rpc('has_permission', { p_feature_key: 'assignments', p_action: 'view' }).then(function (r) { if (r.data === false) window.location.href = '/app/dashboard.html'; });
+      userId = session.user.id;
+      var name = (session.user.user_metadata && session.user.user_metadata.full_name) || session.user.email;
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-dd').textContent = name;
+      document.getElementById('user-email-dd').textContent = session.user.email || '—';
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-avatar').textContent = initials || 'HV';
+      document.getElementById('user-avatar-dd').textContent = initials || 'HV';
+      loadNotificationBadge(userId);
+      load();
+    });
+  }
+
+  function load() {
+    Promise.all([
+      window.sb.from('assignments').select('id,title,description,max_score,class_id,type,due_date,due_offset_days,module_id,mentor_id').eq('id', assignmentId).single(),
+      window.sb.from('submissions').select('*').eq('assignment_id', assignmentId).eq('user_id', userId).maybeSingle(),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId),
+      window.sb.from('mentors').select('id,full_name,role_title')
+    ]).then(function (r) {
+      var aRes = r[0], sRes = r[1];
+      if (aRes.error || !aRes.data) {
+        document.getElementById('a-title').textContent = 'Không tìm thấy bài tập';
+        return;
+      }
+      assignment = aRes.data;
+      submission = sRes.data;
+      (r[3].data || []).forEach(function (m) { mentorMap[m.id] = m; });
+
+      var myClassIds = (r[2].data || []).map(function (m) { return m.class_id; });
+      if (assignment.class_id && myClassIds.indexOf(assignment.class_id) === -1) {
+        document.getElementById('a-title').textContent = 'Bài tập này không thuộc lớp học của bạn';
+        return;
+      }
+
+      document.getElementById('a-title').textContent = assignment.title;
+      document.getElementById('a-desc').textContent = assignment.description || '';
+      document.getElementById('adt-tabs').style.display = 'flex';
+
+      var sessionsP = myClassIds.length ? window.sb.from('class_sessions').select('id,class_id,module_id,order_index,scheduled_at').in('class_id', myClassIds) : Promise.resolve({ data: [] });
+      var modulesP = window.sb.from('modules').select('id,order_index');
+      Promise.all([sessionsP, modulesP]).then(function (r2) {
+        var modulesById = {}; (r2[1].data || []).forEach(function (m) { modulesById[m.id] = m; });
+        annotateEffectiveDueDates([assignment], r2[0].data || [], modulesById);
+
+        var subIdList = submission ? [submission.id] : [];
+        var versionsP = subIdList.length ? window.sb.from('submission_versions').select('*').eq('submission_id', submission.id).order('version_number', { ascending: false }) : Promise.resolve({ data: [] });
+        versionsP.then(function (vRes) {
+          var versions = vRes.data || [];
+          var versionIds = versions.map(function (v) { return v.id; });
+          var filesP = versionIds.length ? window.sb.from('submission_files').select('*').in('version_id', versionIds) : Promise.resolve({ data: [] });
+          filesP.then(function (fRes) {
+            var files = fRes.data || [];
+            var filesByVersion = {}; files.forEach(function (f) { (filesByVersion[f.version_id] = filesByVersion[f.version_id] || []).push(f); });
+            var hasRevisionRequested = versions.some(function (v) { return v.action === 'revision_requested'; });
+
+            renderBadges(hasRevisionRequested);
+            renderWorkTab(versions, filesByVersion);
+            renderFeedbackTab();
+            renderHistoryTab(versions, filesByVersion);
+          });
+        });
+      });
+    });
+  }
+
+  function renderBadges(hasRevisionRequested) {
+    var stateKey = computeSubmissionState(assignment, submission, hasRevisionRequested);
+    document.getElementById('a-badges').innerHTML =
+      '<span class="badge ' + assignmentStatusBadgeClass(stateKey) + '">' + escapeHtml(assignmentStatusLabel(stateKey)) + '</span>' +
+      (assignment._effectiveDueDate ? ' <span style="font-size:0.82rem; color:var(--text-soft); margin-left:8px;">Hạn nộp: ' + fmtDateTime(assignment._effectiveDueDate) + '</span>' : '');
+  }
+
+  function renderWorkTab(versions, filesByVersion) {
+    var el = document.getElementById('tab-work');
+    var locked = submission && submission.status === 'graded';
+
+    if (locked) {
+      el.innerHTML = '<p class="msg-success">Bài đã được chấm — không thể nộp lại. Xem điểm và nhận xét ở tab "Phản hồi".</p>';
+      return;
+    }
+
+    var banner = '';
+    if (submission && submission.status === 'needs_revision') {
+      banner = '<p class="msg-error" style="background:var(--danger-soft); border-radius:8px; padding:0.7rem 0.9rem;">' +
+        '<strong>Mentor yêu cầu chỉnh sửa:</strong> ' + escapeHtml(submission.revision_reason || '') +
+        (submission.revision_due_at ? '<br>Hạn nộp lại: ' + fmtDateTime(submission.revision_due_at) : '') + '</p>';
+    } else if (submission) {
+      banner = '<p style="color:var(--text-soft); font-size:0.85rem;">Bạn đã ' + (submission.status === 'draft' ? 'lưu nháp' : 'nộp bài này') + '. Nộp lại sẽ tạo 1 phiên bản mới, không mất bản cũ.</p>';
+    }
+
+    var showTextarea = assignment.type === 'essay';
+    var showFiles = assignment.type === 'file' || assignment.type === 'project' || assignment.type === 'case_study';
+
+    el.innerHTML = banner + '<form id="work-form">' +
+      (showTextarea ? '<div class="tfield"><label for="f-answer">Bài làm của bạn</label><textarea id="f-answer" style="min-height:160px;">' + escapeHtml((submission && submission.answer_text) || '') + '</textarea></div>' : '') +
+      (showFiles ? '<div class="tfield"><label for="f-files">File đính kèm (PDF, DOCX, XLSX, PPTX, PNG, JPG, ZIP — tối đa ' + MAX_FILES + ' file, ' + MAX_FILE_MB + 'MB/file)</label><input id="f-files" type="file" multiple accept=".pdf,.docx,.xlsx,.pptx,.png,.jpg,.jpeg,.zip" /></div>' +
+        '<div class="tfield" id="drive-links-wrap"><label>Link Google Drive (nếu có)</label><div id="drive-links-list"><div class="adt-file-row"><input type="url" class="f-drive-link" placeholder="https://drive.google.com/..." /></div></div><button type="button" class="row-action-btn" id="add-drive-link">+ Thêm link</button></div>' : '') +
+      '<div class="tfield"><label for="f-note">Ghi chú cho Mentor (tuỳ chọn)</label><textarea id="f-note">' + escapeHtml((submission && submission.note_to_mentor) || '') + '</textarea></div>' +
+      '<div style="display:flex; gap:0.7rem; margin-top:0.6rem;">' +
+      '<button class="btn btn-outline" type="button" id="draft-btn">Lưu nháp</button>' +
+      '<button class="btn btn-gold" type="submit" id="submit-btn">Nộp bài</button>' +
+      '</div>' +
+      '<p class="msg-error" id="work-err" style="display:none; margin-top:0.6rem;"></p>' +
+      '<p class="msg-success" id="work-ok" style="display:none; margin-top:0.6rem;"></p>' +
+      '</form>';
+
+    var addLinkBtn = document.getElementById('add-drive-link');
+    if (addLinkBtn) {
+      addLinkBtn.addEventListener('click', function () {
+        var row = document.createElement('div');
+        row.className = 'adt-file-row';
+        row.innerHTML = '<input type="url" class="f-drive-link" placeholder="https://drive.google.com/..." />';
+        document.getElementById('drive-links-list').appendChild(row);
+      });
+    }
+
+    document.getElementById('draft-btn').addEventListener('click', function () { doSubmit('draft_saved'); });
+    document.getElementById('work-form').addEventListener('submit', function (e) { e.preventDefault(); doSubmit('submitted'); });
+  }
+
+  function collectDriveLinks() {
+    return Array.prototype.slice.call(document.querySelectorAll('.f-drive-link')).map(function (i) { return i.value.trim(); }).filter(Boolean);
+  }
+
+  function doSubmit(action) {
+    var errEl = document.getElementById('work-err');
+    var okEl = document.getElementById('work-ok');
+    errEl.style.display = 'none'; okEl.style.display = 'none';
+
+    var answerEl = document.getElementById('f-answer');
+    var answerText = answerEl ? answerEl.value.trim() : null;
+    var note = document.getElementById('f-note').value.trim() || null;
+
+    var fileInput = document.getElementById('f-files');
+    var selectedFiles = fileInput ? Array.prototype.slice.call(fileInput.files) : [];
+    var driveLinks = collectDriveLinks();
+
+    if (selectedFiles.length > MAX_FILES) {
+      errEl.textContent = 'Chỉ được chọn tối đa ' + MAX_FILES + ' file.';
+      errEl.style.display = 'block';
+      return;
+    }
+    for (var i = 0; i < selectedFiles.length; i++) {
+      var f = selectedFiles[i];
+      var ext = (f.name.split('.').pop() || '').toLowerCase();
+      if (ALLOWED_EXT.indexOf(ext) === -1) {
+        errEl.textContent = 'File "' + f.name + '" không đúng định dạng cho phép (PDF, DOCX, XLSX, PPTX, PNG, JPG, ZIP).';
+        errEl.style.display = 'block';
+        return;
+      }
+      if (f.size > MAX_FILE_MB * 1024 * 1024) {
+        errEl.textContent = 'File "' + f.name + '" vượt quá ' + MAX_FILE_MB + 'MB.';
+        errEl.style.display = 'block';
+        return;
+      }
+    }
+
+    var submitBtn = document.getElementById('submit-btn');
+    var draftBtn = document.getElementById('draft-btn');
+    submitBtn.disabled = true; draftBtn.disabled = true;
+    submitBtn.textContent = action === 'submitted' ? 'Đang nộp...' : 'Đang lưu...';
+
+    var nextVersionGuess = submission ? (submission.current_version_number || 1) + 1 : 1;
+
+    var uploadPromises = selectedFiles.map(function (f) {
+      var path = userId + '/' + assignmentId + '/v' + nextVersionGuess + '/' + Date.now() + '-' + f.name;
+      return window.sb.storage.from('submissions').upload(path, f).then(function (res) {
+        if (res.error) throw res.error;
+        return { file_path: path, file_name: f.name, file_size: f.size, file_type: f.type || null };
+      });
+    });
+
+    Promise.all(uploadPromises).then(function (uploadedFiles) {
+      var fileEntries = uploadedFiles.concat(driveLinks.map(function (link) { return { drive_link: link }; }));
+      return window.sb.rpc('submit_assignment_version', {
+        p_assignment_id: assignmentId,
+        p_action: action,
+        p_answer_text: answerText,
+        p_note_to_mentor: note,
+        p_files: fileEntries
+      });
+    }).then(function (res) {
+      if (res.error) throw res.error;
+      okEl.textContent = action === 'submitted' ? 'Đã nộp bài thành công, đang chờ Mentor chấm.' : 'Đã lưu nháp.';
+      okEl.style.display = 'block';
+      load();
+    }).catch(function (e2) {
+      errEl.textContent = e2.message || 'Có lỗi xảy ra.';
+      errEl.style.display = 'block';
+      submitBtn.disabled = false; draftBtn.disabled = false;
+      submitBtn.textContent = 'Nộp bài';
+      draftBtn.textContent = 'Lưu nháp';
+    });
+  }
+
+  function renderFeedbackTab() {
+    var el = document.getElementById('tab-feedback');
+    if (!submission || submission.status !== 'graded') {
+      el.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có phản hồi — bài tập chưa được chấm.</p>';
+      return;
+    }
+    var mentor = mentorMap[submission.graded_by] || mentorMap[assignment.mentor_id];
+    el.innerHTML =
+      '<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">' +
+      '<div style="font-size:1.6rem; font-weight:800; color:var(--gold-dark);">' + submission.score + '/' + submission.max_score + '</div>' +
+      '<span class="badge b-done">Đã chấm</span>' +
+      '</div>' +
+      (submission.feedback_summary ? '<div class="tfield"><label>Nhận xét tổng quan</label><p style="font-size:0.86rem;">' + escapeHtml(submission.feedback_summary).replace(/\n/g, '<br>') + '</p></div>' : '') +
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      (submission.feedback_strengths ? '<div class="tfield"><label>Điểm mạnh</label><p style="font-size:0.86rem;">' + escapeHtml(submission.feedback_strengths).replace(/\n/g, '<br>') + '</p></div>' : '') +
+      (submission.feedback_improve ? '<div class="tfield"><label>Cần cải thiện</label><p style="font-size:0.86rem;">' + escapeHtml(submission.feedback_improve).replace(/\n/g, '<br>') + '</p></div>' : '') +
+      '</div>' +
+      '<p style="font-size:0.8rem; color:var(--text-soft); margin-top:1rem;">Chấm bởi ' + escapeHtml(mentor ? mentor.full_name : 'Mentor') + ' · ' + fmtDateTime(submission.graded_at) + '</p>';
+  }
+
+  function renderHistoryTab(versions, filesByVersion) {
+    var el = document.getElementById('tab-history');
+    if (versions.length === 0) {
+      el.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có lịch sử nộp bài.</p>';
+      return;
+    }
+    var actionLabel = { draft_saved: 'Lưu nháp', submitted: 'Nộp bài', graded: 'Mentor chấm điểm', revision_requested: 'Mentor yêu cầu chỉnh sửa' };
+    el.innerHTML = versions.map(function (v) {
+      var vFiles = filesByVersion[v.id] || [];
+      var filesHtml = vFiles.map(function (f) {
+        if (f.drive_link) return '<div><a href="' + escapeHtml(f.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(f.drive_link) + '</a></div>';
+        return '<div><button class="row-action-btn" data-hist-dl="' + escapeHtml(f.file_path) + '">Tải: ' + escapeHtml(f.file_name || 'file') + '</button></div>';
+      }).join('');
+      return '<div class="adt-version-item"><b>Phiên bản ' + v.version_number + '</b> — ' + actionLabel[v.action] + ' · ' + fmtDateTime(v.created_at) +
+        (v.note_to_mentor ? '<div style="margin-top:4px; color:var(--text-soft);">Ghi chú: ' + escapeHtml(v.note_to_mentor) + '</div>' : '') +
+        (v.revision_reason ? '<div style="margin-top:4px; color:var(--danger);">Yêu cầu: ' + escapeHtml(v.revision_reason) + '</div>' : '') +
+        (v.score != null ? '<div style="margin-top:4px;">Điểm: ' + v.score + '/' + v.max_score + '</div>' : '') +
+        (filesHtml ? '<div style="margin-top:4px;">' + filesHtml + '</div>' : '') +
+        '</div>';
+    }).join('');
+    el.querySelectorAll('[data-hist-dl]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        window.sb.storage.from('submissions').createSignedUrl(btn.getAttribute('data-hist-dl'), 3600).then(function (res) {
+          if (res.error) { alert('Không tải được file: ' + res.error.message); return; }
+          window.open(res.data.signedUrl, '_blank');
+        });
+      });
+    });
+  }
+</script>
+</body>
+</html>

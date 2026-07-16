@@ -27,7 +27,7 @@
     <div class="t-profile">
       <span class="ph"><span class="avatar" id="user-avatar">GV</span><span class="status-dot"></span></span>
       <div>
-        <div class="role">Giảng viên</div>
+        <div class="role">Mentor</div>
         <div class="name" id="user-name">–</div>
         <div class="online"><span class="d"></span>Online</div>
       </div>
@@ -37,7 +37,7 @@
       <a href="mentor-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
       <a href="mentor-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
       <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
-      <a href="mentor-assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="mentor-assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý câu hỏi</a>
       <a href="mentor-grading.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài<span class="badge-num" id="nav-grading-count" style="display:none;"></span></a>
       <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
       <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
@@ -56,7 +56,7 @@
           <a href="mentor-dashboard.html">Tổng quan</a>
           <a href="mentor-classes.html">Lớp học của tôi</a>
           <a href="mentor-inbox.html">Tin nhắn học viên</a>
-          <a href="mentor-assignments.html">Quản lý bài tập</a>
+          <a href="mentor-assignments.html">Quản lý câu hỏi</a>
           <a href="mentor-grading.html" class="active">Chấm bài</a>
           <a href="mentor-learning-path.html">Lộ trình học tập</a>
           <a href="mentor-students.html">Học viên</a>
@@ -64,7 +64,7 @@
         <div class="t-topbar-actions">
           <div class="t-user-trigger">
             <span class="avatar" id="user-avatar-2">GV</span>
-            <span class="meta"><span class="u-name" id="user-name-2">–</span><span class="u-role">Giảng viên</span></span>
+            <span class="meta"><span class="u-name" id="user-name-2">–</span><span class="u-role">Mentor</span></span>
           </div>
           <button class="btn btn-outline btn-sm" id="logout-btn">Đăng xuất</button>
         </div>
@@ -169,6 +169,15 @@
   var myAssignments = [];
   var myClassIds = [];
   var allGradingSubs = [];
+  var revisionMap = {};
+
+  function fmtDateShort(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
+  function subStatusLabel(s) {
+    if (s.status === 'graded') return '<span class="badge b-done">Đã chấm: ' + s.score + '/' + s.max_score + '</span>';
+    if (s.status === 'needs_revision') return '<span class="badge" style="background:var(--danger-soft); color:var(--danger);">Yêu cầu chỉnh sửa</span>';
+    if (s.status === 'submitted' && revisionMap[s.id]) return '<span class="badge" style="background:#EDE4FF; color:#6D3FD1;">Đã nộp lại</span>';
+    return '<span class="badge b-review">Chờ chấm</span>';
+  }
 
   requireAuth().then(function (session) {
     if (!session) return;
@@ -213,34 +222,39 @@
       return;
     }
     var showAll = document.getElementById('grading-show-all').checked;
-    var query = window.sb.from('submissions').select('id,assignment_id,user_id,type,answer_text,file_path,drive_link,score,max_score,graded,graded_at,feedback,submitted_at').in('assignment_id', assignmentIds).in('type', ['essay', 'file']).order('submitted_at', { ascending: false });
-    if (!showAll) query = query.eq('graded', false);
-    Promise.all([
-      query,
-      window.sb.from('submissions').select('graded,graded_at').in('assignment_id', assignmentIds).eq('graded', false),
-      window.sb.from('profiles').select('id,full_name,email')
-    ]).then(function (r) {
-      allGradingSubs = r[0].data || [];
-      var pendingAll = r[1].data || [];
-      var profilesMap = {}; (r[2].data || []).forEach(function (p) { profilesMap[p.id] = p; });
-      var assignmentMap = {}; myAssignments.forEach(function (a) { assignmentMap[a.id] = a; });
+    var query = window.sb.from('submissions').select('id,assignment_id,user_id,type,answer_text,file_path,drive_link,score,max_score,graded,graded_at,feedback,feedback_summary,feedback_strengths,feedback_improve,note_to_mentor,status,current_version_number,revision_reason,revision_due_at,submitted_at').in('assignment_id', assignmentIds).in('type', ['essay', 'file', 'project']).neq('status', 'draft').order('submitted_at', { ascending: false });
+    if (!showAll) query = query.eq('status', 'submitted');
+    query.then(function (r0) {
+      allGradingSubs = r0.data || [];
+      var subIds = allGradingSubs.map(function (s) { return s.id; });
+      var versionsP = subIds.length ? window.sb.from('submission_versions').select('submission_id,action').in('submission_id', subIds) : Promise.resolve({ data: [] });
+      Promise.all([
+        versionsP,
+        window.sb.from('submissions').select('id').in('assignment_id', assignmentIds).eq('status', 'submitted'),
+        window.sb.from('profiles').select('id,full_name,email')
+      ]).then(function (r) {
+        revisionMap = {};
+        (r[0].data || []).forEach(function (v) { if (v.action === 'revision_requested') revisionMap[v.submission_id] = true; });
+        var pendingAll = r[1].data || [];
+        var profilesMap = {}; (r[2].data || []).forEach(function (p) { profilesMap[p.id] = p; });
+        var assignmentMap = {}; myAssignments.forEach(function (a) { assignmentMap[a.id] = a; });
 
-      document.getElementById('stat-pending').textContent = pendingAll.length;
-      window.sb.from('submissions').select('graded_at').in('assignment_id', assignmentIds).eq('graded', true).then(function (gRes) {
-        var gradedToday = (gRes.data || []).filter(function (s) { return s.graded_at && isSameDay(s.graded_at); }).length;
-        document.getElementById('stat-graded-today').textContent = gradedToday;
-      });
+        document.getElementById('stat-pending').textContent = pendingAll.length;
+        window.sb.from('submissions').select('graded_at').in('assignment_id', assignmentIds).eq('status', 'graded').then(function (gRes) {
+          var gradedToday = (gRes.data || []).filter(function (s) { return s.graded_at && isSameDay(s.graded_at); }).length;
+          document.getElementById('stat-graded-today').textContent = gradedToday;
+        });
 
-      var tbody = document.getElementById('grading-tbody');
-      if (allGradingSubs.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Không có bài nào.</td></tr>'; return; }
-      tbody.innerHTML = allGradingSubs.map(function (s) {
-        var student = profilesMap[s.user_id];
-        var assignment = assignmentMap[s.assignment_id];
-        var status = s.graded ? '<span class="badge b-done">Đã chấm: ' + s.score + '/' + s.max_score + '</span>' : '<span class="badge b-review">Chờ chấm</span>';
-        return '<tr class="row-click" data-grade="' + s.id + '"><td>' + escapeHtml(student ? (student.full_name || student.email) : '') + '</td><td>' + escapeHtml(assignment ? assignment.title : '') + '</td><td>' + escapeHtml(s.type) + '</td><td>' + status + '</td></tr>';
-      }).join('');
-      tbody.querySelectorAll('[data-grade]').forEach(function (row) {
-        row.addEventListener('click', function () { openGradingDetail(row.getAttribute('data-grade'), profilesMap, assignmentMap); });
+        var tbody = document.getElementById('grading-tbody');
+        if (allGradingSubs.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Không có bài nào.</td></tr>'; return; }
+        tbody.innerHTML = allGradingSubs.map(function (s) {
+          var student = profilesMap[s.user_id];
+          var assignment = assignmentMap[s.assignment_id];
+          return '<tr class="row-click" data-grade="' + s.id + '"><td>' + escapeHtml(student ? (student.full_name || student.email) : '') + '</td><td>' + escapeHtml(assignment ? assignment.title : '') + '</td><td>' + escapeHtml(s.type) + '</td><td>' + subStatusLabel(s) + '</td></tr>';
+        }).join('');
+        tbody.querySelectorAll('[data-grade]').forEach(function (row) {
+          row.addEventListener('click', function () { openGradingDetail(row.getAttribute('data-grade'), profilesMap, assignmentMap); });
+        });
       });
     });
   }
@@ -253,49 +267,108 @@
     var assignment = assignmentMap[s.assignment_id];
     document.getElementById('grading-detail-title').textContent = (student ? (student.full_name || student.email) : '') + ' — ' + (assignment ? assignment.title : '');
 
-    var contentHtml = '';
-    if (s.type === 'essay') {
-      contentHtml = '<div class="tfield"><label>Bài làm</label><textarea disabled style="min-height:160px;">' + escapeHtml(s.answer_text || '') + '</textarea></div>';
-    } else if (s.drive_link) {
-      contentHtml = '<p>Link Drive: <a href="' + escapeHtml(s.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(s.drive_link) + '</a></p>';
-    } else if (s.file_path) {
-      contentHtml = '<p><button class="row-action-btn" id="download-file-btn">Tải file bài nộp</button></p>';
-    }
-
     var body = document.getElementById('grading-detail-body');
-    body.innerHTML = contentHtml +
-      '<form id="grade-form" style="margin-top:1rem;">' +
-      '<div class="tfield"><label for="grade-score">Điểm (tối đa ' + (assignment ? assignment.max_score : 10) + ')</label><input id="grade-score" type="number" step="0.5" min="0" max="' + (assignment ? assignment.max_score : 10) + '" value="' + (s.score != null ? s.score : '') + '" required /></div>' +
-      '<div class="tfield"><label for="grade-feedback">Nhận xét</label><textarea id="grade-feedback">' + escapeHtml(s.feedback || '') + '</textarea></div>' +
-      '<button class="btn btn-gold" type="submit">Lưu điểm</button>' +
-      '<p class="msg-success" id="grade-success" style="display:none; color:var(--green); font-size:0.82rem; margin-top:0.6rem;"></p>' +
-      '<p class="msg-error" id="grade-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>' +
-      '</form>';
+    body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
 
-    var dlBtn = document.getElementById('download-file-btn');
-    if (dlBtn) {
-      dlBtn.addEventListener('click', function () {
-        window.sb.storage.from('submissions').createSignedUrl(s.file_path, 3600).then(function (res) {
-          if (res.error) { alert('Không tải được file: ' + res.error.message); return; }
-          window.open(res.data.signedUrl, '_blank');
+    window.sb.from('submission_versions').select('*').eq('submission_id', subId).order('version_number', { ascending: false }).then(function (vRes) {
+      var versions = vRes.data || [];
+      var versionIds = versions.map(function (v) { return v.id; });
+      var filesP = versionIds.length ? window.sb.from('submission_files').select('*').in('version_id', versionIds) : Promise.resolve({ data: [] });
+      filesP.then(function (fRes) {
+        var files = fRes.data || [];
+        var filesByVersion = {}; files.forEach(function (f) { (filesByVersion[f.version_id] = filesByVersion[f.version_id] || []).push(f); });
+        var latestSubmitVersion = versions.find(function (v) { return v.action === 'draft_saved' || v.action === 'submitted'; });
+        var latestFiles = latestSubmitVersion ? (filesByVersion[latestSubmitVersion.id] || []) : [];
+
+        var contentHtml = '';
+        if (s.type === 'essay' && s.answer_text) {
+          contentHtml += '<div class="tfield"><label>Bài làm</label><textarea disabled style="min-height:140px;">' + escapeHtml(s.answer_text) + '</textarea></div>';
+        }
+        if (latestFiles.length) {
+          contentHtml += '<div class="tfield"><label>File / link đã nộp</label>' + latestFiles.map(function (f) {
+            if (f.drive_link) return '<p><a href="' + escapeHtml(f.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(f.drive_link) + '</a></p>';
+            return '<p><button class="row-action-btn" data-dl="' + escapeHtml(f.file_path) + '">Tải: ' + escapeHtml(f.file_name || 'file') + '</button></p>';
+          }).join('') + '</div>';
+        } else if (s.file_path || s.drive_link) {
+          contentHtml += s.drive_link ? '<p>Link Drive: <a href="' + escapeHtml(s.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(s.drive_link) + '</a></p>' : '<p><button class="row-action-btn" data-dl="' + escapeHtml(s.file_path) + '">Tải file bài nộp</button></p>';
+        }
+        if (s.note_to_mentor) {
+          contentHtml += '<div class="tfield"><label>Ghi chú của học viên</label><p style="font-size:0.85rem; color:var(--text-body);">' + escapeHtml(s.note_to_mentor) + '</p></div>';
+        }
+        if (s.status === 'needs_revision') {
+          contentHtml += '<p class="badge" style="background:var(--danger-soft); color:var(--danger); display:inline-block;">Đang chờ học viên nộp lại — đã yêu cầu: ' + escapeHtml(s.revision_reason || '') + (s.revision_due_at ? ' (hạn ' + fmtDateShort(s.revision_due_at) + ')' : '') + '</p>';
+        }
+
+        var historyHtml = '<div class="tfield"><label>Lịch sử nộp bài (' + versions.length + ' phiên bản)</label>' +
+          versions.map(function (v) {
+            var actionLabel = v.action === 'draft_saved' ? 'Lưu nháp' : v.action === 'submitted' ? 'Nộp bài' : v.action === 'graded' ? 'Mentor chấm điểm' : 'Mentor yêu cầu chỉnh sửa';
+            var vFiles = filesByVersion[v.id] || [];
+            return '<div style="padding:0.5rem 0; border-top:1px solid var(--border); font-size:0.8rem;"><b>v' + v.version_number + '</b> — ' + actionLabel + ' · ' + fmtDateTime(v.created_at) +
+              (vFiles.length ? ' · ' + vFiles.length + ' file/link' : '') +
+              (v.score != null ? ' · Điểm: ' + v.score + '/' + v.max_score : '') + '</div>';
+          }).join('') + '</div>';
+
+        body.innerHTML = contentHtml +
+          '<form id="grade-form" style="margin-top:1rem;">' +
+          '<div class="tfield"><label for="grade-score">Điểm (tối đa ' + (assignment ? assignment.max_score : 10) + ')</label><input id="grade-score" type="number" step="0.5" min="0" max="' + (assignment ? assignment.max_score : 10) + '" value="' + (s.score != null ? s.score : '') + '" required /></div>' +
+          '<div class="tfield"><label for="grade-summary">Nhận xét tổng quan</label><textarea id="grade-summary">' + escapeHtml(s.feedback_summary || s.feedback || '') + '</textarea></div>' +
+          '<div class="tfield"><label for="grade-strengths">Điểm mạnh (mỗi dòng 1 ý)</label><textarea id="grade-strengths">' + escapeHtml(s.feedback_strengths || '') + '</textarea></div>' +
+          '<div class="tfield"><label for="grade-improve">Cần cải thiện (mỗi dòng 1 ý)</label><textarea id="grade-improve">' + escapeHtml(s.feedback_improve || '') + '</textarea></div>' +
+          '<button class="btn btn-gold" type="submit">Lưu điểm & Nhận xét</button>' +
+          '<p class="msg-success" id="grade-success" style="display:none; color:var(--green); font-size:0.82rem; margin-top:0.6rem;"></p>' +
+          '<p class="msg-error" id="grade-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>' +
+          '</form>' +
+          '<form id="revision-form" style="margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--border);">' +
+          '<div class="tfield"><label for="rev-reason">Yêu cầu chỉnh sửa — nội dung cần sửa</label><textarea id="rev-reason" placeholder="Nêu rõ phần nào học viên cần chỉnh sửa..."></textarea></div>' +
+          '<div class="tfield"><label for="rev-due">Hạn nộp lại (tuỳ chọn)</label><input id="rev-due" type="date" /></div>' +
+          '<button class="btn btn-outline" type="submit">Yêu cầu học viên chỉnh sửa</button>' +
+          '</form>' +
+          historyHtml;
+
+        body.querySelectorAll('[data-dl]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            window.sb.storage.from('submissions').createSignedUrl(btn.getAttribute('data-dl'), 3600).then(function (res) {
+              if (res.error) { alert('Không tải được file: ' + res.error.message); return; }
+              window.open(res.data.signedUrl, '_blank');
+            });
+          });
         });
-      });
-    }
 
-    document.getElementById('grade-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var maxScore = assignment ? assignment.max_score : 10;
-      window.sb.from('submissions').update({
-        score: parseFloat(document.getElementById('grade-score').value),
-        max_score: maxScore,
-        feedback: document.getElementById('grade-feedback').value.trim(),
-        graded: true,
-        graded_at: new Date().toISOString()
-      }).eq('id', subId).then(function (res) {
-        if (res.error) { document.getElementById('grade-error').textContent = 'Lỗi: ' + res.error.message; document.getElementById('grade-error').style.display = 'block'; return; }
-        document.getElementById('grade-success').textContent = 'Đã lưu điểm!';
-        document.getElementById('grade-success').style.display = 'block';
-        loadGrading();
+        document.getElementById('grade-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+          var maxScore = assignment ? assignment.max_score : 10;
+          window.sb.rpc('grade_submission', {
+            p_submission_id: subId,
+            p_score: parseFloat(document.getElementById('grade-score').value),
+            p_max_score: maxScore,
+            p_summary: document.getElementById('grade-summary').value.trim() || null,
+            p_strengths: document.getElementById('grade-strengths').value.trim() || null,
+            p_improve: document.getElementById('grade-improve').value.trim() || null,
+            p_criteria: null
+          }).then(function (res) {
+            if (res.error) { document.getElementById('grade-error').textContent = 'Lỗi: ' + res.error.message; document.getElementById('grade-error').style.display = 'block'; return; }
+            document.getElementById('grade-success').textContent = 'Đã lưu điểm!';
+            document.getElementById('grade-success').style.display = 'block';
+            loadGrading();
+          });
+        });
+
+        document.getElementById('revision-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+          var reason = document.getElementById('rev-reason').value.trim();
+          if (!reason) { alert('Vui lòng nêu rõ nội dung cần chỉnh sửa.'); return; }
+          var dueVal = document.getElementById('rev-due').value;
+          window.sb.rpc('request_submission_revision', {
+            p_submission_id: subId,
+            p_reason: reason,
+            p_due_at: dueVal ? (dueVal + 'T23:59:00') : null
+          }).then(function (res) {
+            if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+            loadGrading();
+            document.getElementById('grading-detail-title').textContent = 'Chọn 1 bài để chấm';
+            document.getElementById('grading-detail-body').innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đã gửi yêu cầu chỉnh sửa cho học viên.</p>';
+          });
+        });
       });
     });
   }
@@ -311,7 +384,7 @@
     var assignmentIds = overdueAssignments.map(function (a) { return a.id; });
     Promise.all([
       window.sb.from('class_members').select('class_id,student_id').in('class_id', myClassIds),
-      window.sb.from('submissions').select('assignment_id,user_id').in('assignment_id', assignmentIds),
+      window.sb.from('submissions').select('assignment_id,user_id').in('assignment_id', assignmentIds).neq('status', 'draft'),
       window.sb.from('profiles').select('id,full_name,email')
     ]).then(function (r) {
       var members = r[0].data || [];

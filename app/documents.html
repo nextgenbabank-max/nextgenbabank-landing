@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tài liệu của tôi — NextGen BA Banker</title>
+<title>Tài liệu — NextGen BA Banker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="shared/dash.css" />
 </head>
@@ -22,9 +22,10 @@
     </a>
     <nav class="mainnav">
       <a href="dashboard.html">Tổng quan</a>
+      <a href="my-classes.html">Lớp học của tôi</a>
       <a href="assignments.html">Bài tập</a>
-      <a href="case-studies.html">Case study</a>
-      <a href="progress.html">Tiến độ</a>
+      <a href="mentor.html">Liên hệ Mentor</a>
+      <a href="documents.html" class="active">Tài liệu</a>
       <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
     </nav>
     <div class="topbar-actions">
@@ -55,9 +56,10 @@
   </div>
   <div class="mobile-nav" id="mobile-nav">
     <a href="dashboard.html">Tổng quan</a>
+    <a href="my-classes.html">Lớp học của tôi</a>
     <a href="assignments.html">Bài tập</a>
-    <a href="case-studies.html">Case study</a>
-    <a href="progress.html">Tiến độ</a>
+    <a href="mentor.html">Liên hệ Mentor</a>
+    <a href="documents.html" class="active">Tài liệu</a>
     <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
     <a href="#" id="mobile-logout">Đăng xuất</a>
   </div>
@@ -68,15 +70,11 @@
     <button class="sidebar-toggle" id="sidebar-collapse-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
     <nav class="sidebar-nav">
       <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="my-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
       <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
-      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
-      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Liên hệ Mentor</a>
+      <a href="documents.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu</a>
       <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
-      <div class="sidebar-divider"></div>
-      <a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
-      <a href="documents.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
-      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
     </nav>
     <div class="sidebar-support">
       <p class="t">Hỗ trợ học tập</p>
@@ -87,7 +85,7 @@
 
   <main class="main">
     <div class="page-head">
-      <div><h1>Tài liệu của tôi</h1><p class="d">Quản lý và truy cập nhanh các tài liệu học tập của bạn.</p></div>
+      <div><h1>Tài liệu</h1><p class="d">Quản lý và truy cập nhanh các tài liệu học tập của bạn.</p></div>
     </div>
 
     <div class="stat-grid cols-4">
@@ -141,6 +139,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/app.js"></script>
 <script src="shared/notifications.js"></script>
+<script src="shared/due-date.js"></script>
+<script src="shared/documents-shared.js"></script>
 <script>
   (function () {
     var toggle = document.getElementById('nav-toggle');
@@ -206,11 +206,13 @@
 
   function loadDocuments(userId) {
     Promise.all([
-      window.sb.from('documents').select('id,title,url,phase_id,doc_type,created_at').order('created_at', { ascending: false }),
+      window.sb.from('documents').select('id,title,url,phase_id,doc_type,class_id,created_at').order('created_at', { ascending: false }),
       window.sb.from('document_favorites').select('document_id').eq('user_id', userId),
-      window.sb.from('phases').select('id,title').order('order_index')
+      window.sb.from('phases').select('id,title').order('order_index'),
+      window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
-      allDocs = r[0].data || [];
+      var myClassIds = (r[3].data || []).map(function (m) { return m.class_id; });
+      allDocs = (r[0].data || []).filter(function (d) { return !d.class_id || myClassIds.indexOf(d.class_id) !== -1; });
       allFavIds = (r[1].data || []).map(function (f) { return f.document_id; });
       allPhases = r[2].data || [];
 
@@ -284,10 +286,7 @@
       btn.addEventListener('click', function () {
         var docId = btn.getAttribute('data-fav');
         var isFav = allFavIds.indexOf(docId) !== -1;
-        var action = isFav
-          ? window.sb.from('document_favorites').delete().eq('user_id', currentUserId).eq('document_id', docId)
-          : window.sb.from('document_favorites').insert({ user_id: currentUserId, document_id: docId });
-        action.then(function (res) {
+        toggleDocumentFavorite(currentUserId, docId, isFav).then(function (res) {
           if (res.error) { alert('Có lỗi: ' + res.error.message); return; }
           if (isFav) allFavIds = allFavIds.filter(function (id) { return id !== docId; });
           else allFavIds.push(docId);

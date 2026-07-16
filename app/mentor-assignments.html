@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quản lý bài tập — NextGen BA Banker</title>
+<title>Quản lý câu hỏi — NextGen BA Banker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="shared/dash.css" />
 <style>
@@ -11,6 +11,33 @@
   .qq-item:first-child { border-top: none; }
   .qq-item .opt { font-size: 0.82rem; padding: 2px 0; color: var(--text-body); }
   .qq-item .opt.correct { color: var(--green); font-weight: 700; }
+
+  .wiz-steps { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.4rem; }
+  .wiz-step { display: flex; align-items: center; gap: 0.5rem; font-size: 0.84rem; font-weight: 700; color: var(--text-soft); }
+  .wiz-step .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); display: grid; place-items: center; font-size: 0.8rem; flex: none; }
+  .wiz-step.active { color: var(--gold-dark); }
+  .wiz-step.active .dot { border-color: var(--gold); color: var(--gold-dark); }
+  .wiz-step.done .dot { border-color: var(--green); background: var(--green); color: #fff; }
+  .wiz-line { flex: 1; height: 2px; background: var(--border); }
+  .wiz-line.done { background: var(--green); }
+
+  .type-card { border: 1.5px solid var(--border); border-radius: 14px; padding: 1.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .type-card .ic { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 1rem; }
+  .type-card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+  .type-card .d { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.9rem; }
+  .type-card ul { list-style: none; padding: 0; margin: 0 0 1.1rem; text-align: left; font-size: 0.82rem; }
+  .type-card ul li { display: flex; gap: 6px; padding: 3px 0; color: var(--text-body); }
+  .type-card ul li svg { color: var(--green); flex: none; width: 15px; height: 15px; margin-top: 2px; }
+
+  .wiz-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.2rem; align-items: start; }
+  @media (max-width: 980px) { .wiz-grid { grid-template-columns: 1fr; } }
+  .summary-row { display: flex; justify-content: space-between; gap: 0.6rem; padding: 0.5rem 0; border-top: 1px solid var(--border); font-size: 0.82rem; }
+  .summary-row:first-child { border-top: none; }
+  .summary-row .l { color: var(--text-soft); }
+  .summary-row .v { font-weight: 700; color: var(--navy-ink); text-align: right; }
+
+  .scope-box { border: 1.5px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 0.9rem; }
+  .scope-box.done { border-color: var(--green); }
 </style>
 </head>
 <body>
@@ -43,7 +70,7 @@
       <a href="mentor-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
       <a href="mentor-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
       <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
-      <a href="mentor-assignments.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý bài tập</a>
+      <a href="mentor-assignments.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý câu hỏi</a>
       <a href="mentor-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
       <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
       <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
@@ -62,7 +89,7 @@
           <a href="mentor-dashboard.html">Tổng quan</a>
           <a href="mentor-classes.html">Lớp học của tôi</a>
           <a href="mentor-inbox.html">Tin nhắn học viên</a>
-          <a href="mentor-assignments.html" class="active">Quản lý bài tập</a>
+          <a href="mentor-assignments.html" class="active">Quản lý câu hỏi</a>
           <a href="mentor-grading.html">Chấm bài</a>
           <a href="mentor-learning-path.html">Lộ trình học tập</a>
           <a href="mentor-students.html">Học viên</a>
@@ -78,64 +105,213 @@
     </header>
 
     <main class="t-main">
-      <div class="page-head">
-        <div>
-          <h1>Quản lý bài tập</h1>
-          <p class="d">Tạo và quản lý bài tập cho các lớp bạn phụ trách.</p>
-        </div>
-      </div>
-
-      <div class="split">
-        <div class="card">
-          <div class="card-head"><h2>Bài tập của tôi</h2></div>
-          <div class="table-wrap"><table class="data-table">
-            <thead><tr><th>Tên bài tập</th><th>Loại</th><th>Chặng</th><th>Lớp</th><th>Hạn nộp</th><th></th></tr></thead>
-            <tbody id="assignments-tbody"><tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
-          </table></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h2 id="assignment-form-title">Thêm bài tập mới</h2></div>
-          <form id="assignment-form">
-            <input type="hidden" id="asg-id" />
-            <div class="tfield"><label for="asg-title">Tên bài tập</label><input id="asg-title" type="text" required /></div>
-            <div class="tfield"><label for="asg-type">Loại</label><select id="asg-type"><option value="quiz">Quiz (trắc nghiệm)</option><option value="essay">Case study (tự luận)</option><option value="file">Nộp file (link Google Drive)</option></select></div>
-            <div class="tfield"><label for="asg-desc">Mô tả</label><textarea id="asg-desc"></textarea></div>
-            <div class="tfield"><label for="asg-maxscore">Điểm tối đa</label><input id="asg-maxscore" type="number" value="10" /></div>
-            <div class="tfield"><label for="asg-due">Hạn nộp</label><input id="asg-due" type="datetime-local" /></div>
-            <div class="tfield"><label for="asg-doctype">Loại tài liệu (portfolio)</label><input id="asg-doctype" type="text" placeholder="vd BRD, Essay, Quiz" /></div>
-            <div class="tfield"><label for="asg-phase">Chặng</label><select id="asg-phase"></select></div>
-            <div class="tfield"><label for="asg-class">Giao cho lớp học</label><select id="asg-class"><option value="">-- Tất cả lớp (theo chặng) --</option></select></div>
-            <div class="tfield" id="asg-session-field" style="display:none;">
-              <label for="asg-session">Buổi học liên quan</label>
-              <select id="asg-session"><option value="">-- Không gắn buổi học --</option></select>
-            </div>
-            <div class="tfield" id="asg-offset-field" style="display:none;">
-              <label for="asg-offset">Hạn nộp sau buổi học (số ngày)</label>
-              <input id="asg-offset" type="number" min="0" placeholder="vd 7" />
-              <p style="font-size:0.72rem; color:var(--text-soft); margin-top:0.3rem;">Cần chọn cả "Chặng" ở trên để hệ thống tính đúng hạn nộp theo ngày buổi học.</p>
-            </div>
-            <button class="btn btn-gold" type="submit" id="assignment-submit-btn">Thêm bài tập</button>
-            <button class="btn btn-outline" type="button" id="assignment-cancel-btn" style="display:none; margin-left:0.5rem;">Huỷ sửa</button>
-            <p class="msg-error" id="assignment-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
-          </form>
-        </div>
-      </div>
-      <style>@media (max-width: 900px) { .split { grid-template-columns: 1fr !important; } }</style>
-
-      <div class="card" id="quiz-questions-card" style="display:none; margin-top:1.2rem;">
-        <div class="card-head"><h2 id="quiz-questions-title">Câu hỏi quiz</h2></div>
-        <div id="quiz-questions-list"></div>
-        <div class="ud-divider" style="margin:1rem 0;"></div>
-        <form id="quiz-question-form">
-          <div class="tfield"><label for="qq-text">Câu hỏi</label><textarea id="qq-text" required></textarea></div>
-          <div class="tfield"><label>Đáp án (chọn radio ở đáp án đúng)</label>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="0" checked /><input type="text" id="qq-opt0" placeholder="Đáp án 1" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="1" /><input type="text" id="qq-opt1" placeholder="Đáp án 2" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="qq-correct" value="2" /><input type="text" id="qq-opt2" placeholder="Đáp án 3" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
-            <div style="display:flex; align-items:center; gap:8px;"><input type="radio" name="qq-correct" value="3" /><input type="text" id="qq-opt3" placeholder="Đáp án 4" required style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>
+      <!-- ============ VIEW: LIST ============ -->
+      <div id="view-list">
+        <div class="page-head">
+          <div>
+            <h1>Quản lý câu hỏi</h1>
+            <p class="d">Quản lý và theo dõi các câu hỏi của bạn theo lớp học và buổi học.</p>
           </div>
-          <button class="btn btn-gold" type="submit">Thêm câu hỏi</button>
-        </form>
+          <button class="btn btn-gold" id="open-wizard-btn" type="button"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Thêm câu hỏi</button>
+        </div>
+
+        <div class="filter-row">
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="f-search" placeholder="Tìm kiếm bài..." /></div>
+          <select id="f-phase"><option value="">Tất cả lộ trình</option></select>
+          <select id="f-class"><option value="">Tất cả lớp học</option></select>
+          <select id="f-session"><option value="">Tất cả buổi học</option></select>
+          <select id="f-type"><option value="">Tất cả loại bài</option><option value="quiz">Quiz</option><option value="case_study">Case Study</option><option value="project">Project</option></select>
+          <select id="f-status"><option value="">Tất cả trạng thái</option><option value="open">Đang mở</option><option value="grading">Đang chấm</option><option value="closed">Đã đóng</option></select>
+        </div>
+
+        <div class="stat-grid cols-4">
+          <div class="stat-card">
+            <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg></span>
+            <div><div class="n" id="stat-total">–</div><div class="l">Tổng số bài</div></div>
+          </div>
+          <div class="stat-card">
+            <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div><div class="n" id="stat-quiz-open">–</div><div class="l">Quiz đang mở</div></div>
+          </div>
+          <div class="stat-card">
+            <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>
+            <div><div class="n" id="stat-casestudy">–</div><div class="l">Case study</div></div>
+          </div>
+          <div class="stat-card">
+            <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9l-5-7Z"/></svg></span>
+            <div><div class="n" id="stat-project">–</div><div class="l">Project</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2 id="list-title">Danh sách câu hỏi</h2></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Tên bài</th><th>Loại câu hỏi</th><th>Lộ trình</th><th>Lớp</th><th>Buổi áp dụng</th><th>Hạn nộp</th><th>Trạng thái</th><th></th></tr></thead>
+              <tbody id="list-tbody"><tr><td colspan="8" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ VIEW: WIZARD ============ -->
+      <div id="view-wizard" style="display:none;">
+        <div class="page-head">
+          <div>
+            <h1 id="wiz-title">Thêm câu hỏi mới</h1>
+            <p class="d" id="wiz-subtitle">Chọn loại câu hỏi phù hợp với mục tiêu giảng dạy</p>
+          </div>
+          <button class="btn btn-outline" id="close-wizard-btn" type="button"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Huỷ</button>
+        </div>
+
+        <div class="wiz-steps">
+          <div class="wiz-step" id="wiz-tab-1"><span class="dot">1</span><span>Chọn loại câu hỏi</span></div>
+          <div class="wiz-line" id="wiz-line-1"></div>
+          <div class="wiz-step" id="wiz-tab-2"><span class="dot">2</span><span>Điền thông tin</span></div>
+          <div class="wiz-line" id="wiz-line-2"></div>
+          <div class="wiz-step" id="wiz-tab-3"><span class="dot">3</span><span>Chọn phạm vi áp dụng</span></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div id="wiz-step-1">
+          <p style="font-weight:800; color:var(--navy-ink); margin-bottom:1rem;">Chọn loại câu hỏi bạn muốn tạo</p>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem;" id="wiz-type-grid">
+            <div class="type-card">
+              <span class="ic" style="background:var(--gold-soft); color:var(--gold-dark);"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <h3>Quiz</h3>
+              <p class="d">Câu hỏi trắc nghiệm</p>
+              <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Đánh giá kiến thức nhanh chóng</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Chấm điểm tự động</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hỗ trợ nhiều đáp án</li>
+              </ul>
+              <button class="btn btn-gold" data-pick-type="quiz" style="width:100%; justify-content:center;">Chọn</button>
+            </div>
+            <div class="type-card">
+              <span class="ic" style="background:var(--green-soft); color:var(--green);"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>
+              <h3>Case Study</h3>
+              <p class="d">Bài tập tự luận, học viên nộp link Google Drive</p>
+              <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Phân tích tình huống thực tế</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Học viên nộp bài qua Google Drive</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mentor chấm và nhận xét</li>
+              </ul>
+              <button class="btn btn-gold" data-pick-type="case_study" style="width:100%; justify-content:center;">Chọn</button>
+            </div>
+            <div class="type-card">
+              <span class="ic" style="background:var(--violet-soft); color:var(--violet);"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9l-5-7Z"/></svg></span>
+              <h3>Project</h3>
+              <p class="d">Bài tập dự án / deliverable theo buổi</p>
+              <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bài tập dự án theo từng buổi học</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Học viên nộp deliverable</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Đánh giá bằng điểm tổng</li>
+              </ul>
+              <button class="btn btn-gold" data-pick-type="project" style="width:100%; justify-content:center;">Chọn</button>
+            </div>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-soft); margin-top:1rem;"><svg style="display:inline; vertical-align:-3px;" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Bạn có thể thay đổi loại câu hỏi sau nếu cần.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="wiz-step-2" style="display:none;">
+          <div class="wiz-grid">
+            <div class="card">
+              <div id="wiz-form-quiz" style="display:none;">
+                <p style="font-weight:800; color:var(--navy-ink); margin-bottom:0.9rem;">A. Thông tin chung</p>
+                <div class="grid-2" style="gap:1rem 1.2rem;">
+                  <div class="tfield"><label for="q-title">Tên bài *</label><input id="q-title" type="text" required /></div>
+                  <div class="tfield"><label for="q-desc">Mô tả ngắn</label><input id="q-desc" type="text" /></div>
+                </div>
+                <div class="grid-2" style="gap:1rem 1.2rem;">
+                  <div class="tfield"><label for="q-time-limit">Thời gian làm bài *</label>
+                    <select id="q-time-limit"><option value="10">10 phút</option><option value="15">15 phút</option><option value="20" selected>20 phút</option><option value="30">30 phút</option><option value="45">45 phút</option><option value="60">60 phút</option></select>
+                  </div>
+                  <div class="tfield"><label for="q-due">Hạn nộp *</label><input id="q-due" type="datetime-local" required /></div>
+                </div>
+                <div class="tfield"><label>Số câu hỏi</label><input id="q-count" type="text" disabled value="0 câu" /></div>
+                <div style="display:flex; gap:2rem; margin:0.8rem 0 1.2rem;">
+                  <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:600;"><input type="checkbox" id="q-show-score" checked /> Hiển thị điểm sau nộp</label>
+                  <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:600;"><input type="checkbox" id="q-shuffle" checked /> Trộn đáp án</label>
+                </div>
+
+                <p style="font-weight:800; color:var(--navy-ink); margin:1.2rem 0 0.9rem;">B. Nội dung câu hỏi</p>
+                <div id="quiz-builder"></div>
+                <button class="btn btn-outline" id="add-question-btn" type="button" style="width:100%; justify-content:center; margin-top:0.8rem;">+ Thêm câu hỏi</button>
+              </div>
+
+              <div id="wiz-form-cs" style="display:none;">
+                <div class="tfield"><label for="cs-title">Tên bài *</label><input id="cs-title" type="text" required /></div>
+                <div class="tfield"><label for="cs-desc" id="cs-desc-label">Mô tả tình huống *</label><textarea id="cs-desc" required></textarea></div>
+                <div class="tfield"><label for="cs-objective" id="cs-objective-label">Yêu cầu đầu ra *</label><textarea id="cs-objective" required></textarea></div>
+                <div class="tfield"><label for="cs-reference">Tài liệu tham khảo (link)</label><input id="cs-reference" type="url" placeholder="https://drive.google.com/..." /></div>
+                <div class="tfield"><label for="cs-deliverables">Deliverables cần nộp *</label><textarea id="cs-deliverables" required placeholder="Liệt kê các deliverables học viên cần nộp"></textarea></div>
+                <div class="grid-2" style="gap:1rem 1.2rem;">
+                  <div class="tfield"><label for="cs-due">Hạn nộp *</label><input id="cs-due" type="datetime-local" required /></div>
+                  <div class="tfield"><label for="cs-maxscore">Thang điểm *</label><input id="cs-maxscore" type="number" value="100" required /></div>
+                </div>
+                <div class="tfield"><label for="cs-notes">Ghi chú cho học viên</label><textarea id="cs-notes"></textarea></div>
+                <p style="font-size:0.8rem; color:var(--text-soft);">Học viên nộp bài bằng <b>Link Google Drive</b>.</p>
+              </div>
+
+              <p class="msg-error" id="wiz-step2-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.8rem;"></p>
+              <div style="display:flex; gap:0.7rem; margin-top:1rem;">
+                <button class="btn btn-outline" id="wiz-back-1" type="button">Quay lại</button>
+                <button class="btn btn-gold" id="wiz-next-2" type="button" style="flex:1; justify-content:center;">Lưu</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><h2 id="wiz-summary-title">Tóm tắt câu hỏi</h2></div>
+              <div id="wiz-summary-body"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="wiz-step-3" style="display:none;">
+          <div class="wiz-grid">
+            <div class="card">
+              <div class="scope-box">
+                <p style="font-weight:700; color:var(--navy-ink); margin-bottom:0.2rem;">1. Chọn lộ trình</p>
+                <p style="font-size:0.78rem; color:var(--text-soft); margin-bottom:0.6rem;">Chọn lộ trình mà câu hỏi sẽ được áp dụng</p>
+                <select id="scope-phase"></select>
+              </div>
+              <div class="scope-box">
+                <p style="font-weight:700; color:var(--navy-ink); margin-bottom:0.2rem;">2. Chọn lớp</p>
+                <p style="font-size:0.78rem; color:var(--text-soft); margin-bottom:0.6rem;">Chọn lớp thuộc lộ trình đã chọn</p>
+                <select id="scope-class"><option value="">-- Chọn lớp --</option></select>
+              </div>
+              <div class="scope-box">
+                <p style="font-weight:700; color:var(--navy-ink); margin-bottom:0.2rem;">3. Chọn buổi áp dụng</p>
+                <p style="font-size:0.78rem; color:var(--text-soft); margin-bottom:0.6rem;">Chọn buổi học cụ thể để áp dụng câu hỏi (tuỳ chọn)</p>
+                <select id="scope-session"><option value="">-- Không gắn buổi học --</option></select>
+              </div>
+
+              <div class="card" style="background:var(--bg-soft); box-shadow:none; border:1px solid var(--border);">
+                <p style="font-weight:700; color:var(--navy-ink); margin-bottom:0.6rem;">Xem trước phạm vi áp dụng</p>
+                <div id="scope-preview" style="font-size:0.84rem; color:var(--text-soft);">Chọn lớp học để xem trước.</div>
+              </div>
+              <p style="font-size:0.78rem; color:var(--text-soft); margin-top:0.8rem;">Câu hỏi sẽ được giao cho tất cả học viên trong lớp (và buổi học, nếu có chọn) ở trên.</p>
+
+              <p class="msg-error" id="wiz-step3-error" style="display:none; color:var(--danger); font-size:0.82rem; margin-top:0.6rem;"></p>
+              <div style="display:flex; gap:0.7rem; margin-top:1rem;">
+                <button class="btn btn-outline" id="wiz-back-2" type="button">Quay lại chỉnh sửa</button>
+                <button class="btn btn-gold" id="wiz-save-final" type="button" style="flex:1; justify-content:center;">Lưu &amp; Giao bài</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-head"><h2>Tóm tắt câu hỏi đã lưu</h2></div>
+              <div id="wiz-summary-body-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz question management (for editing existing quiz assignments from the list) -->
+      <div class="card" id="quiz-questions-card" style="display:none; margin-top:1.2rem;">
+        <div class="card-head"><h2 id="quiz-questions-title">Câu hỏi quiz</h2><a href="#" class="more" id="quiz-questions-close">Đóng</a></div>
+        <div id="quiz-questions-list"></div>
       </div>
     </main>
   </div>
@@ -174,21 +350,26 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
+  function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
+  function fmtDateTime(iso) {
+    if (!iso) return '–';
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
   function toLocalInputValue(iso) {
     if (!iso) return '';
     var d = new Date(iso);
     d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
     return d.toISOString().slice(0, 16);
   }
-  function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
+  var TYPE_LABEL = { quiz: 'Quiz', case_study: 'Case Study', project: 'Project', essay: 'Case Study', file: 'Project' };
 
   var myMentorId = null;
   var allAssignments = [];
   var allPhases = [];
   var allClasses = [];
+  var allSessions = [];
   var allModules = [];
-  var activeClassSessions = [];
-  var activeQuizAssignmentId = null;
 
   requireAuth().then(function (session) {
     if (!session) return;
@@ -207,180 +388,386 @@
       window.sb.from('mentors').select('id').eq('user_id', session.user.id).single().then(function (mRes) {
         if (mRes.error || !mRes.data) return;
         myMentorId = mRes.data.id;
-        Promise.all([
-          window.sb.from('phases').select('id,title').order('order_index'),
-          window.sb.from('classes').select('id,name').eq('mentor_id', myMentorId),
-          window.sb.from('modules').select('id,phase_id,order_index')
-        ]).then(function (r) {
-          allPhases = r[0].data || [];
-          allClasses = r[1].data || [];
-          allModules = r[2].data || [];
-          document.getElementById('asg-phase').innerHTML = '<option value="">-- Không gán --</option>' + allPhases.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>'; }).join('');
-          document.getElementById('asg-class').innerHTML = '<option value="">-- Tất cả lớp (theo chặng) --</option>' + allClasses.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
-          loadAssignments();
-        });
+        initData();
       });
     });
   });
+
+  function initData() {
+    Promise.all([
+      window.sb.from('phases').select('id,title').order('order_index'),
+      window.sb.from('classes').select('id,name,phase_id').eq('mentor_id', myMentorId),
+      window.sb.from('modules').select('id,phase_id,order_index')
+    ]).then(function (r) {
+      allPhases = r[0].data || [];
+      allClasses = r[1].data || [];
+      allModules = r[2].data || [];
+      var classIds = allClasses.map(function (c) { return c.id; });
+      var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,class_id,title,scheduled_at,order_index,module_id').in('class_id', classIds).order('order_index') : Promise.resolve({ data: [] });
+      sessionsP.then(function (sRes) {
+        allSessions = sRes.data || [];
+        populateFilterDropdowns();
+        loadAssignments();
+      });
+    });
+  }
+
+  function populateFilterDropdowns() {
+    document.getElementById('f-phase').innerHTML = '<option value="">Tất cả lộ trình</option>' + allPhases.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>'; }).join('');
+    document.getElementById('f-class').innerHTML = '<option value="">Tất cả lớp học</option>' + allClasses.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
+    document.getElementById('f-session').innerHTML = '<option value="">Tất cả buổi học</option>' + allSessions.map(function (s) {
+      var cls = allClasses.find(function (c) { return c.id === s.class_id; });
+      return '<option value="' + s.id + '">' + (cls ? escapeHtml(cls.name) + ' — ' : '') + 'Buổi ' + (s.order_index != null ? s.order_index : '?') + '</option>';
+    }).join('');
+  }
+  ['f-search', 'f-phase', 'f-class', 'f-session', 'f-type', 'f-status'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', renderList);
+    document.getElementById(id).addEventListener('change', renderList);
+  });
+
+  function sessionForAssignment(a) {
+    if (!a.module_id) return null;
+    var mod = allModules.find(function (m) { return m.id === a.module_id; });
+    var candidates = a.class_id ? allSessions.filter(function (s) { return s.class_id === a.class_id; }) : allSessions;
+    return candidates.find(function (s) { return s.module_id === a.module_id; }) ||
+      (mod ? candidates.find(function (s) { return s.order_index != null && s.order_index === mod.order_index; }) : null) || null;
+  }
+
+  function assignmentStatus(a) {
+    if (!a.due_date) return 'open';
+    var due = new Date(a.due_date);
+    if (due >= new Date()) return 'open';
+    var subs = a._submissions || [];
+    if (subs.some(function (s) { return !s.graded; })) return 'grading';
+    return 'closed';
+  }
+  function statusBadge(status) {
+    if (status === 'open') return '<span class="badge" style="background:var(--green-soft); color:var(--green);">Đang mở</span>';
+    if (status === 'grading') return '<span class="badge b-review">Đang chấm</span>';
+    return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Đã đóng</span>';
+  }
+  function typeBadge(type) {
+    var label = TYPE_LABEL[type] || type;
+    var colors = { quiz: 'var(--gold)', case_study: 'var(--green)', project: 'var(--violet)', essay: 'var(--green)', file: 'var(--violet)' };
+    return '<span class="badge" style="background:transparent; border:1.5px solid ' + (colors[type] || 'var(--border)') + '; color:' + (colors[type] || 'var(--text-soft)') + ';">' + escapeHtml(label) + '</span>';
+  }
 
   function loadAssignments() {
-    window.sb.from('assignments').select('id,title,type,description,max_score,due_date,doc_type,phase_id,class_id,module_id,due_offset_days').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (res) {
+    window.sb.from('assignments').select('*').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (res) {
       allAssignments = res.data || [];
-      var tbody = document.getElementById('assignments-tbody');
-      if (allAssignments.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập nào.</td></tr>'; return; }
-      tbody.innerHTML = allAssignments.map(function (a) {
-        var phase = allPhases.find(function (p) { return p.id === a.phase_id; });
-        var cls = allClasses.find(function (c) { return c.id === a.class_id; });
-        return '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.type) + '</td><td>' + (phase ? escapeHtml(phase.title) : '—') + '</td><td>' + (cls ? escapeHtml(cls.name) : 'Tất cả lớp') + '</td><td>' + fmtDate(a.due_date) + '</td>' +
-          '<td><button class="row-action-btn" data-edit-asg="' + a.id + '">Sửa</button> <button class="row-action-btn" data-del-asg="' + a.id + '">Xoá</button></td></tr>';
-      }).join('');
-      tbody.querySelectorAll('[data-edit-asg]').forEach(function (btn) { btn.addEventListener('click', function () { editAssignment(btn.getAttribute('data-edit-asg')); }); });
-      tbody.querySelectorAll('[data-del-asg]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          if (!confirm('Xoá bài tập này? (Sẽ xoá luôn câu hỏi/bài nộp liên quan)')) return;
-          window.sb.from('assignments').delete().eq('id', btn.getAttribute('data-del-asg')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadAssignments(); });
-        });
+      var ids = allAssignments.map(function (a) { return a.id; });
+      var subsP = ids.length ? window.sb.from('submissions').select('assignment_id,graded').in('assignment_id', ids) : Promise.resolve({ data: [] });
+      subsP.then(function (subRes) {
+        var subs = subRes.data || [];
+        allAssignments.forEach(function (a) { a._submissions = subs.filter(function (s) { return s.assignment_id === a.id; }); });
+        renderStats();
+        renderList();
       });
     });
   }
 
-  function populateSessionsForClass(classId, preselectModuleId) {
-    var sessionField = document.getElementById('asg-session-field');
-    var offsetField = document.getElementById('asg-offset-field');
-    var sessionSelect = document.getElementById('asg-session');
-    if (!classId) {
-      sessionField.style.display = 'none';
-      offsetField.style.display = 'none';
-      activeClassSessions = [];
-      sessionSelect.innerHTML = '<option value="">-- Không gắn buổi học --</option>';
-      return Promise.resolve();
-    }
-    sessionField.style.display = 'block';
-    offsetField.style.display = 'block';
-    return window.sb.from('class_sessions').select('id,title,scheduled_at,order_index,module_id').eq('class_id', classId).order('order_index').then(function (res) {
-      activeClassSessions = res.data || [];
-      sessionSelect.innerHTML = '<option value="">-- Không gắn buổi học --</option>' + activeClassSessions.map(function (s) {
-        return '<option value="' + s.id + '">Buổi ' + (s.order_index != null ? s.order_index : '?') + ' — ' + fmtDate(s.scheduled_at) + (s.title ? ' — ' + escapeHtml(s.title) : '') + '</option>';
-      }).join('');
-      if (preselectModuleId) {
-        var mod = allModules.find(function (m) { return m.id === preselectModuleId; });
-        var match = mod ? activeClassSessions.find(function (s) { return s.module_id === preselectModuleId || (s.order_index != null && s.order_index === mod.order_index); }) : null;
-        if (match) sessionSelect.value = match.id;
+  function renderStats() {
+    document.getElementById('stat-total').textContent = allAssignments.length;
+    document.getElementById('stat-quiz-open').textContent = allAssignments.filter(function (a) { return a.type === 'quiz' && assignmentStatus(a) === 'open'; }).length;
+    document.getElementById('stat-casestudy').textContent = allAssignments.filter(function (a) { return a.type === 'case_study' || a.type === 'essay'; }).length;
+    document.getElementById('stat-project').textContent = allAssignments.filter(function (a) { return a.type === 'project' || a.type === 'file'; }).length;
+  }
+
+  function renderList() {
+    var q = (document.getElementById('f-search').value || '').toLowerCase();
+    var fPhase = document.getElementById('f-phase').value;
+    var fClass = document.getElementById('f-class').value;
+    var fSession = document.getElementById('f-session').value;
+    var fType = document.getElementById('f-type').value;
+    var fStatus = document.getElementById('f-status').value;
+
+    var filtered = allAssignments.filter(function (a) {
+      if (q && a.title.toLowerCase().indexOf(q) === -1) return false;
+      if (fPhase && a.phase_id !== fPhase) return false;
+      if (fClass && a.class_id !== fClass) return false;
+      if (fSession) {
+        var sess = sessionForAssignment(a);
+        if (!sess || sess.id !== fSession) return false;
       }
+      if (fType && a.type !== fType) return false;
+      if (fStatus && assignmentStatus(a) !== fStatus) return false;
+      return true;
+    });
+
+    document.getElementById('list-title').textContent = 'Danh sách câu hỏi (' + filtered.length + ')';
+    var tbody = document.getElementById('list-tbody');
+    if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="color:var(--text-soft); font-size:0.85rem;">Chưa có câu hỏi nào.</td></tr>'; return; }
+    tbody.innerHTML = filtered.map(function (a) {
+      var phase = allPhases.find(function (p) { return p.id === a.phase_id; });
+      var cls = allClasses.find(function (c) { return c.id === a.class_id; });
+      var sess = sessionForAssignment(a);
+      return '<tr>' +
+        '<td>' + escapeHtml(a.title) + '</td>' +
+        '<td>' + typeBadge(a.type) + '</td>' +
+        '<td>' + (phase ? escapeHtml(phase.title) : '—') + '</td>' +
+        '<td>' + (cls ? escapeHtml(cls.name) : 'Tất cả lớp') + '</td>' +
+        '<td>' + (sess ? 'Buổi ' + (sess.order_index != null ? sess.order_index : '?') + (sess.title ? ' - ' + escapeHtml(sess.title) : '') : '—') + '</td>' +
+        '<td>' + fmtDateTime(a.due_date) + '</td>' +
+        '<td>' + statusBadge(assignmentStatus(a)) + '</td>' +
+        '<td><button class="row-action-btn" data-edit="' + a.id + '">Sửa</button> <button class="row-action-btn" data-del="' + a.id + '">Xoá</button></td></tr>';
+    }).join('');
+    tbody.querySelectorAll('[data-edit]').forEach(function (btn) { btn.addEventListener('click', function () { openQuizManageOrAlert(btn.getAttribute('data-edit')); }); });
+    tbody.querySelectorAll('[data-del]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!confirm('Xoá câu hỏi này? (Sẽ xoá luôn câu hỏi con/bài nộp liên quan)')) return;
+        window.sb.from('assignments').delete().eq('id', btn.getAttribute('data-del')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadAssignments(); });
+      });
     });
   }
-  document.getElementById('asg-class').addEventListener('change', function (e) {
-    populateSessionsForClass(e.target.value, null);
-  });
 
-  function editAssignment(id) {
+  function openQuizManageOrAlert(id) {
     var a = allAssignments.find(function (x) { return x.id === id; });
     if (!a) return;
-    document.getElementById('asg-id').value = a.id;
-    document.getElementById('asg-title').value = a.title;
-    document.getElementById('asg-type').value = a.type;
-    document.getElementById('asg-desc').value = a.description || '';
-    document.getElementById('asg-maxscore').value = a.max_score;
-    document.getElementById('asg-due').value = toLocalInputValue(a.due_date);
-    document.getElementById('asg-doctype').value = a.doc_type || '';
-    document.getElementById('asg-phase').value = a.phase_id || '';
-    document.getElementById('asg-class').value = a.class_id || '';
-    document.getElementById('asg-offset').value = a.due_offset_days != null ? a.due_offset_days : '';
-    populateSessionsForClass(a.class_id, a.module_id);
-    document.getElementById('assignment-form-title').textContent = 'Sửa bài tập';
-    document.getElementById('assignment-submit-btn').textContent = 'Lưu thay đổi';
-    document.getElementById('assignment-cancel-btn').style.display = 'inline-flex';
-    if (a.type === 'quiz') { showQuizQuestions(a.id, a.title); } else { document.getElementById('quiz-questions-card').style.display = 'none'; }
-  }
-  document.getElementById('assignment-cancel-btn').addEventListener('click', function () {
-    document.getElementById('assignment-form').reset();
-    document.getElementById('asg-id').value = '';
-    document.getElementById('assignment-form-title').textContent = 'Thêm bài tập mới';
-    document.getElementById('assignment-submit-btn').textContent = 'Thêm bài tập';
-    document.getElementById('assignment-cancel-btn').style.display = 'none';
-    document.getElementById('quiz-questions-card').style.display = 'none';
-    populateSessionsForClass('', null);
-  });
-  document.getElementById('assignment-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var id = document.getElementById('asg-id').value;
-    var dueVal = document.getElementById('asg-due').value;
-    var phaseId = document.getElementById('asg-phase').value || null;
-    var sessionId = document.getElementById('asg-session').value;
-    var offsetVal = document.getElementById('asg-offset').value;
-    var moduleId = null;
-    if (sessionId) {
-      var picked = activeClassSessions.find(function (s) { return s.id === sessionId; });
-      if (picked) {
-        moduleId = picked.module_id || (allModules.find(function (m) { return m.phase_id === phaseId && m.order_index === picked.order_index; }) || {}).id || null;
-      }
+    if (a.type !== 'quiz') {
+      alert('Sửa nội dung Case Study/Project: vui lòng xoá và tạo lại câu hỏi mới (chưa hỗ trợ sửa trực tiếp ở bản này).');
+      return;
     }
-    var payload = {
-      title: document.getElementById('asg-title').value.trim(),
-      type: document.getElementById('asg-type').value,
-      description: document.getElementById('asg-desc').value.trim(),
-      max_score: parseFloat(document.getElementById('asg-maxscore').value) || 10,
-      due_date: dueVal ? new Date(dueVal).toISOString() : null,
-      doc_type: document.getElementById('asg-doctype').value.trim(),
-      phase_id: phaseId,
-      class_id: document.getElementById('asg-class').value || null,
-      module_id: moduleId,
-      due_offset_days: sessionId && offsetVal !== '' ? parseInt(offsetVal, 10) : null,
-      mentor_id: myMentorId
-    };
-    var errorOut = document.getElementById('assignment-error');
-    errorOut.style.display = 'none';
-    var action = id ? window.sb.from('assignments').update(payload).eq('id', id) : window.sb.from('assignments').insert(payload);
-    action.then(function (res) {
-      if (res.error) { errorOut.textContent = res.error.message; errorOut.style.display = 'block'; return; }
-      document.getElementById('assignment-cancel-btn').click();
-      loadAssignments();
-    });
-  });
-
-  function showQuizQuestions(assignmentId, title) {
-    activeQuizAssignmentId = assignmentId;
     document.getElementById('quiz-questions-card').style.display = 'block';
-    document.getElementById('quiz-questions-title').textContent = 'Câu hỏi quiz — ' + title;
-    loadQuizQuestions();
-  }
-  function loadQuizQuestions() {
-    window.sb.from('quiz_questions').select('id,question_text,options,correct_index,order_index').eq('assignment_id', activeQuizAssignmentId).order('order_index').then(function (res) {
+    document.getElementById('quiz-questions-title').textContent = 'Câu hỏi quiz — ' + a.title;
+    window.sb.from('quiz_questions').select('id,question_text,options,correct_index,order_index').eq('assignment_id', id).order('order_index').then(function (res) {
       var list = document.getElementById('quiz-questions-list');
       var qs = res.data || [];
       if (qs.length === 0) { list.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có câu hỏi nào.</p>'; return; }
-      list.innerHTML = qs.map(function (q, idx) {
-        var opts = (q.options || []).map(function (opt, i) {
-          return '<div class="opt' + (i === q.correct_index ? ' correct' : '') + '">' + (i === q.correct_index ? '✓ ' : '') + escapeHtml(opt) + '</div>';
+      list.innerHTML = qs.map(function (qq, idx) {
+        var opts = (qq.options || []).map(function (opt, i) {
+          return '<div class="opt' + (i === qq.correct_index ? ' correct' : '') + '">' + (i === qq.correct_index ? '✓ ' : '') + escapeHtml(opt) + '</div>';
         }).join('');
-        return '<div class="qq-item"><b>Câu ' + (idx + 1) + '.</b> ' + escapeHtml(q.question_text) + opts +
-          '<button class="row-action-btn" data-del-qq="' + q.id + '" style="margin-top:6px;">Xoá câu hỏi</button></div>';
+        return '<div class="qq-item"><b>Câu ' + (idx + 1) + '.</b> ' + escapeHtml(qq.question_text) + opts + '</div>';
       }).join('');
-      list.querySelectorAll('[data-del-qq]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          window.sb.from('quiz_questions').delete().eq('id', btn.getAttribute('data-del-qq')).then(function (r) { if (r.error) alert('Lỗi: ' + r.error.message); else loadQuizQuestions(); });
-        });
+    });
+    document.getElementById('quiz-questions-card').scrollIntoView({ behavior: 'smooth' });
+  }
+  document.getElementById('quiz-questions-close').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.getElementById('quiz-questions-card').style.display = 'none';
+  });
+
+  // ============ WIZARD ============
+  var wizType = null;
+  var wizQuestions = [];
+  var wizData = {};
+
+  function showWizardStep(n) {
+    [1, 2, 3].forEach(function (i) {
+      document.getElementById('wiz-step-' + i).style.display = i === n ? 'block' : 'none';
+      var tab = document.getElementById('wiz-tab-' + i);
+      tab.classList.toggle('active', i === n);
+      tab.classList.toggle('done', i < n);
+    });
+    document.getElementById('wiz-line-1').classList.toggle('done', n > 1);
+    document.getElementById('wiz-line-2').classList.toggle('done', n > 2);
+  }
+
+  document.getElementById('open-wizard-btn').addEventListener('click', function () {
+    wizType = null;
+    wizQuestions = [];
+    wizData = {};
+    document.getElementById('view-list').style.display = 'none';
+    document.getElementById('view-wizard').style.display = 'block';
+    document.getElementById('wiz-title').textContent = 'Thêm câu hỏi mới';
+    document.getElementById('wiz-subtitle').textContent = 'Chọn loại câu hỏi phù hợp với mục tiêu giảng dạy';
+    document.getElementById('wiz-form-quiz').style.display = 'none';
+    document.getElementById('wiz-form-cs').style.display = 'none';
+    showWizardStep(1);
+  });
+  document.getElementById('close-wizard-btn').addEventListener('click', function () {
+    document.getElementById('view-wizard').style.display = 'none';
+    document.getElementById('view-list').style.display = 'block';
+  });
+
+  document.querySelectorAll('[data-pick-type]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      wizType = btn.getAttribute('data-pick-type');
+      document.getElementById('wiz-title').textContent = 'Thêm câu hỏi ' + (TYPE_LABEL[wizType] || wizType);
+      document.getElementById('wiz-form-quiz').style.display = wizType === 'quiz' ? 'block' : 'none';
+      document.getElementById('wiz-form-cs').style.display = wizType !== 'quiz' ? 'block' : 'none';
+      if (wizType !== 'quiz') {
+        document.getElementById('cs-desc-label').textContent = wizType === 'project' ? 'Mô tả đề bài *' : 'Mô tả tình huống *';
+        document.getElementById('cs-objective-label').textContent = wizType === 'project' ? 'Mục tiêu *' : 'Yêu cầu đầu ra *';
+      }
+      if (wizType === 'quiz' && wizQuestions.length === 0) addQuizQuestion();
+      showWizardStep(2);
+    });
+  });
+  document.getElementById('wiz-back-1').addEventListener('click', function () { showWizardStep(1); });
+
+  function addQuizQuestion() {
+    wizQuestions.push({ text: '', options: ['', '', '', ''], correct: 0 });
+    renderQuizBuilder();
+  }
+  function renderQuizBuilder() {
+    var box = document.getElementById('quiz-builder');
+    box.innerHTML = wizQuestions.map(function (q, qi) {
+      return '<div class="card" style="box-shadow:none; border:1px solid var(--border); margin-bottom:0.8rem;">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;"><b>Câu ' + (qi + 1) + '</b>' +
+        (wizQuestions.length > 1 ? '<button class="row-action-btn" data-del-q="' + qi + '" style="color:var(--danger);">Xoá câu hỏi</button>' : '') + '</div>' +
+        '<div class="tfield"><label>Nội dung câu hỏi *</label><textarea data-q-text="' + qi + '" style="min-height:60px;">' + escapeHtml(q.text) + '</textarea></div>' +
+        '<div class="tfield"><label>Các đáp án *</label>' +
+        q.options.map(function (opt, oi) {
+          return '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><input type="radio" name="q-correct-' + qi + '" data-q-correct="' + qi + '" value="' + oi + '"' + (q.correct === oi ? ' checked' : '') + ' />' +
+            '<input type="text" data-q-opt="' + qi + '-' + oi + '" value="' + escapeHtml(opt) + '" placeholder="Đáp án ' + (oi + 1) + '" style="flex:1; padding:0.5em; border:1px solid var(--border); border-radius:6px;" /></div>';
+        }).join('') +
+        '</div></div>';
+    }).join('');
+    box.querySelectorAll('[data-q-text]').forEach(function (el) { el.addEventListener('input', function () { wizQuestions[+el.getAttribute('data-q-text')].text = el.value; updateQuizCount(); }); });
+    box.querySelectorAll('[data-q-opt]').forEach(function (el) {
+      el.addEventListener('input', function () {
+        var parts = el.getAttribute('data-q-opt').split('-');
+        wizQuestions[+parts[0]].options[+parts[1]] = el.value;
       });
     });
+    box.querySelectorAll('[data-q-correct]').forEach(function (el) {
+      el.addEventListener('change', function () { wizQuestions[+el.getAttribute('data-q-correct')].correct = +el.value; });
+    });
+    box.querySelectorAll('[data-del-q]').forEach(function (el) {
+      el.addEventListener('click', function () { wizQuestions.splice(+el.getAttribute('data-del-q'), 1); renderQuizBuilder(); updateQuizCount(); });
+    });
+    updateQuizCount();
   }
-  document.getElementById('quiz-question-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!activeQuizAssignmentId) return;
-    var options = [document.getElementById('qq-opt0').value.trim(), document.getElementById('qq-opt1').value.trim(), document.getElementById('qq-opt2').value.trim(), document.getElementById('qq-opt3').value.trim()];
-    var correctIndex = parseInt(document.querySelector('input[name="qq-correct"]:checked').value, 10);
-    window.sb.from('quiz_questions').select('id', { count: 'exact', head: true }).eq('assignment_id', activeQuizAssignmentId).then(function (countRes) {
-      var orderIndex = (countRes.count || 0) + 1;
-      window.sb.from('quiz_questions').insert({
-        assignment_id: activeQuizAssignmentId,
-        question_text: document.getElementById('qq-text').value.trim(),
-        options: options,
-        correct_index: correctIndex,
-        order_index: orderIndex
-      }).then(function (res) {
-        if (res.error) { alert('Lỗi: ' + res.error.message); return; }
-        document.getElementById('quiz-question-form').reset();
-        loadQuizQuestions();
-      });
+  function updateQuizCount() { document.getElementById('q-count').value = wizQuestions.length + ' câu'; }
+  document.getElementById('add-question-btn').addEventListener('click', addQuizQuestion);
+
+  function renderSummary(targetId) {
+    var rows = [];
+    if (wizType === 'quiz') {
+      rows.push(['Loại câu hỏi', 'Quiz']);
+      rows.push(['Quy cách nộp', 'Trả lời trắc nghiệm trên hệ thống']);
+      rows.push(['Thời gian làm bài', document.getElementById('q-time-limit').value + ' phút']);
+      rows.push(['Số câu hỏi', wizQuestions.length + ' câu']);
+      rows.push(['Hiển thị điểm sau nộp', document.getElementById('q-show-score').checked ? 'Có' : 'Không']);
+      rows.push(['Trộn đáp án', document.getElementById('q-shuffle').checked ? 'Có' : 'Không']);
+    } else if (wizType) {
+      rows.push(['Loại câu hỏi', TYPE_LABEL[wizType]]);
+      rows.push(['Hình thức nộp', 'Link Google Drive']);
+      rows.push(['Hạn nộp', fmtDateTime(document.getElementById('cs-due').value ? new Date(document.getElementById('cs-due').value).toISOString() : null)]);
+      rows.push(['Thang điểm', document.getElementById('cs-maxscore').value]);
+    }
+    var html = rows.map(function (r) { return '<div class="summary-row"><span class="l">' + escapeHtml(r[0]) + '</span><span class="v">' + escapeHtml(String(r[1])) + '</span></div>'; }).join('');
+    document.getElementById(targetId).innerHTML = html;
+  }
+
+  document.getElementById('wiz-next-2').addEventListener('click', function () {
+    var errorOut = document.getElementById('wiz-step2-error');
+    errorOut.style.display = 'none';
+    if (wizType === 'quiz') {
+      var title = document.getElementById('q-title').value.trim();
+      if (!title) { errorOut.textContent = 'Vui lòng nhập tên bài.'; errorOut.style.display = 'block'; return; }
+      if (!document.getElementById('q-due').value) { errorOut.textContent = 'Vui lòng chọn hạn nộp.'; errorOut.style.display = 'block'; return; }
+      if (wizQuestions.length === 0 || wizQuestions.some(function (q) { return !q.text.trim() || q.options.some(function (o) { return !o.trim(); }); })) {
+        errorOut.textContent = 'Vui lòng điền đủ nội dung và đáp án cho tất cả câu hỏi.'; errorOut.style.display = 'block'; return;
+      }
+      wizData = {
+        title: title,
+        description: document.getElementById('q-desc').value.trim(),
+        due_date: new Date(document.getElementById('q-due').value).toISOString(),
+        quiz_time_limit_minutes: parseInt(document.getElementById('q-time-limit').value, 10),
+        quiz_show_score_after_submit: document.getElementById('q-show-score').checked,
+        quiz_shuffle_answers: document.getElementById('q-shuffle').checked,
+        max_score: 10
+      };
+    } else {
+      var csTitle = document.getElementById('cs-title').value.trim();
+      var csDesc = document.getElementById('cs-desc').value.trim();
+      var csObjective = document.getElementById('cs-objective').value.trim();
+      var csDeliverables = document.getElementById('cs-deliverables').value.trim();
+      var csDue = document.getElementById('cs-due').value;
+      if (!csTitle || !csDesc || !csObjective || !csDeliverables || !csDue) {
+        errorOut.textContent = 'Vui lòng điền đủ các trường bắt buộc (*).'; errorOut.style.display = 'block'; return;
+      }
+      wizData = {
+        title: csTitle,
+        description: csDesc,
+        objective: csObjective,
+        deliverables: csDeliverables,
+        reference_url: document.getElementById('cs-reference').value.trim(),
+        due_date: new Date(csDue).toISOString(),
+        max_score: parseFloat(document.getElementById('cs-maxscore').value) || 100,
+        student_notes: document.getElementById('cs-notes').value.trim()
+      };
+    }
+    renderSummary('wiz-summary-body');
+    populateScopeStep();
+    showWizardStep(3);
+  });
+
+  function populateScopeStep() {
+    document.getElementById('scope-phase').innerHTML = '<option value="">-- Chọn lộ trình --</option>' + allPhases.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.title) + '</option>'; }).join('');
+    document.getElementById('scope-class').innerHTML = '<option value="">-- Chọn lớp --</option>';
+    document.getElementById('scope-session').innerHTML = '<option value="">-- Không gắn buổi học --</option>';
+    document.getElementById('scope-preview').textContent = 'Chọn lớp học để xem trước.';
+    renderSummary('wiz-summary-body-3');
+  }
+  document.getElementById('scope-phase').addEventListener('change', function (e) {
+    var phaseId = e.target.value;
+    var classesInPhase = phaseId ? allClasses.filter(function (c) { return c.phase_id === phaseId; }) : allClasses;
+    document.getElementById('scope-class').innerHTML = '<option value="">-- Chọn lớp --</option>' + classesInPhase.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
+    document.getElementById('scope-session').innerHTML = '<option value="">-- Không gắn buổi học --</option>';
+  });
+  document.getElementById('scope-class').addEventListener('change', function (e) {
+    var classId = e.target.value;
+    var sessions = allSessions.filter(function (s) { return s.class_id === classId; });
+    document.getElementById('scope-session').innerHTML = '<option value="">-- Không gắn buổi học --</option>' + sessions.map(function (s) {
+      return '<option value="' + s.id + '">Buổi ' + (s.order_index != null ? s.order_index : '?') + ' — ' + fmtDateTime(s.scheduled_at) + (s.title ? ' — ' + escapeHtml(s.title) : '') + '</option>';
+    }).join('');
+    updateScopePreview();
+  });
+  document.getElementById('scope-session').addEventListener('change', updateScopePreview);
+
+  function updateScopePreview() {
+    var classId = document.getElementById('scope-class').value;
+    var sessionId = document.getElementById('scope-session').value;
+    var box = document.getElementById('scope-preview');
+    if (!classId) { box.textContent = 'Chọn lớp học để xem trước.'; return; }
+    var cls = allClasses.find(function (c) { return c.id === classId; });
+    var sess = allSessions.find(function (s) { return s.id === sessionId; });
+    window.sb.from('class_members').select('student_id', { count: 'exact', head: true }).eq('class_id', classId).then(function (res) {
+      box.innerHTML =
+        '<div class="summary-row"><span class="l">Lớp sẽ áp dụng</span><span class="v">' + escapeHtml(cls ? cls.name : '') + '</span></div>' +
+        '<div class="summary-row"><span class="l">Buổi áp dụng</span><span class="v">' + (sess ? fmtDateTime(sess.scheduled_at) : 'Tất cả buổi') + '</span></div>' +
+        '<div class="summary-row"><span class="l">Số học viên dự kiến</span><span class="v">' + (res.count != null ? res.count : 0) + ' học viên</span></div>';
+    });
+  }
+
+  document.getElementById('wiz-back-2').addEventListener('click', function () { showWizardStep(2); });
+
+  document.getElementById('wiz-save-final').addEventListener('click', function () {
+    var errorOut = document.getElementById('wiz-step3-error');
+    errorOut.style.display = 'none';
+    var phaseId = document.getElementById('scope-phase').value || null;
+    var classId = document.getElementById('scope-class').value || null;
+    var sessionId = document.getElementById('scope-session').value || null;
+    var moduleId = null;
+    if (sessionId) {
+      var sess = allSessions.find(function (s) { return s.id === sessionId; });
+      if (sess) {
+        moduleId = sess.module_id || (allModules.find(function (m) { return m.phase_id === phaseId && m.order_index === sess.order_index; }) || {}).id || null;
+      }
+    }
+    var payload = Object.assign({}, wizData, {
+      type: wizType,
+      phase_id: phaseId,
+      class_id: classId,
+      module_id: moduleId,
+      mentor_id: myMentorId
+    });
+    window.sb.from('assignments').insert(payload).select('id').single().then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      var assignmentId = res.data.id;
+      if (wizType === 'quiz' && wizQuestions.length) {
+        var rows = wizQuestions.map(function (q, i) { return { assignment_id: assignmentId, question_text: q.text, options: q.options, correct_index: q.correct, order_index: i + 1 }; });
+        window.sb.from('quiz_questions').insert(rows).then(function () {
+          document.getElementById('close-wizard-btn').click();
+          loadAssignments();
+        });
+      } else {
+        document.getElementById('close-wizard-btn').click();
+        loadAssignments();
+      }
     });
   });
 </script>

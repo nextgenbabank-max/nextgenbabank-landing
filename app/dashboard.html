@@ -22,9 +22,10 @@
     </a>
     <nav class="mainnav">
       <a href="dashboard.html" class="active">Tổng quan</a>
+      <a href="my-classes.html">Lớp học của tôi</a>
       <a href="assignments.html">Bài tập</a>
-      <a href="case-studies.html">Case study</a>
-      <a href="progress.html">Tiến độ</a>
+      <a href="mentor.html">Liên hệ Mentor</a>
+      <a href="documents.html">Tài liệu</a>
       <a href="notifications.html">Thông báo <span class="count" id="notif-count-main" style="display:none;">0</span></a>
     </nav>
     <div class="topbar-actions">
@@ -55,9 +56,10 @@
   </div>
   <div class="mobile-nav" id="mobile-nav">
     <a href="dashboard.html" class="active">Tổng quan</a>
+    <a href="my-classes.html">Lớp học của tôi</a>
     <a href="assignments.html">Bài tập</a>
-    <a href="case-studies.html">Case study</a>
-    <a href="progress.html">Tiến độ</a>
+    <a href="mentor.html">Liên hệ Mentor</a>
+    <a href="documents.html">Tài liệu</a>
     <a href="notifications.html">Thông báo <span class="count" id="notif-count-mobile" style="display:none;">0</span></a>
     <a href="#" id="mobile-logout">Đăng xuất</a>
   </div>
@@ -68,15 +70,11 @@
     <button class="sidebar-toggle" id="sidebar-collapse-toggle" aria-label="Thu gọn/Mở rộng menu" title="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
     <nav class="sidebar-nav">
       <a href="dashboard.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="my-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>Lớp học của tôi</a>
       <a href="assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11l2 2 4-4M8 16h8"/></svg>Bài tập</a>
-      <a href="case-studies.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Case study</a>
-      <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M11 19V5M18 19v-7"/><path d="M3 19h18"/></svg>Tiến độ</a>
+      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Liên hệ Mentor</a>
+      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu</a>
       <a href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Thông báo<span class="badge-num" id="notif-badge-sidebar" style="display:none;">0</span></a>
-      <div class="sidebar-divider"></div>
-      <a href="schedule.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Lịch học &amp; Meet</a>
-      <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
-      <a href="mentor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Mentor của tôi</a>
-      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 1.8-2 3.5"/><path d="M12 17h.01"/></svg>Hỏi đáp</a>
     </nav>
     <div class="sidebar-support">
       <p class="t">Hỗ trợ học tập</p>
@@ -97,7 +95,10 @@
           <p style="font-size:0.92rem; font-weight:800; color:var(--navy-ink); margin-top:0.3rem;" id="next-session-title">Đang tải...</p>
           <p style="font-size:0.8rem; color:var(--text-soft); margin-top:0.1rem;" id="next-session-time"></p>
         </div>
-        <a class="btn btn-outline btn-sm" href="schedule.html">Xem lịch</a>
+        <span id="next-session-meet-wrap" style="display:flex; gap:0.5rem;">
+          <a class="btn btn-gold btn-sm" id="next-session-meet-btn" href="#" target="_blank" rel="noopener" style="display:none;">Vào Meet</a>
+          <a class="btn btn-outline btn-sm" href="my-classes.html">Xem lịch</a>
+        </span>
       </div>
     </div>
 
@@ -178,6 +179,8 @@
 <script src="shared/app.js"></script>
 <script src="shared/notifications.js"></script>
 <script src="shared/due-date.js"></script>
+<script src="shared/assignment-status.js"></script>
+<script src="shared/session-status.js"></script>
 <script>
   (function () {
     var toggle = document.getElementById('nav-toggle');
@@ -268,18 +271,25 @@
 
   function loadNextMeetSession(userId) {
     Promise.all([
-      window.sb.from('class_sessions').select('title,scheduled_at,class_id').gte('scheduled_at', new Date().toISOString()).order('scheduled_at'),
+      window.sb.from('class_sessions').select('title,scheduled_at,ends_at,meet_link,status,is_published,class_id').gte('scheduled_at', new Date().toISOString()).order('scheduled_at'),
       window.sb.from('class_members').select('class_id').eq('student_id', userId)
     ]).then(function (r) {
       var myClassIds = (r[1].data || []).map(function (cm) { return cm.class_id; });
       var s = (r[0].data || []).find(function (sess) { return !sess.class_id || myClassIds.indexOf(sess.class_id) !== -1; });
       var titleEl = document.getElementById('next-session-title');
       var timeEl = document.getElementById('next-session-time');
-      if (!s) { titleEl.textContent = 'Chưa có buổi học nào'; timeEl.textContent = ''; return; }
+      var meetBtn = document.getElementById('next-session-meet-btn');
+      if (!s) { titleEl.textContent = 'Chưa có buổi học nào'; timeEl.textContent = ''; meetBtn.style.display = 'none'; return; }
       var d = new Date(s.scheduled_at);
       var days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
       titleEl.textContent = s.title;
       timeEl.textContent = days[d.getDay()] + ', ' + d.toLocaleDateString('vi-VN') + ' • ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      if (sessionMeetVisible(s)) {
+        meetBtn.href = s.meet_link;
+        meetBtn.style.display = 'inline-flex';
+      } else {
+        meetBtn.style.display = 'none';
+      }
     });
   }
 
@@ -305,7 +315,7 @@
       window.sb.from('modules').select('id,title,phase_id,order_index').order('order_index'),
       window.sb.from('module_progress').select('module_id,completed').eq('user_id', userId),
       window.sb.from('assignments').select('id,title,type,phase_id,mentor_id,doc_type,due_date,due_offset_days,module_id,max_score,class_id').order('created_at', { ascending: false }),
-      window.sb.from('submissions').select('assignment_id,score,max_score,graded,graded_at,submitted_at').eq('user_id', userId),
+      window.sb.from('submissions').select('*').eq('user_id', userId),
       window.sb.from('mentors').select('id,full_name,avatar_initials,avatar_color'),
       window.sb.from('class_members').select('class_id').eq('student_id', userId).order('joined_at', { ascending: false }).limit(1),
       window.sb.from('class_members').select('class_id').eq('student_id', userId)
@@ -335,17 +345,22 @@
       var sessionsQuery = myClassId
         ? window.sb.from('class_sessions').select('module_id,order_index,scheduled_at').eq('class_id', myClassId)
         : Promise.resolve({ data: [] });
+      var subIds = submissions.map(function (s) { return s.id; });
+      var versionsQuery = subIds.length ? window.sb.from('submission_versions').select('submission_id,action').in('submission_id', subIds) : Promise.resolve({ data: [] });
 
-      sessionsQuery.then(function (sessionsRes) {
-        annotateEffectiveDueDates(assignments, sessionsRes.data || [], modulesById);
+      Promise.all([sessionsQuery, versionsQuery]).then(function (r2) {
+        var revisionMap = {};
+        (r2[1].data || []).forEach(function (v) { if (v.action === 'revision_requested') revisionMap[v.submission_id] = true; });
+
+        annotateEffectiveDueDates(assignments, r2[0].data || [], modulesById);
 
         renderPhaseStats(phases, modules, progressByModule, assignments, subByAssignment);
-        renderAssignmentsTable(assignments, subByAssignment, mentorById, phaseById);
+        renderAssignmentsTable(assignments, subByAssignment, revisionMap, mentorById, phaseById);
         renderCurrentPhase(phases, modules, progressByModule);
         renderWeeklyGoal(assignments, subByAssignment);
         renderFeed(assignments, subByAssignment, mentorById);
 
-        var doneCount = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+        var doneCount = assignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].status === 'graded'; }).length;
         var pendingCount = assignments.filter(function (a) { return !subByAssignment[a.id]; }).length;
         document.getElementById('stat-done-frac').textContent = doneCount + ' / ' + assignments.length;
         document.getElementById('stat-done-pct').textContent = assignments.length ? 'Hoàn thành ' + Math.round(doneCount / assignments.length * 100) + '%' : '—';
@@ -376,24 +391,13 @@
       var phaseAssignments = assignments.filter(function (a) { return a.phase_id === phase.id; });
       var total = phaseModules.length + phaseAssignments.length;
       var done = phaseModules.filter(function (m) { return progressByModule[m.id]; }).length +
-        phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+        phaseAssignments.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].status === 'graded'; }).length;
       var pct = total ? Math.round(done / total * 100) : 0;
       return { id: phase.id, title: phase.title, order_index: phase.order_index, pct: pct };
     });
   }
 
-  function assignmentStatus(assignment, sub) {
-    if (!sub) return { label: 'Mới giao', cls: 'b-new', action: 'Làm bài' };
-    if (!sub.graded) return { label: 'Chờ chấm', cls: 'b-review', action: 'Xem bài nộp' };
-    return { label: 'Đã chấm: ' + sub.score + '/' + sub.max_score, cls: 'b-done', action: 'Xem kết quả' };
-  }
-
-  function assignmentLink(a) {
-    var page = a.type === 'quiz' ? 'quiz.html' : (a.type === 'essay' ? 'essay.html' : 'file.html');
-    return page + '?a=' + a.id;
-  }
-
-  function renderAssignmentsTable(assignments, subByAssignment, mentorById, phaseById) {
+  function renderAssignmentsTable(assignments, subByAssignment, revisionMap, mentorById, phaseById) {
     var tbody = document.getElementById('assignments-tbody');
     if (!tbody) return;
     if (assignments.length === 0) {
@@ -402,15 +406,15 @@
     }
     tbody.innerHTML = assignments.slice(0, 6).map(function (a) {
       var sub = subByAssignment[a.id];
-      var st = assignmentStatus(a, sub);
+      var stateKey = computeSubmissionState(a, sub, sub && revisionMap[sub.id]);
       var due = a._effectiveDueDate ? fmtDate(a._effectiveDueDate) + (daysLeft(a._effectiveDueDate) != null ? ' <span class="due-soon">(' + daysLeft(a._effectiveDueDate) + ' ngày nữa)</span>' : '') : '—';
       var phase = phaseById[a.phase_id];
       return '<tr>' +
         '<td><div class="cell-item"><div><div class="t">' + escapeHtml(a.title) + '</div><div class="s">' + escapeHtml(a.doc_type || '') + '</div></div></div></td>' +
         '<td>' + escapeHtml(phase ? phase.title : '—') + '</td>' +
         '<td><span class="due-cell">' + due + '</span></td>' +
-        '<td><span class="badge ' + st.cls + '">' + st.label + '</span></td>' +
-        '<td><a class="row-action-btn" href="' + assignmentLink(a) + '">' + st.action + '</a></td>' +
+        '<td><span class="badge ' + assignmentStatusBadgeClass(stateKey) + '">' + escapeHtml(assignmentStatusLabel(stateKey)) + '</span></td>' +
+        '<td><a class="row-action-btn" href="' + assignmentDetailLink(a) + '">Xem</a></td>' +
         '</tr>';
     }).join('');
   }
@@ -448,7 +452,7 @@
       var d = a._effectiveDueDate;
       return d >= weekStart && d < weekEnd;
     });
-    var doneThisWeek = thisWeek.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].graded; }).length;
+    var doneThisWeek = thisWeek.filter(function (a) { return subByAssignment[a.id] && subByAssignment[a.id].status === 'graded'; }).length;
     var daysRemain = Math.max(0, Math.ceil((weekEnd - now) / 86400000));
     document.getElementById('week-days-left').textContent = 'Còn ' + daysRemain + ' ngày';
 
@@ -469,12 +473,12 @@
     var events = [];
     Object.keys(subByAssignment).forEach(function (aid) {
       var s = subByAssignment[aid];
-      if (s.graded && s.graded_at) {
+      if (s.status === 'graded' && s.graded_at) {
         var a = assignmentById[aid];
         var mentor = a && mentorById[a.mentor_id];
         events.push({
           time: new Date(s.graded_at),
-          html: '<span class="av">' + escapeHtml(mentor ? mentor.avatar_initials : 'GV') + '</span><p><b>' + escapeHtml(mentor ? mentor.full_name : 'Giảng viên') + '</b> đã chấm bài tập "' + escapeHtml(a ? a.title : '') + '"<br><span class="t">' + fmtDate(s.graded_at) + '</span></p>'
+          html: '<span class="av">' + escapeHtml(mentor ? mentor.avatar_initials : 'M') + '</span><p><b>' + escapeHtml(mentor ? mentor.full_name : 'Mentor') + '</b> đã chấm bài tập "' + escapeHtml(a ? a.title : '') + '"<br><span class="t">' + fmtDate(s.graded_at) + '</span></p>'
         });
       }
     });
