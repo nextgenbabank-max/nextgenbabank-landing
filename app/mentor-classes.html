@@ -113,20 +113,46 @@
 
       <div class="card" id="detail-panel" style="display:none;">
           <a href="#" class="more" id="detail-close" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Đóng</a>
-          <p id="d-name" style="font-size:1.05rem; font-weight:800; color:var(--navy-ink); margin-bottom:0.3rem;">–</p>
-          <span class="badge b-progress" id="d-status">–</span>
 
-          <div class="info-line" style="border-top:none; margin-top:0.8rem;"><span class="l" style="flex:1;">Mã lớp</span><span class="v" id="d-code">–</span></div>
-          <div class="info-line"><span class="l" style="flex:1;">Thời gian</span><span class="v" id="d-dates">–</span></div>
-          <div class="info-line"><span class="l" style="flex:1;">Tiến độ tổng thể</span><span class="v" id="d-progress">–</span></div>
+          <div class="cls-hero">
+            <span class="cls-hero-avatar" id="d-avatar">–</span>
+            <div class="cls-hero-id">
+              <div class="cls-hero-name" id="d-name">–</div>
+              <div class="cls-hero-chips">
+                <span class="chip-mini" id="d-code-chip">–</span>
+                <span class="chip-mini" id="d-dates-chip">–</span>
+              </div>
+            </div>
+            <span class="badge" id="d-status" style="flex:none;">–</span>
+            <div class="cls-hero-ring">
+              <div class="ring-wrap">
+                <svg viewBox="0 0 84 84">
+                  <circle cx="42" cy="42" r="36" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="8"/>
+                  <circle id="d-ring-circle" cx="42" cy="42" r="36" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="226"/>
+                </svg>
+                <span class="pct" id="d-ring-pct" style="color:#fff;">–</span>
+              </div>
+              <div class="cls-hero-ring-label">Tiến độ<br>tổng thể</div>
+            </div>
+          </div>
+
+          <div class="stat-grid cols-3" id="d-stat-grid" style="margin:1.1rem 0;">
+            <div class="stat-card">
+              <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg></span>
+              <div><div class="n" id="d-stat-students">–</div><div class="l">Học viên</div></div>
+            </div>
+            <div class="stat-card">
+              <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+              <div><div class="n" id="d-stat-sessions">–</div><div class="l">Buổi học</div></div>
+            </div>
+            <div class="stat-card">
+              <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg></span>
+              <div><div class="n" id="d-stat-assignments">–</div><div class="l">Bài tập đã giao</div></div>
+            </div>
+          </div>
 
           <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Danh sách học viên (<span id="d-roster-count">0</span>)</p>
-          <div class="table-wrap">
-            <table class="data-table" id="d-roster-table">
-              <thead><tr><th>Họ và tên</th><th>Email</th><th>Tiến độ</th></tr></thead>
-              <tbody id="d-roster-tbody"></tbody>
-            </table>
-          </div>
+          <div id="d-roster-list"></div>
 
           <div class="mc-tabs" id="mc-tabs" style="display:flex; gap:0.5rem; margin:1.1rem 0 1rem; border-bottom:1.5px solid var(--border);">
             <button type="button" class="mc-tab-btn active" data-tab="schedule">Lịch học</button>
@@ -136,7 +162,7 @@
           <div class="mc-tab-panel active" data-panel="schedule" id="mc-tab-schedule">
             <div class="table-wrap">
               <table class="data-table" id="d-sessions-table">
-                <thead><tr><th>Ngày giờ</th><th>Kết thúc</th><th>Phòng/Hình thức</th><th>Link Meet</th><th></th></tr></thead>
+                <thead><tr><th>Ngày giờ</th><th>Kết thúc</th><th>Phòng/Hình thức</th><th>Trạng thái</th><th>Link Meet</th><th></th></tr></thead>
                 <tbody id="d-sessions-tbody"></tbody>
               </table>
             </div>
@@ -189,6 +215,27 @@
         .assign-block:first-child { border-top: none; padding-top: 0; margin-top: 0; }
         .assign-block .assign-title-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
         .grade-inline { background: var(--bg-soft); border-radius: 10px; padding: 0.8rem; margin-top: 0.5rem; }
+
+        .cls-hero { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; background: linear-gradient(120deg, var(--navy) 0%, var(--navy-2) 100%); border-radius: 14px; padding: 1.2rem 1.4rem; }
+        .cls-hero-avatar { flex: none; width: 54px; height: 54px; border-radius: 50%; background: var(--gold-grad); color: #fff; font-weight: 800; font-size: 1.05rem; display: grid; place-items: center; }
+        .cls-hero-id { flex: 1; min-width: 140px; }
+        .cls-hero-name { font-size: 1.15rem; font-weight: 800; color: #fff; }
+        .cls-hero-chips { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+        .chip-mini { background: rgba(255,255,255,.14); color: #fff; font-size: 0.74rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+        .cls-hero-ring { display: flex; align-items: center; gap: 0.7rem; flex: none; }
+        .cls-hero-ring .ring-wrap { width: 62px; height: 62px; }
+        .cls-hero-ring .pct { font-size: 0.9rem; }
+        .cls-hero-ring-label { font-size: 0.72rem; color: rgba(255,255,255,.75); line-height: 1.3; }
+        .roster-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.6rem 0.4rem; border-radius: 10px; }
+        .roster-row:hover { background: var(--bg-soft); }
+        .roster-row .av { flex: none; width: 38px; height: 38px; border-radius: 50%; background: var(--gold-grad); color: #fff; font-weight: 800; font-size: 0.76rem; display: grid; place-items: center; }
+        .roster-row .body { flex: 1; min-width: 0; }
+        .roster-row .n { font-size: 0.86rem; font-weight: 700; color: var(--navy-ink); }
+        .roster-row .e { font-size: 0.76rem; color: var(--text-soft); margin: 1px 0 5px; }
+        .roster-row .pbar { margin-top: 4px; }
+        .roster-row .pct-label { flex: none; font-weight: 800; color: var(--navy-ink); font-size: 0.84rem; width: 42px; text-align: right; }
+        .meet-pill { display: inline-flex; align-items: center; gap: 5px; padding: 0.35em 0.8em; border-radius: 999px; background: var(--green-soft); color: var(--green); font-size: 0.78rem; font-weight: 700; text-decoration: none; }
+        .meet-pill:hover { background: var(--green); color: #fff; }
       </style>
     </main>
   </div>
@@ -198,6 +245,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/app.js"></script>
+<script src="shared/session-status.js"></script>
 <script>
   (function () {
     var btn = document.getElementById('t-hamburger');
@@ -222,6 +270,9 @@
   })();
   document.getElementById('logout-btn').addEventListener('click', signOut);
 
+  function initialsOf(name) {
+    return (name || '?').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || '?';
+  }
   function escapeHtml(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -405,33 +456,52 @@
     document.getElementById('mc-tab-schedule').style.display = 'block';
     document.getElementById('mc-tab-assignments').style.display = 'none';
     document.getElementById('d-assignments-body').innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+    document.getElementById('d-avatar').textContent = initialsOf(c.name);
     document.getElementById('d-name').textContent = c.name;
     var statusEl = document.getElementById('d-status');
-    statusEl.outerHTML = classStatusBadge(c).replace('<span', '<span id="d-status"');
-    document.getElementById('d-code').textContent = c.code || '–';
-    document.getElementById('d-dates').textContent = fmtDate(c.start_date) + ' – ' + fmtDate(c.end_date);
-    document.getElementById('d-progress').textContent = 'Đang tính...';
+    statusEl.outerHTML = classStatusBadge(c).replace('<span', '<span id="d-status" style="flex:none;"');
+    document.getElementById('d-code-chip').textContent = 'Mã lớp: ' + (c.code || '–');
+    document.getElementById('d-dates-chip').textContent = fmtDate(c.start_date) + ' – ' + fmtDate(c.end_date);
+    document.getElementById('d-ring-pct').textContent = '–';
+    document.getElementById('d-ring-circle').setAttribute('stroke-dashoffset', '226');
+    document.getElementById('d-stat-students').textContent = c._members.length;
+    document.getElementById('d-stat-sessions').textContent = (allSessionsByClass[classId] || []).length;
+    document.getElementById('d-stat-assignments').textContent = '–';
+
+    window.sb.from('assignments').select('id', { count: 'exact', head: true }).eq('mentor_id', myMentorId).or('class_id.is.null,class_id.eq.' + classId).then(function (aRes) {
+      document.getElementById('d-stat-assignments').textContent = aRes.count != null ? aRes.count : 0;
+    });
 
     window.sb.from('profiles').select('id,full_name,email').in('id', c._members.length ? c._members : ['00000000-0000-0000-0000-000000000000']).then(function (pRes) {
       var roster = c._members.length ? (pRes.data || []) : [];
       document.getElementById('d-roster-count').textContent = roster.length;
-      var rosterTbody = document.getElementById('d-roster-tbody');
+      var rosterList = document.getElementById('d-roster-list');
       if (roster.length === 0) {
-        rosterTbody.innerHTML = '<tr><td colspan="3" style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</td></tr>';
+        rosterList.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có học viên nào.</p>';
       } else {
-        rosterTbody.innerHTML = roster.map(function (s) {
-          return '<tr><td>' + escapeHtml(s.full_name || '(chưa đặt tên)') + '</td><td>' + escapeHtml(s.email || '') + '</td><td class="roster-pct" data-uid="' + s.id + '">–</td></tr>';
+        rosterList.innerHTML = roster.map(function (s) {
+          return '<div class="roster-row">' +
+            '<span class="av">' + escapeHtml(initialsOf(s.full_name || s.email)) + '</span>' +
+            '<div class="body"><div class="n">' + escapeHtml(s.full_name || '(chưa đặt tên)') + '</div><div class="e">' + escapeHtml(s.email || '') + '</div>' +
+            '<div class="pbar" data-uid="' + s.id + '"><i class="green" style="width:0%;"></i></div></div>' +
+            '<span class="pct-label" data-uid="' + s.id + '">–</span>' +
+            '</div>';
         }).join('');
       }
       var studentIds = roster.map(function (s) { return s.id; });
       computeProgressForStudents(studentIds, classId).then(function (pctByStudent) {
-        document.querySelectorAll('.roster-pct').forEach(function (cell) {
-          var uid = cell.getAttribute('data-uid');
-          cell.textContent = (pctByStudent[uid] || 0) + '%';
+        rosterList.querySelectorAll('[data-uid]').forEach(function (el) {
+          var uid = el.getAttribute('data-uid');
+          var pct = pctByStudent[uid] || 0;
+          if (el.classList.contains('pbar')) el.querySelector('i').style.width = pct + '%';
+          else el.textContent = pct + '%';
         });
         var vals = studentIds.map(function (uid) { return pctByStudent[uid] || 0; });
         var overall = vals.length ? Math.round(vals.reduce(function (s, v) { return s + v; }, 0) / vals.length) : 0;
-        document.getElementById('d-progress').textContent = vals.length ? overall + '%' : 'Chưa có học viên';
+        var circumference = 226;
+        var offset = Math.round(circumference * (1 - overall / 100));
+        document.getElementById('d-ring-circle').setAttribute('stroke-dashoffset', vals.length ? offset : circumference);
+        document.getElementById('d-ring-pct').textContent = vals.length ? overall + '%' : '–';
       });
     });
 
@@ -442,15 +512,20 @@
     var sessions = allSessionsByClass[classId] || [];
     var tbody = document.getElementById('d-sessions-tbody');
     if (sessions.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có buổi học nào.</td></tr>';
       return;
     }
     tbody.innerHTML = sessions.map(function (s) {
+      var phase = computeSessionPhase(s);
+      var meetHtml = s.meet_link
+        ? '<a class="meet-pill" href="' + escapeHtml(s.meet_link) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l5-3v10l-5-3"/><rect x="1" y="6" width="14" height="12" rx="2"/></svg>Vào Meet</a>'
+        : '<span style="color:var(--text-soft); font-size:0.78rem;">Chưa có link</span>';
       return '<tr>' +
         '<td>' + fmtDateTime(s.scheduled_at) + '</td>' +
         '<td>' + fmtDateTime(s.ends_at) + '</td>' +
         '<td>' + escapeHtml((s.mode || '') + (s.room ? ' · ' + s.room : '')) + '</td>' +
-        '<td>' + (s.meet_link ? '<a href="' + escapeHtml(s.meet_link) + '" target="_blank" rel="noopener">Mở link</a>' : '<span style="color:var(--text-soft);">Chưa có</span>') + '</td>' +
+        '<td><span class="badge ' + sessionStatusBadgeClass(phase) + '">' + escapeHtml(sessionStatusLabel(phase)) + '</span></td>' +
+        '<td>' + meetHtml + '</td>' +
         '<td><button class="row-action-btn" data-edit-sess="' + s.id + '">Sửa</button></td></tr>';
     }).join('');
     tbody.querySelectorAll('[data-edit-sess]').forEach(function (btn) {
