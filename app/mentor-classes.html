@@ -135,6 +135,15 @@
               </div>
             </div>
             <div class="tfield"><label for="se-link">Link Google Meet</label><input id="se-link" type="url" /></div>
+            <div class="grid-2" style="gap:0.8rem 1rem;">
+              <div class="tfield">
+                <label for="se-status">Trạng thái buổi học</label>
+                <select id="se-status"><option value="scheduled">Bình thường</option><option value="cancelled">Đã hủy</option><option value="rescheduled">Đã đổi lịch</option></select>
+              </div>
+              <div class="tfield">
+                <label for="se-published"><input id="se-published" type="checkbox" style="width:auto; margin-right:6px;" />Công bố cho học viên (hiện nút Vào Meet)</label>
+              </div>
+            </div>
             <p class="msg-error" id="se-error" style="display:none; color:var(--danger); font-size:0.82rem;"></p>
             <div style="display:flex; gap:0.6rem;">
               <button class="btn btn-outline btn-sm" id="se-cancel-btn" type="button">Huỷ</button>
@@ -231,7 +240,7 @@
       myClasses = clsRes.data || [];
       var classIds = myClasses.map(function (c) { return c.id; });
       var membersP = classIds.length ? window.sb.from('class_members').select('class_id,student_id') .in('class_id', classIds) : Promise.resolve({ data: [] });
-      var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,class_id,title,scheduled_at,ends_at,meet_link,mode,room').in('class_id', classIds).order('scheduled_at') : Promise.resolve({ data: [] });
+      var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,class_id,title,scheduled_at,ends_at,meet_link,mode,room,status,is_published').in('class_id', classIds).order('scheduled_at') : Promise.resolve({ data: [] });
       Promise.all([membersP, sessionsP]).then(function (r) {
         var members = r[0].data || [];
         var sessions = r[1].data || [];
@@ -375,6 +384,8 @@
     document.getElementById('se-room').value = s.room || '';
     document.getElementById('se-mode').value = s.mode || 'online';
     document.getElementById('se-link').value = s.meet_link || '';
+    document.getElementById('se-status').value = s.status || 'scheduled';
+    document.getElementById('se-published').checked = s.is_published !== false;
     document.getElementById('se-error').style.display = 'none';
     document.getElementById('session-edit-card').style.display = 'block';
   }
@@ -397,7 +408,9 @@
       ends_at: endVal ? new Date(endVal).toISOString() : null,
       room: document.getElementById('se-room').value.trim(),
       mode: document.getElementById('se-mode').value,
-      meet_link: link
+      meet_link: link,
+      status: document.getElementById('se-status').value,
+      is_published: document.getElementById('se-published').checked
     };
     window.sb.from('class_sessions').update(payload).eq('id', id).then(function (res) {
       if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
