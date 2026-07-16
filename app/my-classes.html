@@ -136,6 +136,7 @@
     </div>
 
     <div id="mc-detail" style="display:none;">
+      <a href="#" class="more" id="mc-detail-close" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Quay lại danh sách lớp</a>
       <div class="card" id="mc-info-card"></div>
 
       <div class="stat-grid cols-4" id="mc-stats"></div>
@@ -338,6 +339,10 @@
     document.getElementById('mc-detail').style.display = 'block';
     loadClassDetail(classId);
   }
+  document.getElementById('mc-detail-close').addEventListener('click', function (e) {
+    e.preventDefault();
+    renderClassList();
+  });
 
   function loadClassDetail(classId) {
     var cls = myClasses.find(function (c) { return c.id === classId; });
