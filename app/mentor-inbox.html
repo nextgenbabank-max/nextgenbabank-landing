@@ -277,12 +277,14 @@
   }
 
   function loadStudents() {
-    Promise.all([
-      window.sb.from('profiles').select('id,full_name,email').eq('is_mentor', false),
-      window.sb.from('messages').select('student_id,sender_id,body,created_at,read_at').order('created_at', { ascending: false })
-    ]).then(function (r) {
-      var profiles = r[0].data || [];
-      var messages = r[1].data || [];
+    window.sb.from('profiles').select('id,full_name,email').eq('is_mentor', false).eq('primary_mentor_id', myMentorId).then(function (pRes) {
+      var profiles = pRes.data || [];
+      var studentIds = profiles.map(function (p) { return p.id; });
+      var messagesP = studentIds.length
+        ? window.sb.from('messages').select('student_id,sender_id,body,created_at,read_at').in('student_id', studentIds).order('created_at', { ascending: false })
+        : Promise.resolve({ data: [] });
+      messagesP.then(function (mRes) {
+      var messages = mRes.data || [];
 
       students = profiles.map(function (p) {
         var thread = messages.filter(function (m) { return m.student_id === p.id; });
@@ -302,6 +304,7 @@
       }
 
       renderStudentList();
+      });
     });
   }
 

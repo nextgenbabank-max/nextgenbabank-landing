@@ -267,7 +267,7 @@
         }
 
         var subsQuery = assignmentIds.length
-          ? window.sb.from('submissions').select('id,user_id,assignment_id,submitted_at,graded', { count: 'exact' }).in('assignment_id', assignmentIds).eq('graded', false).order('submitted_at', { ascending: false }).limit(5)
+          ? window.sb.from('submissions').select('id,user_id,assignment_id,submitted_at,graded', { count: 'exact' }).in('assignment_id', assignmentIds).eq('status', 'submitted').order('submitted_at', { ascending: false }).limit(5)
           : Promise.resolve({ data: [], count: 0 });
         subsQuery.then(function (subRes) {
           var pending = subRes.data || [];
