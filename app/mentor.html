@@ -164,11 +164,6 @@
         </div>
       </div>
     </div>
-
-    <div class="card" style="margin-top:1.2rem;">
-      <div class="card-head"><h2>Lộ trình cá nhân hoá từ Mentor</h2></div>
-      <div class="path-list" id="my-path-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
-    </div>
     <style>@media (max-width: 1280px) { .grid-main-side { grid-template-columns: 1fr !important; } }</style>
   </main>
 </div>
@@ -217,7 +212,6 @@
     });
   }
   function fmtTime(iso) { return new Date(iso).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }); }
-  function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('vi-VN') : '–'; }
   var TOPIC_LABEL = { assignment: 'Bài tập', lesson: 'Bài học', schedule: 'Lịch học', feedback: 'Feedback', document: 'Tài liệu', other: 'Khác' };
 
   var currentUserId = null;
@@ -248,37 +242,7 @@
     loadNextSession(currentUserId);
     loadChat(currentUserId);
     loadLastFeedback(currentUserId);
-    loadMyPathSteps(currentUserId);
   });
-
-  function pathStatusBadge(status) {
-    if (status === 'done') return '<span class="badge b-done">Hoàn thành</span>';
-    if (status === 'in_progress') return '<span class="badge b-new">Đang học</span>';
-    return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Chưa bắt đầu</span>';
-  }
-  function pathStatusPct(status) { return status === 'done' ? 100 : status === 'in_progress' ? 50 : 0; }
-  function pathStatusColor(status) { return status === 'done' ? 'green' : status === 'in_progress' ? 'blue' : 'gold'; }
-
-  function loadMyPathSteps(userId) {
-    window.sb.from('learning_path_steps').select('id,title,description,due_date,status,order_index').eq('student_id', userId).order('order_index').then(function (res) {
-      var box = document.getElementById('my-path-list');
-      var steps = res.data || [];
-      if (res.error || steps.length === 0) {
-        box.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Mentor chưa tạo lộ trình cá nhân hoá nào cho bạn.</p>';
-        return;
-      }
-      box.innerHTML = steps.map(function (step, idx) {
-        var pct = pathStatusPct(step.status);
-        return '<div class="path-step">' +
-          '<span class="num" style="background:var(--navy); color:#fff;">' + (idx + 1) + '</span>' +
-          '<div class="body2">' +
-          '<div class="top"><div><div class="t">' + escapeHtml(step.title) + '</div><div class="d">' + escapeHtml(step.description || '') + '</div></div>' +
-          '<div class="right">' + pathStatusBadge(step.status) + '<div class="due">Hạn hoàn thành<br>' + fmtDate(step.due_date) + '</div></div></div>' +
-          '<div class="pbar-row"><span class="pbar"><i class="' + pathStatusColor(step.status) + '" style="width:' + pct + '%;"></i></span><span class="pct">' + pct + '%</span></div>' +
-          '</div></div>';
-      }).join('');
-    });
-  }
 
   function loadLastFeedback(userId) {
     window.sb.from('submissions').select('assignment_id,score,max_score,feedback_summary,feedback,graded_at').eq('user_id', userId).eq('status', 'graded').order('graded_at', { ascending: false }).limit(1).then(function (res) {

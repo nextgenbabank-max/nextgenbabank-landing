@@ -72,7 +72,6 @@
       <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
       <a href="mentor-assignments.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý câu hỏi</a>
       <a href="mentor-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
-      <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
       <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
       <div class="t-nav-divider"></div>
       <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
@@ -361,6 +360,9 @@
   var allClasses = [];
   var allSessions = [];
   var allModules = [];
+  var urlParams = new URLSearchParams(window.location.search);
+  var prefillClassId = urlParams.get('class');
+  var prefillSessionId = urlParams.get('session');
 
   requireAuth().then(function (session) {
     if (!session) return;
@@ -398,6 +400,8 @@
       sessionsP.then(function (sRes) {
         allSessions = sRes.data || [];
         populateFilterDropdowns();
+        if (prefillClassId) document.getElementById('f-class').value = prefillClassId;
+        if (prefillSessionId) document.getElementById('f-session').value = prefillSessionId;
         loadAssignments();
       });
     });
@@ -756,6 +760,18 @@
           var sess = sessionForAssignment(a);
           if (sess) document.getElementById('scope-session').value = sess.id;
         }
+      }
+    } else if (prefillClassId) {
+      var prefCls = allClasses.find(function (c) { return c.id === prefillClassId; });
+      if (prefCls) {
+        var phaseSel2 = document.getElementById('scope-phase');
+        phaseSel2.value = prefCls.phase_id || '';
+        phaseSel2.dispatchEvent(new Event('change'));
+        var classSel2 = document.getElementById('scope-class');
+        classSel2.value = prefCls.id;
+        classSel2.dispatchEvent(new Event('change'));
+        if (prefillSessionId) document.getElementById('scope-session').value = prefillSessionId;
+        updateScopePreview();
       }
     }
   }

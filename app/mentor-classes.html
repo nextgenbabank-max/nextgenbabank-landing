@@ -43,7 +43,6 @@
       <a href="mentor-inbox.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.5 8.5 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5Z"/></svg>Tin nhắn học viên</a>
       <a href="mentor-assignments.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 11h6M9 15h6"/></svg>Quản lý câu hỏi</a>
       <a href="mentor-grading.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Chấm bài</a>
-      <a href="mentor-learning-path.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 11 16M16 7.5 13 16"/></svg>Lộ trình học tập</a>
       <a href="mentor-students.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Học viên</a>
       <div class="t-nav-divider"></div>
       <a href="documents.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg>Tài liệu của tôi</a>
@@ -101,47 +100,69 @@
             </table>
           </div>
 
-          <p style="font-size:0.78rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.03em; margin:1.1rem 0 0.4rem;">Buổi học</p>
-          <div class="table-wrap">
-            <table class="data-table" id="d-sessions-table">
-              <thead><tr><th>Ngày giờ</th><th>Kết thúc</th><th>Phòng/Hình thức</th><th>Link Meet</th><th></th></tr></thead>
-              <tbody id="d-sessions-tbody"></tbody>
-            </table>
+          <div class="mc-tabs" id="mc-tabs" style="display:flex; gap:0.5rem; margin:1.1rem 0 1rem; border-bottom:1.5px solid var(--border);">
+            <button type="button" class="mc-tab-btn active" data-tab="schedule">Lịch học</button>
+            <button type="button" class="mc-tab-btn" data-tab="assignments">Bài tập theo buổi</button>
           </div>
 
-          <div class="card" id="session-edit-card" style="display:none; margin-top:0.9rem; box-shadow:none; border:1px solid var(--border);">
-            <div class="card-head"><h2 style="font-size:0.9rem;">Sửa buổi học</h2></div>
-            <input type="hidden" id="se-id" />
-            <div class="grid-2" style="gap:0.8rem 1rem;">
-              <div class="tfield"><label for="se-time">Giờ bắt đầu</label><input id="se-time" type="datetime-local" /></div>
-              <div class="tfield"><label for="se-end">Giờ kết thúc</label><input id="se-end" type="datetime-local" /></div>
+          <div class="mc-tab-panel active" data-panel="schedule" id="mc-tab-schedule">
+            <div class="table-wrap">
+              <table class="data-table" id="d-sessions-table">
+                <thead><tr><th>Ngày giờ</th><th>Kết thúc</th><th>Phòng/Hình thức</th><th>Link Meet</th><th></th></tr></thead>
+                <tbody id="d-sessions-tbody"></tbody>
+              </table>
             </div>
-            <div class="grid-2" style="gap:0.8rem 1rem;">
-              <div class="tfield"><label for="se-room">Phòng học (nếu offline)</label><input id="se-room" type="text" /></div>
-              <div class="tfield">
-                <label for="se-mode">Hình thức</label>
-                <select id="se-mode"><option value="online">Online</option><option value="offline">Offline</option><option value="hybrid">Kết hợp</option></select>
+
+            <div class="card" id="session-edit-card" style="display:none; margin-top:0.9rem; box-shadow:none; border:1px solid var(--border);">
+              <div class="card-head"><h2 style="font-size:0.9rem;">Sửa buổi học</h2></div>
+              <input type="hidden" id="se-id" />
+              <div class="grid-2" style="gap:0.8rem 1rem;">
+                <div class="tfield"><label for="se-time">Giờ bắt đầu</label><input id="se-time" type="datetime-local" /></div>
+                <div class="tfield"><label for="se-end">Giờ kết thúc</label><input id="se-end" type="datetime-local" /></div>
+              </div>
+              <div class="grid-2" style="gap:0.8rem 1rem;">
+                <div class="tfield"><label for="se-room">Phòng học (nếu offline)</label><input id="se-room" type="text" /></div>
+                <div class="tfield">
+                  <label for="se-mode">Hình thức</label>
+                  <select id="se-mode"><option value="online">Online</option><option value="offline">Offline</option><option value="hybrid">Kết hợp</option></select>
+                </div>
+              </div>
+              <div class="tfield"><label for="se-link">Link Google Meet</label><input id="se-link" type="url" /></div>
+              <div class="grid-2" style="gap:0.8rem 1rem;">
+                <div class="tfield">
+                  <label for="se-status">Trạng thái buổi học</label>
+                  <select id="se-status"><option value="scheduled">Bình thường</option><option value="cancelled">Đã hủy</option><option value="rescheduled">Đã đổi lịch</option></select>
+                </div>
+                <div class="tfield">
+                  <label for="se-published"><input id="se-published" type="checkbox" style="width:auto; margin-right:6px;" />Công bố cho học viên (hiện nút Vào Meet)</label>
+                </div>
+              </div>
+              <p class="msg-error" id="se-error" style="display:none; color:var(--danger); font-size:0.82rem;"></p>
+              <div style="display:flex; gap:0.6rem;">
+                <button class="btn btn-outline btn-sm" id="se-cancel-btn" type="button">Huỷ</button>
+                <button class="btn btn-gold btn-sm" id="se-save-btn" type="button">Lưu thay đổi</button>
               </div>
             </div>
-            <div class="tfield"><label for="se-link">Link Google Meet</label><input id="se-link" type="url" /></div>
-            <div class="grid-2" style="gap:0.8rem 1rem;">
-              <div class="tfield">
-                <label for="se-status">Trạng thái buổi học</label>
-                <select id="se-status"><option value="scheduled">Bình thường</option><option value="cancelled">Đã hủy</option><option value="rescheduled">Đã đổi lịch</option></select>
-              </div>
-              <div class="tfield">
-                <label for="se-published"><input id="se-published" type="checkbox" style="width:auto; margin-right:6px;" />Công bố cho học viên (hiện nút Vào Meet)</label>
-              </div>
-            </div>
-            <p class="msg-error" id="se-error" style="display:none; color:var(--danger); font-size:0.82rem;"></p>
-            <div style="display:flex; gap:0.6rem;">
-              <button class="btn btn-outline btn-sm" id="se-cancel-btn" type="button">Huỷ</button>
-              <button class="btn btn-gold btn-sm" id="se-save-btn" type="button">Lưu thay đổi</button>
-            </div>
+          </div>
+
+          <div class="mc-tab-panel" data-panel="assignments" id="mc-tab-assignments" style="display:none;">
+            <div id="d-assignments-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
           </div>
         </div>
       </div>
-      <style>@media (max-width: 1180px) { #cls-grid { grid-template-columns: 1fr !important; } }</style>
+      <style>
+        @media (max-width: 1180px) { #cls-grid { grid-template-columns: 1fr !important; } }
+        .mc-tab-btn { padding: 0.6rem 1rem; border: none; background: none; font-weight: 700; font-size: 0.86rem; color: var(--text-soft); cursor: pointer; border-bottom: 2px solid transparent; }
+        .mc-tab-btn.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+        .buoi-card { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+        .buoi-card .buoi-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.7rem; }
+        .buoi-card .buoi-head h3 { font-size: 0.94rem; font-weight: 800; color: var(--navy-ink); }
+        .buoi-card .buoi-head .d { font-size: 0.78rem; color: var(--text-soft); }
+        .assign-block { border-top: 1px solid var(--border); padding-top: 0.7rem; margin-top: 0.7rem; }
+        .assign-block:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+        .assign-block .assign-title-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+        .grade-inline { background: var(--bg-soft); border-radius: 10px; padding: 0.8rem; margin-top: 0.5rem; }
+      </style>
     </main>
   </div>
 </div>
@@ -225,11 +246,11 @@
   });
 
   function loadClasses() {
-    window.sb.from('classes').select('id,name,code,mode,status,start_date,end_date').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (clsRes) {
+    window.sb.from('classes').select('id,name,code,mode,status,start_date,end_date,phase_id').eq('mentor_id', myMentorId).order('created_at', { ascending: false }).then(function (clsRes) {
       myClasses = clsRes.data || [];
       var classIds = myClasses.map(function (c) { return c.id; });
       var membersP = classIds.length ? window.sb.from('class_members').select('class_id,student_id') .in('class_id', classIds) : Promise.resolve({ data: [] });
-      var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,class_id,title,scheduled_at,ends_at,meet_link,mode,room,status,is_published').in('class_id', classIds).order('scheduled_at') : Promise.resolve({ data: [] });
+      var sessionsP = classIds.length ? window.sb.from('class_sessions').select('id,class_id,title,scheduled_at,ends_at,meet_link,mode,room,status,is_published,module_id,order_index').in('class_id', classIds).order('scheduled_at') : Promise.resolve({ data: [] });
       Promise.all([membersP, sessionsP]).then(function (r) {
         var members = r[0].data || [];
         var sessions = r[1].data || [];
@@ -310,6 +331,10 @@
     if (!c) return;
     document.getElementById('detail-panel').style.display = 'block';
     document.getElementById('session-edit-card').style.display = 'none';
+    document.querySelectorAll('.mc-tab-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === 'schedule'); });
+    document.getElementById('mc-tab-schedule').style.display = 'block';
+    document.getElementById('mc-tab-assignments').style.display = 'none';
+    document.getElementById('d-assignments-body').innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
     document.getElementById('d-name').textContent = c.name;
     var statusEl = document.getElementById('d-status');
     statusEl.outerHTML = classStatusBadge(c).replace('<span', '<span id="d-status"');
@@ -413,6 +438,201 @@
     selectedClassId = null;
     document.getElementById('detail-panel').style.display = 'none';
   });
+
+  document.querySelectorAll('.mc-tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.mc-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.mc-tab-panel').forEach(function (p) { p.style.display = 'none'; });
+      btn.classList.add('active');
+      var panel = document.querySelector('[data-panel="' + btn.getAttribute('data-tab') + '"]');
+      panel.style.display = 'block';
+      if (btn.getAttribute('data-tab') === 'assignments' && selectedClassId) loadAssignmentsTab(selectedClassId);
+    });
+  });
+
+  function typeLabelVi(t) {
+    return { quiz: 'Quiz', case_study: 'Case Study', project: 'Project', essay: 'Case Study', file: 'Project' }[t] || t;
+  }
+  function subStatusLabel(s) {
+    if (!s) return '<span class="badge b-review">Chưa nộp</span>';
+    if (s.status === 'graded') return '<span class="badge b-done">Đã chấm: ' + s.score + '/' + s.max_score + '</span>';
+    if (s.status === 'needs_revision') return '<span class="badge" style="background:var(--danger-soft); color:var(--danger);">Yêu cầu chỉnh sửa</span>';
+    if (s.status === 'draft') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Đang nháp</span>';
+    return '<span class="badge b-review">Chờ chấm</span>';
+  }
+
+  function loadAssignmentsTab(classId) {
+    var cls = myClasses.find(function (c) { return c.id === classId; });
+    var body = document.getElementById('d-assignments-body');
+    body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+    var sessions = (allSessionsByClass[classId] || []).slice().sort(function (a, b) { return new Date(a.scheduled_at) - new Date(b.scheduled_at); });
+
+    Promise.all([
+      window.sb.from('modules').select('id,title,order_index').eq('phase_id', cls ? cls.phase_id : null),
+      window.sb.from('assignments').select('id,title,type,due_date,max_score,module_id,class_id').eq('mentor_id', myMentorId).or('class_id.is.null,class_id.eq.' + classId),
+      window.sb.from('profiles').select('id,full_name,email').in('id', cls ? c_members_or_empty(cls) : [])
+    ]).then(function (r) {
+      var modulesById = {}; (r[0].data || []).forEach(function (m) { modulesById[m.id] = m; });
+      var assignments = r[1].data || [];
+      var profilesMap = {}; (r[2].data || []).forEach(function (p) { profilesMap[p.id] = p; });
+
+      var assignmentIds = assignments.map(function (a) { return a.id; });
+      var subsP = assignmentIds.length ? window.sb.from('submissions').select('id,assignment_id,user_id,status,score,max_score,answer_text,note_to_mentor,revision_reason,revision_due_at,feedback_summary').in('assignment_id', assignmentIds) : Promise.resolve({ data: [] });
+      subsP.then(function (subRes) {
+        var submissions = subRes.data || [];
+        renderAssignmentsTabBody(cls, sessions, modulesById, assignments, submissions, profilesMap);
+      });
+    });
+  }
+  function c_members_or_empty(cls) { return cls._members && cls._members.length ? cls._members : ['00000000-0000-0000-0000-000000000000']; }
+
+  function renderAssignmentsTabBody(cls, sessions, modulesById, assignments, submissions, profilesMap) {
+    var body = document.getElementById('d-assignments-body');
+    var subByAssignment = {};
+    submissions.forEach(function (s) { (subByAssignment[s.assignment_id] = subByAssignment[s.assignment_id] || []).push(s); });
+
+    var withModule = sessions.filter(function (s) { return s.module_id; });
+    var globalAssignments = assignments.filter(function (a) { return !a.module_id; });
+
+    if (withModule.length === 0 && globalAssignments.length === 0) {
+      body.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Lớp này chưa có buổi học nào gắn bài tập.</p>';
+      return;
+    }
+
+    var html = withModule.map(function (s, idx) {
+      var mod = modulesById[s.module_id];
+      var moduleAssignments = assignments.filter(function (a) { return a.module_id === s.module_id; });
+      return buoiCardHtml('Buổi ' + (s.order_index != null ? s.order_index : idx + 1) + (mod ? ' — ' + escapeHtml(mod.title) : ''), fmtDateTime(s.scheduled_at), cls.id, s.id, moduleAssignments, subByAssignment, profilesMap);
+    }).join('');
+
+    if (globalAssignments.length) {
+      html += buoiCardHtml('Bài tập chung (không gắn buổi cụ thể)', '', cls.id, '', globalAssignments, subByAssignment, profilesMap);
+    }
+
+    body.innerHTML = html;
+    wireAssignmentsTabEvents(body, assignments, submissions, profilesMap);
+  }
+
+  function buoiCardHtml(title, dateLabel, classId, sessionId, moduleAssignments, subByAssignment, profilesMap) {
+    var addLink = 'mentor-assignments.html?class=' + classId + (sessionId ? '&session=' + sessionId : '');
+    var assignHtml = moduleAssignments.length === 0
+      ? '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có bài tập cho buổi này.</p>'
+      : moduleAssignments.map(function (a) {
+        var subs = subByAssignment[a.id] || [];
+        var gradable = a.type !== 'quiz';
+        var rows = subs.length === 0
+          ? '<p style="color:var(--text-soft); font-size:0.8rem;">Chưa có học viên nộp bài.</p>'
+          : '<div class="table-wrap"><table class="data-table"><thead><tr><th>Học viên</th><th>Trạng thái</th><th></th></tr></thead><tbody>' +
+            subs.map(function (s) {
+              var p = profilesMap[s.user_id];
+              var actionBtn = gradable && s.status === 'submitted' ? '<button class="row-action-btn primary" data-grade-open="' + s.id + '">Chấm bài</button>' : (s.status === 'graded' ? '<button class="row-action-btn" data-grade-open="' + s.id + '">Xem/Sửa điểm</button>' : '');
+              return '<tr><td>' + escapeHtml(p ? (p.full_name || p.email) : '') + '</td><td>' + subStatusLabel(s) + '</td><td>' + actionBtn + '</td></tr>' +
+                '<tr class="grade-row" data-grade-row="' + s.id + '" style="display:none;"><td colspan="3"><div class="grade-inline" data-grade-panel="' + s.id + '"></div></td></tr>';
+            }).join('') + '</tbody></table></div>';
+        return '<div class="assign-block" data-assignment-id="' + a.id + '">' +
+          '<div class="assign-title-row"><span style="font-weight:700; color:var(--navy-ink); font-size:0.88rem;">' + escapeHtml(a.title) + ' <span class="badge b-review" style="font-size:0.66rem;">' + typeLabelVi(a.type) + '</span></span>' +
+          '<span style="font-size:0.78rem; color:var(--text-soft);">Hạn nộp: ' + fmtDateTime(a.due_date) + '</span></div>' +
+          rows + '</div>';
+      }).join('');
+
+    return '<div class="buoi-card">' +
+      '<div class="buoi-head"><div><h3>' + title + '</h3>' + (dateLabel ? '<div class="d">' + dateLabel + '</div>' : '') + '</div>' +
+      '<a class="row-action-btn primary" href="' + addLink + '">+ Giao bài tập cho buổi này</a></div>' +
+      assignHtml + '</div>';
+  }
+
+  function wireAssignmentsTabEvents(container, assignments, submissions, profilesMap) {
+    var assignmentsById = {}; assignments.forEach(function (a) { assignmentsById[a.id] = a; });
+    var submissionsById = {}; submissions.forEach(function (s) { submissionsById[s.id] = s; });
+
+    container.querySelectorAll('[data-grade-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var subId = btn.getAttribute('data-grade-open');
+        var row = container.querySelector('[data-grade-row="' + subId + '"]');
+        var panel = container.querySelector('[data-grade-panel="' + subId + '"]');
+        var isOpen = row.style.display !== 'none';
+        if (isOpen) { row.style.display = 'none'; return; }
+        row.style.display = 'table-row';
+        if (!panel.getAttribute('data-loaded')) {
+          panel.setAttribute('data-loaded', '1');
+          renderGradePanel(panel, submissionsById[subId], findAssignmentForSubmission(assignmentsById, submissionsById[subId]));
+        }
+      });
+    });
+  }
+  function findAssignmentForSubmission(assignmentsById, sub) { return sub ? assignmentsById[sub.assignment_id] : null; }
+
+  function renderGradePanel(panel, sub, assignment) {
+    panel.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p>';
+    window.sb.from('submission_versions').select('*').eq('submission_id', sub.id).order('version_number', { ascending: false }).then(function (vRes) {
+      var versions = vRes.data || [];
+      var versionIds = versions.map(function (v) { return v.id; });
+      var filesP = versionIds.length ? window.sb.from('submission_files').select('*').in('version_id', versionIds) : Promise.resolve({ data: [] });
+      filesP.then(function (fRes) {
+        var files = fRes.data || [];
+        var filesByVersion = {}; files.forEach(function (f) { (filesByVersion[f.version_id] = filesByVersion[f.version_id] || []).push(f); });
+        var latestSubmitVersion = versions.find(function (v) { return v.action === 'draft_saved' || v.action === 'submitted'; });
+        var latestFiles = latestSubmitVersion ? (filesByVersion[latestSubmitVersion.id] || []) : [];
+
+        var contentHtml = '';
+        if (sub.answer_text) contentHtml += '<div class="tfield"><label>Bài làm</label><p style="font-size:0.85rem;">' + escapeHtml(sub.answer_text) + '</p></div>';
+        if (latestFiles.length) {
+          contentHtml += '<div class="tfield"><label>File / link đã nộp</label>' + latestFiles.map(function (f) {
+            if (f.drive_link) return '<p><a href="' + escapeHtml(f.drive_link) + '" target="_blank" rel="noopener">' + escapeHtml(f.drive_link) + '</a></p>';
+            return '<p><button class="row-action-btn" data-inline-dl="' + escapeHtml(f.file_path) + '">Tải: ' + escapeHtml(f.file_name || 'file') + '</button></p>';
+          }).join('') + '</div>';
+        }
+        if (sub.note_to_mentor) contentHtml += '<div class="tfield"><label>Ghi chú của học viên</label><p style="font-size:0.85rem;">' + escapeHtml(sub.note_to_mentor) + '</p></div>';
+
+        var maxScore = assignment ? assignment.max_score : 10;
+        panel.innerHTML = contentHtml +
+          '<form class="inline-grade-form">' +
+          '<div class="tfield"><label>Điểm (tối đa ' + maxScore + ')</label><input class="ig-score" type="number" step="0.5" min="0" max="' + maxScore + '" value="' + (sub.score != null ? sub.score : '') + '" required /></div>' +
+          '<div class="tfield"><label>Nhận xét tổng quan</label><textarea class="ig-summary">' + escapeHtml(sub.feedback_summary || '') + '</textarea></div>' +
+          '<div style="display:flex; gap:0.6rem;"><button class="btn btn-gold btn-sm ig-save" type="submit">Lưu điểm</button><button class="btn btn-outline btn-sm ig-revision" type="button">Yêu cầu chỉnh sửa</button></div>' +
+          '<p class="msg-success ig-ok" style="display:none; color:var(--green); font-size:0.8rem; margin-top:0.5rem;"></p>' +
+          '<p class="msg-error ig-err" style="display:none; color:var(--danger); font-size:0.8rem; margin-top:0.5rem;"></p>' +
+          '</form>';
+
+        panel.querySelectorAll('[data-inline-dl]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            window.sb.storage.from('submissions').createSignedUrl(btn.getAttribute('data-inline-dl'), 3600).then(function (res) {
+              if (res.error) { alert('Không tải được file: ' + res.error.message); return; }
+              window.open(res.data.signedUrl, '_blank');
+            });
+          });
+        });
+
+        var form = panel.querySelector('.inline-grade-form');
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var okEl = panel.querySelector('.ig-ok'), errEl = panel.querySelector('.ig-err');
+          okEl.style.display = 'none'; errEl.style.display = 'none';
+          window.sb.rpc('grade_submission', {
+            p_submission_id: sub.id,
+            p_score: parseFloat(panel.querySelector('.ig-score').value),
+            p_max_score: maxScore,
+            p_summary: panel.querySelector('.ig-summary').value.trim() || null,
+            p_strengths: null,
+            p_improve: null,
+            p_criteria: null
+          }).then(function (res) {
+            if (res.error) { errEl.textContent = 'Lỗi: ' + res.error.message; errEl.style.display = 'block'; return; }
+            okEl.textContent = 'Đã lưu điểm!'; okEl.style.display = 'block';
+            loadAssignmentsTab(selectedClassId);
+          });
+        });
+        panel.querySelector('.ig-revision').addEventListener('click', function () {
+          var reason = prompt('Nội dung cần học viên chỉnh sửa:');
+          if (!reason) return;
+          window.sb.rpc('request_submission_revision', { p_submission_id: sub.id, p_reason: reason, p_due_at: null }).then(function (res) {
+            if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+            loadAssignmentsTab(selectedClassId);
+          });
+        });
+      });
+    });
+  }
 </script>
 </body>
 </html>
