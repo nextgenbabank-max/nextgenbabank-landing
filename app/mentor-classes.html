@@ -71,18 +71,47 @@
         </div>
       </div>
 
-      <div class="grid-main-side" id="cls-grid">
-        <div class="card">
-          <div class="card-head"><h2 id="cls-list-title">Danh sách lớp học</h2></div>
-          <div class="table-wrap">
-            <table class="data-table" id="cls-table">
-              <thead><tr><th>Tên lớp</th><th>Mã lớp</th><th>Số học viên</th><th>Thời gian</th><th>Trạng thái</th></tr></thead>
-              <tbody id="cls-tbody"><tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
-            </table>
-          </div>
+      <div id="cls-list-view">
+        <div class="stat-grid cols-4" id="cls-list-stats"></div>
+
+        <div class="filter-row">
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="cls-search" placeholder="Tìm theo tên lớp, mã lớp..." /></div>
+          <select id="cls-status-filter">
+            <option value="">Trạng thái: Tất cả</option>
+            <option value="ongoing">Đang học</option>
+            <option value="upcoming">Sắp khai giảng</option>
+            <option value="done">Hoàn thành</option>
+            <option value="archived">Đã lưu trữ</option>
+          </select>
         </div>
 
-        <div class="card" id="detail-panel" style="display:none;">
+        <div class="grid-main-side">
+          <div class="card">
+            <div class="card-head"><h2 id="cls-list-title">Danh sách lớp học</h2></div>
+            <div class="table-wrap">
+              <table class="data-table" id="cls-table">
+                <thead><tr><th>Tên lớp</th><th>Mã lớp</th><th>Số học viên</th><th>Thời gian</th><th>Trạng thái</th></tr></thead>
+                <tbody id="cls-tbody"><tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="card-head"><h2>Lớp đang học</h2></div>
+              <div id="cls-current-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+            </div>
+
+            <div class="card help-card">
+              <p class="t">Thao tác nhanh</p>
+              <p class="d">Giao câu hỏi/bài tập mới hoặc chấm bài học viên đã nộp.</p>
+              <a class="btn btn-gold btn-sm" href="mentor-assignments.html" style="width:100%; justify-content:center;">Quản lý câu hỏi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="detail-panel" style="display:none;">
           <a href="#" class="more" id="detail-close" style="margin-bottom:0.9rem;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Đóng</a>
           <p id="d-name" style="font-size:1.05rem; font-weight:800; color:var(--navy-ink); margin-bottom:0.3rem;">–</p>
           <span class="badge b-progress" id="d-status">–</span>
@@ -147,10 +176,9 @@
           <div class="mc-tab-panel" data-panel="assignments" id="mc-tab-assignments" style="display:none;">
             <div id="d-assignments-body"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
           </div>
-        </div>
       </div>
       <style>
-        @media (max-width: 1180px) { #cls-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 1180px) { #cls-list-view .grid-main-side { grid-template-columns: 1fr !important; } }
         .mc-tab-btn { padding: 0.6rem 1rem; border: none; background: none; font-weight: 700; font-size: 0.86rem; color: var(--text-soft); cursor: pointer; border-bottom: 2px solid transparent; }
         .mc-tab-btn.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
         .buoi-card { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
@@ -264,20 +292,60 @@
     });
   }
 
-  function classStatusBadge(c) {
-    if (c.status === 'draft') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Nháp</span>';
-    if (c.status === 'archived') return '<span class="badge" style="background:var(--border); color:var(--text-soft);">Đã lưu trữ</span>';
+  function classStatusKey(c) {
+    if (c.status === 'draft') return 'draft';
+    if (c.status === 'archived') return 'archived';
     var today = new Date().toISOString().slice(0, 10);
-    if (c.start_date && today < c.start_date) return '<span class="badge b-progress">Chờ bắt đầu</span>';
-    if (c.end_date && today > c.end_date) return '<span class="badge b-done">Hoàn thành</span>';
-    return '<span class="badge" style="background:var(--green-soft); color:var(--green);">Đang học</span>';
+    if (c.start_date && today < c.start_date) return 'upcoming';
+    if (c.end_date && today > c.end_date) return 'done';
+    return 'ongoing';
   }
+  var CLASS_STATUS_LABEL = { draft: 'Nháp', archived: 'Đã lưu trữ', upcoming: 'Sắp khai giảng', done: 'Hoàn thành', ongoing: 'Đang học' };
+  var CLASS_STATUS_BADGE = { draft: '', archived: '', upcoming: 'b-new', done: 'b-done', ongoing: 'b-review' };
+  function classStatusBadge(c) {
+    var key = classStatusKey(c);
+    var style = (key === 'archived' || key === 'draft') ? ' style="background:var(--border); color:var(--text-soft);"' : '';
+    return '<span class="badge ' + CLASS_STATUS_BADGE[key] + '"' + style + '>' + CLASS_STATUS_LABEL[key] + '</span>';
+  }
+  function statCard(n, label) { return '<div class="stat-card"><div><div class="n">' + n + '</div><div class="l">' + label + '</div></div></div>'; }
 
   function renderClassTable() {
-    document.getElementById('cls-list-title').textContent = 'Danh sách lớp học (' + myClasses.length + ')';
+    var counts = { ongoing: 0, upcoming: 0, done: 0 };
+    myClasses.forEach(function (c) { var k = classStatusKey(c); if (counts[k] !== undefined) counts[k]++; });
+    document.getElementById('cls-list-stats').innerHTML =
+      statCard(myClasses.length, 'Tổng số lớp') +
+      statCard(counts.ongoing, 'Đang học') +
+      statCard(counts.upcoming, 'Sắp khai giảng') +
+      statCard(counts.done, 'Hoàn thành');
+
+    var current = myClasses.find(function (c) { return classStatusKey(c) === 'ongoing'; });
+    var curBody = document.getElementById('cls-current-body');
+    if (!current) {
+      curBody.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Không có lớp nào đang học.</p>';
+    } else {
+      curBody.innerHTML =
+        '<p style="font-size:0.94rem; font-weight:800; color:var(--navy-ink);">' + escapeHtml(current.name) + '</p>' +
+        '<p style="font-size:0.8rem; color:var(--text-soft); margin:0.2rem 0 0.8rem;">' + escapeHtml(current.code || '') + ' · ' + current._members.length + ' học viên</p>' +
+        '<button class="btn btn-gold btn-sm" id="cls-current-goto" style="width:100%; justify-content:center;">Xem chi tiết</button>';
+      document.getElementById('cls-current-goto').addEventListener('click', function () { openDetail(current.id); });
+    }
+
+    renderClassRows();
+  }
+
+  function renderClassRows() {
+    var q = (document.getElementById('cls-search').value || '').toLowerCase();
+    var statusFilter = document.getElementById('cls-status-filter').value;
+    var filtered = myClasses.filter(function (c) {
+      if (q && (c.name || '').toLowerCase().indexOf(q) === -1 && (c.code || '').toLowerCase().indexOf(q) === -1) return false;
+      if (statusFilter && classStatusKey(c) !== statusFilter) return false;
+      return true;
+    });
+    document.getElementById('cls-list-title').textContent = 'Danh sách lớp học (' + filtered.length + ')';
     var tbody = document.getElementById('cls-tbody');
     if (myClasses.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Bạn chưa được phân công lớp học nào.</td></tr>'; return; }
-    tbody.innerHTML = myClasses.map(function (c) {
+    if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Không có lớp nào khớp bộ lọc.</td></tr>'; return; }
+    tbody.innerHTML = filtered.map(function (c) {
       return '<tr class="row-click" data-id="' + c.id + '">' +
         '<td>' + escapeHtml(c.name) + '</td>' +
         '<td>' + escapeHtml(c.code || '–') + '</td>' +
@@ -289,6 +357,8 @@
       row.addEventListener('click', function () { openDetail(row.getAttribute('data-id')); });
     });
   }
+  document.getElementById('cls-search').addEventListener('input', renderClassRows);
+  document.getElementById('cls-status-filter').addEventListener('change', renderClassRows);
 
   function computeProgressForStudents(studentIds, classId) {
     if (studentIds.length === 0) return Promise.resolve({});
@@ -328,6 +398,7 @@
     selectedClassId = classId;
     var c = myClasses.find(function (x) { return x.id === classId; });
     if (!c) return;
+    document.getElementById('cls-list-view').style.display = 'none';
     document.getElementById('detail-panel').style.display = 'block';
     document.getElementById('session-edit-card').style.display = 'none';
     document.querySelectorAll('.mc-tab-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === 'schedule'); });
@@ -436,6 +507,7 @@
     e.preventDefault();
     selectedClassId = null;
     document.getElementById('detail-panel').style.display = 'none';
+    document.getElementById('cls-list-view').style.display = 'block';
   });
 
   document.querySelectorAll('.mc-tab-btn').forEach(function (btn) {
