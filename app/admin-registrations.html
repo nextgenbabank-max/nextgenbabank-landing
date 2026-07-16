@@ -259,16 +259,27 @@
   function setApproval(id, status) {
     window.sb.auth.getSession().then(function (sessionRes) {
       var adminId = sessionRes.data.session.user.id;
-      window.sb.from('profiles').update({
+      var row = currentRows.find(function (r) { return r.id === id; }) || {};
+      var isMentorApproval = status === 'approved' && row.role === 'mentor';
+      var payload = {
         approval_status: status,
         approved_at: new Date().toISOString(),
         approved_by: adminId
-      }).eq('id', id).then(function (res) {
+      };
+      if (isMentorApproval) payload.is_mentor = true;
+      window.sb.from('profiles').update(payload).eq('id', id).then(function (res) {
         if (res.error) { alert('Lỗi: ' + res.error.message); return; }
-        selectedId = null;
-        document.getElementById('detail-panel').style.display = 'none';
-        loadStats();
-        loadTab(currentTab);
+        var afterUpdate = function () {
+          selectedId = null;
+          document.getElementById('detail-panel').style.display = 'none';
+          loadStats();
+          loadTab(currentTab);
+        };
+        if (isMentorApproval) {
+          window.sb.rpc('admin_ensure_mentor_row', { p_profile_id: id, p_avatar_initials: initialsOf(row.full_name) }).then(afterUpdate);
+        } else {
+          afterUpdate();
+        }
       });
     });
   }

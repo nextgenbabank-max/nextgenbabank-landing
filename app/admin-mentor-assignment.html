@@ -140,10 +140,7 @@
               <label for="q-teacher">Chọn giảng viên phụ trách *</label>
               <select id="q-teacher"><option value="">Chọn giảng viên</option></select>
             </div>
-            <div class="tfield">
-              <label for="q-class">Chọn lớp học *</label>
-              <select id="q-class"><option value="">Chọn lớp học</option></select>
-            </div>
+            <p style="font-size:0.78rem; color:var(--text-soft); margin:-0.3rem 0 0.9rem;">Chỉ gán mentor phụ trách cá nhân — không thay đổi lớp học của học viên. Vào "Quản lý lớp học" nếu cần thêm/xoá học viên khỏi lớp.</p>
             <button class="btn btn-gold" style="width:100%; justify-content:center;" id="q-save-btn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Lưu phân công</button>
             <p class="msg-error" id="q-error" style="display:none; margin-top:0.8rem; color:var(--danger);"></p>
             <p class="msg-success" id="q-success" style="display:none; margin-top:0.8rem;">Đã lưu phân công thành công.</p>
@@ -226,10 +223,6 @@
       qTeacher.innerHTML = '<option value="">Chọn giảng viên</option>' + allMentorsList.map(function (m) {
         return '<option value="' + m.id + '">' + escapeHtml(m.full_name) + '</option>';
       }).join('');
-      var qClass = document.getElementById('q-class');
-      qClass.innerHTML = '<option value="">Chọn lớp học</option>' + allClassesList.map(function (c) {
-        return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>';
-      }).join('');
 
       renderMentorChips();
       renderStudentTable();
@@ -281,26 +274,20 @@
   document.getElementById('q-save-btn').addEventListener('click', function () {
     var studentId = document.getElementById('q-student').value;
     var mentorId = document.getElementById('q-teacher').value;
-    var classId = document.getElementById('q-class').value;
     var errorOut = document.getElementById('q-error');
     var successOut = document.getElementById('q-success');
     errorOut.style.display = 'none';
     successOut.style.display = 'none';
-    if (!studentId || !mentorId || !classId) {
-      errorOut.textContent = 'Vui lòng chọn đủ học viên, giảng viên và lớp học.';
+    if (!studentId || !mentorId) {
+      errorOut.textContent = 'Vui lòng chọn đủ học viên và giảng viên.';
       errorOut.style.display = 'block';
       return;
     }
-    Promise.all([
-      window.sb.from('profiles').update({ primary_mentor_id: mentorId }).eq('id', studentId),
-      window.sb.from('class_members').upsert({ class_id: classId, student_id: studentId }, { onConflict: 'class_id,student_id' })
-    ]).then(function (results) {
-      var err = results.find(function (r) { return r.error; });
-      if (err) { errorOut.textContent = 'Lỗi: ' + err.error.message; errorOut.style.display = 'block'; return; }
+    window.sb.from('profiles').update({ primary_mentor_id: mentorId }).eq('id', studentId).then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
       successOut.style.display = 'block';
       document.getElementById('q-student').value = '';
       document.getElementById('q-teacher').value = '';
-      document.getElementById('q-class').value = '';
       loadAll();
     });
   });

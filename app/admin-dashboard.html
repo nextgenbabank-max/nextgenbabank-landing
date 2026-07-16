@@ -35,7 +35,7 @@
 
     <nav class="t-nav">
       <a href="admin-dashboard.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
-      <a href="admin-registrations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>Đăng ký tài khoản<span class="badge-num">12</span></a>
+      <a href="admin-registrations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>Đăng ký tài khoản<span class="badge-num" id="nav-pending-badge" style="display:none;">0</span></a>
       <a href="admin-create-account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Tạo tài khoản</a>
       <a href="admin-users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Quản lý người dùng</a>
       <a href="admin-permissions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Phân quyền</a>
@@ -61,7 +61,7 @@
           <a href="learning-path-designer.html">Thiết kế lộ trình học</a>
         </nav>
         <div class="t-topbar-actions">
-          <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot">12</span></button>
+          <button class="icon-btn" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" id="topbar-pending-badge" style="display:none;">0</span></button>
           <div class="user-menu" id="user-menu">
             <div class="t-user-trigger" id="user-trigger-btn">
               <span class="avatar" id="user-avatar-2">AD</span>
@@ -91,19 +91,19 @@
       <div class="stat-grid cols-4">
         <div class="stat-card">
           <span class="ic blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg></span>
-          <div><div class="n">256</div><div class="l">Tổng người dùng</div><div class="sub">↑ 12% so với tháng trước</div></div>
+          <div><div class="n" id="stat-total">—</div><div class="l">Tổng người dùng</div></div>
         </div>
         <div class="stat-card">
           <span class="ic green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
-          <div><div class="n">198</div><div class="l">Học viên</div><div class="sub">↑ 10% so với tháng trước</div></div>
+          <div><div class="n" id="stat-students">—</div><div class="l">Học viên</div></div>
         </div>
         <div class="stat-card">
           <span class="ic violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/></svg></span>
-          <div><div class="n">48</div><div class="l">Giảng viên</div><div class="sub">↑ 15% so với tháng trước</div></div>
+          <div><div class="n" id="stat-mentors">—</div><div class="l">Giảng viên</div></div>
         </div>
         <div class="stat-card">
           <span class="ic amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-          <div><div class="n">12</div><div class="l">Chờ phê duyệt</div><div class="sub">↓ 4 so với tuần trước</div></div>
+          <div><div class="n" id="stat-pending">—</div><div class="l">Chờ phê duyệt</div></div>
         </div>
       </div>
 
@@ -117,57 +117,8 @@
             <div class="table-wrap">
               <table class="data-table">
                 <thead><tr><th>Họ tên</th><th>Email</th><th>Vai trò</th><th>Ngày đăng ký</th><th>Thao tác</th></tr></thead>
-                <tbody>
-                  <tr>
-                    <td><div class="cell-item"><span class="ic" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">NA</span><div class="t">Nguyễn Văn A</div></div></td>
-                    <td>nguyenvana@gmail.com</td>
-                    <td><span class="badge b-new">Học viên</span></td>
-                    <td>16/05/2025 10:30</td>
-                    <td class="action-pair">
-                      <button class="icon-action approve" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>
-                      <button class="icon-action reject" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><div class="cell-item"><span class="ic" style="background:linear-gradient(120deg,#A78BFA,var(--violet));">TB</span><div class="t">Trần Thị B</div></div></td>
-                    <td>tranthib@gmail.com</td>
-                    <td><span class="badge b-review">Giảng viên</span></td>
-                    <td>15/05/2025 09:15</td>
-                    <td class="action-pair">
-                      <button class="icon-action approve" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>
-                      <button class="icon-action reject" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><div class="cell-item"><span class="ic" style="background:linear-gradient(120deg,#34D399,var(--green));">LC</span><div class="t">Lê Văn C</div></div></td>
-                    <td>levanc@gmail.com</td>
-                    <td><span class="badge b-new">Học viên</span></td>
-                    <td>15/05/2025 16:45</td>
-                    <td class="action-pair">
-                      <button class="icon-action approve" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>
-                      <button class="icon-action reject" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><div class="cell-item"><span class="ic" style="background:linear-gradient(120deg,#E6AC2E,var(--amber));">PD</span><div class="t">Phạm Minh D</div></div></td>
-                    <td>phamminhd@gmail.com</td>
-                    <td><span class="badge b-new">Học viên</span></td>
-                    <td>15/05/2025 14:20</td>
-                    <td class="action-pair">
-                      <button class="icon-action approve" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>
-                      <button class="icon-action reject" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><div class="cell-item"><span class="ic" style="background:#E86A8A;">HE</span><div class="t">Hoàng Thị E</div></div></td>
-                    <td>hoangthe@gmail.com</td>
-                    <td><span class="badge b-review">Giảng viên</span></td>
-                    <td>14/05/2025 11:05</td>
-                    <td class="action-pair">
-                      <button class="icon-action approve" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>
-                      <button class="icon-action reject" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
-                    </td>
-                  </tr>
+                <tbody id="pending-tbody">
+                  <tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -178,31 +129,26 @@
           <div class="card">
             <div class="card-head"><h2>Tỷ lệ người dùng theo vai trò</h2></div>
             <div class="donut-wrap">
-              <div class="ring" style="background:conic-gradient(var(--blue) 0% 77%, var(--violet) 77% 96%, var(--gold) 96% 100%);"></div>
-              <div class="hole"><span class="n">256</span><span class="l">Tổng</span></div>
+              <div class="ring" id="donut-ring"></div>
+              <div class="hole"><span class="n" id="donut-total">—</span><span class="l">Tổng</span></div>
             </div>
             <div class="donut-legend">
-              <div class="row"><span class="dot" style="background:var(--blue);"></span><span class="lbl">Học viên</span><span class="val">198 (77%)</span></div>
-              <div class="row"><span class="dot" style="background:var(--violet);"></span><span class="lbl">Giảng viên</span><span class="val">48 (18.8%)</span></div>
-              <div class="row"><span class="dot" style="background:var(--gold);"></span><span class="lbl">Admin</span><span class="val">10 (9%)</span></div>
+              <div class="row"><span class="dot" style="background:var(--blue);"></span><span class="lbl">Học viên</span><span class="val" id="donut-students">—</span></div>
+              <div class="row"><span class="dot" style="background:var(--violet);"></span><span class="lbl">Giảng viên</span><span class="val" id="donut-mentors">—</span></div>
+              <div class="row"><span class="dot" style="background:var(--gold);"></span><span class="lbl">Admin</span><span class="val" id="donut-admins">—</span></div>
             </div>
           </div>
 
           <div class="card">
             <div class="card-head"><h2>Hoạt động gần đây</h2></div>
-            <div class="feed">
-              <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg></span><p><b>Nguyễn Văn A</b> đăng ký tài khoản học viên<br><span class="t">5 phút trước</span></p></div>
-              <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg></span><p><b>Trần Thị B</b> đăng ký tài khoản giảng viên<br><span class="t">15 phút trước</span></p></div>
-              <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><p><b>Admin System</b> đã phê duyệt tài khoản cho Lê Văn C<br><span class="t">1 giờ trước</span></p></div>
-              <div class="feed-item"><span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><p><b>Phạm Minh D</b> đăng ký tài khoản giảng viên<br><span class="t">2 giờ trước</span></p></div>
-            </div>
+            <div class="feed" id="activity-feed"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
           </div>
 
           <div class="card">
             <div class="card-head"><h2>Tổng quan nhanh</h2></div>
-            <div class="milestone-row"><span class="ic" style="background:var(--green-soft); color:var(--green);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div style="flex:1;"><div class="t">Tài khoản đã phê duyệt</div></div><div style="font-weight:800; color:var(--navy-ink);">244</div></div>
-            <div class="milestone-row"><span class="ic" style="background:var(--danger-soft); color:var(--danger);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></span><div style="flex:1;"><div class="t">Tài khoản bị từ chối</div></div><div style="font-weight:800; color:var(--navy-ink);">8</div></div>
-            <div class="milestone-row"><span class="ic" style="background:var(--amber-soft); color:var(--amber);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><div style="flex:1;"><div class="t">Tài khoản bị khóa</div></div><div style="font-weight:800; color:var(--navy-ink);">4</div></div>
+            <div class="milestone-row"><span class="ic" style="background:var(--green-soft); color:var(--green);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div style="flex:1;"><div class="t">Tài khoản đã phê duyệt</div></div><div style="font-weight:800; color:var(--navy-ink);" id="qo-approved">—</div></div>
+            <div class="milestone-row"><span class="ic" style="background:var(--danger-soft); color:var(--danger);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></span><div style="flex:1;"><div class="t">Tài khoản bị từ chối</div></div><div style="font-weight:800; color:var(--navy-ink);" id="qo-rejected">—</div></div>
+            <div class="milestone-row"><span class="ic" style="background:var(--amber-soft); color:var(--amber);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><div style="flex:1;"><div class="t">Tài khoản đang ngưng hoạt động</div></div><div style="font-weight:800; color:var(--navy-ink);" id="qo-inactive">—</div></div>
           </div>
         </div>
       </div>
@@ -238,14 +184,28 @@
     });
   })();
 
-  document.querySelectorAll('.icon-action').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var row = btn.closest('tr');
-      row.style.transition = 'opacity .25s';
-      row.style.opacity = '0';
-      setTimeout(function () { row.remove(); }, 250);
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
-  });
+  }
+  function initialsOf(name) {
+    return (name || '?').trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase() || '?';
+  }
+  function fmtDateTime(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  }
+  function timeAgo(iso) {
+    var diffMin = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+    if (diffMin < 1) return 'Vừa xong';
+    if (diffMin < 60) return diffMin + ' phút trước';
+    var diffHr = Math.round(diffMin / 60);
+    if (diffHr < 24) return diffHr + ' giờ trước';
+    return Math.round(diffHr / 24) + ' ngày trước';
+  }
+
+  var currentAdminId = null;
 
   requireAuth().then(function (session) {
     if (!session) return;
@@ -254,6 +214,7 @@
         window.location.href = '/app/dashboard.html';
         return;
       }
+      currentAdminId = session.user.id;
       var name = res.data.full_name || session.user.email;
       document.getElementById('user-name').textContent = name;
       document.getElementById('user-name-2').textContent = name;
@@ -263,8 +224,146 @@
       document.getElementById('user-avatar-dd').textContent = initials || 'AD';
       document.getElementById('user-name-dd').textContent = name;
       document.getElementById('user-email-dd').textContent = session.user.email || '—';
+      loadDashboard();
     });
   });
+
+  function loadDashboard() {
+    Promise.all([
+      window.sb.from('profiles').select('id,is_admin,is_mentor,approval_status,is_active'),
+      window.sb.from('profiles').select('id,full_name,email,role,approval_status,created_at').eq('approval_status', 'pending').order('created_at', { ascending: false }).limit(6),
+      window.sb.from('profiles').select('id,full_name,role,approval_status,created_at,approved_at').order('created_at', { ascending: false }).limit(20)
+    ]).then(function (r) {
+      var all = r[0].data || [];
+      var pending = r[1].data || [];
+      var recent = r[2].data || [];
+
+      var students = all.filter(function (p) { return !p.is_admin && !p.is_mentor; }).length;
+      var mentors = all.filter(function (p) { return p.is_mentor; }).length;
+      var admins = all.filter(function (p) { return p.is_admin; }).length;
+      var pendingCount = all.filter(function (p) { return p.approval_status === 'pending'; }).length;
+      var approvedCount = all.filter(function (p) { return p.approval_status === 'approved'; }).length;
+      var rejectedCount = all.filter(function (p) { return p.approval_status === 'rejected'; }).length;
+      var inactiveCount = all.filter(function (p) { return p.is_active === false; }).length;
+      var total = all.length;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-students').textContent = students;
+      document.getElementById('stat-mentors').textContent = mentors;
+      document.getElementById('stat-pending').textContent = pendingCount;
+      document.getElementById('qo-approved').textContent = approvedCount;
+      document.getElementById('qo-rejected').textContent = rejectedCount;
+      document.getElementById('qo-inactive').textContent = inactiveCount;
+
+      ['nav-pending-badge', 'topbar-pending-badge'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (pendingCount > 0) { el.textContent = pendingCount > 9 ? '9+' : String(pendingCount); el.style.display = ''; }
+        else { el.style.display = 'none'; }
+      });
+
+      renderDonut(students, mentors, admins, total);
+      renderPendingTable(pending);
+      renderFeed(recent);
+    });
+  }
+
+  function renderDonut(students, mentors, admins, total) {
+    document.getElementById('donut-total').textContent = total;
+    if (total === 0) {
+      document.getElementById('donut-ring').style.background = 'var(--border)';
+      document.getElementById('donut-students').textContent = '0 (0%)';
+      document.getElementById('donut-mentors').textContent = '0 (0%)';
+      document.getElementById('donut-admins').textContent = '0 (0%)';
+      return;
+    }
+    var pctS = Math.round(students / total * 100);
+    var pctM = Math.round(mentors / total * 100);
+    var pctA = 100 - pctS - pctM;
+    var cut1 = students / total * 100;
+    var cut2 = cut1 + (mentors / total * 100);
+    document.getElementById('donut-ring').style.background =
+      'conic-gradient(var(--blue) 0% ' + cut1 + '%, var(--violet) ' + cut1 + '% ' + cut2 + '%, var(--gold) ' + cut2 + '% 100%)';
+    document.getElementById('donut-students').textContent = students + ' (' + pctS + '%)';
+    document.getElementById('donut-mentors').textContent = mentors + ' (' + pctM + '%)';
+    document.getElementById('donut-admins').textContent = admins + ' (' + pctA + '%)';
+  }
+
+  function renderPendingTable(pending) {
+    var tbody = document.getElementById('pending-tbody');
+    if (pending.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text-soft); font-size:0.85rem;">Không có đăng ký nào đang chờ.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = pending.map(function (r) {
+      var roleBadge = r.role === 'mentor' ? '<span class="badge b-review">Giảng viên</span>' : '<span class="badge b-new">Học viên</span>';
+      return '<tr>' +
+        '<td><div class="cell-item"><span class="ic" style="background:linear-gradient(120deg,#5B9BFA,var(--blue));">' + initialsOf(r.full_name) + '</span><div class="t">' + escapeHtml(r.full_name || '(chưa đặt tên)') + '</div></div></td>' +
+        '<td>' + escapeHtml(r.email || '') + '</td>' +
+        '<td>' + roleBadge + '</td>' +
+        '<td>' + fmtDateTime(r.created_at) + '</td>' +
+        '<td class="action-pair">' +
+        '<button class="icon-action approve" data-approve="' + r.id + '" data-role="' + escapeHtml(r.role || '') + '" data-name="' + escapeHtml(r.full_name || '') + '" aria-label="Phê duyệt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>' +
+        '<button class="icon-action reject" data-reject="' + r.id + '" aria-label="Từ chối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg></button>' +
+        '</td></tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-approve]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setApproval(btn.getAttribute('data-approve'), 'approved', btn.getAttribute('data-role'), btn.getAttribute('data-name'));
+      });
+    });
+    tbody.querySelectorAll('[data-reject]').forEach(function (btn) {
+      btn.addEventListener('click', function () { setApproval(btn.getAttribute('data-reject'), 'rejected'); });
+    });
+  }
+
+  function setApproval(id, status, role, fullName) {
+    var isMentorApproval = status === 'approved' && role === 'mentor';
+    var payload = {
+      approval_status: status,
+      approved_at: new Date().toISOString(),
+      approved_by: currentAdminId
+    };
+    if (isMentorApproval) payload.is_mentor = true;
+    window.sb.from('profiles').update(payload).eq('id', id).then(function (res) {
+      if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+      if (isMentorApproval) {
+        window.sb.rpc('admin_ensure_mentor_row', { p_profile_id: id, p_avatar_initials: initialsOf(fullName) }).then(loadDashboard);
+      } else {
+        loadDashboard();
+      }
+    });
+  }
+
+  function renderFeed(recent) {
+    var events = [];
+    recent.forEach(function (r) {
+      var roleLabel = r.role === 'mentor' ? 'giảng viên' : 'học viên';
+      if (r.created_at) {
+        events.push({
+          time: new Date(r.created_at),
+          html: '<span class="av sys"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg></span><p><b>' + escapeHtml(r.full_name || r.id) + '</b> đăng ký tài khoản ' + roleLabel + '<br><span class="t">' + timeAgo(r.created_at) + '</span></p>'
+        });
+      }
+      if (r.approved_at && r.approval_status !== 'pending') {
+        var verb = r.approval_status === 'approved' ? 'đã phê duyệt tài khoản cho' : 'đã từ chối tài khoản của';
+        var icon = r.approval_status === 'approved'
+          ? '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+          : '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-12 12M6 6l12 12"/></svg>';
+        events.push({
+          time: new Date(r.approved_at),
+          html: '<span class="av sys">' + icon + '</span><p><b>Admin</b> ' + verb + ' ' + escapeHtml(r.full_name || r.id) + '<br><span class="t">' + timeAgo(r.approved_at) + '</span></p>'
+        });
+      }
+    });
+    events.sort(function (a, b) { return b.time - a.time; });
+    var feed = document.getElementById('activity-feed');
+    if (events.length === 0) {
+      feed.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có hoạt động nào.</p>';
+      return;
+    }
+    feed.innerHTML = events.slice(0, 6).map(function (e) { return '<div class="feed-item">' + e.html + '</div>'; }).join('');
+  }
 
   (function () {
     var menu = document.getElementById('user-menu');
