@@ -10,12 +10,18 @@
   .breadcrumb { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.6rem; }
   .breadcrumb a { color: var(--text-soft); }
   .breadcrumb a:hover { color: var(--gold-dark); }
-  .lib-cat-head { background: var(--navy-grad, linear-gradient(120deg,#0E2C45,#16395A)); color: #fff; border-radius: var(--radius); padding: 1.6rem clamp(1.2rem,3vw,2rem); margin-bottom: 1.2rem; }
-  .lib-cat-head h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
-  .lib-cat-head p { color: rgba(255,255,255,0.78); font-size: 0.88rem; max-width: 640px; }
-  .lib-cat-metrics { display: flex; gap: 1.8rem; margin-top: 1.1rem; flex-wrap: wrap; }
+  .lib-cat-head { position: relative; overflow: hidden; background: linear-gradient(120deg,#0E2C45 0%, #16395A 55%, #0E2C45 100%); color: #fff; border-radius: var(--radius); padding: 1.6rem clamp(1.2rem,3vw,2rem); margin-bottom: 1.2rem; }
+  .lib-cat-head::before { content: ''; position: absolute; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(224,112,28,0.38), transparent 70%); top: -90px; right: -50px; pointer-events: none; }
+  .lib-cat-head::after { content: ''; position: absolute; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(14,138,134,0.4), transparent 70%); bottom: -70px; left: 22%; pointer-events: none; }
+  .lib-cat-head-inner { position: relative; z-index: 1; display: flex; gap: 1rem; align-items: flex-start; }
+  .lib-cat-icon { flex: none; width: 52px; height: 52px; border-radius: 14px; background: rgba(255,255,255,0.14); display: grid; place-items: center; color: #F5A25D; border: 1px solid rgba(255,255,255,0.22); }
+  .lib-cat-icon svg { width: 26px; height: 26px; }
+  .lib-cat-head h1 { position: relative; z-index: 1; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; color: #fff; }
+  .lib-cat-head p { position: relative; z-index: 1; color: rgba(255,255,255,0.8); font-size: 0.88rem; max-width: 640px; }
+  .lib-cat-metrics { position: relative; z-index: 1; display: flex; align-items: center; gap: 1.8rem; margin-top: 1.1rem; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.2); flex-wrap: wrap; }
   .lib-cat-metrics div .n { font-size: 1.2rem; font-weight: 800; }
   .lib-cat-metrics div .l { font-size: 0.74rem; color: rgba(255,255,255,0.7); }
+  .lib-cat-metrics .admin-tag { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; background: rgba(255,255,255,0.15); padding: 0.3em 0.7em; border-radius: 999px; color: #fff; margin-left: auto; }
   .doc-star { border: none; background: none; cursor: pointer; color: var(--border); display: inline-flex; }
   .doc-star.fav { color: var(--gold); }
   #dm-table th, #dm-table td { white-space: nowrap; }
@@ -73,13 +79,19 @@
     <div class="breadcrumb"><a href="../index.html">Trang chủ</a> › <a href="tai-lieu.html">Thư viện tài liệu</a> › <span id="bc-cat-name">…</span></div>
 
     <div class="lib-cat-head">
-      <h1 id="cat-title">Đang tải...</h1>
-      <p id="cat-desc"></p>
-      <div class="lib-cat-metrics">
+      <div class="lib-cat-head-inner">
+        <span class="lib-cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span>
+        <div>
+          <h1 id="cat-title">Đang tải...</h1>
+          <p id="cat-desc"></p>
+        </div>
+      </div>
+      <div class="lib-cat-metrics" id="lib-cat-metrics-box" style="display:none;">
         <div><div class="n" id="cm-total">—</div><div class="l">Tổng tài liệu</div></div>
         <div><div class="n" id="cm-views">—</div><div class="l">Tổng lượt xem</div></div>
         <div><div class="n" id="cm-opens">—</div><div class="l">Tổng lượt mở Drive</div></div>
         <div><div class="n" id="cm-updated">—</div><div class="l">Cập nhật gần nhất</div></div>
+        <span class="admin-tag">Chỉ Admin thấy</span>
       </div>
     </div>
 
@@ -298,8 +310,9 @@
     var session = res.data.session;
     if (!session) { loadCategoryAndDocs(); return; }
     currentUserId = session.user.id;
-    window.sb.from('profiles').select('full_name').eq('id', session.user.id).single().then(function (profRes) {
+    window.sb.from('profiles').select('full_name,is_admin').eq('id', session.user.id).single().then(function (profRes) {
       var name = (profRes.data && profRes.data.full_name) || session.user.email;
+      if (profRes.data && profRes.data.is_admin) document.getElementById('lib-cat-metrics-box').style.display = 'flex';
       document.getElementById('guest-login-btn').style.display = 'none';
       document.getElementById('guest-login-btn-m').style.display = 'none';
       document.getElementById('user-menu').style.display = '';
