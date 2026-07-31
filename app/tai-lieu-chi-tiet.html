@@ -106,9 +106,9 @@
             <span>Số trang: <strong id="doc-pages">—</strong></span>
             <span>Tác giả: <strong id="doc-author">—</strong></span>
             <span>Cập nhật: <strong id="doc-updated">—</strong></span>
-            <span>Lượt xem: <strong id="doc-views">—</strong></span>
-            <span>Lượt mở Drive: <strong id="doc-opens">—</strong></span>
-            <span>Lượt tải: <strong id="doc-downloads">—</strong></span>
+            <span class="admin-col" style="display:none;">Lượt xem: <strong id="doc-views">—</strong></span>
+            <span class="admin-col" style="display:none;">Lượt mở Drive: <strong id="doc-opens">—</strong></span>
+            <span class="admin-col" style="display:none;">Lượt tải: <strong id="doc-downloads">—</strong></span>
           </div>
         </div>
         <div class="doc-actions">
@@ -164,6 +164,7 @@
   var categorySlug = params.get('c') || '';
   var documentSlug = params.get('d') || '';
   var currentUserId = null;
+  var isAdminUser = false;
   var currentDoc = null;
   var currentCategory = null;
   var isFavorite = false;
@@ -281,7 +282,7 @@
         var related = res.data || [];
         document.getElementById('doc-related').innerHTML = related.length ? related.map(function (d) {
           return '<a class="related-doc-item" href="tai-lieu-chi-tiet.html?c=' + encodeURIComponent(categorySlug) + '&d=' + encodeURIComponent(d.slug) + '">' +
-            '<span class="t">' + escapeHtml(d.title) + '</span><span class="m">' + libraryFileTypeLabel(d.file_type) + ' · ' + libraryFormatCount(d.view_count) + ' lượt xem</span></a>';
+            '<span class="t">' + escapeHtml(d.title) + '</span><span class="m">' + libraryFileTypeLabel(d.file_type) + (isAdminUser ? ' · ' + libraryFormatCount(d.view_count) + ' lượt xem' : '') + '</span></a>';
         }).join('') : '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tài liệu liên quan.</p>';
       });
   }
@@ -360,8 +361,10 @@
     var session = res.data.session;
     if (!session) { loadDocument(); return; }
     currentUserId = session.user.id;
-    window.sb.from('profiles').select('full_name').eq('id', session.user.id).single().then(function (profRes) {
+    window.sb.from('profiles').select('full_name,is_admin').eq('id', session.user.id).single().then(function (profRes) {
       var name = (profRes.data && profRes.data.full_name) || session.user.email;
+      isAdminUser = !!(profRes.data && profRes.data.is_admin);
+      if (isAdminUser) document.querySelectorAll('.admin-col').forEach(function (el) { el.style.display = ''; });
       document.getElementById('guest-login-btn').style.display = 'none';
       document.getElementById('guest-login-btn-m').style.display = 'none';
       document.getElementById('user-menu').style.display = '';
