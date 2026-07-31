@@ -201,7 +201,7 @@
         popularBox.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có dữ liệu lượt xem.</p>';
       } else {
         popularBox.innerHTML = popular.slice(0, 5).map(function (c) {
-          return '<div class="lib-popular-item"><a href="tai-lieu-danh-muc.html?slug=' + encodeURIComponent(c.slug) + '">' + escapeHtml(c.name) + '</a><span class="cnt">' + libraryFormatCount(c.totalViews) + ' lượt xem</span></div>';
+          return '<div class="lib-popular-item"><a href="tai-lieu-danh-muc.html?slug=' + encodeURIComponent(c.slug) + '">' + escapeHtml(c.name) + '</a></div>';
         }).join('');
       }
 
