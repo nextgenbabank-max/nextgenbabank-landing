@@ -682,6 +682,12 @@ table.data-table tr:last-child td { border-bottom: none; }
 .icon-action.approve:hover { background: var(--green); color: #fff; }
 .icon-action.reject { background: var(--danger-soft); color: var(--danger); }
 .icon-action.reject:hover { background: var(--danger); color: #fff; }
+.icon-action.view { background: var(--blue-soft); color: var(--blue); }
+.icon-action.view:hover { background: var(--blue); color: #fff; }
+.icon-action.edit { background: var(--gold-soft); color: var(--gold-dark); }
+.icon-action.edit:hover { background: var(--gold-grad); color: #fff; }
+.icon-action.delete { background: var(--danger-soft); color: var(--danger); }
+.icon-action.delete:hover { background: var(--danger); color: #fff; }
 .action-pair { display: flex; align-items: center; gap: 6px; }
 
 /* ---------- Admin: multi-segment donut ---------- */
