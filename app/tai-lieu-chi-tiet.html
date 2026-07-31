@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title id="page-title">Xem tài liệu — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .breadcrumb { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.6rem; }
+  .breadcrumb a { color: var(--text-soft); }
+  .breadcrumb a:hover { color: var(--gold-dark); }
+  .doc-detail-head { display: flex; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+  .doc-detail-head h1 { font-size: 1.4rem; font-weight: 800; color: var(--navy-ink); margin-bottom: 0.5rem; }
+  .doc-meta-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .doc-meta-row .badge { font-weight: 700; }
+  .doc-stat-line { display: flex; flex-wrap: wrap; gap: 1.4rem; font-size: 0.82rem; color: var(--text-soft); margin-top: 0.5rem; }
+  .doc-stat-line strong { color: var(--navy-ink); }
+  .doc-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .viewer-wrap { position: relative; background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; min-height: 70vh; }
+  .viewer-wrap iframe { width: 100%; height: 78vh; border: none; display: block; }
+  .viewer-state { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: var(--bg-soft); text-align: center; padding: 2rem; }
+  .viewer-state.hidden { display: none; }
+  .spinner { width: 38px; height: 38px; border-radius: 50%; border: 4px solid var(--border); border-top-color: var(--gold); animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .viewer-state .ic-error { width: 46px; height: 46px; border-radius: 50%; background: var(--danger-soft); color: var(--danger); display: flex; align-items: center; justify-content: center; }
+  .viewer-state p { color: var(--text-soft); font-size: 0.88rem; max-width: 420px; }
+  .doc-detail-side .card { margin-bottom: 1.1rem; }
+  .related-doc-item { display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+  .related-doc-item:last-child { border-bottom: none; }
+  .related-doc-item .t { font-weight: 700; color: var(--navy-ink); }
+  .related-doc-item .m { font-size: 0.76rem; color: var(--text-soft); }
+  .toast-copy { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 0.6em 1.2em; border-radius: 10px; font-size: 0.85rem; z-index: 500; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .toast-copy.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" /><path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" /></svg></span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="tai-lieu.html" class="active">Thư viện tài liệu</a>
+      <a href="dashboard.html" id="nav-dashboard-link" style="display:none;">Khu học tập</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="btn btn-gold btn-sm" href="login.html" id="guest-login-btn">Đăng nhập / Đăng ký</a>
+      <div class="user-menu" id="user-menu" style="display:none;">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head"><span class="avatar" id="user-avatar-dd">BL</span><div><div class="n" id="user-name-dd">Học viên</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div></div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Khu học tập</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="../index.html">Trang chủ</a>
+    <a href="tai-lieu.html" class="active">Thư viện tài liệu</a>
+    <a href="dashboard.html" id="nav-dashboard-link-m" style="display:none;">Khu học tập</a>
+    <a href="login.html" id="guest-login-btn-m">Đăng nhập / Đăng ký</a>
+    <a href="#" id="mobile-logout" style="display:none;">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <main class="main" style="max-width:1500px; margin:0 auto; width:100%;">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> › <a href="tai-lieu.html">Thư viện tài liệu</a> › <a id="bc-cat-link" href="#"></a> › <span id="bc-doc-name">…</span>
+    </div>
+
+    <div id="doc-not-found" style="display:none;" class="card">
+      <p style="color:var(--text-soft);">Không tìm thấy tài liệu này, hoặc tài liệu đã bị gỡ / chưa được đăng.</p>
+      <a class="btn btn-outline btn-sm" href="tai-lieu.html">← Quay lại thư viện tài liệu</a>
+    </div>
+
+    <div id="doc-login-required" style="display:none;" class="card">
+      <p style="color:var(--text-soft);">Tài liệu này yêu cầu đăng nhập để xem. Vui lòng đăng nhập vào tài khoản NextGen BA Banker của bạn.</p>
+      <a class="btn btn-gold btn-sm" href="login.html">Đăng nhập ngay</a>
+    </div>
+
+    <div id="doc-content" style="display:none;">
+      <div class="doc-detail-head">
+        <div>
+          <h1 id="doc-title">—</h1>
+          <div class="doc-meta-row">
+            <span class="badge b-new" id="doc-filetype">PDF</span>
+            <span class="badge" id="doc-level" style="background:var(--blue-soft); color:var(--blue);">—</span>
+            <span class="badge" style="background:var(--bg-soft); color:var(--text-soft);" id="doc-version">—</span>
+          </div>
+          <div class="doc-stat-line">
+            <span>Dung lượng: <strong id="doc-size">—</strong></span>
+            <span>Số trang: <strong id="doc-pages">—</strong></span>
+            <span>Tác giả: <strong id="doc-author">—</strong></span>
+            <span>Cập nhật: <strong id="doc-updated">—</strong></span>
+            <span>Lượt xem: <strong id="doc-views">—</strong></span>
+            <span>Lượt mở Drive: <strong id="doc-opens">—</strong></span>
+            <span>Lượt tải: <strong id="doc-downloads">—</strong></span>
+          </div>
+        </div>
+        <div class="doc-actions">
+          <button class="btn btn-outline btn-sm" id="btn-favorite">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg>
+            <span id="btn-favorite-text">Lưu tài liệu</span>
+          </button>
+          <button class="btn btn-outline btn-sm" id="btn-share"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-3.9M8.6 13.5l6.8 3.9"/></svg>Chia sẻ</button>
+          <button class="btn btn-outline btn-sm" id="btn-open-drive"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"/></svg>Mở trên Google Drive</button>
+          <button class="btn btn-gold btn-sm" id="btn-download" style="display:none;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/></svg>Tải tài liệu</button>
+        </div>
+      </div>
+
+      <div class="grid-main-side">
+        <div>
+          <div class="viewer-wrap" id="viewer-wrap">
+            <iframe id="doc-iframe" title="Xem tài liệu" allow="autoplay" style="display:none;"></iframe>
+            <div class="viewer-state" id="viewer-loading">
+              <div class="spinner"></div>
+              <p>Đang tải tài liệu từ Google Drive...</p>
+            </div>
+            <div class="viewer-state hidden" id="viewer-error">
+              <span class="ic-error"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg></span>
+              <p id="viewer-error-text">Không thể tải tài liệu. Có thể file đã bị xóa, chưa được chia sẻ đúng quyền, hoặc bạn không có quyền truy cập.</p>
+              <button class="btn btn-outline btn-sm" id="btn-retry-viewer">Tải lại</button>
+            </div>
+          </div>
+        </div>
+        <div class="doc-detail-side">
+          <div class="card">
+            <div class="card-head"><h2>Tài liệu liên quan</h2></div>
+            <div id="doc-related"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-copy" id="toast-copy">Đã sao chép liên kết trang.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/library.js"></script>
+<script>
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var categorySlug = params.get('c') || '';
+  var documentSlug = params.get('d') || '';
+  var currentUserId = null;
+  var currentDoc = null;
+  var currentCategory = null;
+  var isFavorite = false;
+  var tracker = null;
+  var viewerLoadTimeout = null;
+
+  if (!categorySlug || !documentSlug) window.location.href = 'tai-lieu.html';
+
+  function loadDocument() {
+    window.sb.from('library_categories').select('id,name,slug').eq('slug', categorySlug).single().then(function (catRes) {
+      if (catRes.error || !catRes.data) { showNotFound(); return; }
+      currentCategory = catRes.data;
+      document.getElementById('bc-cat-link').textContent = currentCategory.name;
+      document.getElementById('bc-cat-link').href = 'tai-lieu-danh-muc.html?slug=' + encodeURIComponent(categorySlug);
+
+      window.sb.from('library_documents')
+        .select('id,title,slug,description,file_type,drive_url,drive_file_id,total_pages,file_size_bytes,author_name,difficulty_level,version,updated_at,created_at,view_count,drive_open_count,download_click_count,favorite_count,requires_login,is_drive_open_enabled,is_download_link_enabled,category_id')
+        .eq('category_id', currentCategory.id).eq('slug', documentSlug).eq('status', 'PUBLISHED').single()
+        .then(function (docRes) {
+          if (docRes.error || !docRes.data) { showNotFound(); return; }
+          currentDoc = docRes.data;
+
+          window.sb.auth.getSession().then(function (res) {
+            var session = res.data.session;
+            if (currentDoc.requires_login && !session) { showLoginRequired(); return; }
+            renderDocument();
+          });
+        });
+    });
+  }
+
+  function showNotFound() {
+    document.getElementById('doc-not-found').style.display = 'block';
+  }
+  function showLoginRequired() {
+    document.getElementById('doc-login-required').style.display = 'block';
+  }
+
+  function renderDocument() {
+    document.title = currentDoc.title + ' — Thư viện tài liệu — NextGen BA Banker';
+    document.getElementById('bc-doc-name').textContent = currentDoc.title;
+    document.getElementById('doc-content').style.display = 'block';
+    document.getElementById('doc-title').textContent = currentDoc.title;
+    document.getElementById('doc-filetype').textContent = libraryFileTypeLabel(currentDoc.file_type);
+    document.getElementById('doc-level').textContent = libraryDifficultyLabel(currentDoc.difficulty_level);
+    document.getElementById('doc-version').textContent = currentDoc.version ? 'Phiên bản ' + currentDoc.version : 'Chưa gắn phiên bản';
+    document.getElementById('doc-size').textContent = libraryFormatFileSize(currentDoc.file_size_bytes);
+    document.getElementById('doc-pages').textContent = currentDoc.total_pages || '—';
+    document.getElementById('doc-author').textContent = currentDoc.author_name || '—';
+    document.getElementById('doc-updated').textContent = libraryTimeAgo(currentDoc.updated_at || currentDoc.created_at);
+    document.getElementById('doc-views').textContent = libraryFormatCount(currentDoc.view_count);
+    document.getElementById('doc-opens').textContent = libraryFormatCount(currentDoc.drive_open_count);
+    document.getElementById('doc-downloads').textContent = libraryFormatCount(currentDoc.download_click_count);
+
+    if (!currentDoc.is_drive_open_enabled) document.getElementById('btn-open-drive').style.display = 'none';
+    if (currentDoc.is_download_link_enabled) document.getElementById('btn-download').style.display = '';
+
+    loadViewer();
+    loadRelated();
+    if (currentUserId) {
+      window.sb.from('library_document_favorites').select('id').eq('user_id', currentUserId).eq('document_id', currentDoc.id).maybeSingle().then(function (favRes) {
+        isFavorite = !!(favRes.data && favRes.data.id);
+        updateFavoriteButton();
+      });
+    } else {
+      updateFavoriteButton();
+    }
+  }
+
+  function loadViewer() {
+    var fileId = currentDoc.drive_file_id;
+    if (!fileId) {
+      var norm = libraryNormalizeDriveUrl(currentDoc.drive_url);
+      fileId = norm && norm.fileId;
+    }
+    if (!fileId) { showViewerError('Đường dẫn Google Drive của tài liệu này không hợp lệ.'); return; }
+
+    var iframe = document.getElementById('doc-iframe');
+    document.getElementById('viewer-error').classList.add('hidden');
+    document.getElementById('viewer-loading').classList.remove('hidden');
+    iframe.style.display = 'none';
+
+    tracker = createLibraryViewTracker(currentDoc.id);
+    tracker.start();
+
+    if (viewerLoadTimeout) clearTimeout(viewerLoadTimeout);
+    viewerLoadTimeout = setTimeout(function () {
+      showViewerError('Tài liệu tải quá lâu — có thể file đã bị xóa hoặc chưa được chia sẻ đúng quyền (Anyone with the link).');
+    }, 15000);
+
+    iframe.onload = function () {
+      clearTimeout(viewerLoadTimeout);
+      document.getElementById('viewer-loading').classList.add('hidden');
+      document.getElementById('viewer-error').classList.add('hidden');
+      iframe.style.display = 'block';
+      if (tracker) tracker.onIframeLoaded();
+    };
+    iframe.src = libraryGetPreviewUrl(fileId) + '?t=' + Date.now();
+  }
+
+  function showViewerError(message) {
+    document.getElementById('viewer-loading').classList.add('hidden');
+    document.getElementById('viewer-error').classList.remove('hidden');
+    document.getElementById('viewer-error-text').textContent = message || 'Không thể tải tài liệu. Có thể file đã bị xóa, chưa được chia sẻ đúng quyền, hoặc bạn không có quyền truy cập.';
+    document.getElementById('doc-iframe').style.display = 'none';
+  }
+
+  document.getElementById('btn-retry-viewer').addEventListener('click', loadViewer);
+
+  function loadRelated() {
+    window.sb.from('library_documents').select('id,title,slug,file_type,view_count')
+      .eq('category_id', currentCategory.id).eq('status', 'PUBLISHED').neq('id', currentDoc.id)
+      .order('view_count', { ascending: false }).limit(5)
+      .then(function (res) {
+        var related = res.data || [];
+        document.getElementById('doc-related').innerHTML = related.length ? related.map(function (d) {
+          return '<a class="related-doc-item" href="tai-lieu-chi-tiet.html?c=' + encodeURIComponent(categorySlug) + '&d=' + encodeURIComponent(d.slug) + '">' +
+            '<span class="t">' + escapeHtml(d.title) + '</span><span class="m">' + libraryFileTypeLabel(d.file_type) + ' · ' + libraryFormatCount(d.view_count) + ' lượt xem</span></a>';
+        }).join('') : '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tài liệu liên quan.</p>';
+      });
+  }
+
+  function updateFavoriteButton() {
+    document.getElementById('btn-favorite-text').textContent = isFavorite ? 'Đã lưu' : 'Lưu tài liệu';
+    document.getElementById('btn-favorite').classList.toggle('btn-gold', isFavorite);
+    document.getElementById('btn-favorite').classList.toggle('btn-outline', !isFavorite);
+  }
+
+  document.getElementById('btn-favorite').addEventListener('click', function () {
+    if (!currentUserId) { window.location.href = 'login.html'; return; }
+    var query = isFavorite
+      ? window.sb.from('library_document_favorites').delete().eq('user_id', currentUserId).eq('document_id', currentDoc.id)
+      : window.sb.from('library_document_favorites').insert({ user_id: currentUserId, document_id: currentDoc.id });
+    query.then(function (res) {
+      if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+      isFavorite = !isFavorite;
+      updateFavoriteButton();
+    });
+  });
+
+  document.getElementById('btn-share').addEventListener('click', function () {
+    var url = window.location.href;
+    if (navigator.clipboard) navigator.clipboard.writeText(url).catch(function () {});
+    var toast = document.getElementById('toast-copy');
+    toast.classList.add('show');
+    setTimeout(function () { toast.classList.remove('show'); }, 2200);
+  });
+
+  function authedPost(path, body) {
+    return window.sb.auth.getSession().then(function (res) {
+      var token = res.data.session && res.data.session.access_token;
+      var headers = { 'Content-Type': 'application/json' };
+      if (token) headers.Authorization = 'Bearer ' + token;
+      return fetch(path, { method: 'POST', headers: headers, body: JSON.stringify(body || {}) });
+    }).then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); });
+  }
+
+  document.getElementById('btn-open-drive').addEventListener('click', function () {
+    authedPost('/api/documents/' + currentDoc.id + '/open-drive', {
+      anonymous_id: libraryGetAnonymousId(),
+      view_session_id: tracker && tracker.getSessionId(),
+      source_page: 'tai-lieu-chi-tiet'
+    }).then(function (result) {
+      if (!result.ok || !result.data.ok) { alert((result.data && result.data.error) || 'Không thể mở tài liệu trên Google Drive.'); return; }
+      window.open(result.data.url, '_blank', 'noopener,noreferrer');
+    });
+  });
+
+  document.getElementById('btn-download').addEventListener('click', function () {
+    authedPost('/api/documents/' + currentDoc.id + '/download-click', {
+      anonymous_id: libraryGetAnonymousId(),
+      view_session_id: tracker && tracker.getSessionId()
+    }).then(function (result) {
+      if (!result.ok || !result.data.ok) { alert((result.data && result.data.error) || 'Không thể tải tài liệu.'); return; }
+      window.open(result.data.url, '_blank', 'noopener,noreferrer');
+    });
+  });
+
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click', function (e) { if (!menu.contains(e.target)) menu.classList.remove('open'); });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+    document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+  })();
+
+  window.sb.auth.getSession().then(function (res) {
+    var session = res.data.session;
+    if (!session) { loadDocument(); return; }
+    currentUserId = session.user.id;
+    window.sb.from('profiles').select('full_name').eq('id', session.user.id).single().then(function (profRes) {
+      var name = (profRes.data && profRes.data.full_name) || session.user.email;
+      document.getElementById('guest-login-btn').style.display = 'none';
+      document.getElementById('guest-login-btn-m').style.display = 'none';
+      document.getElementById('user-menu').style.display = '';
+      document.getElementById('mobile-logout').style.display = '';
+      document.getElementById('nav-dashboard-link').style.display = '';
+      document.getElementById('nav-dashboard-link-m').style.display = '';
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-dd').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'BL';
+      document.getElementById('user-avatar-dd').textContent = initials || 'BL';
+      document.getElementById('user-email-dd').textContent = session.user.email || '—';
+    });
+    loadDocument();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Danh mục tài liệu tham khảo — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .lib-view-toggle { display: inline-flex; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .lib-view-toggle button { border: none; background: var(--card); padding: 0.5em 0.8em; cursor: pointer; color: var(--text-soft); display: flex; }
+  .lib-view-toggle button.active { background: var(--gold-grad); color: #fff; }
+  .lib-view-toggle button:not(:last-child) { border-right: 1.5px solid var(--border); }
+  select#lib-sort { border: 1.5px solid var(--border); border-radius: 10px; padding: 0.5em 0.8em; font-family: inherit; background: var(--card); }
+  .lib-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  @media (max-width: 1180px) { .lib-card-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .lib-card-grid { grid-template-columns: 1fr; } }
+  .lib-cat-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .lib-cat-card h3 { font-size: 1rem; font-weight: 800; color: var(--navy-ink); }
+  .lib-cat-card p { font-size: 0.84rem; color: var(--text-soft); flex: 1; }
+  .lib-cat-card .meta-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-soft); border-top: 1px solid var(--border); padding-top: 0.6rem; margin-top: 0.2rem; }
+  .lib-popular-list, .lib-suggest-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .lib-popular-item, .lib-suggest-item { display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+  .lib-popular-item:last-child, .lib-suggest-item:last-child { border-bottom: none; }
+  .lib-popular-item .cnt { font-size: 0.76rem; color: var(--text-soft); }
+  .breadcrumb { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.6rem; }
+  .breadcrumb a { color: var(--text-soft); }
+  .breadcrumb a:hover { color: var(--gold-dark); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="tai-lieu.html" class="active">Thư viện tài liệu</a>
+      <a href="dashboard.html" id="nav-dashboard-link" style="display:none;">Khu học tập</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="btn btn-gold btn-sm" href="login.html" id="guest-login-btn">Đăng nhập / Đăng ký</a>
+      <div class="user-menu" id="user-menu" style="display:none;">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head">
+            <span class="avatar" id="user-avatar-dd">BL</span>
+            <div><div class="n" id="user-name-dd">Học viên</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div>
+          </div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Khu học tập</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="../index.html">Trang chủ</a>
+    <a href="tai-lieu.html" class="active">Thư viện tài liệu</a>
+    <a href="dashboard.html" id="nav-dashboard-link-m" style="display:none;">Khu học tập</a>
+    <a href="login.html" id="guest-login-btn-m">Đăng nhập / Đăng ký</a>
+    <a href="#" id="mobile-logout" style="display:none;">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <main class="main" style="max-width:1500px; margin:0 auto; width:100%;">
+    <div class="breadcrumb"><a href="../index.html">Trang chủ</a> › Thư viện tài liệu tham khảo</div>
+    <div class="page-head">
+      <div>
+        <h1>Danh mục tài liệu tham khảo</h1>
+        <p class="d">Kho tài liệu nghiệp vụ ngân hàng theo từng chủ đề — xem trực tuyến ngay trên trình duyệt, không cần tải về.</p>
+      </div>
+    </div>
+
+    <div class="stat-grid cols-4">
+      <div class="stat-card"><div><div class="n" id="st-categories">—</div><div class="l">Tổng danh mục</div></div></div>
+      <div class="stat-card"><div><div class="n" id="st-documents">—</div><div class="l">Tổng tài liệu</div></div></div>
+      <div class="stat-card"><div><div class="n" id="st-new">—</div><div class="l">Tài liệu mới (7 ngày)</div></div></div>
+      <div class="stat-card"><div><div class="n" id="st-popular-name" style="font-size:1rem;">—</div><div class="l">Chủ đề phổ biến nhất</div></div></div>
+    </div>
+
+    <div class="filter-row">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="lib-search" placeholder="Tìm chủ đề tài liệu..." /></div>
+      <select id="lib-sort">
+        <option value="order">Sắp xếp: Mặc định</option>
+        <option value="name">Tên A-Z</option>
+        <option value="count-desc">Nhiều tài liệu nhất</option>
+        <option value="updated-desc">Cập nhật gần nhất</option>
+      </select>
+      <div class="lib-view-toggle" role="group" aria-label="Chuyển đổi dạng hiển thị">
+        <button id="lib-view-table" class="active" title="Dạng bảng" aria-label="Dạng bảng"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></button>
+        <button id="lib-view-card" title="Dạng thẻ" aria-label="Dạng thẻ"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+      </div>
+    </div>
+
+    <div class="grid-main-side">
+      <div>
+        <div class="card" id="lib-table-view">
+          <div class="card-head"><h2 id="lib-list-title">Danh mục tài liệu</h2></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>STT</th><th>Chủ đề</th><th>Mô tả</th><th>Số tài liệu</th><th>Cập nhật gần nhất</th><th>Thao tác</th></tr></thead>
+              <tbody id="lib-tbody"><tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="lib-card-grid" id="lib-card-view" style="display:none;"></div>
+        <div class="pagination" id="lib-pagination" style="display:none;">
+          <div class="info" id="lib-page-info"></div>
+          <div class="pages" id="lib-page-buttons"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="card-head"><h2>Chủ đề phổ biến</h2></div>
+          <div class="lib-popular-list" id="lib-popular-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+        <div class="card" style="margin-top:1.1rem;">
+          <div class="card-head"><h2>Đề xuất theo mối quan tâm</h2></div>
+          <div class="lib-suggest-list" id="lib-suggest-list"><p style="color:var(--text-soft); font-size:0.85rem;">Đăng nhập để nhận đề xuất theo mối quan tâm của bạn.</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/library.js"></script>
+<script>
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var PAGE_SIZE = 9;
+  var currentPage = 1;
+  var allCategories = [];
+  var filteredCategories = [];
+
+  function loadCategories() {
+    Promise.all([
+      window.sb.from('library_categories').select('id,name,slug,description,display_order').eq('is_active', true).order('display_order'),
+      window.sb.from('library_documents').select('category_id,updated_at,created_at,view_count').eq('status', 'PUBLISHED')
+    ]).then(function (results) {
+      var categories = results[0].data || [];
+      var docs = results[1].data || [];
+
+      var statsByCategory = {};
+      var totalNew = 0;
+      var sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      var viewsByCategory = {};
+
+      docs.forEach(function (d) {
+        if (!statsByCategory[d.category_id]) statsByCategory[d.category_id] = { count: 0, lastUpdated: null };
+        statsByCategory[d.category_id].count += 1;
+        var updated = d.updated_at || d.created_at;
+        if (updated && (!statsByCategory[d.category_id].lastUpdated || updated > statsByCategory[d.category_id].lastUpdated)) {
+          statsByCategory[d.category_id].lastUpdated = updated;
+        }
+        if (d.created_at && new Date(d.created_at).getTime() >= sevenDaysAgo) totalNew += 1;
+        viewsByCategory[d.category_id] = (viewsByCategory[d.category_id] || 0) + (d.view_count || 0);
+      });
+
+      allCategories = categories.map(function (c) {
+        var s = statsByCategory[c.id] || { count: 0, lastUpdated: null };
+        return {
+          id: c.id, name: c.name, slug: c.slug, description: c.description,
+          display_order: c.display_order, docCount: s.count, lastUpdated: s.lastUpdated,
+          totalViews: viewsByCategory[c.id] || 0
+        };
+      });
+
+      document.getElementById('st-categories').textContent = allCategories.length;
+      document.getElementById('st-documents').textContent = docs.length;
+      document.getElementById('st-new').textContent = totalNew;
+
+      var popular = allCategories.slice().sort(function (a, b) { return b.totalViews - a.totalViews; }).filter(function (c) { return c.totalViews > 0; });
+      document.getElementById('st-popular-name').textContent = popular[0] ? popular[0].name : '—';
+
+      var popularBox = document.getElementById('lib-popular-list');
+      if (popular.length === 0) {
+        popularBox.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có dữ liệu lượt xem.</p>';
+      } else {
+        popularBox.innerHTML = popular.slice(0, 5).map(function (c) {
+          return '<div class="lib-popular-item"><a href="tai-lieu-danh-muc.html?slug=' + encodeURIComponent(c.slug) + '">' + escapeHtml(c.name) + '</a><span class="cnt">' + libraryFormatCount(c.totalViews) + ' lượt xem</span></div>';
+        }).join('');
+      }
+
+      applyFilters();
+    });
+  }
+
+  function applyFilters() {
+    var q = (document.getElementById('lib-search').value || '').toLowerCase();
+    var sort = document.getElementById('lib-sort').value;
+    filteredCategories = allCategories.filter(function (c) {
+      return !q || c.name.toLowerCase().indexOf(q) !== -1 || (c.description || '').toLowerCase().indexOf(q) !== -1;
+    });
+    if (sort === 'name') filteredCategories.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    else if (sort === 'count-desc') filteredCategories.sort(function (a, b) { return b.docCount - a.docCount; });
+    else if (sort === 'updated-desc') filteredCategories.sort(function (a, b) { return new Date(b.lastUpdated || 0) - new Date(a.lastUpdated || 0); });
+    else filteredCategories.sort(function (a, b) { return a.display_order - b.display_order; });
+    currentPage = 1;
+    render();
+  }
+
+  function render() {
+    document.getElementById('lib-list-title').textContent = 'Danh mục tài liệu (' + filteredCategories.length + ')';
+    var totalPages = Math.max(1, Math.ceil(filteredCategories.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    var start = (currentPage - 1) * PAGE_SIZE;
+    var pageItems = filteredCategories.slice(start, start + PAGE_SIZE);
+
+    var tbody = document.getElementById('lib-tbody');
+    if (pageItems.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Không tìm thấy danh mục phù hợp.</td></tr>';
+    } else {
+      tbody.innerHTML = pageItems.map(function (c, i) {
+        return '<tr>' +
+          '<td>' + (start + i + 1) + '</td>' +
+          '<td><strong>' + escapeHtml(c.name) + '</strong></td>' +
+          '<td style="max-width:320px; white-space:normal; color:var(--text-soft);">' + escapeHtml(c.description || '—') + '</td>' +
+          '<td>' + c.docCount + '</td>' +
+          '<td>' + libraryTimeAgo(c.lastUpdated) + '</td>' +
+          '<td><a class="btn btn-outline btn-sm" href="tai-lieu-danh-muc.html?slug=' + encodeURIComponent(c.slug) + '">Xem tài liệu →</a></td>' +
+          '</tr>';
+      }).join('');
+    }
+
+    var cardBox = document.getElementById('lib-card-view');
+    cardBox.innerHTML = pageItems.map(function (c) {
+      return '<div class="lib-cat-card">' +
+        '<h3>' + escapeHtml(c.name) + '</h3>' +
+        '<p>' + escapeHtml(c.description || '') + '</p>' +
+        '<div class="meta-row"><span>' + c.docCount + ' tài liệu</span><span>Cập nhật ' + libraryTimeAgo(c.lastUpdated) + '</span></div>' +
+        '<a class="btn btn-gold btn-sm" style="justify-content:center;" href="tai-lieu-danh-muc.html?slug=' + encodeURIComponent(c.slug) + '">Xem tài liệu →</a>' +
+        '</div>';
+    }).join('') || '<p style="color:var(--text-soft); font-size:0.85rem;">Không tìm thấy danh mục phù hợp.</p>';
+
+    var pagBox = document.getElementById('lib-pagination');
+    pagBox.style.display = totalPages > 1 ? 'flex' : 'none';
+    document.getElementById('lib-page-info').textContent = 'Trang ' + currentPage + '/' + totalPages + ' — ' + filteredCategories.length + ' danh mục';
+    var btnBox = document.getElementById('lib-page-buttons');
+    var html = '';
+    for (var p = 1; p <= totalPages; p++) {
+      html += '<button data-page="' + p + '" class="' + (p === currentPage ? 'active' : '') + '">' + p + '</button>';
+    }
+    btnBox.innerHTML = html;
+    btnBox.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () { currentPage = Number(btn.getAttribute('data-page')); render(); });
+    });
+  }
+
+  document.getElementById('lib-search').addEventListener('input', applyFilters);
+  document.getElementById('lib-sort').addEventListener('change', applyFilters);
+  document.getElementById('lib-view-table').addEventListener('click', function () {
+    this.classList.add('active');
+    document.getElementById('lib-view-card').classList.remove('active');
+    document.getElementById('lib-table-view').style.display = '';
+    document.getElementById('lib-card-view').style.display = 'none';
+  });
+  document.getElementById('lib-view-card').addEventListener('click', function () {
+    document.getElementById('lib-view-table').classList.remove('active');
+    this.classList.add('active');
+    document.getElementById('lib-table-view').style.display = 'none';
+    document.getElementById('lib-card-view').style.display = 'grid';
+  });
+
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click', function (e) { if (!menu.contains(e.target)) menu.classList.remove('open'); });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+    document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+  })();
+
+  window.sb.auth.getSession().then(function (res) {
+    var session = res.data.session;
+    if (!session) { loadCategories(); return; }
+    window.sb.from('profiles').select('full_name').eq('id', session.user.id).single().then(function (profRes) {
+      var name = (profRes.data && profRes.data.full_name) || session.user.email;
+      document.getElementById('guest-login-btn').style.display = 'none';
+      document.getElementById('guest-login-btn-m').style.display = 'none';
+      document.getElementById('user-menu').style.display = '';
+      document.getElementById('mobile-logout').style.display = '';
+      document.getElementById('nav-dashboard-link').style.display = '';
+      document.getElementById('nav-dashboard-link-m').style.display = '';
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-dd').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'BL';
+      document.getElementById('user-avatar-dd').textContent = initials || 'BL';
+      document.getElementById('user-email-dd').textContent = session.user.email || '—';
+
+      // Đề xuất theo mối quan tâm: gợi ý danh mục có nhiều tài liệu người dùng đã xem/yêu thích nhất
+      Promise.all([
+        window.sb.from('library_document_favorites').select('document_id').eq('user_id', session.user.id),
+        window.sb.from('library_documents').select('id,category_id,title')
+      ]).then(function (r) {
+        var favIds = (r[0].data || []).map(function (f) { return f.document_id; });
+        var docs = r[1].data || [];
+        var favCategoryIds = {};
+        docs.forEach(function (d) { if (favIds.indexOf(d.id) !== -1) favCategoryIds[d.category_id] = true; });
+        var suggestBox = document.getElementById('lib-suggest-list');
+        var suggestCats = allCategories.filter(function (c) { return favCategoryIds[c.id]; }).slice(0, 4);
+        if (suggestCats.length === 0) {
+          suggestBox.innerHTML = '<p style="color:var(--text-soft); font-size:0.85rem;">Lưu tài liệu yêu thích để nhận đề xuất theo mối quan tâm của bạn.</p>';
+          return;
+        }
+        suggestBox.innerHTML = suggestCats.map(function (c) {
+          return '<div class="lib-suggest-item"><a href="tai-lieu-danh-muc.html?slug=' + encodeURIComponent(c.slug) + '">' + escapeHtml(c.name) + '</a></div>';
+        }).join('');
+      });
+    });
+    loadCategories();
+  });
+</script>
+</body>
+</html>

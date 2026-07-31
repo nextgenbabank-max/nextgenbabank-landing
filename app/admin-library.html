@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thư viện tài liệu tham khảo — Admin — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-top: 0.5rem; }
+  .bar-chart .col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; }
+  .bar-chart .bar { width: 100%; max-width: 28px; background: var(--gold-grad); border-radius: 5px 5px 0 0; min-height: 2px; }
+  .bar-chart .lbl { font-size: 0.68rem; color: var(--text-soft); }
+  .inline-form { display: none; background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.2rem; margin-top: 1rem; }
+  .inline-form.open { display: block; }
+  .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem 1.1rem; }
+  @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-grid .full { grid-column: 1 / -1; }
+  .tfield label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--navy-ink); margin-bottom: 0.3rem; }
+  .tfield input[type=text], .tfield input[type=number], .tfield input[type=url], .tfield textarea, .tfield select {
+    width: 100%; border: 1.5px solid var(--border); border-radius: 9px; padding: 0.55em 0.7em; font-family: inherit; font-size: 0.88rem; background: var(--card);
+  }
+  .tfield textarea { min-height: 70px; resize: vertical; }
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+  .toggle-row:last-child { border-bottom: none; }
+  .switch { position: relative; width: 40px; height: 22px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .slider { position: absolute; inset: 0; background: var(--border); border-radius: 999px; cursor: pointer; transition: 0.2s; }
+  .switch .slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+  .switch input:checked + .slider { background: var(--gold-grad); }
+  .switch input:checked + .slider::before { transform: translateX(18px); }
+  .drive-check-msg { font-size: 0.78rem; margin-top: 0.4rem; display: none; padding: 0.5em 0.7em; border-radius: 8px; }
+  .drive-check-msg.ok { display: block; background: var(--green-soft, #E4F5EA); color: var(--green, #1E8A4C); }
+  .drive-check-msg.warn { display: block; background: var(--gold-soft); color: var(--gold-dark); }
+  .drive-check-msg.err { display: block; background: var(--danger-soft); color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="t-shell">
+  <aside class="t-sidebar" id="t-sidebar">
+    <div class="t-sidebar-head">
+      <a class="t-brand" href="admin-dashboard.html">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" /><path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" /></svg></span>
+        <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+      </a>
+      <button class="t-sidebar-toggle" id="t-sidebar-toggle" aria-label="Thu gọn/Mở rộng menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg></button>
+    </div>
+    <div class="t-profile">
+      <span class="ph"><span class="avatar" id="user-avatar">AD</span><span class="status-dot"></span></span>
+      <div><div class="role">Admin</div><div class="name" id="user-name">Admin System</div><div class="online">Quản trị hệ thống</div></div>
+    </div>
+    <nav class="t-nav">
+      <a href="admin-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Tổng quan</a>
+      <a href="admin-registrations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>Đăng ký tài khoản</a>
+      <a href="admin-create-account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>Tạo tài khoản</a>
+      <a href="admin-users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg>Quản lý người dùng</a>
+      <a href="admin-permissions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Phân quyền</a>
+      <a href="admin-classes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><path d="M22 10v6"/></svg>Quản lý lớp học</a>
+      <a href="admin-mentor-assignment.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><path d="M2 20c0-3 2.5-5 6-5"/><circle cx="17" cy="8" r="3"/><path d="M13 20c0-3 2-5 4-5"/><path d="m9 14 2 2 4-4"/></svg>Phân công mentor</a>
+      <a href="learning-path-designer.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Thiết kế lộ trình học</a>
+      <a href="admin-library.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>Thư viện tài liệu</a>
+      <div class="t-nav-divider"></div>
+    </nav>
+  </aside>
+
+  <div class="t-content">
+    <header class="t-topbar">
+      <div class="t-topbar-inner">
+        <button class="t-hamburger" id="t-hamburger" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <nav class="t-mainnav">
+          <a href="admin-dashboard.html">Tổng quan</a>
+          <a href="admin-users.html">Quản lý người dùng</a>
+          <a href="admin-classes.html">Quản lý lớp học</a>
+          <a href="admin-mentor-assignment.html">Phân công mentor</a>
+          <a href="admin-library.html" class="active">Thư viện tài liệu</a>
+        </nav>
+        <div class="t-topbar-actions">
+          <div class="user-menu" id="user-menu">
+            <div class="t-user-trigger" id="user-trigger-btn">
+              <span class="avatar" id="user-avatar-2">AD</span>
+              <span class="meta"><span class="u-name" id="user-name-2">Admin System</span><span class="u-role">Admin</span></span>
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <div class="user-dropdown">
+              <div class="ud-head"><span class="avatar" id="user-avatar-dd">AD</span><div><div class="n" id="user-name-dd">Admin System</div><div class="r">Admin</div><div class="e" id="user-email-dd">—</div></div></div>
+              <div class="ud-divider"></div>
+              <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+              <div class="ud-divider"></div>
+              <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="t-main">
+      <div class="page-head">
+        <div><h1>Thư viện tài liệu tham khảo</h1><p class="d">Quản lý danh mục, tài liệu và theo dõi số liệu sử dụng của thư viện tài liệu công khai.</p></div>
+        <a class="btn btn-outline btn-sm" href="tai-lieu.html" target="_blank" rel="noopener">Xem trang công khai ↗</a>
+      </div>
+
+      <div class="stat-grid cols-5">
+        <div class="stat-card"><div><div class="n" id="st-docs">—</div><div class="l">Tổng tài liệu</div></div></div>
+        <div class="stat-card"><div><div class="n" id="st-views">—</div><div class="l">Tổng lượt xem</div></div></div>
+        <div class="stat-card"><div><div class="n" id="st-opens">—</div><div class="l">Tổng lượt mở Drive</div></div></div>
+        <div class="stat-card"><div><div class="n" id="st-downloads">—</div><div class="l">Tổng lượt nhấn tải</div></div></div>
+        <div class="stat-card"><div><div class="n" id="st-unique">—</div><div class="l">Người xem duy nhất</div></div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h2>Lượt xem theo ngày (7 ngày)</h2></div>
+          <div class="bar-chart" id="chart-views"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Lượt mở Drive theo ngày (7 ngày)</h2></div>
+          <div class="bar-chart" id="chart-opens"></div>
+        </div>
+      </div>
+
+      <div class="stat-grid cols-3">
+        <div class="stat-card"><div><div class="n" id="st-ratio">—</div><div class="l">Tỷ lệ xem → mở Drive</div></div></div>
+        <div class="stat-card"><div><div class="n" id="st-avgtime">—</div><div class="l">Thời gian xem trung bình</div></div></div>
+        <div class="stat-card"><div><div class="n" id="st-popular-cat" style="font-size:1rem;">—</div><div class="l">Chủ đề phổ biến nhất</div></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Tài liệu phổ biến</h2></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Tên tài liệu</th><th>Danh mục</th><th>Lượt xem</th><th>Lượt mở Drive</th></tr></thead>
+            <tbody id="popular-tbody"><tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ QUẢN LÝ DANH MỤC ============ -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Quản lý danh mục</h2>
+          <button class="btn btn-gold btn-sm" id="btn-new-category">+ Thêm danh mục</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>STT</th><th>Tên danh mục</th><th>Slug</th><th>Số tài liệu</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+            <tbody id="cat-tbody"><tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="inline-form" id="category-form">
+          <h3 style="font-size:0.95rem; font-weight:800; margin-bottom:0.8rem;" id="category-form-title">Thêm danh mục</h3>
+          <div class="form-grid">
+            <div class="tfield"><label>Tên danh mục *</label><input type="text" id="cat-f-name" /></div>
+            <div class="tfield"><label>Slug (tự tạo nếu để trống)</label><input type="text" id="cat-f-slug" placeholder="vd: tin-dung" /></div>
+            <div class="tfield full"><label>Mô tả</label><textarea id="cat-f-desc"></textarea></div>
+          </div>
+          <div style="display:flex; gap:0.7rem; margin-top:1rem;">
+            <button class="btn btn-outline btn-sm" id="cat-form-cancel" type="button">Huỷ</button>
+            <button class="btn btn-gold btn-sm" id="cat-form-save" type="button">Lưu danh mục</button>
+          </div>
+          <p class="msg-error" id="cat-form-error" style="display:none; color:var(--danger); margin-top:0.6rem; font-size:0.82rem;"></p>
+        </div>
+      </div>
+
+      <!-- ============ QUẢN LÝ TÀI LIỆU ============ -->
+      <div class="card">
+        <div class="card-head">
+          <h2 id="doc-list-title">Quản lý tài liệu</h2>
+          <button class="btn btn-gold btn-sm" id="btn-new-document">+ Thêm tài liệu</button>
+        </div>
+        <div class="filter-row">
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="doc-search" placeholder="Tìm tên tài liệu..." /></div>
+          <select id="doc-filter-category"><option value="">Danh mục: Tất cả</option></select>
+          <select id="doc-filter-status"><option value="">Trạng thái: Tất cả</option><option value="DRAFT">Nháp</option><option value="PUBLISHED">Đã đăng</option><option value="ARCHIVED">Lưu trữ</option></select>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Tên tài liệu</th><th>Danh mục</th><th>Loại</th><th>Trạng thái</th><th>Lượt xem</th><th>Lượt mở</th><th>Cập nhật</th><th>Thao tác</th></tr></thead>
+            <tbody id="doc-tbody"><tr><td colspan="8" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="inline-form" id="document-form">
+          <h3 style="font-size:0.95rem; font-weight:800; margin-bottom:0.8rem;" id="document-form-title">Thêm tài liệu</h3>
+          <div class="form-grid">
+            <div class="tfield"><label>Tên tài liệu *</label><input type="text" id="doc-f-title" /></div>
+            <div class="tfield"><label>Danh mục *</label><select id="doc-f-category"></select></div>
+            <div class="tfield full"><label>Mô tả</label><textarea id="doc-f-desc"></textarea></div>
+            <div class="tfield"><label>Tác giả</label><input type="text" id="doc-f-author" /></div>
+            <div class="tfield"><label>Loại tài liệu</label>
+              <select id="doc-f-filetype"><option value="pdf">PDF</option><option value="docx">Word (docx)</option><option value="xlsx">Excel (xlsx)</option><option value="pptx">PowerPoint (pptx)</option></select>
+            </div>
+            <div class="tfield"><label>Cấp độ</label>
+              <select id="doc-f-level"><option value="">Không đặt</option><option value="beginner">Cơ bản</option><option value="intermediate">Trung cấp</option><option value="advanced">Nâng cao</option></select>
+            </div>
+            <div class="tfield"><label>Phiên bản</label><input type="text" id="doc-f-version" placeholder="vd: v1.0" /></div>
+            <div class="tfield"><label>Tổng số trang</label><input type="number" min="0" id="doc-f-pages" /></div>
+            <div class="tfield"><label>Dung lượng (MB)</label><input type="number" min="0" step="0.1" id="doc-f-size" /></div>
+            <div class="tfield full">
+              <label>Link Google Drive *</label>
+              <input type="url" id="doc-f-drive-url" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" />
+              <div class="drive-check-msg" id="drive-check-msg"></div>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem; border-top:1px solid var(--border); padding-top:0.8rem;">
+            <div class="toggle-row"><span>Cho phép xem trên website</span><label class="switch"><input type="checkbox" id="doc-f-viewable" checked /><span class="slider"></span></label></div>
+            <div class="toggle-row"><span>Cho phép mở Google Drive</span><label class="switch"><input type="checkbox" id="doc-f-drive-open" checked /><span class="slider"></span></label></div>
+            <div class="toggle-row"><span>Hiển thị nút tải xuống</span><label class="switch"><input type="checkbox" id="doc-f-download" /><span class="slider"></span></label></div>
+            <div class="toggle-row"><span>Yêu cầu đăng nhập để xem</span><label class="switch"><input type="checkbox" id="doc-f-requires-login" /><span class="slider"></span></label></div>
+          </div>
+
+          <div class="tfield" style="margin-top:0.9rem; max-width:260px;">
+            <label>Trạng thái</label>
+            <select id="doc-f-status"><option value="DRAFT">Nháp (DRAFT)</option><option value="PUBLISHED">Đăng công khai (PUBLISHED)</option><option value="ARCHIVED">Lưu trữ (ARCHIVED)</option></select>
+          </div>
+
+          <div style="display:flex; gap:0.7rem; margin-top:1.1rem;">
+            <button class="btn btn-outline btn-sm" id="doc-form-cancel" type="button">Huỷ</button>
+            <button class="btn btn-gold btn-sm" id="doc-form-save" type="button">Lưu tài liệu</button>
+          </div>
+          <p class="msg-error" id="doc-form-error" style="display:none; color:var(--danger); margin-top:0.6rem; font-size:0.82rem;"></p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="t-sidebar-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:45;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/library.js"></script>
+<script>
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function slugify(s) {
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  (function () {
+    var btn = document.getElementById('t-hamburger');
+    var sidebar = document.getElementById('t-sidebar');
+    var backdrop = document.getElementById('t-sidebar-backdrop');
+    function close() { sidebar.classList.remove('open'); backdrop.style.display = 'none'; }
+    btn.addEventListener('click', function () { var open = sidebar.classList.toggle('open'); backdrop.style.display = open ? 'block' : 'none'; });
+    backdrop.addEventListener('click', close);
+  })();
+  (function () {
+    var shell = document.querySelector('.t-shell');
+    var collapseBtn = document.getElementById('t-sidebar-toggle');
+    var KEY = 'mentorSidebarCollapsed';
+    if (localStorage.getItem(KEY) === '1') shell.classList.add('collapsed');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = shell.classList.toggle('collapsed');
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    });
+  })();
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click', function (e) { if (!menu.contains(e.target)) menu.classList.remove('open'); });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+  })();
+
+  var allCategories = [];
+  var allDocuments = [];
+  var editingCategoryId = null;
+  var editingDocumentId = null;
+
+  // ============ DASHBOARD ============
+  function loadDashboard() {
+    Promise.all([
+      window.sb.from('library_documents').select('id,title,category_id,file_type,view_count,drive_open_count,download_click_count,status'),
+      window.sb.from('library_document_view_sessions').select('user_id,anonymous_id,is_valid_view,active_duration_seconds,started_at').eq('is_valid_view', true),
+      window.sb.from('library_document_drive_open_logs').select('opened_at')
+    ]).then(function (results) {
+      var docs = (results[0].data || []).filter(function (d) { return d.status !== 'ARCHIVED'; });
+      var sessions = results[1].data || [];
+      var opens = results[2].data || [];
+
+      var totalViews = docs.reduce(function (s, d) { return s + (d.view_count || 0); }, 0);
+      var totalOpens = docs.reduce(function (s, d) { return s + (d.drive_open_count || 0); }, 0);
+      var totalDownloads = docs.reduce(function (s, d) { return s + (d.download_click_count || 0); }, 0);
+      document.getElementById('st-docs').textContent = docs.length;
+      document.getElementById('st-views').textContent = libraryFormatCount(totalViews);
+      document.getElementById('st-opens').textContent = libraryFormatCount(totalOpens);
+      document.getElementById('st-downloads').textContent = libraryFormatCount(totalDownloads);
+
+      var uniqueSet = {};
+      sessions.forEach(function (s) { uniqueSet[s.user_id || ('a:' + s.anonymous_id)] = true; });
+      document.getElementById('st-unique').textContent = libraryFormatCount(Object.keys(uniqueSet).length);
+
+      document.getElementById('st-ratio').textContent = totalViews > 0 ? Math.round((totalOpens / totalViews) * 100) + '%' : '—';
+
+      var avgSeconds = sessions.length ? sessions.reduce(function (s, x) { return s + (x.active_duration_seconds || 0); }, 0) / sessions.length : 0;
+      document.getElementById('st-avgtime').textContent = avgSeconds > 0 ? Math.round(avgSeconds / 60) + ' phút ' + Math.round(avgSeconds % 60) + ' giây' : '—';
+
+      renderDayChart('chart-views', sessions.map(function (s) { return s.started_at; }));
+      renderDayChart('chart-opens', opens.map(function (o) { return o.opened_at; }));
+
+      var popular = docs.slice().sort(function (a, b) { return (b.view_count || 0) - (a.view_count || 0); }).slice(0, 5);
+      document.getElementById('popular-tbody').innerHTML = popular.length ? popular.map(function (d) {
+        var cat = allCategories.find(function (c) { return c.id === d.category_id; });
+        return '<tr><td>' + escapeHtml(d.title) + '</td><td>' + escapeHtml(cat ? cat.name : '—') + '</td><td>' + libraryFormatCount(d.view_count) + '</td><td>' + libraryFormatCount(d.drive_open_count) + '</td></tr>';
+      }).join('') : '<tr><td colspan="4" style="color:var(--text-soft); font-size:0.85rem;">Chưa có dữ liệu.</td></tr>';
+
+      var catViewSums = {};
+      docs.forEach(function (d) { catViewSums[d.category_id] = (catViewSums[d.category_id] || 0) + (d.view_count || 0); });
+      var topCatId = Object.keys(catViewSums).sort(function (a, b) { return catViewSums[b] - catViewSums[a]; })[0];
+      var topCat = allCategories.find(function (c) { return c.id === topCatId; });
+      document.getElementById('st-popular-cat').textContent = topCat ? topCat.name : '—';
+    });
+  }
+
+  function renderDayChart(elId, dateList) {
+    var days = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date();
+      d.setDate(d.getDate() - i);
+      days.push({ key: d.toISOString().slice(0, 10), label: (d.getMonth() + 1) + '/' + d.getDate(), count: 0 });
+    }
+    var byKey = {};
+    days.forEach(function (d) { byKey[d.key] = d; });
+    dateList.forEach(function (dt) {
+      if (!dt) return;
+      var key = String(dt).slice(0, 10);
+      if (byKey[key]) byKey[key].count += 1;
+    });
+    var max = Math.max.apply(null, days.map(function (d) { return d.count; }).concat([1]));
+    document.getElementById(elId).innerHTML = days.map(function (d) {
+      var h = Math.round((d.count / max) * 100);
+      return '<div class="col"><div style="font-size:0.68rem; color:var(--text-soft);">' + d.count + '</div><div class="bar" style="height:' + Math.max(h, 2) + '%;"></div><div class="lbl">' + d.label + '</div></div>';
+    }).join('');
+  }
+
+  // ============ DANH MỤC ============
+  function loadCategories() {
+    return window.sb.from('library_categories').select('id,name,slug,description,display_order,is_active').order('display_order').then(function (res) {
+      allCategories = res.data || [];
+      var docSelect = document.getElementById('doc-f-category');
+      var filterSelect = document.getElementById('doc-filter-category');
+      docSelect.innerHTML = allCategories.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
+      filterSelect.innerHTML = '<option value="">Danh mục: Tất cả</option>' + allCategories.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml(c.name) + '</option>'; }).join('');
+      renderCategoryTable();
+    });
+  }
+
+  function renderCategoryTable() {
+    var tbody = document.getElementById('cat-tbody');
+    if (allCategories.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="color:var(--text-soft); font-size:0.85rem;">Chưa có danh mục nào.</td></tr>'; return; }
+    tbody.innerHTML = allCategories.map(function (c, i) {
+      var docCount = allDocuments.filter(function (d) { return d.category_id === c.id; }).length;
+      var statusBadge = c.is_active ? '<span class="badge b-done">Hoạt động</span>' : '<span class="badge" style="background:var(--danger-soft); color:var(--danger);">Đã khoá</span>';
+      return '<tr>' +
+        '<td>' + (i + 1) + '</td>' +
+        '<td><strong>' + escapeHtml(c.name) + '</strong></td>' +
+        '<td style="color:var(--text-soft);">' + escapeHtml(c.slug) + '</td>' +
+        '<td>' + docCount + '</td>' +
+        '<td>' + statusBadge + '</td>' +
+        '<td class="action-pair">' +
+          '<button class="row-action-btn" data-cat-up="' + c.id + '" ' + (i === 0 ? 'disabled' : '') + '>↑</button>' +
+          '<button class="row-action-btn" data-cat-down="' + c.id + '" ' + (i === allCategories.length - 1 ? 'disabled' : '') + '>↓</button>' +
+          '<button class="row-action-btn" data-cat-edit="' + c.id + '">Sửa</button>' +
+          '<button class="row-action-btn" data-cat-toggle="' + c.id + '" data-current="' + c.is_active + '">' + (c.is_active ? 'Khoá' : 'Mở khoá') + '</button>' +
+        '</td></tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-cat-edit]').forEach(function (btn) { btn.addEventListener('click', function () { openCategoryForm(btn.getAttribute('data-cat-edit')); }); });
+    tbody.querySelectorAll('[data-cat-toggle]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-cat-toggle');
+        var current = btn.getAttribute('data-current') === 'true';
+        window.sb.from('library_categories').update({ is_active: !current }).eq('id', id).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          loadCategories();
+        });
+      });
+    });
+    tbody.querySelectorAll('[data-cat-up]').forEach(function (btn) { btn.addEventListener('click', function () { swapCategoryOrder(btn.getAttribute('data-cat-up'), -1); }); });
+    tbody.querySelectorAll('[data-cat-down]').forEach(function (btn) { btn.addEventListener('click', function () { swapCategoryOrder(btn.getAttribute('data-cat-down'), 1); }); });
+  }
+
+  function swapCategoryOrder(id, direction) {
+    var idx = allCategories.findIndex(function (c) { return c.id === id; });
+    var swapIdx = idx + direction;
+    if (swapIdx < 0 || swapIdx >= allCategories.length) return;
+    var a = allCategories[idx], b = allCategories[swapIdx];
+    Promise.all([
+      window.sb.from('library_categories').update({ display_order: b.display_order }).eq('id', a.id),
+      window.sb.from('library_categories').update({ display_order: a.display_order }).eq('id', b.id)
+    ]).then(function () { loadCategories(); });
+  }
+
+  function openCategoryForm(id) {
+    editingCategoryId = id || null;
+    var form = document.getElementById('category-form');
+    document.getElementById('cat-form-error').style.display = 'none';
+    if (id) {
+      var c = allCategories.find(function (x) { return x.id === id; });
+      document.getElementById('category-form-title').textContent = 'Sửa danh mục';
+      document.getElementById('cat-f-name').value = c.name;
+      document.getElementById('cat-f-slug').value = c.slug;
+      document.getElementById('cat-f-desc').value = c.description || '';
+    } else {
+      document.getElementById('category-form-title').textContent = 'Thêm danh mục';
+      document.getElementById('cat-f-name').value = '';
+      document.getElementById('cat-f-slug').value = '';
+      document.getElementById('cat-f-desc').value = '';
+    }
+    form.classList.add('open');
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  document.getElementById('btn-new-category').addEventListener('click', function () { openCategoryForm(null); });
+  document.getElementById('cat-form-cancel').addEventListener('click', function () { document.getElementById('category-form').classList.remove('open'); });
+  document.getElementById('cat-form-save').addEventListener('click', function () {
+    var name = document.getElementById('cat-f-name').value.trim();
+    var slug = slugify(document.getElementById('cat-f-slug').value.trim() || name);
+    var description = document.getElementById('cat-f-desc').value.trim();
+    var errorOut = document.getElementById('cat-form-error');
+    errorOut.style.display = 'none';
+    if (!name || !slug) { errorOut.textContent = 'Vui lòng nhập tên danh mục.'; errorOut.style.display = 'block'; return; }
+
+    var payload = { name: name, slug: slug, description: description || null };
+    var query = editingCategoryId
+      ? window.sb.from('library_categories').update(payload).eq('id', editingCategoryId)
+      : window.sb.from('library_categories').insert(Object.assign({ display_order: allCategories.length + 1 }, payload));
+    query.then(function (res) {
+      if (res.error) { errorOut.textContent = 'Lỗi: ' + res.error.message; errorOut.style.display = 'block'; return; }
+      document.getElementById('category-form').classList.remove('open');
+      loadCategories();
+    });
+  });
+
+  // ============ TÀI LIỆU ============
+  function loadDocuments() {
+    return window.sb.from('library_documents')
+      .select('id,category_id,title,slug,description,file_type,drive_url,drive_file_id,total_pages,file_size_bytes,author_name,difficulty_level,version,is_viewable,is_drive_open_enabled,is_download_link_enabled,requires_login,view_count,drive_open_count,download_click_count,status,updated_at,created_at')
+      .order('created_at', { ascending: false })
+      .then(function (res) {
+        allDocuments = res.data || [];
+        renderCategoryTable();
+        renderDocumentTable();
+        loadDashboard();
+      });
+  }
+
+  function renderDocumentTable() {
+    var q = (document.getElementById('doc-search').value || '').toLowerCase();
+    var catFilter = document.getElementById('doc-filter-category').value;
+    var statusFilter = document.getElementById('doc-filter-status').value;
+    var filtered = allDocuments.filter(function (d) {
+      if (q && d.title.toLowerCase().indexOf(q) === -1) return false;
+      if (catFilter && d.category_id !== catFilter) return false;
+      if (statusFilter && d.status !== statusFilter) return false;
+      return true;
+    });
+    document.getElementById('doc-list-title').textContent = 'Quản lý tài liệu (' + filtered.length + ')';
+    var tbody = document.getElementById('doc-tbody');
+    if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="color:var(--text-soft); font-size:0.85rem;">Không có tài liệu nào.</td></tr>'; return; }
+    tbody.innerHTML = filtered.map(function (d) {
+      var cat = allCategories.find(function (c) { return c.id === d.category_id; });
+      var statusMap = { DRAFT: '<span class="badge">Nháp</span>', PUBLISHED: '<span class="badge b-done">Đã đăng</span>', ARCHIVED: '<span class="badge" style="background:var(--bg-soft); color:var(--text-soft);">Lưu trữ</span>' };
+      return '<tr>' +
+        '<td><strong>' + escapeHtml(d.title) + '</strong></td>' +
+        '<td>' + escapeHtml(cat ? cat.name : '—') + '</td>' +
+        '<td>' + libraryFileTypeLabel(d.file_type) + '</td>' +
+        '<td>' + (statusMap[d.status] || d.status) + '</td>' +
+        '<td>' + libraryFormatCount(d.view_count) + '</td>' +
+        '<td>' + libraryFormatCount(d.drive_open_count) + '</td>' +
+        '<td>' + libraryTimeAgo(d.updated_at || d.created_at) + '</td>' +
+        '<td class="action-pair">' +
+          '<button class="row-action-btn" data-doc-edit="' + d.id + '">Sửa</button>' +
+          (d.status !== 'PUBLISHED' ? '<button class="row-action-btn primary" data-doc-status="' + d.id + '" data-status="PUBLISHED">Đăng</button>' : '<button class="row-action-btn" data-doc-status="' + d.id + '" data-status="DRAFT">Gỡ đăng</button>') +
+          (d.status !== 'ARCHIVED' ? '<button class="row-action-btn" data-doc-status="' + d.id + '" data-status="ARCHIVED">Lưu trữ</button>' : '') +
+        '</td></tr>';
+    }).join('');
+
+    tbody.querySelectorAll('[data-doc-edit]').forEach(function (btn) { btn.addEventListener('click', function () { openDocumentForm(btn.getAttribute('data-doc-edit')); }); });
+    tbody.querySelectorAll('[data-doc-status]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-doc-status');
+        var status = btn.getAttribute('data-status');
+        var doc = allDocuments.find(function (x) { return x.id === id; });
+        if (status === 'PUBLISHED' && !libraryIsAllowedDriveUrl(doc.drive_url)) {
+          alert('Không thể đăng: link Google Drive không hợp lệ. Vui lòng sửa lại link trước.');
+          return;
+        }
+        window.sb.from('library_documents').update({ status: status, published_at: status === 'PUBLISHED' ? new Date().toISOString() : doc.published_at }).eq('id', id).then(function (res) {
+          if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+          loadDocuments();
+        });
+      });
+    });
+  }
+
+  ['doc-search'].forEach(function (id) { document.getElementById(id).addEventListener('input', renderDocumentTable); });
+  ['doc-filter-category', 'doc-filter-status'].forEach(function (id) { document.getElementById(id).addEventListener('change', renderDocumentTable); });
+
+  function checkDriveUrl(url) {
+    var msgBox = document.getElementById('drive-check-msg');
+    var norm = libraryNormalizeDriveUrl(url);
+    if (!url) { msgBox.className = 'drive-check-msg'; msgBox.textContent = ''; return null; }
+    if (!norm) {
+      msgBox.className = 'drive-check-msg err';
+      msgBox.textContent = 'Link không hợp lệ. Chỉ chấp nhận URL thuộc drive.google.com hoặc docs.google.com.';
+      return null;
+    }
+    msgBox.className = 'drive-check-msg ok';
+    msgBox.textContent = 'Đã nhận diện File ID: ' + norm.fileId + '. Đảm bảo file đã bật chia sẻ "Anyone with the link" trước khi đăng.';
+    return norm;
+  }
+  document.getElementById('doc-f-drive-url').addEventListener('input', function () { checkDriveUrl(this.value.trim()); });
+  document.getElementById('doc-f-drive-url').addEventListener('blur', function () {
+    var norm = checkDriveUrl(this.value.trim());
+    if (!norm) return;
+    // Heuristic kiểm tra quyền chia sẻ: thử tải thumbnail công khai của file (không đọc được nội dung do CORS,
+    // nhưng ảnh thumbnail public sẽ tải được nếu file đã share đúng quyền "Anyone with the link").
+    var img = new Image();
+    var msgBox = document.getElementById('drive-check-msg');
+    img.onload = function () { msgBox.className = 'drive-check-msg ok'; msgBox.textContent = 'File ID: ' + norm.fileId + '. Có vẻ file đã chia sẻ công khai (đọc được thumbnail).'; };
+    img.onerror = function () { msgBox.className = 'drive-check-msg warn'; msgBox.textContent = 'File ID: ' + norm.fileId + '. Không đọc được thumbnail — kiểm tra lại quyền chia sẻ "Anyone with the link" trước khi đăng.'; };
+    img.src = 'https://drive.google.com/thumbnail?id=' + norm.fileId;
+  });
+
+  function openDocumentForm(id) {
+    editingDocumentId = id || null;
+    var form = document.getElementById('document-form');
+    document.getElementById('doc-form-error').style.display = 'none';
+    document.getElementById('drive-check-msg').className = 'drive-check-msg';
+    if (id) {
+      var d = allDocuments.find(function (x) { return x.id === id; });
+      document.getElementById('document-form-title').textContent = 'Sửa tài liệu';
+      document.getElementById('doc-f-title').value = d.title;
+      document.getElementById('doc-f-category').value = d.category_id;
+      document.getElementById('doc-f-desc').value = d.description || '';
+      document.getElementById('doc-f-author').value = d.author_name || '';
+      document.getElementById('doc-f-filetype').value = d.file_type || 'pdf';
+      document.getElementById('doc-f-level').value = d.difficulty_level || '';
+      document.getElementById('doc-f-version').value = d.version || '';
+      document.getElementById('doc-f-pages').value = d.total_pages || '';
+      document.getElementById('doc-f-size').value = d.file_size_bytes ? Math.round((d.file_size_bytes / (1024 * 1024)) * 10) / 10 : '';
+      document.getElementById('doc-f-drive-url').value = d.drive_url || '';
+      document.getElementById('doc-f-viewable').checked = !!d.is_viewable;
+      document.getElementById('doc-f-drive-open').checked = !!d.is_drive_open_enabled;
+      document.getElementById('doc-f-download').checked = !!d.is_download_link_enabled;
+      document.getElementById('doc-f-requires-login').checked = !!d.requires_login;
+      document.getElementById('doc-f-status').value = d.status;
+      checkDriveUrl(d.drive_url);
+    } else {
+      document.getElementById('document-form-title').textContent = 'Thêm tài liệu';
+      ['doc-f-title', 'doc-f-desc', 'doc-f-author', 'doc-f-version', 'doc-f-pages', 'doc-f-size', 'doc-f-drive-url'].forEach(function (i) { document.getElementById(i).value = ''; });
+      document.getElementById('doc-f-filetype').value = 'pdf';
+      document.getElementById('doc-f-level').value = '';
+      document.getElementById('doc-f-viewable').checked = true;
+      document.getElementById('doc-f-drive-open').checked = true;
+      document.getElementById('doc-f-download').checked = false;
+      document.getElementById('doc-f-requires-login').checked = false;
+      document.getElementById('doc-f-status').value = 'DRAFT';
+    }
+    form.classList.add('open');
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  document.getElementById('btn-new-document').addEventListener('click', function () { openDocumentForm(null); });
+  document.getElementById('doc-form-cancel').addEventListener('click', function () { document.getElementById('document-form').classList.remove('open'); });
+  document.getElementById('doc-form-save').addEventListener('click', function () {
+    var errorOut = document.getElementById('doc-form-error');
+    errorOut.style.display = 'none';
+
+    var title = document.getElementById('doc-f-title').value.trim();
+    var categoryId = document.getElementById('doc-f-category').value;
+    var driveUrlRaw = document.getElementById('doc-f-drive-url').value.trim();
+    var status = document.getElementById('doc-f-status').value;
+    var norm = libraryNormalizeDriveUrl(driveUrlRaw);
+
+    if (!title || !categoryId) { errorOut.textContent = 'Vui lòng nhập tên tài liệu và chọn danh mục.'; errorOut.style.display = 'block'; return; }
+    if (!norm) { errorOut.textContent = 'Link Google Drive không hợp lệ. Chỉ chấp nhận URL thuộc drive.google.com hoặc docs.google.com.'; errorOut.style.display = 'block'; return; }
+    if (status === 'PUBLISHED' && !norm) { errorOut.textContent = 'Không thể đăng công khai khi link Google Drive không hợp lệ.'; errorOut.style.display = 'block'; return; }
+
+    var sizeMb = parseFloat(document.getElementById('doc-f-size').value);
+    var existing = editingDocumentId ? allDocuments.find(function (x) { return x.id === editingDocumentId; }) : null;
+    var baseSlug = slugify(title);
+    var payload = {
+      category_id: categoryId,
+      title: title,
+      slug: (existing && existing.slug) || baseSlug,
+      description: document.getElementById('doc-f-desc').value.trim() || null,
+      author_name: document.getElementById('doc-f-author').value.trim() || null,
+      file_type: document.getElementById('doc-f-filetype').value,
+      difficulty_level: document.getElementById('doc-f-level').value || null,
+      version: document.getElementById('doc-f-version').value.trim() || null,
+      total_pages: document.getElementById('doc-f-pages').value ? Number(document.getElementById('doc-f-pages').value) : null,
+      file_size_bytes: isNaN(sizeMb) ? null : Math.round(sizeMb * 1024 * 1024),
+      drive_url: norm.driveUrl,
+      drive_file_id: norm.fileId,
+      is_viewable: document.getElementById('doc-f-viewable').checked,
+      is_drive_open_enabled: document.getElementById('doc-f-drive-open').checked,
+      is_download_link_enabled: document.getElementById('doc-f-download').checked,
+      requires_login: document.getElementById('doc-f-requires-login').checked,
+      status: status,
+      published_at: status === 'PUBLISHED' ? new Date().toISOString() : (existing ? existing.published_at : null)
+    };
+
+    var query = editingDocumentId
+      ? window.sb.from('library_documents').update(payload).eq('id', editingDocumentId)
+      : window.sb.from('library_documents').insert(payload);
+
+    query.then(function (res) {
+      if (res.error) {
+        errorOut.textContent = /duplicate|unique/i.test(res.error.message) ? 'Đã tồn tại tài liệu trùng tên trong danh mục này. Hãy đổi tên hoặc sửa slug.' : ('Lỗi: ' + res.error.message);
+        errorOut.style.display = 'block';
+        return;
+      }
+      document.getElementById('document-form').classList.remove('open');
+      loadDocuments();
+    });
+  });
+
+  requireAuth().then(function (session) {
+    if (!session) return;
+    window.sb.from('profiles').select('is_admin,full_name').eq('id', session.user.id).single().then(function (res) {
+      if (res.error || !res.data || !res.data.is_admin) { window.location.href = '/app/dashboard.html'; return; }
+      var name = res.data.full_name || session.user.email;
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-2').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'AD';
+      document.getElementById('user-avatar-2').textContent = initials || 'AD';
+      document.getElementById('user-avatar-dd').textContent = initials || 'AD';
+      document.getElementById('user-name-dd').textContent = name;
+      document.getElementById('user-email-dd').textContent = session.user.email || '—';
+
+      loadCategories().then(loadDocuments);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title id="page-title">Tài liệu theo chủ đề — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12.5 7.5 16 8 15.3 11.5' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="shared/dash.css" />
+<style>
+  .breadcrumb { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.6rem; }
+  .breadcrumb a { color: var(--text-soft); }
+  .breadcrumb a:hover { color: var(--gold-dark); }
+  .lib-cat-head { background: var(--navy-grad, linear-gradient(120deg,#0E2C45,#16395A)); color: #fff; border-radius: var(--radius); padding: 1.6rem clamp(1.2rem,3vw,2rem); margin-bottom: 1.2rem; }
+  .lib-cat-head h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .lib-cat-head p { color: rgba(255,255,255,0.78); font-size: 0.88rem; max-width: 640px; }
+  .lib-cat-metrics { display: flex; gap: 1.8rem; margin-top: 1.1rem; flex-wrap: wrap; }
+  .lib-cat-metrics div .n { font-size: 1.2rem; font-weight: 800; }
+  .lib-cat-metrics div .l { font-size: 0.74rem; color: rgba(255,255,255,0.7); }
+  .doc-star { border: none; background: none; cursor: pointer; color: var(--border); display: inline-flex; }
+  .doc-star.fav { color: var(--gold); }
+  #dm-table th, #dm-table td { white-space: nowrap; }
+  #dm-table td.wrap-desc { white-space: normal; max-width: 260px; color: var(--text-soft); font-size: 0.82rem; }
+  .related-doc-item { display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+  .related-doc-item:last-child { border-bottom: none; }
+  .related-doc-item .t { font-weight: 700; color: var(--navy-ink); }
+  .related-doc-item .m { font-size: 0.76rem; color: var(--text-soft); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" /><path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" /></svg></span>
+      <span><div class="name">NextGen <span class="hl">BA</span> Banker</div><div class="tagline">Learn · Analyze · Grow</div></span>
+    </a>
+    <nav class="mainnav">
+      <a href="../index.html">Trang chủ</a>
+      <a href="tai-lieu.html" class="active">Thư viện tài liệu</a>
+      <a href="dashboard.html" id="nav-dashboard-link" style="display:none;">Khu học tập</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="btn btn-gold btn-sm" href="login.html" id="guest-login-btn">Đăng nhập / Đăng ký</a>
+      <div class="user-menu" id="user-menu" style="display:none;">
+        <div class="user-trigger" id="user-trigger-btn">
+          <span class="avatar" id="user-avatar">BL</span>
+          <span class="meta"><span class="u-name" id="user-name">Học viên</span><span class="u-role">Học viên</span></span>
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="user-dropdown">
+          <div class="ud-head"><span class="avatar" id="user-avatar-dd">BL</span><div><div class="n" id="user-name-dd">Học viên</div><div class="r">Học viên</div><div class="e" id="user-email-dd">—</div></div></div>
+          <div class="ud-divider"></div>
+          <a class="ud-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/></svg>Hồ sơ của tôi</a>
+          <a class="ud-item" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Khu học tập</a>
+          <div class="ud-divider"></div>
+          <a class="ud-item ud-logout" href="#" id="dropdown-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="../index.html">Trang chủ</a>
+    <a href="tai-lieu.html" class="active">Thư viện tài liệu</a>
+    <a href="dashboard.html" id="nav-dashboard-link-m" style="display:none;">Khu học tập</a>
+    <a href="login.html" id="guest-login-btn-m">Đăng nhập / Đăng ký</a>
+    <a href="#" id="mobile-logout" style="display:none;">Đăng xuất</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <main class="main" style="max-width:1500px; margin:0 auto; width:100%;">
+    <div class="breadcrumb"><a href="../index.html">Trang chủ</a> › <a href="tai-lieu.html">Thư viện tài liệu</a> › <span id="bc-cat-name">…</span></div>
+
+    <div class="lib-cat-head">
+      <h1 id="cat-title">Đang tải...</h1>
+      <p id="cat-desc"></p>
+      <div class="lib-cat-metrics">
+        <div><div class="n" id="cm-total">—</div><div class="l">Tổng tài liệu</div></div>
+        <div><div class="n" id="cm-views">—</div><div class="l">Tổng lượt xem</div></div>
+        <div><div class="n" id="cm-opens">—</div><div class="l">Tổng lượt mở Drive</div></div>
+        <div><div class="n" id="cm-updated">—</div><div class="l">Cập nhật gần nhất</div></div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="dm-search" placeholder="Tìm tên tài liệu..." /></div>
+      <select id="dm-filter-type"><option value="">Loại file: Tất cả</option></select>
+      <select id="dm-filter-level"><option value="">Cấp độ: Tất cả</option><option value="beginner">Cơ bản</option><option value="intermediate">Trung cấp</option><option value="advanced">Nâng cao</option></select>
+      <select id="dm-filter-author"><option value="">Tác giả: Tất cả</option></select>
+      <select id="dm-sort">
+        <option value="newest">Mới nhất</option>
+        <option value="views-desc">Nhiều lượt xem</option>
+        <option value="opens-desc">Nhiều lượt mở</option>
+      </select>
+    </div>
+
+    <div class="grid-main-side">
+      <div class="card">
+        <div class="card-head"><h2 id="dm-list-title">Danh sách tài liệu</h2></div>
+        <div class="table-wrap">
+          <table class="data-table" id="dm-table">
+            <thead><tr>
+              <th></th><th>Tên tài liệu</th><th>Loại</th><th>Mô tả</th><th>Số trang</th><th>Dung lượng</th><th>Tác giả</th><th>Cập nhật</th><th>Lượt xem</th><th>Lượt mở</th><th>Lượt tải</th><th>Thao tác</th>
+            </tr></thead>
+            <tbody id="dm-tbody"><tr><td colspan="12" style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="dm-pagination" style="display:none;">
+          <div class="info" id="dm-page-info"></div>
+          <div class="pages" id="dm-page-buttons"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="card-head"><h2>Tài liệu liên quan</h2></div>
+          <div id="dm-related"><p style="color:var(--text-soft); font-size:0.85rem;">Đang tải...</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/app.js"></script>
+<script src="shared/library.js"></script>
+<script>
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var categorySlug = params.get('slug') || '';
+  var currentUserId = null;
+  var currentCategory = null;
+  var allDocs = [];
+  var filteredDocs = [];
+  var favoriteDocIds = {};
+  var PAGE_SIZE = 10;
+  var currentPage = 1;
+
+  if (!categorySlug) {
+    window.location.href = 'tai-lieu.html';
+  }
+
+  function loadCategoryAndDocs() {
+    window.sb.from('library_categories').select('id,name,slug,description').eq('slug', categorySlug).eq('is_active', true).single()
+      .then(function (catRes) {
+        if (catRes.error || !catRes.data) {
+          document.getElementById('cat-title').textContent = 'Không tìm thấy danh mục';
+          document.getElementById('dm-tbody').innerHTML = '<tr><td colspan="12">Danh mục không tồn tại hoặc đã bị ẩn.</td></tr>';
+          return;
+        }
+        currentCategory = catRes.data;
+        document.title = currentCategory.name + ' — Thư viện tài liệu — NextGen BA Banker';
+        document.getElementById('bc-cat-name').textContent = currentCategory.name;
+        document.getElementById('cat-title').textContent = currentCategory.name;
+        document.getElementById('cat-desc').textContent = currentCategory.description || '';
+
+        return window.sb.from('library_documents')
+          .select('id,title,slug,description,file_type,total_pages,file_size_bytes,author_name,difficulty_level,updated_at,created_at,view_count,drive_open_count,download_click_count,favorite_count,requires_login')
+          .eq('category_id', currentCategory.id)
+          .eq('status', 'PUBLISHED')
+          .then(function (docsRes) {
+            allDocs = docsRes.data || [];
+
+            var totalViews = allDocs.reduce(function (s, d) { return s + (d.view_count || 0); }, 0);
+            var totalOpens = allDocs.reduce(function (s, d) { return s + (d.drive_open_count || 0); }, 0);
+            var lastUpdated = allDocs.reduce(function (max, d) { var u = d.updated_at || d.created_at; return (!max || u > max) ? u : max; }, null);
+            document.getElementById('cm-total').textContent = allDocs.length;
+            document.getElementById('cm-views').textContent = libraryFormatCount(totalViews);
+            document.getElementById('cm-opens').textContent = libraryFormatCount(totalOpens);
+            document.getElementById('cm-updated').textContent = libraryTimeAgo(lastUpdated);
+
+            var types = Array.from(new Set(allDocs.map(function (d) { return d.file_type; }).filter(Boolean)));
+            var typeSelect = document.getElementById('dm-filter-type');
+            types.forEach(function (t) { typeSelect.innerHTML += '<option value="' + escapeHtml(t) + '">' + escapeHtml(libraryFileTypeLabel(t)) + '</option>'; });
+
+            var authors = Array.from(new Set(allDocs.map(function (d) { return d.author_name; }).filter(Boolean)));
+            var authorSelect = document.getElementById('dm-filter-author');
+            authors.forEach(function (a) { authorSelect.innerHTML += '<option value="' + escapeHtml(a) + '">' + escapeHtml(a) + '</option>'; });
+
+            var related = allDocs.slice().sort(function (a, b) { return (b.view_count || 0) - (a.view_count || 0); }).slice(0, 5);
+            document.getElementById('dm-related').innerHTML = related.length ? related.map(function (d) {
+              return '<a class="related-doc-item" href="tai-lieu-chi-tiet.html?c=' + encodeURIComponent(categorySlug) + '&d=' + encodeURIComponent(d.slug) + '">' +
+                '<span class="t">' + escapeHtml(d.title) + '</span><span class="m">' + libraryFileTypeLabel(d.file_type) + ' · ' + libraryFormatCount(d.view_count) + ' lượt xem</span></a>';
+            }).join('') : '<p style="color:var(--text-soft); font-size:0.85rem;">Chưa có tài liệu.</p>';
+
+            applyFilters();
+          });
+      });
+  }
+
+  function applyFilters() {
+    var q = (document.getElementById('dm-search').value || '').toLowerCase();
+    var type = document.getElementById('dm-filter-type').value;
+    var level = document.getElementById('dm-filter-level').value;
+    var author = document.getElementById('dm-filter-author').value;
+    var sort = document.getElementById('dm-sort').value;
+
+    filteredDocs = allDocs.filter(function (d) {
+      if (q && d.title.toLowerCase().indexOf(q) === -1 && (d.description || '').toLowerCase().indexOf(q) === -1) return false;
+      if (type && d.file_type !== type) return false;
+      if (level && d.difficulty_level !== level) return false;
+      if (author && d.author_name !== author) return false;
+      return true;
+    });
+
+    if (sort === 'views-desc') filteredDocs.sort(function (a, b) { return (b.view_count || 0) - (a.view_count || 0); });
+    else if (sort === 'opens-desc') filteredDocs.sort(function (a, b) { return (b.drive_open_count || 0) - (a.drive_open_count || 0); });
+    else filteredDocs.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+
+    currentPage = 1;
+    render();
+  }
+
+  function render() {
+    document.getElementById('dm-list-title').textContent = 'Danh sách tài liệu (' + filteredDocs.length + ')';
+    var totalPages = Math.max(1, Math.ceil(filteredDocs.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    var start = (currentPage - 1) * PAGE_SIZE;
+    var pageItems = filteredDocs.slice(start, start + PAGE_SIZE);
+
+    var tbody = document.getElementById('dm-tbody');
+    if (pageItems.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="12" style="color:var(--text-soft); font-size:0.85rem;">Không tìm thấy tài liệu phù hợp.</td></tr>';
+    } else {
+      tbody.innerHTML = pageItems.map(function (d) {
+        var isFav = !!favoriteDocIds[d.id];
+        var loginBadge = d.requires_login ? ' <span class="badge b-review" style="margin-left:4px;">Cần đăng nhập</span>' : '';
+        return '<tr>' +
+          '<td><button class="doc-star ' + (isFav ? 'fav' : '') + '" data-fav-id="' + d.id + '" title="Lưu yêu thích" aria-label="Lưu yêu thích"><svg viewBox="0 0 24 24" width="18" height="18" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.8"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></svg></button></td>' +
+          '<td><a href="tai-lieu-chi-tiet.html?c=' + encodeURIComponent(categorySlug) + '&d=' + encodeURIComponent(d.slug) + '"><strong>' + escapeHtml(d.title) + '</strong></a>' + loginBadge + '</td>' +
+          '<td><span class="badge b-new">' + libraryFileTypeLabel(d.file_type) + '</span></td>' +
+          '<td class="wrap-desc">' + escapeHtml(d.description || '—') + '</td>' +
+          '<td>' + (d.total_pages || '—') + '</td>' +
+          '<td>' + libraryFormatFileSize(d.file_size_bytes) + '</td>' +
+          '<td>' + escapeHtml(d.author_name || '—') + '</td>' +
+          '<td>' + libraryTimeAgo(d.updated_at || d.created_at) + '</td>' +
+          '<td>' + libraryFormatCount(d.view_count) + '</td>' +
+          '<td>' + libraryFormatCount(d.drive_open_count) + '</td>' +
+          '<td>' + libraryFormatCount(d.download_click_count) + '</td>' +
+          '<td><a class="btn btn-outline btn-sm" href="tai-lieu-chi-tiet.html?c=' + encodeURIComponent(categorySlug) + '&d=' + encodeURIComponent(d.slug) + '">Xem →</a></td>' +
+          '</tr>';
+      }).join('');
+    }
+
+    tbody.querySelectorAll('[data-fav-id]').forEach(function (btn) {
+      btn.addEventListener('click', function () { toggleFavorite(btn.getAttribute('data-fav-id'), btn); });
+    });
+
+    var pagBox = document.getElementById('dm-pagination');
+    pagBox.style.display = totalPages > 1 ? 'flex' : 'none';
+    document.getElementById('dm-page-info').textContent = 'Trang ' + currentPage + '/' + totalPages + ' — ' + filteredDocs.length + ' tài liệu';
+    var btnBox = document.getElementById('dm-page-buttons');
+    var html = '';
+    for (var p = 1; p <= totalPages; p++) html += '<button data-page="' + p + '" class="' + (p === currentPage ? 'active' : '') + '">' + p + '</button>';
+    btnBox.innerHTML = html;
+    btnBox.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () { currentPage = Number(btn.getAttribute('data-page')); render(); });
+    });
+  }
+
+  function toggleFavorite(documentId, btn) {
+    if (!currentUserId) { window.location.href = 'login.html'; return; }
+    var isFav = !!favoriteDocIds[documentId];
+    var query = isFav
+      ? window.sb.from('library_document_favorites').delete().eq('user_id', currentUserId).eq('document_id', documentId)
+      : window.sb.from('library_document_favorites').insert({ user_id: currentUserId, document_id: documentId });
+    query.then(function (res) {
+      if (res.error) { alert('Lỗi: ' + res.error.message); return; }
+      favoriteDocIds[documentId] = !isFav;
+      render();
+    });
+  }
+
+  ['dm-search'].forEach(function (id) { document.getElementById(id).addEventListener('input', applyFilters); });
+  ['dm-filter-type', 'dm-filter-level', 'dm-filter-author', 'dm-sort'].forEach(function (id) { document.getElementById(id).addEventListener('change', applyFilters); });
+
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function () { panel.classList.toggle('open'); });
+  })();
+  (function () {
+    var menu = document.getElementById('user-menu');
+    var trigger = document.getElementById('user-trigger-btn');
+    trigger.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click', function (e) { if (!menu.contains(e.target)) menu.classList.remove('open'); });
+    document.getElementById('dropdown-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+    document.getElementById('mobile-logout').addEventListener('click', function (e) { e.preventDefault(); signOut(); });
+  })();
+
+  window.sb.auth.getSession().then(function (res) {
+    var session = res.data.session;
+    if (!session) { loadCategoryAndDocs(); return; }
+    currentUserId = session.user.id;
+    window.sb.from('profiles').select('full_name').eq('id', session.user.id).single().then(function (profRes) {
+      var name = (profRes.data && profRes.data.full_name) || session.user.email;
+      document.getElementById('guest-login-btn').style.display = 'none';
+      document.getElementById('guest-login-btn-m').style.display = 'none';
+      document.getElementById('user-menu').style.display = '';
+      document.getElementById('mobile-logout').style.display = '';
+      document.getElementById('nav-dashboard-link').style.display = '';
+      document.getElementById('nav-dashboard-link-m').style.display = '';
+      var initials = name.trim().split(/\s+/).slice(-2).map(function (w) { return w[0]; }).join('').toUpperCase();
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-name-dd').textContent = name;
+      document.getElementById('user-avatar').textContent = initials || 'BL';
+      document.getElementById('user-avatar-dd').textContent = initials || 'BL';
+      document.getElementById('user-email-dd').textContent = session.user.email || '—';
+    });
+    window.sb.from('library_document_favorites').select('document_id').eq('user_id', session.user.id).then(function (favRes) {
+      (favRes.data || []).forEach(function (f) { favoriteDocIds[f.document_id] = true; });
+      loadCategoryAndDocs();
+    });
+  });
+</script>
+</body>
+</html>
