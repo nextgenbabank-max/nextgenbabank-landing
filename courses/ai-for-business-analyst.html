@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI for Business Analyst — NextGen BA Banker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E2C45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M6 10 12 6 18 10'/%3E%3Cpath d='M8 10 V14 M12 10 V14 M16 10 V14'/%3E%3Cpath d='M6 14 H18'/%3E%3Cpath d='M6.5 17 16 8' stroke='%23E0701C'/%3E%3Cpath d='M12 7 16 8 15 12' stroke='%23E0701C'/%3E%3C/svg%3E" />
+<style>
+  :root {
+    --navy: #0E2C45; --navy-2: #16395A; --navy-ink: #1C2B30;
+    --text-body: #46565A; --text-soft: #5F747C;
+    --bg: #FFFFFF; --bg-soft: #F3F5F6; --card: #FFFFFF; --border: #DBE1E3;
+    --gold: #E0701C; --gold-dark: #C45E12; --gold-soft: #FCEADB;
+    --gold-grad: linear-gradient(120deg, #EA8A3C 0%, #C45E12 100%);
+    --shadow: 0 30px 60px -24px rgba(14, 44, 69, 0.4);
+    --shadow-sm: 0 14px 30px -14px rgba(14, 44, 69, 0.32);
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--navy-ink); background: var(--bg); line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 1.4rem; }
+
+  header.site { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 40; }
+  .nav-row { max-width: 1180px; margin: 0 auto; padding: 0.9rem 1.4rem; display: flex; align-items: center; gap: 1.4rem; }
+  .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; color: var(--navy); }
+  .brand .name { font-size: 1.02rem; }
+  .brand .hl { color: var(--gold); }
+  nav.links { display: flex; gap: 1.3rem; margin-left: auto; font-size: 0.92rem; font-weight: 600; color: var(--navy-2); }
+  nav.links a.active { color: var(--gold); }
+  .nav-actions { display: flex; gap: 0.6rem; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
+  .mobile-panel { display: none; flex-direction: column; gap: 0.2rem; padding: 0.6rem 1.4rem 1rem; border-top: 1px solid var(--border); }
+  .mobile-panel.open { display: flex; }
+  .mobile-panel a { padding: 0.55rem 0; font-weight: 600; color: var(--navy-2); }
+  @media (max-width: 860px) {
+    nav.links, .nav-actions { display: none; }
+    .nav-toggle { display: block; margin-left: auto; }
+  }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4em; padding: 0.68em 1.3em; border-radius: 9px; font-size: 0.92rem; font-weight: 700; cursor: pointer; border: 1.5px solid transparent; }
+  .btn-gold { background: var(--gold-grad); color: #fff; box-shadow: 0 12px 24px -12px rgba(140,106,30,0.55); }
+  .btn-gold:hover { background: var(--gold-dark); }
+  .btn-outline { border-color: var(--border); color: var(--navy-2); background: #fff; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-block { display: flex; width: 100%; }
+
+  .breadcrumb { font-size: 0.85rem; color: var(--text-soft); padding: 1rem 0; }
+  .breadcrumb a:hover { color: var(--gold); }
+
+  .detail-grid { display: grid; grid-template-columns: 1.65fr 1fr; gap: 2.2rem; align-items: start; padding-bottom: 3rem; }
+  @media (max-width: 980px) { .detail-grid { grid-template-columns: 1fr; } }
+
+  .kicker { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  h1.course-title { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; margin: 0 0 0.5rem; color: var(--navy); }
+  .course-tagline { font-size: 1.02rem; color: var(--text-body); margin: 0 0 1.2rem; }
+  .quick-facts { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.6rem; }
+  .quick-fact { display: flex; align-items: center; gap: 0.5rem; border: 1.5px solid var(--border); border-radius: 12px; padding: 0.6rem 0.9rem; font-size: 0.85rem; font-weight: 600; color: var(--navy-2); }
+  .quick-fact svg { width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; }
+
+  .content-block { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1.5rem 1.6rem; margin-bottom: 1.3rem; }
+  .content-block h2 { font-size: 1.08rem; font-weight: 800; margin: 0 0 0.9rem; display: flex; align-items: center; gap: 0.55rem; color: var(--navy); }
+  .content-block h2 svg { width: 20px; height: 20px; color: var(--gold); }
+  .content-block p { color: var(--text-body); margin: 0 0 0.6rem; font-size: 0.94rem; }
+  .content-block ul.plain { margin: 0; padding-left: 1.2rem; color: var(--text-body); font-size: 0.9rem; display: grid; gap: 0.4rem; }
+
+  .numbered-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+  .numbered-list li { display: flex; gap: 0.8rem; }
+  .numbered-list .num { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--gold-grad); color: #fff; font-weight: 800; font-size: 0.85rem; display: grid; place-items: center; }
+  .numbered-list strong { display: block; color: var(--navy); font-size: 0.94rem; }
+  .numbered-list span.d { color: var(--text-soft); font-size: 0.86rem; }
+
+  .not-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  @media (max-width: 640px) { .not-grid { grid-template-columns: 1fr; } }
+  .not-item { display: flex; gap: 0.6rem; align-items: flex-start; border: 1.5px solid var(--border); border-radius: 12px; padding: 0.7rem 0.85rem; font-size: 0.85rem; color: var(--text-body); }
+  .not-item svg { width: 18px; height: 18px; color: #C0392B; flex-shrink: 0; margin-top: 0.1rem; }
+
+  .check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+  .check-list li { display: flex; gap: 0.6rem; font-size: 0.92rem; color: var(--text-body); }
+  .check-list svg { width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; margin-top: 0.15rem; }
+
+  .takeaway-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; }
+  @media (max-width: 780px) { .takeaway-grid { grid-template-columns: repeat(2, 1fr); } }
+  .takeaway-card { border: 1.5px solid var(--border); border-radius: 14px; padding: 1rem; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--navy-2); }
+  .takeaway-card svg { width: 26px; height: 26px; color: var(--gold); margin-bottom: 0.5rem; }
+
+  .differentiator { background: var(--gold-soft); border-radius: var(--radius); padding: 1.1rem 1.3rem; font-size: 0.92rem; color: var(--navy-ink); }
+  .differentiator strong { color: var(--navy); }
+
+  .sidebar { position: sticky; top: 90px; }
+  .price-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.4rem 1.5rem; margin-bottom: 1.2rem; }
+  .badge-promo { display: inline-block; background: var(--gold-soft); color: var(--gold); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; padding: 0.35em 0.8em; border-radius: 999px; margin-bottom: 0.8rem; }
+  .price-sale { font-size: 1.9rem; font-weight: 800; color: var(--navy); }
+  .price-unit { font-size: 0.95rem; color: var(--text-soft); font-weight: 600; }
+  .price-original { font-size: 0.92rem; color: var(--text-soft); text-decoration: line-through; margin: 0.2rem 0 1rem; }
+  .meta-list { list-style: none; margin: 0 0 1.1rem; padding: 0; display: grid; gap: 0.55rem; }
+  .meta-list li { display: flex; gap: 0.55rem; font-size: 0.88rem; color: var(--text-body); }
+  .meta-list svg { width: 17px; height: 17px; color: var(--gold); flex-shrink: 0; margin-top: 0.1rem; }
+
+  .org-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .org-table td { padding: 0.55rem 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .org-table td:first-child { color: var(--text-soft); width: 42%; }
+  .org-table td:last-child { color: var(--navy-ink); font-weight: 600; }
+
+  .footer-banner { background: var(--navy); color: #fff; border-radius: var(--radius); padding: 1.8rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin: 2rem 0 3rem; }
+  .footer-banner h3 { margin: 0 0 0.3rem; font-size: 1.25rem; }
+  .footer-banner p { margin: 0; color: #C7D3DB; font-size: 0.92rem; }
+  .footer-banner .cta-row { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+  .footer-banner a.link-white { color: #fff; font-weight: 700; font-size: 0.9rem; }
+
+  footer.site { border-top: 1px solid var(--border); padding: 1.4rem 0; }
+  footer.site .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.7rem; font-size: 0.85rem; color: var(--text-soft); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-row">
+    <a class="brand" href="../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
+        <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+        <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+      </svg>
+      <span class="name">NextGen <span class="hl">BA</span> Banker</span>
+    </a>
+    <nav class="links">
+      <a href="../index.html">Trang chủ</a>
+      <a href="../index.html#lo-trinh">Lộ trình học</a>
+      <a href="../index.html#khoa-hoc" class="active">Khóa học</a>
+      <a href="../community.html">Cộng đồng</a>
+      <a href="../about.html">Giới thiệu</a>
+    </nav>
+    <div class="nav-actions">
+      <button type="button" class="btn btn-gold" data-open-consultation data-course-name="AI for Business Analyst">Nhận tư vấn</button>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-panel" id="mobile-panel">
+    <a href="../index.html">Trang chủ</a>
+    <a href="../index.html#lo-trinh">Lộ trình học</a>
+    <a href="../index.html#khoa-hoc">Khóa học</a>
+    <a href="../community.html">Cộng đồng</a>
+    <a href="../about.html">Giới thiệu</a>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">Trang chủ</a> &gt; <a href="../index.html#khoa-hoc">Khóa học</a> &gt; AI for Business Analyst
+  </nav>
+
+  <div class="detail-grid">
+    <div class="content-col">
+      <span class="kicker">CHI TIẾT KHÓA HỌC</span>
+      <h1 class="course-title">AI FOR BUSINESS ANALYST</h1>
+      <p class="course-tagline">Ứng dụng AI để nâng cao hiệu suất và chất lượng công việc BA.</p>
+      <div class="quick-facts">
+        <div class="quick-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 36 giờ · 12 buổi × 3 giờ</div>
+        <div class="quick-fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9m9 5h-9m9 5h-9M4 7h1m-1 5h1m-1 5h1"/></svg> Không chia chặng, chỉ thanh toán trọn khóa</div>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg> Bối cảnh</h2>
+        <ul class="plain">
+          <li>BA đang chịu áp lực deadline tài liệu và ngày càng gặp dự án có cấu phần AI.</li>
+          <li>Nhiều người dùng ChatGPT theo kiểu copy-paste dẫn đến rủi ro bịa nội dung và lộ thông tin dự án.</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg> Khóa học này là gì</h2>
+        <ol class="numbered-list">
+          <li><span class="num">1</span><span><strong>Dùng AI đúng cách</strong><span class="d"> — biết sử dụng AI và kiểm chứng lại đầu ra.</span></span></li>
+          <li><span class="num">2</span><span><strong>Tự xây agent riêng</strong><span class="d"> — biến quy trình lặp lại thành nhân viên ảo chạy đúng chuẩn công ty.</span></span></li>
+          <li><span class="num">3</span><span><strong>Làm BA cho dự án AI</strong><span class="d"> — viết requirement cho tính năng có đầu ra không xác định trước.</span></span></li>
+        </ol>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg> Khóa học này KHÔNG phải là gì</h2>
+        <div class="not-grid">
+          <div class="not-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg> Không dạy lại nghiệp vụ BA cơ bản</div>
+          <div class="not-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg> Không phải khóa toàn ML hay Python</div>
+          <div class="not-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg> Không phải 50 prompt cho dân văn phòng</div>
+          <div class="not-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg> Không hứa AI viết thay tài liệu</div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg> Đối tượng</h2>
+        <p>BA có tối thiểu 2 năm kinh nghiệm, đã tự chủ module hoặc dự án nhỏ; phù hợp cả BA Lead cần xây quy trình AI cho team.</p>
+        <p><strong>Yêu cầu đầu vào:</strong> đã viết được SRS/User Story độc lập, có tài khoản Claude hoặc ChatGPT bản trả phí, mang laptop.</p>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Cam kết đầu ra</h2>
+        <ul class="check-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Giải thích được AI làm được và không làm được trong công việc BA</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Rút ngắn 40–60% thời gian soạn tài liệu</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Phát hiện nội dung AI bịa và biết cách điều tra, xác minh</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Tự viết spec và xây agent riêng cho quy trình BA</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Vận hành pipeline agent: soạn nháp → review → duyệt</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Viết requirement cho tính năng AI bằng metric và ngưỡng chấp nhận</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg> Mang về sau khóa học</h2>
+        <div class="takeaway-grid">
+          <div class="takeaway-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Bộ 4–5 agent đang chạy</div>
+          <div class="takeaway-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>Prompt template cho tài liệu BA</div>
+          <div class="takeaway-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Checklist kiểm chứng output AI</div>
+          <div class="takeaway-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>Capstone: bộ tài liệu BA cho 1 tính năng AI</div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.5 9 22 9.5 16.5 14 18 21.5 12 17.5 6 21.5 7.5 14 2 9.5 9.5 9Z"/></svg> Điểm khác biệt</h2>
+        <div class="differentiator">Đa số khóa AI dạy cách hỏi AI. Khóa này dạy cách <strong>đặc tả cho AI</strong>. Xây agent về bản chất là viết spec cho một nhân sự ảo, và BA có lợi thế tự nhiên ở việc này.</div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="price-card" id="gia-hoc-phi">
+        <span class="badge-promo">Ưu đãi 50%</span>
+        <div><span class="price-sale" id="price-sale">3.999.000 VNĐ</span><span class="price-unit"> / khóa</span></div>
+        <div class="price-original" id="price-original">Giá gốc: 7.998.000 VNĐ / khóa</div>
+        <ul class="meta-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 01 khóa hoàn chỉnh, không chia chặng</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 2 buổi/tuần · 6 tuần</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 19c0-3.3 3-5 7-5s7 1.7 7 5"/><circle cx="18" cy="9" r="2.4"/><path d="M17 13.3c2.5.2 4.5 1.7 5 3.7"/></svg> Tối đa 16 học viên</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/><path d="M12 2v13m0 0-4-4m4 4 4-4"/></svg> Miễn phí 01 buổi Review CV &amp; luyện phỏng vấn</li>
+        </ul>
+        <button type="button" class="btn btn-gold btn-block" data-open-consultation data-course-name="AI for Business Analyst">Đăng ký tư vấn</button>
+        <button type="button" class="btn btn-outline btn-block" style="margin-top:.6rem;" data-open-syllabus data-course-name="AI for Business Analyst">Nhận đề cương</button>
+      </div>
+      <div class="price-card">
+        <h3 style="margin:0 0 .9rem;font-size:1rem;color:var(--navy);">Thông tin tổ chức</h3>
+        <table class="org-table">
+          <tr><td>Thời lượng:</td><td>36 giờ — 12 buổi × 3 giờ</td></tr>
+          <tr><td>Lịch học:</td><td>2 buổi/tuần → 6 tuần</td></tr>
+          <tr><td>Sĩ số:</td><td>Tối đa 16</td></tr>
+          <tr><td>Công cụ nền:</td><td>Claude Projects / Custom GPT (no-code)</td></tr>
+          <tr><td>Công cụ nâng cao:</td><td>Claude Code + MCP (buổi 8, tùy chọn)</td></tr>
+          <tr><td>Đánh giá:</td><td>Capstone 100đ, đạt từ 70đ</td></tr>
+        </table>
+      </div>
+      <div class="price-card">
+        <h3 style="margin:0 0 .9rem;font-size:1rem;color:var(--navy);">Đầu ra nổi bật</h3>
+        <ul class="check-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.75 5.8 21l1.2-7L2 9.3l7-1L12 2l3 6.3 7 1-5 4.7 1.2 7Z"/></svg> Bộ agent và quy trình BA tự động hóa sẵn sàng vận hành</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.75 5.8 21l1.2-7L2 9.3l7-1L12 2l3 6.3 7 1-5 4.7 1.2 7Z"/></svg> Giảm 40–60% thời gian soạn tài liệu, tăng chất lượng đầu ra</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.75 5.8 21l1.2-7L2 9.3l7-1L12 2l3 6.3 7 1-5 4.7 1.2 7Z"/></svg> Tự tin đặc tả và làm BA cho các tính năng AI không xác định trước</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-banner">
+    <div>
+      <h3>Sẵn sàng ứng dụng AI vào công việc BA?</h3>
+      <p>Nhận tư vấn chi tiết về lộ trình, nội dung học và cách triển khai capstone.</p>
+    </div>
+    <div class="cta-row">
+      <button type="button" class="btn btn-gold" data-open-consultation data-course-name="AI for Business Analyst">Đăng ký tư vấn</button>
+      <a class="link-white" href="#gia-hoc-phi">Xem học phí →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="container">
+    <span>NextGen BA Banker</span>
+    <span>Chương trình đào tạo nội bộ · Tham chiếu BABOK Guide v3</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var panel = document.getElementById('mobile-panel');
+    toggle.addEventListener('click', function () {
+      var open = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+
+  (function () {
+    var SUPABASE_URL = 'https://jdkzevfxitprddvaohyi.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_a2p2pbLD3AWJOTZWFswVuQ_trIfygVs';
+    var SLUG = 'ai-for-business-analyst';
+
+    function formatVndLocal(n) {
+      return Number(n).toLocaleString('vi-VN', { maximumFractionDigits: 0 }) + ' VNĐ';
+    }
+
+    fetch(SUPABASE_URL + '/rest/v1/courses?slug=eq.' + SLUG + '&select=*', {
+      headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY }
+    })
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .then(function (rows) {
+        var c = rows && rows[0];
+        if (!c) return;
+
+        document.getElementById('price-sale').textContent = formatVndLocal(c.sale_price) + ' / khóa';
+        document.getElementById('price-original').textContent = 'Giá gốc: ' + formatVndLocal(c.original_price) + ' / khóa';
+
+        document.querySelectorAll('[data-open-consultation], [data-open-syllabus]').forEach(function (el) {
+          el.setAttribute('data-course-id', c.id);
+          el.setAttribute('data-course-name', c.name);
+          el.setAttribute('data-messenger-url', c.messenger_url || '');
+          el.setAttribute('data-zalo-url', c.zalo_url || '');
+        });
+      })
+      .catch(function () {});
+  })();
+</script>
+<script>
+  window.SUPABASE_URL = 'https://jdkzevfxitprddvaohyi.supabase.co';
+  window.SUPABASE_KEY = 'sb_publishable_a2p2pbLD3AWJOTZWFswVuQ_trIfygVs';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../shared/course-widgets.js"></script>
+</body>
+</html>
