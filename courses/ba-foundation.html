@@ -22,21 +22,29 @@
   .container { max-width: 1180px; margin: 0 auto; padding: 0 1.4rem; }
 
   /* Header */
-  header.site { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 40; }
+  header.site { background: var(--navy); position: sticky; top: 0; z-index: 40; }
   .nav-row { max-width: 1180px; margin: 0 auto; padding: 0.9rem 1.4rem; display: flex; align-items: center; gap: 1.4rem; }
-  .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; color: var(--navy); }
-  .brand .name { font-size: 1.02rem; }
+  .brand { display: flex; align-items: center; gap: 0.6rem; color: #fff; }
+  .brand .icon { width: 30px; height: 30px; flex-shrink: 0; display: grid; place-items: center; color: #fff; }
+  .brand .name { font-size: 1.02rem; font-weight: 700; }
   .brand .hl { color: var(--gold); }
-  nav.links { display: flex; gap: 1.3rem; margin-left: auto; font-size: 0.92rem; font-weight: 600; color: var(--navy-2); }
-  nav.links a.active { color: var(--gold); }
-  .nav-actions { display: flex; gap: 0.6rem; }
-  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.4rem; }
-  .mobile-panel { display: none; flex-direction: column; gap: 0.2rem; padding: 0.6rem 1.4rem 1rem; border-top: 1px solid var(--border); }
+  .brand .tagline { font-size: 0.68rem; color: #9FB0CB; letter-spacing: 0.02em; margin-top: 1px; }
+  nav.links { display: flex; gap: 1.3rem; margin-left: auto; font-size: 0.88rem; font-weight: 600; }
+  nav.links a { color: #C8D3E6; padding-bottom: 6px; border-bottom: 2px solid transparent; }
+  nav.links a:hover, nav.links a:focus-visible { color: #fff; }
+  nav.links a.active { color: #fff; border-color: var(--gold); }
+  .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+  .nav-toggle { display: none; width: 38px; height: 38px; border-radius: 8px; background: rgba(255,255,255,0.08); border: none; color: #fff; cursor: pointer; align-items: center; justify-content: center; }
+  .nav-toggle:hover { background: rgba(255,255,255,0.16); }
+  .mobile-panel { display: none; flex-direction: column; gap: 0.2rem; background: var(--navy); padding: 0.6rem 1.4rem 1rem; border-top: 1px solid rgba(255,255,255,0.12); }
   .mobile-panel.open { display: flex; }
-  .mobile-panel a { padding: 0.55rem 0; font-weight: 600; color: var(--navy-2); }
-  @media (max-width: 860px) {
+  .mobile-panel a { padding: 0.7rem 0; font-weight: 600; color: #C8D3E6; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .mobile-panel a.active { color: #fff; }
+  .mobile-panel .mobile-actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; }
+  .mobile-panel .mobile-actions .btn { flex: 1; justify-content: center; }
+  @media (max-width: 1080px) {
     nav.links, .nav-actions { display: none; }
-    .nav-toggle { display: block; margin-left: auto; }
+    .nav-toggle { display: inline-flex; }
   }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4em; padding: 0.68em 1.3em; border-radius: 9px; font-size: 0.92rem; font-weight: 700; cursor: pointer; border: 1.5px solid transparent; }
@@ -44,6 +52,8 @@
   .btn-gold:hover { background: var(--gold-dark); }
   .btn-outline { border-color: var(--border); color: var(--navy-2); background: #fff; }
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-ghost { background: transparent; border-color: rgba(255,255,255,0.35); color: #fff; }
+  .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
   .btn-block { display: flex; width: 100%; }
 
   /* Breadcrumb */
@@ -118,32 +128,42 @@
 <header class="site">
   <div class="nav-row">
     <a class="brand" href="../index.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
-        <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
-        <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
-      </svg>
-      <span class="name">NextGen <span class="hl">BA</span> Banker</span>
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="30" height="30">
+          <circle cx="12" cy="12" r="10" /><path d="M6 10 12 6 18 10" /><path d="M8 10 V14 M12 10 V14 M16 10 V14" /><path d="M6 14 H18" />
+          <path d="M6.5 17 16 8" stroke="var(--gold)" /><path d="M12 7 16 8 15 12" stroke="var(--gold)" />
+        </svg>
+      </span>
+      <span>
+        <div class="name">NextGen <span class="hl">BA</span> Banker</div>
+        <div class="tagline">Learn · Analyze · Grow</div>
+      </span>
     </a>
     <nav class="links">
       <a href="../index.html">Trang chủ</a>
       <a href="../index.html#lo-trinh">Lộ trình học</a>
       <a href="../index.html#khoa-hoc" class="active">Khóa học</a>
-      <a href="../community.html">Cộng đồng</a>
+      <a href="../app/tai-lieu.html">Thư viện tài liệu</a>
       <a href="../index.html#gioi-thieu">Giới thiệu</a>
     </nav>
     <div class="nav-actions">
-      <button type="button" class="btn btn-gold" data-open-consultation data-course-name="BA Foundation">Nhận tư vấn</button>
+      <a class="btn btn-ghost" href="../app/login.html">Đăng nhập / Đăng ký</a>
+      <button type="button" class="btn btn-gold" data-open-consultation data-course-name="BA Foundation">Đăng ký tư vấn</button>
     </div>
     <button class="nav-toggle" id="nav-toggle" aria-label="Mở menu" aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
   </div>
   <div class="mobile-panel" id="mobile-panel">
     <a href="../index.html">Trang chủ</a>
     <a href="../index.html#lo-trinh">Lộ trình học</a>
-    <a href="../index.html#khoa-hoc">Khóa học</a>
-    <a href="../community.html">Cộng đồng</a>
+    <a href="../index.html#khoa-hoc" class="active">Khóa học</a>
+    <a href="../app/tai-lieu.html">Thư viện tài liệu</a>
     <a href="../index.html#gioi-thieu">Giới thiệu</a>
+    <div class="mobile-actions">
+      <a class="btn btn-ghost" href="../app/login.html">Đăng nhập / Đăng ký</a>
+      <button type="button" class="btn btn-gold btn-block" data-open-consultation data-course-name="BA Foundation">Đăng ký tư vấn</button>
+    </div>
   </div>
 </header>
 
