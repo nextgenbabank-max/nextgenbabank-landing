@@ -215,6 +215,11 @@
     .cta-row .btn { width: 100%; justify-content: center; }
   }
 
+  .hero-proof-bar { display: flex; flex-wrap: wrap; gap: clamp(1.2rem, 3vw, 2.2rem); margin: 1.3rem 0 1.1rem; padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .hero-proof-bar .hp-item { display: flex; flex-direction: column; }
+  .hero-proof-bar .hp-item .n { font-size: 1.35rem; font-weight: 800; color: var(--navy); line-height: 1.1; }
+  .hero-proof-bar .hp-item .l { font-size: 0.76rem; color: var(--text-soft); margin-top: 2px; max-width: 130px; }
+  @media (max-width: 480px) { .hero-proof-bar { gap: 1.2rem 1.6rem; } }
   .trust p { font-size: 0.82rem; color: var(--text-soft); margin-bottom: 0.9rem; }
   .trust-logos { display: flex; align-items: center; gap: clamp(1.1rem, 3vw, 1.8rem); flex-wrap: wrap; color: var(--text-soft); }
   .trust-logos .logo { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.92rem; opacity: 0.75; }
@@ -716,16 +721,14 @@
         <p class="sub">Không chỉ học BA là gì. Bạn sẽ trực tiếp phân tích quy trình, làm rõ yêu cầu, thiết kế giải pháp và xây dựng bộ tài liệu hoàn chỉnh cho một dự án ngân hàng mô phỏng.</p>
         <p class="emphasis">Học đúng kiến thức – Làm được sản phẩm – Sẵn sàng tham gia dự án</p>
         <div class="cta-row">
-          <a class="btn btn-gold" href="#lo-trinh">Khám phá lộ trình học →</a>
-          <a class="btn btn-outline" href="#dang-ky">Đăng ký nhận tư vấn</a>
+          <a class="btn btn-gold" href="#dang-ky">Đăng ký nhận tư vấn miễn phí →</a>
+          <a class="btn btn-outline" href="#lo-trinh">Khám phá lộ trình học</a>
         </div>
-        <div class="trust">
-          <div class="trust-logos">
-            <span class="logo">Tham chiếu BABOK Guide</span>
-            <span class="logo">Case study ngân hàng</span>
-            <span class="logo">AI Mentor</span>
-            <span class="logo">Portfolio thực tế</span>
-          </div>
+        <div class="hero-proof-bar" aria-hidden="false">
+          <div class="hp-item"><span class="n">97+</span><span class="l">Tài liệu tham khảo thực tế</span></div>
+          <div class="hp-item"><span class="n">04</span><span class="l">Case study ngân hàng</span></div>
+          <div class="hp-item"><span class="n">06</span><span class="l">Chặng học bám sát BABOK</span></div>
+          <div class="hp-item"><span class="n">1:1</span><span class="l">Hỗ trợ AI Mentor</span></div>
         </div>
       </div>
 
