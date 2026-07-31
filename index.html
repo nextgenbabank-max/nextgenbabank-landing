@@ -603,6 +603,8 @@
   .field input::placeholder { color: #7C87A0; }
   .field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
   form.register-form .btn-gold { width: 100%; justify-content: center; }
+  .step2-actions.show { display: flex !important; }
+  @media (max-width: 480px) { .step2-actions { flex-direction: column; } }
   .form-fine { font-size: 0.74rem; color: #7C87A0; margin-top: 0.8rem; }
 
   .confirm-panel { display: none; border: 1px solid rgba(244,121,31,0.5); border-radius: var(--radius); padding: 1.5rem; }
@@ -1593,6 +1595,8 @@
               </select>
             </div>
           </div>
+          <div id="step2-fields" style="display:none;">
+          <p class="form-fine" style="margin:-0.2rem 0 0.9rem;">Bước 2 (không bắt buộc) — giúp chúng tôi đề xuất lộ trình sát hơn với bạn:</p>
           <div class="field-row">
             <div class="field">
               <label for="f-experience">Kinh nghiệm làm việc</label>
@@ -1638,6 +1642,11 @@
               <option>Quy trình nội bộ ngân hàng</option>
               <option>Chưa xác định</option>
             </select>
+          </div>
+          </div>
+          <div class="step2-actions" id="step2-actions" style="display:none; gap:0.7rem; margin-top:0.2rem;">
+            <button class="btn btn-gold" type="button" id="step2-submit" style="flex:1; justify-content:center;">Hoàn tất hồ sơ →</button>
+            <button class="btn btn-outline" type="button" id="step2-skip" style="flex:1; justify-content:center;">Bỏ qua, xem lộ trình ngay</button>
           </div>
           <button class="btn btn-gold" type="submit" id="register-submit">Nhận lộ trình đề xuất</button>
           <p class="form-fine" id="form-error" style="display:none; color:#B3261E;"></p>
@@ -1714,7 +1723,20 @@
     var nameOut = document.getElementById('confirm-name');
     var submitBtn = document.getElementById('register-submit');
     var errorOut = document.getElementById('form-error');
+    var step2Fields = document.getElementById('step2-fields');
+    var step2Actions = document.getElementById('step2-actions');
+    var step2SubmitBtn = document.getElementById('step2-submit');
+    var step2SkipBtn = document.getElementById('step2-skip');
     if (!form) return;
+
+    var registeredEmail = '';
+    var registeredName = '';
+
+    function showConfirm() {
+      nameOut.textContent = registeredName || 'bạn';
+      form.style.display = 'none';
+      panel.classList.add('show');
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1722,10 +1744,6 @@
       var email = document.getElementById('f-email').value.trim();
       var phone = document.getElementById('f-phone').value.trim();
       var role = document.getElementById('f-role').value;
-      var experience = document.getElementById('f-experience').value;
-      var weeklyHours = document.getElementById('f-hours').value;
-      var goal = document.getElementById('f-goal').value;
-      var interest = document.getElementById('f-interest').value;
 
       errorOut.style.display = 'none';
       submitBtn.disabled = true;
@@ -1743,18 +1761,17 @@
           name: name,
           email: email,
           phone: phone,
-          role: role,
-          experience: experience,
-          weekly_hours: weeklyHours,
-          goal: goal,
-          interest: interest
+          role: role
         })
       })
         .then(function (res) {
           if (!res.ok) throw new Error('Gửi thất bại (HTTP ' + res.status + ')');
-          nameOut.textContent = name || 'bạn';
-          form.style.display = 'none';
-          panel.classList.add('show');
+          registeredName = name;
+          registeredEmail = email;
+          submitBtn.style.display = 'none';
+          step2Fields.style.display = 'block';
+          step2Actions.classList.add('show');
+          step2Fields.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         })
         .catch(function () {
           errorOut.textContent = 'Có lỗi khi gửi đăng ký. Vui lòng thử lại sau.';
@@ -1763,6 +1780,40 @@
         .finally(function () {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Nhận lộ trình đề xuất';
+        });
+    });
+
+    step2SkipBtn.addEventListener('click', function () { showConfirm(); });
+
+    step2SubmitBtn.addEventListener('click', function () {
+      var experience = document.getElementById('f-experience').value;
+      var weeklyHours = document.getElementById('f-hours').value;
+      var goal = document.getElementById('f-goal').value;
+      var interest = document.getElementById('f-interest').value;
+
+      step2SubmitBtn.disabled = true;
+      step2SubmitBtn.textContent = 'Đang lưu...';
+
+      fetch(SUPABASE_URL + '/rest/v1/registrations?email=eq.' + encodeURIComponent(registeredEmail), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          experience: experience,
+          weekly_hours: weeklyHours,
+          goal: goal,
+          interest: interest
+        })
+      })
+        .then(showConfirm)
+        .catch(showConfirm)
+        .finally(function () {
+          step2SubmitBtn.disabled = false;
+          step2SubmitBtn.textContent = 'Hoàn tất hồ sơ →';
         });
     });
   })();
